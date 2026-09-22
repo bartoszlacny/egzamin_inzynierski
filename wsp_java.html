@@ -1,0 +1,492 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Wstęp do programowania w języku Java – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Wstęp do programowania w języku Java</h1>
+
+<div class="zagadnienie">
+<h2>1. Polimorfizm</h2>
+
+<p>Możliwość traktowania obiektów różnych klas (powiązanych dziedziczeniem/interfejsem) <strong>jednolicie</strong>, przez referencję do typu bazowego, przy czym faktycznie wykonana zostaje metoda właściwa dla <strong>rzeczywistego</strong> typu obiektu.</p>
+
+<pre>class Zwierze {
+    void wydajDzwiek() { System.out.println("..."); }
+}
+class Pies extends Zwierze {
+    @Override
+    void wydajDzwiek() { System.out.println("Hau!"); }
+}
+class Kot extends Zwierze {
+    @Override
+    void wydajDzwiek() { System.out.println("Miau!"); }
+}
+
+Zwierze[] zwierzeta = { new Pies(), new Kot() };
+for (Zwierze z : zwierzeta) {
+    z.wydajDzwiek();   // "Hau!", potem "Miau!" — mimo że typ zmiennej to Zwierze
+}</pre>
+
+<h3>Polimorfizm w czasie wykonania (dynamic dispatch)</h3>
+<p>W Javie wywołania metod niestatycznych są domyślnie <strong>polimorficzne</strong> — o tym, która wersja metody się wykona, decyduje <strong>rzeczywisty typ obiektu</strong> w czasie wykonania, nie zadeklarowany typ zmiennej (to odróżnia Javę od C++, gdzie trzeba jawnie oznaczyć metodę jako <code>virtual</code>).</p>
+
+<h3>Polimorfizm parametryczny (przeciążenie) vs polimorfizm dziedziczenia</h3>
+<ul>
+<li><strong>polimorfizm przez dziedziczenie (nadpisywanie)</strong> — jak w przykładzie wyżej, rozstrzygany w czasie <strong>wykonania</strong></li>
+<li><strong>polimorfizm przez przeciążanie (overloading)</strong> — wiele metod o tej samej nazwie, różne parametry, rozstrzygane w czasie <strong>kompilacji</strong> na podstawie typów argumentów</li>
+</ul>
+
+<h3>Upcasting i downcasting</h3>
+<pre>Zwierze z = new Pies();          // upcasting — zawsze bezpieczny, niejawny
+Pies p = (Pies) z;                // downcasting — wymaga jawnego rzutowania, może zgłosić ClassCastException</pre>
+
+<div class="uwaga">Polimorfizm to fundament pisania kodu działającego na poziomie abstrakcji klasy bazowej/interfejsu (np. metoda przyjmująca <code>List&lt;T&gt;</code> działa identycznie niezależnie, czy dostanie <code>ArrayList</code> czy <code>LinkedList</code>) — kluczowy mechanizm dla elastycznego, rozszerzalnego kodu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Mechanizm nadpisywania metod (overriding)</h2>
+
+<h3>Zasady nadpisywania</h3>
+<p>Klasa pochodna może dostarczyć <strong>własną implementację</strong> metody zdefiniowanej w klasie bazowej — musi mieć:</p>
+<ul>
+<li>taką samą <strong>nazwę</strong> i listę parametrów (sygnaturę)</li>
+<li>taki sam lub <strong>bardziej specyficzny (kowariantny)</strong> typ zwracany</li>
+<li>taki sam lub <strong>szerszy</strong> poziom dostępu (nie można zwężyć np. z <code>public</code> na <code>private</code>)</li>
+</ul>
+
+<h3>Adnotacja <code>@Override</code></h3>
+<pre>@Override
+void wydajDzwiek() { ... }</pre>
+<p>Nieobowiązkowa, ale <strong>zalecana</strong> — kompilator sprawdza, czy metoda faktycznie nadpisuje coś z klasy bazowej; jeśli literówka w nazwie/sygnaturze spowoduje, że to wcale nie jest nadpisanie (a nowa, osobna metoda), kompilator zgłosi błąd zamiast pozwolić na trudny do wykrycia błąd logiczny.</p>
+
+<h3>Wywołanie metody klasy bazowej — <code>super</code></h3>
+<pre>class Pies extends Zwierze {
+    @Override
+    void wydajDzwiek() {
+        super.wydajDzwiek();   // wywołanie oryginalnej implementacji z Zwierze
+        System.out.println("Hau!");
+    }
+}</pre>
+
+<h3>Nadpisywanie vs przesłanianie (overriding vs hiding)</h3>
+<p>Metody <strong>statyczne</strong> nie są polimorficzne — jeśli klasa pochodna definiuje metodę statyczną o tej samej sygnaturze, to nie jest nadpisanie, lecz <strong>przesłonięcie (hiding)</strong> — wybór metody odbywa się na podstawie <strong>zadeklarowanego typu zmiennej</strong> (czas kompilacji), nie rzeczywistego typu obiektu.</p>
+
+<h3>Metody i klasy <code>final</code></h3>
+<p><code>final</code> przy metodzie — zakazuje jej nadpisania w klasach pochodnych; <code>final</code> przy klasie — zakazuje dziedziczenia po niej w ogóle (np. <code>String</code> jest klasą <code>final</code>).</p>
+
+<h3>Konstruktory — nie są nadpisywane</h3>
+<p>Konstruktory <strong>nie dziedziczą się i nie są nadpisywane</strong> jak zwykłe metody — każda klasa definiuje własne, choć może wywołać konstruktor klasy bazowej przez <code>super(...)</code> (musi to być pierwsza instrukcja w konstruktorze pochodnym).</p>
+
+<div class="uwaga">Klasyczne pytanie: różnica między <em>overloading</em> (przeciążanie — te same nazwy, różne parametry, rozstrzygane statycznie) i <em>overriding</em> (nadpisywanie — ta sama sygnatura w klasie pochodnej, rozstrzygane dynamicznie w czasie wykonania).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Typy prymitywne i typy obiektowe</h2>
+
+<h3>Typy prymitywne</h3>
+<table>
+<tr><th>Typ</th><th>Rozmiar</th><th>Zakres/opis</th></tr>
+<tr><td><code>byte</code></td><td>8 bit</td><td>-128 do 127</td></tr>
+<tr><td><code>short</code></td><td>16 bit</td><td>-32768 do 32767</td></tr>
+<tr><td><code>int</code></td><td>32 bit</td><td>liczby całkowite, domyślny typ całkowity</td></tr>
+<tr><td><code>long</code></td><td>64 bit</td><td>większy zakres liczb całkowitych</td></tr>
+<tr><td><code>float</code></td><td>32 bit</td><td>zmiennoprzecinkowy, pojedyncza precyzja</td></tr>
+<tr><td><code>double</code></td><td>64 bit</td><td>zmiennoprzecinkowy, domyślny typ dla liczb dziesiętnych</td></tr>
+<tr><td><code>char</code></td><td>16 bit</td><td>pojedynczy znak Unicode</td></tr>
+<tr><td><code>boolean</code></td><td>—</td><td><code>true</code>/<code>false</code></td></tr>
+</table>
+
+<h3>Cechy typów prymitywnych</h3>
+<ul>
+<li>przechowują <strong>wartość</strong> bezpośrednio (nie referencję) — zmienna to "kontener" z konkretną liczbą/znakiem</li>
+<li nie mają metod (nie można wywołać metody na <code>int</code>)</li>
+<li przypisanie/przekazanie kopiuje <strong>wartość</strong></li>
+</ul>
+
+<h3>Typy obiektowe (referencyjne)</h3>
+<p>Klasy, interfejsy, tablice — zmienna przechowuje <strong>referencję</strong> (adres) do obiektu na stercie, nie samą wartość:</p>
+<pre>String s1 = new String("abc");
+String s2 = s1;      // s2 wskazuje na TEN SAM obiekt co s1
+// przypisanie/przekazanie kopiuje REFERENCJĘ, nie zawartość obiektu</pre>
+
+<h3>Klasy opakowujące (wrapper classes)</h3>
+<p>Każdy typ prymitywny ma odpowiadającą klasę obiektową: <code>int</code>→<code>Integer</code>, <code>double</code>→<code>Double</code>, <code>boolean</code>→<code>Boolean</code>, <code>char</code>→<code>Character</code> itd. — potrzebne np. w kolekcjach generycznych (patrz punkt 5), które przechowują tylko obiekty, nie typy prymitywne.</p>
+
+<h3>Autoboxing i unboxing</h3>
+<pre>Integer obj = 5;        // autoboxing: int → Integer (automatyczne)
+int x = obj;             // unboxing: Integer → int (automatyczne)
+
+List&lt;Integer&gt; lista = new ArrayList&lt;&gt;();
+lista.add(10);            // 10 (int) automatycznie "boxowane" do Integer</pre>
+
+<div class="uwaga">Pułapka: porównywanie obiektów <code>Integer</code> operatorem <code>==</code> porównuje <strong>referencje</strong>, nie wartości (poza małym zakresem cache'owanym przez JVM, -128 do 127) — do porównania wartości należy używać <code>.equals()</code>. Typy prymitywne (<code>int</code>) porównywane <code>==</code> porównują wartości bezpośrednio — częste źródło błędów dla początkujących.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Interfejsy i interfejsy funkcyjne</h2>
+
+<h3>Interfejs — kontrakt</h3>
+<p>Definiuje zestaw metod, które implementująca klasa <strong>musi</strong> zaimplementować, bez (zwykle) podawania samej implementacji:</p>
+<pre>interface Ksztalt {
+    double pole();          // metoda abstrakcyjna (domyślnie)
+}
+
+class Kwadrat implements Ksztalt {
+    double bok;
+    Kwadrat(double b) { bok = b; }
+    public double pole() { return bok * bok; }
+}</pre>
+
+<h3>Klasa może implementować wiele interfejsów</h3>
+<pre>class Kaczka implements Latajacy, Plywajacy { ... }</pre>
+<p>W odróżnieniu od dziedziczenia klas (Java zezwala tylko na <strong>jedną</strong> klasę bazową), interfejsów można implementować wiele naraz — to sposób Javy na uniknięcie problemu diamentu z wielodziedziczenia (patrz przedmiot Programowanie obiektowe/C++).</p>
+
+<h3>Metody domyślne (<code>default</code>) i statyczne w interfejsach</h3>
+<pre>interface Ksztalt {
+    double pole();
+    default void wypisz() {           // metoda z domyślną implementacją
+        System.out.println("Pole: " + pole());
+    }
+    static Ksztalt punkt() {           // metoda statyczna interfejsu
+        return () -&gt; 0;
+    }
+}</pre>
+<p>Pozwala dodawać nowe metody do istniejącego interfejsu bez łamania klas, które go już implementują (nie muszą dostarczać implementacji metody <code>default</code>, jeśli domyślna im wystarcza).</p>
+
+<h3>Interfejsy funkcyjne</h3>
+<p>Interfejs z <strong>dokładnie jedną</strong> metodą abstrakcyjną — może być reprezentowany przez wyrażenie lambda:</p>
+<pre>@FunctionalInterface
+interface Operacja {
+    int wykonaj(int a, int b);
+}
+
+Operacja dodaj = (a, b) -&gt; a + b;   // implementacja przez lambdę
+System.out.println(dodaj.wykonaj(2,3));  // 5</pre>
+<p>Adnotacja <code>@FunctionalInterface</code> jest opcjonalna, ale wymusza kompilacyjną weryfikację, że interfejs ma tylko jedną metodę abstrakcyjną.</p>
+
+<h3>Wbudowane interfejsy funkcyjne (<code>java.util.function</code>)</h3>
+<table>
+<tr><th>Interfejs</th><th>Sygnatura</th><th>Zastosowanie</th></tr>
+<tr><td><code>Function&lt;T,R&gt;</code></td><td><code>R apply(T t)</code></td><td>przekształcenie wartości typu T na R</td></tr>
+<tr><td><code>Predicate&lt;T&gt;</code></td><td><code>boolean test(T t)</code></td><td>warunek logiczny (np. filtrowanie)</td></tr>
+<tr><td><code>Consumer&lt;T&gt;</code></td><td><code>void accept(T t)</code></td><td>"zużywa" wartość, nic nie zwraca (np. wypisanie)</td></tr>
+<tr><td><code>Supplier&lt;T&gt;</code></td><td><code>T get()</code></td><td>dostarcza wartość bez argumentów</td></tr>
+</table>
+
+<pre>List&lt;Integer&gt; lista = List.of(1,2,3,4,5);
+lista.stream()
+     .filter(x -&gt; x % 2 == 0)     // Predicate
+     .map(x -&gt; x * x)              // Function
+     .forEach(System.out::println); // Consumer</pre>
+
+<div class="uwaga">Interfejsy funkcyjne + lambdy to podstawa API Stream w Javie — pozwalają pisać zwięzły, "funkcyjny" styl przetwarzania kolekcji, zamiast klasycznych pętli.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Typy generyczne</h2>
+
+<p>Mechanizm pozwalający pisać klasy/metody niezależne od <strong>konkretnego</strong> typu danych, z zachowaniem bezpieczeństwa typów sprawdzanego w czasie <strong>kompilacji</strong>.</p>
+
+<h3>Przed generykami (Java &lt;5, tylko historycznie)</h3>
+<pre>List lista = new ArrayList();    // brak informacji o typie elementów
+lista.add("tekst");
+lista.add(5);                     // kompiluje się, ale to błąd logiczny!
+String s = (String) lista.get(1); // ClassCastException w czasie WYKONANIA</pre>
+
+<h3>Z generykami</h3>
+<pre>List&lt;String&gt; lista = new ArrayList&lt;&gt;();
+lista.add("tekst");
+// lista.add(5);      // BŁĄD KOMPILACJI — wykryte od razu, nie w czasie wykonania!
+String s = lista.get(0);  // bez rzutowania — kompilator wie, że to String</pre>
+
+<h3>Klasa generyczna</h3>
+<pre>class Pojemnik&lt;T&gt; {
+    private T zawartosc;
+    public void ustaw(T x) { zawartosc = x; }
+    public T pobierz() { return zawartosc; }
+}
+
+Pojemnik&lt;Integer&gt; p1 = new Pojemnik&lt;&gt;();
+p1.ustaw(5);
+Pojemnik&lt;String&gt; p2 = new Pojemnik&lt;&gt;();
+p2.ustaw("tekst");</pre>
+
+<h3>Metoda generyczna</h3>
+<pre>static &lt;T&gt; T pierwszy(List&lt;T&gt; lista) {
+    return lista.get(0);
+}</pre>
+
+<h3>Wiele parametrów typu</h3>
+<pre>class Para&lt;K, V&gt; {
+    K klucz; V wartosc;
+    Para(K k, V v) { klucz = k; wartosc = v; }
+}
+
+Para&lt;String, Integer&gt; p = new Para&lt;&gt;("wiek", 25);</pre>
+
+<h3>Ograniczenia typu (bounded types)</h3>
+<pre>class Liczbowy&lt;T extends Number&gt; {   // T musi być podtypem Number (Integer, Double...)
+    T wartosc;
+    double podwojna() { return wartosc.doubleValue() * 2; }
+}</pre>
+
+<h3>Wildcards — <code>?</code></h3>
+<pre>void wypisz(List&lt;?&gt; lista) { ... }                  // dowolny typ elementów
+void sumuj(List&lt;? extends Number&gt; lista) { ... }     // Number lub jego podtyp (tylko odczyt bezpieczny)</pre>
+
+<h3>Wymazywanie typów (type erasure)</h3>
+<p>W czasie <strong>wykonania</strong> informacja o parametrze generycznym jest "wymazywana" — JVM nie wie w runtime, czy to był <code>List&lt;String&gt;</code> czy <code>List&lt;Integer&gt;</code> (obie stają się po kompilacji zwykłym <code>List</code>). Generyki to więc mechanizm <strong>czasu kompilacji</strong> (bezpieczeństwo typów, brak rzutowań w kodzie źródłowym), nie realna specjalizacja kodu w czasie wykonania (w odróżnieniu np. od szablonów C++, które generują osobny kod dla każdego typu).</p>
+
+<div class="uwaga">Konsekwencja wymazywania typów: nie można sprawdzić <code>instanceof List&lt;String&gt;</code> ani utworzyć tablicy generycznej <code>new T[10]</code> — te operacje wymagałyby informacji o typie, która w runtime już nie istnieje.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Wyjątki w Javie</h2>
+
+<h3>Hierarchia wyjątków</h3>
+<pre>Throwable
+├── Error               (błędy krytyczne JVM — np. OutOfMemoryError; nie łapie się ich zwykle)
+└── Exception
+    ├── RuntimeException (unchecked — np. NullPointerException, ArrayIndexOutOfBoundsException)
+    └── (pozostałe)       (checked — np. IOException)</pre>
+
+<h3>Checked vs unchecked</h3>
+<table>
+<tr><th></th><th>Checked</th><th>Unchecked (RuntimeException)</th></tr>
+<tr><td>Wymuszenie przez kompilator</td><td>tak — musisz obsłużyć (<code>try/catch</code>) lub zadeklarować (<code>throws</code>)</td><td>nie — kompiluje się nawet bez obsługi</td></tr>
+<tr><td>Typowa przyczyna</td><td>problemy zewnętrzne, przewidywalne (brak pliku, błąd sieci)</td><td>błędy programistyczne (null, złe indeksowanie)</td></tr>
+<tr><td>Przykłady</td><td><code>IOException</code>, <code>SQLException</code></td><td><code>NullPointerException</code>, <code>ArithmeticException</code>, <code>ClassCastException</code></td></tr>
+</table>
+
+<h3><code>try</code> / <code>catch</code> / <code>finally</code></h3>
+<pre>try {
+    int[] tab = new int[5];
+    System.out.println(tab[10]);   // rzuci ArrayIndexOutOfBoundsException
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Błąd indeksu: " + e.getMessage());
+} catch (Exception e) {
+    System.out.println("Inny błąd: " + e.getMessage());
+} finally {
+    System.out.println("Wykonuje się zawsze");
+}</pre>
+
+<h3>Deklaracja <code>throws</code> — propagacja wyjątku checked</h3>
+<pre>void wczytajPlik(String nazwa) throws IOException {
+    FileReader f = new FileReader(nazwa);   // może rzucić IOException
+    // ...
+}
+
+void wywolaj() {
+    try {
+        wczytajPlik("dane.txt");
+    } catch (IOException e) {
+        System.out.println("Nie udało się wczytać pliku");
+    }
+}</pre>
+
+<h3>Try-with-resources</h3>
+<pre>try (FileReader f = new FileReader("dane.txt")) {
+    // f automatycznie zamknięty na końcu bloku, nawet przy wyjątku
+} catch (IOException e) {
+    e.printStackTrace();
+}</pre>
+<p>Wymaga, by zasób implementował interfejs <code>AutoCloseable</code> — analogiczne do <code>with</code> w Pythonie (patrz przedmiot Języki skryptowe).</p>
+
+<h3>Własne wyjątki</h3>
+<pre>class NiewystarczajaceSaldoException extends Exception {
+    public NiewystarczajaceSaldoException(String wiadomosc) {
+        super(wiadomosc);
+    }
+}
+
+void wyplac(double kwota) throws NiewystarczajaceSaldoException {
+    if (kwota &gt; saldo) {
+        throw new NiewystarczajaceSaldoException("Brak środków");
+    }
+}</pre>
+
+<div class="uwaga">Dobra praktyka: dziedzicz własne wyjątki po <code>Exception</code> (checked) tylko gdy wołający <strong>powinien</strong> być zmuszony do obsługi błędu; jeśli to raczej błąd programistyczny (np. niepoprawny argument), lepiej po <code>RuntimeException</code> (unchecked).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Kolekcje (Collections Framework)</h2>
+
+<h3>Hierarchia głównych interfejsów</h3>
+<table>
+<tr><th>Interfejs</th><th>Cecha</th><th>Popularne implementacje</th></tr>
+<tr><td><code>List&lt;T&gt;</code></td><td>uporządkowana, dopuszcza duplikaty, dostęp po indeksie</td><td><code>ArrayList</code>, <code>LinkedList</code></td></tr>
+<tr><td><code>Set&lt;T&gt;</code></td><td>unikalne elementy, brak dostępu po indeksie</td><td><code>HashSet</code>, <code>TreeSet</code>, <code>LinkedHashSet</code></td></tr>
+<tr><td><code>Map&lt;K,V&gt;</code></td><td>mapowanie klucz→wartość, unikalne klucze</td><td><code>HashMap</code>, <code>TreeMap</code>, <code>LinkedHashMap</code></td></tr>
+<tr><td><code>Queue&lt;T&gt;</code></td><td>FIFO (lub priorytetowa)</td><td><code>LinkedList</code>, <code>PriorityQueue</code></td></tr>
+<tr><td><code>Deque&lt;T&gt;</code></td><td>kolejka dwustronna (i jako stos)</td><td><code>ArrayDeque</code></td></tr>
+</table>
+
+<h3><code>ArrayList</code> vs <code>LinkedList</code></h3>
+<p>Analogiczne do tablicy dynamicznej vs listy z dowiązaniami (patrz przedmiot Algorytmy i struktury danych): <code>ArrayList</code> — szybki dostęp po indeksie \(O(1)\), wolniejsze wstawianie w środku \(O(n)\); <code>LinkedList</code> — odwrotnie.</p>
+
+<h3><code>HashMap</code> vs <code>TreeMap</code></h3>
+<ul>
+<li><code>HashMap</code> — oparta o tablicę haszującą, brak gwarantowanej kolejności, operacje średnio \(O(1)\)</li>
+<li><code>TreeMap</code> — oparta o drzewo (czerwono-czarne), klucze <strong>sortowane</strong>, operacje \(O(\log n)\)</li>
+<li><code>LinkedHashMap</code> — zachowuje kolejność <strong>wstawiania</strong> elementów, kosztem niewielkiego narzutu względem <code>HashMap</code></li>
+</ul>
+
+<h3>Przykład użycia</h3>
+<pre>Map&lt;String, Integer&gt; wiek = new HashMap&lt;&gt;();
+wiek.put("Jan", 25);
+wiek.put("Anna", 30);
+
+for (Map.Entry&lt;String, Integer&gt; wpis : wiek.entrySet()) {
+    System.out.println(wpis.getKey() + ": " + wpis.getValue());
+}
+
+List&lt;Integer&gt; lista = new ArrayList&lt;&gt;(List.of(5, 3, 1, 4));
+Collections.sort(lista);          // sortowanie w miejscu
+lista.stream().filter(x -&gt; x &gt; 2).forEach(System.out::println);</pre>
+
+<h3>Iterator</h3>
+<p>Uniwersalny sposób przechodzenia po elementach kolekcji, niezależnie od jej konkretnej implementacji:</p>
+<pre>Iterator&lt;String&gt; it = lista.iterator();
+while (it.hasNext()) {
+    String element = it.next();
+    if (element.equals("usun")) it.remove();  // bezpieczne usuwanie podczas iteracji
+}</pre>
+<div class="uwaga">Modyfikacja kolekcji "zwykłą" pętlą <code>for-each</code> podczas iteracji (np. <code>lista.remove(x)</code>) rzuca <code>ConcurrentModificationException</code> — do bezpiecznego usuwania w trakcie iteracji trzeba użyć <code>Iterator.remove()</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Klasy abstrakcyjne vs interfejsy</h2>
+
+<h3>Klasa abstrakcyjna</h3>
+<pre>abstract class Figura {
+    String nazwa;
+    Figura(String nazwa) { this.nazwa = nazwa; }   // konstruktor — OK w klasie abstrakcyjnej
+
+    abstract double pole();          // metoda abstrakcyjna — brak implementacji
+
+    void wypisz() {                  // metoda konkretna — WSPÓLNA implementacja dla wszystkich podklas
+        System.out.println(nazwa + ": " + pole());
+    }
+}
+
+class Kwadrat extends Figura {
+    double bok;
+    Kwadrat(double b) { super("Kwadrat"); bok = b; }
+    double pole() { return bok*bok; }
+}
+
+// Figura f = new Figura("x");   // BŁĄD — nie można tworzyć instancji klasy abstrakcyjnej</pre>
+
+<h3>Porównanie</h3>
+<table>
+<tr><th></th><th>Klasa abstrakcyjna</th><th>Interfejs</th></tr>
+<tr><td>Dziedziczenie/implementacja</td><td>tylko <strong>jedna</strong> (<code>extends</code>)</td><td><strong>wiele</strong> naraz (<code>implements</code>)</td></tr>
+<tr><td>Pola z danymi (stan)</td><td>tak, może mieć dowolne pola instancji</td><td>tylko stałe (<code>public static final</code>, domyślnie)</td></tr>
+<tr><td>Konstruktor</td><td>tak (wywoływany przez <code>super()</code> z podklasy)</td><td>nie</td></tr>
+<tr><td>Metody konkretne (z implementacją)</td><td>tak, dowolna liczba</td><td>tak, ale jako <code>default</code>/<code>static</code> (od Java 8)</td></tr>
+<tr><td>Poziomy dostępu metod</td><td>dowolne (<code>public</code>, <code>protected</code>, <code>private</code>)</td><td>domyślnie <code>public</code></td></tr>
+</table>
+
+<h3>Kiedy który wybrać?</h3>
+<ul>
+<li><strong>klasa abstrakcyjna</strong> — gdy podklasy mają <strong>wspólny stan</strong> (pola) i/lub dużo <strong>wspólnej logiki</strong> do odziedziczenia, a tylko część zachowania różni się między nimi ("jest rodzajem X, ale różni się szczegółem")</li>
+<li><strong>interfejs</strong> — gdy chcesz zdefiniować <strong>kontrakt/zdolność</strong>, którą różne, niepowiązane hierarchią klasy mogą implementować ("umie robić X", niezależnie od tego "czym jest") — pozwala też łączyć wiele niezależnych "zdolności" w jednej klasie</li>
+</ul>
+
+<div class="uwaga">Częsta zasada praktyczna: <strong>interfejs, kiedy się da</strong> (elastyczność wielokrotnej implementacji), <strong>klasa abstrakcyjna, kiedy trzeba</strong> (współdzielony stan/konstruktor/dużo wspólnej logiki) — obie techniki nie wykluczają się, klasa może jednocześnie dziedziczyć po klasie abstrakcyjnej i implementować kilka interfejsów.</div>
+</div>
+
+</body>
+</html>

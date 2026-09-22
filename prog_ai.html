@@ -1,0 +1,502 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie aplikacji internetowych (Java EE) – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie aplikacji internetowych (Java EE / Jakarta EE)</h1>
+
+<div class="zagadnienie">
+<h2>1. Elementy niezbędne do wdrożenia aplikacji Java EE/Jakarta</h2>
+
+<h3>Kontener serwletów / serwer aplikacyjny</h3>
+<p>Aplikacja Java EE/Jakarta nie działa "samodzielnie" (jak prosty program z <code>main()</code>) — wymaga <strong>kontenera</strong>, który zarządza jej cyklem życia:</p>
+<table>
+<tr><th>Typ</th><th>Przykłady</th><th>Zakres</th></tr>
+<tr><td>Kontener serwletów</td><td>Apache Tomcat, Jetty</td><td>obsługuje serwlety, JSP — "lżejszy", bez pełnego zestawu usług EE</td></tr>
+<tr><td>Pełny serwer aplikacyjny</td><td>WildFly, GlassFish, Payara</td><td>pełne wsparcie specyfikacji Java EE/Jakarta (EJB, JMS, JTA, JPA i inne)</td></tr>
+</table>
+
+<h3>Archiwum WAR (Web Application Archive)</h3>
+<p>Standardowy format pakowania aplikacji webowej Java do wdrożenia — plik <code>.war</code> to skompresowane archiwum (jak ZIP) ze ustaloną strukturą katalogów:</p>
+<pre>moja-aplikacja.war
+├── WEB-INF/
+│   ├── web.xml           # deskryptor wdrożenia (opcjonalny od Servlet 3.0+)
+│   ├── classes/          # skompilowane klasy .class
+│   └── lib/              # zależne biblioteki .jar
+├── index.jsp
+└── inne zasoby statyczne (CSS, JS, obrazy)</pre>
+<p><code>WEB-INF</code> jest <strong>niedostępny</strong> bezpośrednio z przeglądarki (bezpieczne miejsce na klasy/konfigurację) — pliki poza nim (jak <code>index.jsp</code>) są publicznie dostępne.</p>
+
+<h3>Deskryptor wdrożenia — <code>web.xml</code></h3>
+<pre>&lt;web-app&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;MojServlet&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;pl.przykład.MojServlet&lt;/servlet-class&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;MojServlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</pre>
+<p>Od Servlet 3.0 większość konfiguracji można zastąpić <strong>adnotacjami</strong> w kodzie (np. <code>@WebServlet("/hello")</code>) — <code>web.xml</code> stał się opcjonalny, choć wciąż używany np. do konfiguracji filtrów bezpieczeństwa czy stron błędów.</p>
+
+<h3>Proces wdrożenia (deployment)</h3>
+<ol>
+<li>kompilacja kodu i spakowanie do archiwum <code>.war</code> (zwykle przez Maven/Gradle)</li>
+<li>skopiowanie/wgranie archiwum do katalogu wdrożeń serwera (np. <code>webapps/</code> w Tomcacie) albo przez panel administracyjny serwera</li>
+<li>serwer automatycznie rozpakowuje i uruchamia aplikację, udostępniając ją pod danym kontekstem URL (np. <code>/moja-aplikacja/</code>)</li>
+</ol>
+
+<h3>Zależności — Maven/Gradle</h3>
+<p>Zarządzanie bibliotekami (np. sterownik JDBC, biblioteki JSON) zwykle przez Mavena (<code>pom.xml</code>) lub Gradle — automatyczne pobieranie i wersjonowanie zależności, analogicznie do <code>package.json</code> w Node.js czy <code>requirements.txt</code> w Pythonie.</p>
+
+<div class="uwaga">Typowe pytanie: opisz pełną ścieżkę od napisanego kodu serwletu do działającej aplikacji dostępnej pod adresem URL — kompilacja, pakowanie do WAR, wdrożenie na serwer, konfiguracja mapowania URL.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Serwlet — budowa i zasada działania</h2>
+
+<p>Klasa Java rozszerzająca <code>HttpServlet</code>, obsługująca żądania HTTP po stronie serwera — podstawowy budulec aplikacji webowych w Java EE/Jakarta (analogicznie do kontrolera w MVC — patrz przedmiot Bazy danych w aplikacjach internetowych).</p>
+
+<h3>Podstawowa struktura serwletu</h3>
+<pre>@WebServlet("/hello")
+public class MojServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("&lt;h1&gt;Witaj, świecie!&lt;/h1&gt;");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String imie = request.getParameter("imie");
+        response.getWriter().println("Cześć, " + imie);
+    }
+}</pre>
+
+<h3>Cykl życia serwletu</h3>
+<ol>
+<li><strong>ładowanie i instancjonowanie</strong> — kontener tworzy <strong>jedną</strong> instancję serwletu (nie nową dla każdego żądania!) — zwykle przy pierwszym żądaniu albo przy starcie aplikacji</li>
+<li><strong><code>init()</code></strong> — wywoływane raz, po utworzeniu instancji — inicjalizacja zasobów (np. połączenie z bazą)</li>
+<li><strong><code>service()</code></strong> — wywoływane dla <strong>każdego</strong> żądania, deleguje do odpowiedniej metody (<code>doGet</code>, <code>doPost</code> itd.) w zależności od metody HTTP</li>
+<li><strong><code>destroy()</code></strong> — wywoływane raz, przy usuwaniu serwletu/zamykaniu aplikacji — zwolnienie zasobów</li>
+</ol>
+
+<h3>Metody obsługi żądań HTTP</h3>
+<table>
+<tr><th>Metoda serwletu</th><th>Odpowiadająca metoda HTTP</th></tr>
+<tr><td><code>doGet</code></td><td>GET — odczyt danych</td></tr>
+<tr><td><code>doPost</code></td><td>POST — wysłanie danych (np. formularz)</td></tr>
+<tr><td><code>doPut</code></td><td>PUT — aktualizacja zasobu</td></tr>
+<tr><td><code>doDelete</code></td><td>DELETE — usunięcie zasobu</td></tr>
+</table>
+
+<h3>Wielowątkowość serwletów</h3>
+<div class="uwaga">Kontener obsługuje wiele żądań do <strong>tej samej</strong> instancji serwletu w <strong>osobnych wątkach</strong> (jeden wątek na żądanie) — pola instancyjne serwletu są więc <strong>współdzielone</strong> między żądaniami i wymagają synchronizacji (patrz przedmiot Programowanie współbieżne), jeśli są modyfikowane! Dane specyficzne dla jednego żądania powinny być zmiennymi lokalnymi w metodzie <code>doGet</code>/<code>doPost</code>, nie polami klasy.</div>
+
+<h3>Filtry (Filters) i słuchacze (Listeners)</h3>
+<p><strong>Filtr</strong> — pośredniczy w przetwarzaniu żądania przed/po serwletem (np. logowanie, uwierzytelnianie, kompresja) — może przetworzyć wiele różnych serwletów wg wzorca URL. <strong>Listener</strong> — reaguje na zdarzenia cyklu życia aplikacji/sesji (np. utworzenie sesji, uruchomienie aplikacji).</p>
+
+<div class="uwaga">Typowe pytanie: prześledź cykl życia serwletu od pierwszego żądania klienta do zamknięcia aplikacji, i wyjaśnij, dlaczego pole instancyjne serwletu jest ryzykowne bez synchronizacji.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Sesje w Java EE/Jakarta</h2>
+
+<h3>Dlaczego sesje są potrzebne</h3>
+<p>HTTP jest protokołem <strong>bezstanowym</strong> (patrz przedmiot Sieci komputerowe / Języki hipertekstowe) — serwer domyślnie nie "pamięta" nic między kolejnymi żądaniami tego samego klienta. Sesja pozwala powiązać serię żądań z jednym, konkretnym użytkownikiem/przeglądarką.</p>
+
+<h3>Tworzenie i obsługa sesji — <code>HttpSession</code></h3>
+<pre>protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    HttpSession sesja = request.getSession();    // tworzy nową sesję, jeśli nie istnieje
+
+    Integer licznik = (Integer) sesja.getAttribute("licznik");
+    if (licznik == null) licznik = 0;
+    licznik++;
+    sesja.setAttribute("licznik", licznik);
+
+    response.getWriter().println("Odwiedziny: " + licznik);
+}</pre>
+<p><code>request.getSession()</code> — zwraca istniejącą sesję albo tworzy nową; <code>request.getSession(false)</code> — zwraca <code>null</code>, jeśli sesja nie istnieje (nie tworzy nowej).</p>
+
+<h3>Mechanizm identyfikacji sesji — Cookie <code>JSESSIONID</code></h3>
+<p>Kontener automatycznie generuje unikalny identyfikator sesji i przesyła go do klienta jako cookie (<code>JSESSIONID</code>) — przy każdym kolejnym żądaniu przeglądarka odsyła to cookie, a serwer na tej podstawie odnajduje właściwy obiekt <code>HttpSession</code> po swojej stronie.</p>
+
+<h3>URL rewriting — alternatywa bez cookies</h3>
+<pre>String url = response.encodeURL("strona.jsp");   // dopisuje identyfikator sesji do URL, jeśli cookies wyłączone</pre>
+<p>Awaryjny mechanizm, gdy klient ma wyłączone cookies — identyfikator sesji dopisywany bezpośrednio do adresu URL (mniej bezpieczny — widoczny w historii przeglądarki, logach serwera).</p>
+
+<h3>Atrybuty sesji</h3>
+<pre>sesja.setAttribute("uzytkownik", obiektUzytkownika);
+Object dane = sesja.getAttribute("uzytkownik");
+sesja.removeAttribute("uzytkownik");
+sesja.invalidate();    // zakończenie sesji (np. przy wylogowaniu)</pre>
+
+<h3>Czas życia sesji</h3>
+<p>Sesja wygasa automatycznie po okresie <strong>braku aktywności</strong> (timeout, konfigurowalny w <code>web.xml</code> lub programowo: <code>sesja.setMaxInactiveInterval(sekundy)</code>) — nie jest to czas od utworzenia, a czas od <strong>ostatniego</strong> żądania powiązanego z tą sesją.</p>
+
+<h3>Przechowywanie stanu sesji na serwerze</h3>
+<p>Dane sesji (poza samym identyfikatorem) są przechowywane <strong>po stronie serwera</strong> (domyślnie w pamięci) — w odróżnieniu od cookies, gdzie same dane trzymane są u klienta. Przy wielu instancjach serwera (load balancing) wymaga to <strong>replikacji sesji</strong> albo mechanizmu "sticky session" (przypisania klienta zawsze do tego samego serwera).</p>
+
+<div class="uwaga">Typowe pytanie: zaimplementuj prosty licznik odwiedzin lub mechanizm logowania z użyciem <code>HttpSession</code>, i wyjaśnij różnicę między sesją a cookie — cookie to mechanizm transportu identyfikatora, sesja to sam obiekt ze stanem po stronie serwera.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Baza danych: JDBC vs JPA</h2>
+
+<p><em>(podstawy JDBC — patrz przedmiot Programowanie sieciowe; tu porównanie z JPA w kontekście Java EE)</em></p>
+
+<h3>JDBC — niskopoziomowy dostęp do bazy</h3>
+<pre>try (Connection conn = DriverManager.getConnection(url, user, pass);
+     PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Produkty WHERE id=?")) {
+    stmt.setInt(1, 5);
+    ResultSet rs = stmt.executeQuery();
+    while (rs.next()) {
+        System.out.println(rs.getString("nazwa"));
+    }
+}</pre>
+<p>Programista pisze <strong>ręcznie</strong> zapytania SQL i mapuje wyniki (<code>ResultSet</code>) na obiekty samodzielnie.</p>
+
+<h3>JPA — mapowanie obiektowo-relacyjne (ORM)</h3>
+<pre>@Entity
+@Table(name = "produkty")
+public class Produkt {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nazwa;
+    private double cena;
+
+    // gettery, settery
+}
+
+// użycie przez EntityManager
+Produkt p = entityManager.find(Produkt.class, 5L);   // odpowiednik SELECT ... WHERE id=5
+entityManager.persist(nowyProdukt);                   // odpowiednik INSERT
+entityManager.remove(p);                               // odpowiednik DELETE</pre>
+<p>Programista operuje na <strong>obiektach</strong> (encjach), JPA "pod maską" generuje odpowiednie zapytania SQL — analogicznie do ORM w innych technologiach (patrz przedmiot Bazy danych w aplikacjach internetowych).</p>
+
+<h3>JPQL (Java Persistence Query Language)</h3>
+<pre>List&lt;Produkt&gt; wynik = entityManager
+    .createQuery("SELECT p FROM Produkt p WHERE p.cena &gt; :min", Produkt.class)
+    .setParameter("min", 100.0)
+    .getResultList();</pre>
+<p>Zapytania w JPQL operują na <strong>encjach i ich polach</strong> (nie na tabelach/kolumnach SQL) — JPA tłumaczy je na konkretny dialekt SQL bazy docelowej, co daje przenośność między różnymi bazami danych.</p>
+
+<h3>Porównanie JDBC vs JPA</h3>
+<table>
+<tr><th></th><th>JDBC</th><th>JPA</th></tr>
+<tr><td>Poziom abstrakcji</td><td>niski — surowy SQL, ręczne mapowanie</td><td>wysoki — obiekty (encje), automatyczne mapowanie</td></tr>
+<tr><td>Ilość kodu "boilerplate"</td><td>duża (Connection, Statement, ResultSet, zamykanie zasobów)</td><td>mała (adnotacje na klasie, gotowe metody EntityManager)</td></tr>
+<tr><td>Kontrola nad zapytaniem</td><td>pełna — dokładnie taki SQL, jaki napisano</td><td>mniejsza — JPA generuje SQL, czasem nieoptymalny bez dodatkowego tuningu</td></tr>
+<tr><td>Przenośność między bazami</td><td>ograniczona (składnia SQL bywa specyficzna dla bazy)</td><td>lepsza — JPQL/encje niezależne od konkretnej bazy</td></tr>
+<tr><td>Krzywa uczenia</td><td>niższa — "zwykły" SQL</td><td>wyższa — trzeba zrozumieć mapowanie, cykl życia encji, cache</td></tr>
+<tr><td>Wydajność dla złożonych/masowych operacji</td><td>potencjalnie lepsza (pełna kontrola)</td><td>może wymagać dostrojenia (np. problem N+1 przy leniwym ładowaniu relacji)</td></tr>
+</table>
+
+<h3>Relacje między encjami (JPA)</h3>
+<pre>@Entity
+public class Zamowienie {
+    @ManyToOne
+    private Klient klient;
+
+    @OneToMany(mappedBy = "zamowienie")
+    private List&lt;PozycjaZamowienia&gt; pozycje;
+}</pre>
+<p>Adnotacje <code>@OneToMany</code>, <code>@ManyToOne</code>, <code>@ManyToMany</code> odwzorowują relacje znane z modelowania ERD (patrz przedmiot Relacyjne bazy danych) bezpośrednio w kodzie Java.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego scenariusza (np. prosta operacja odczytu vs złożony raport z wielu tabel) uzasadnij wybór między JDBC a JPA — JPA dla typowych operacji CRUD na obiektach domenowych, JDBC gdy potrzebna pełna kontrola nad konkretnym, zoptymalizowanym zapytaniem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. JSP i JSF — frameworki widoku</h2>
+
+<h3>JSP (JavaServer Pages)</h3>
+<p>Technologia pozwalająca <strong>mieszać</strong> statyczny HTML z kodem Java osadzonym wewnątrz strony — plik <code>.jsp</code> jest przy pierwszym żądaniu <strong>kompilowany</strong> przez kontener do zwykłego serwletu.</p>
+
+<pre>&lt;html&gt;
+&lt;body&gt;
+    &lt;h1&gt;Lista produktów&lt;/h1&gt;
+    &lt;ul&gt;
+    &lt;% for (Produkt p : produkty) { %&gt;
+        &lt;li&gt;&lt;%= p.getNazwa() %&gt; - &lt;%= p.getCena() %&gt; zł&lt;/li&gt;
+    &lt;% } %&gt;
+    &lt;/ul&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+<h3>Elementy składni JSP</h3>
+<table>
+<tr><th>Element</th><th>Zastosowanie</th></tr>
+<tr><td><code>&lt;% kod java %&gt;</code></td><td>scriptlet — dowolny kod Java</td></tr>
+<tr><td><code>&lt;%= wyrażenie %&gt;</code></td><td>wypisanie wartości wyrażenia do HTML</td></tr>
+<tr><td><code>&lt;%@ page ... %&gt;</code></td><td>dyrektywa strony (import, kodowanie znaków)</td></tr>
+<tr><td>JSTL (<code>&lt;c:forEach&gt;</code>, <code>&lt;c:if&gt;</code>)</td><td>biblioteka tagów — zalecana alternatywa dla scriptletów, czytelniejsza, bliższa "czystemu" HTML</td></tr>
+<tr><td>EL (Expression Language, <code>${...}</code>)</td><td>uproszczony dostęp do atrybutów (żądania, sesji, aplikacji) bez pisania jawnego kodu Java</td></tr>
+</table>
+
+<div class="uwaga">Dobra praktyka (i zgodnie z MVC, patrz przedmiot Bazy danych w aplikacjach internetowych): JSP powinien zawierać <strong>głównie prezentację</strong> (widok), a logika biznesowa i dostęp do danych powinny być w serwletach/klasach modelu — nadmiar scriptletów w JSP to "code smell" łamiący separację odpowiedzialności.</div>
+
+<h3>JSF (JavaServer Faces)</h3>
+<p>Framework wyższego poziomu niż JSP — komponentowy model UI (podobny do desktopowych frameworków GUI), z automatycznym zarządzaniem stanem i cyklem żądania.</p>
+
+<pre>&lt;h:form&gt;
+    &lt;h:inputText value="#{produktBean.nazwa}" /&gt;
+    &lt;h:commandButton value="Zapisz" action="#{produktBean.zapisz}" /&gt;
+&lt;/h:form&gt;</pre>
+
+<h3>Managed Beans</h3>
+<p>Klasy Java powiązane z widokiem JSF (przez <code>@ManagedBean</code>/<code>@Named</code> lub CDI <code>@Inject</code>) — komponenty JSF (jak <code>&lt;h:inputText&gt;</code>) automatycznie odczytują/zapisują wartości pól tych klas, bez ręcznego parsowania parametrów żądania (jak trzeba by robić w "gołym" serwlecie).</p>
+
+<h3>Cykl życia żądania JSF (6 faz)</h3>
+<ol>
+<li>Odtworzenie drzewa komponentów (Restore View)</li>
+<li>Zastosowanie wartości żądania (Apply Request Values)</li>
+<li>Walidacja (Process Validations)</li>
+<li>Aktualizacja modelu (Update Model Values)</li>
+<li>Wywołanie logiki aplikacji (Invoke Application)</li>
+<li>Wygenerowanie odpowiedzi (Render Response)</li>
+</ol>
+<p>Znacznie bardziej złożony i "zarządzany" niż prosty cykl serwletu (żądanie → odpowiedź) — JSF automatyzuje konwersję typów, walidację i synchronizację stanu komponentów z modelem.</p>
+
+<h3>Porównanie JSP vs JSF</h3>
+<table>
+<tr><th></th><th>JSP</th><th>JSF</th></tr>
+<tr><td>Model programowania</td><td>skrypt generujący HTML (podobny do PHP)</td><td>komponentowy, zdarzeniowy (podobny do aplikacji desktopowych)</td></tr>
+<tr><td>Zarządzanie stanem</td><td>ręczne (przez sesję/żądanie)</td><td>automatyczne (drzewo komponentów, Managed Beans)</td></tr>
+<tr><td>Złożoność</td><td>niższa, bliższa "czystemu" HTML+Java</td><td>wyższa, więcej "magii" frameworka</td></tr>
+<tr><td>Kontrola nad wygenerowanym HTML</td><td>pełna</td><td>ograniczona (komponenty renderują swój własny HTML)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: napisz prosty formularz w JSP (ze scriptletem/JSTL) i jego odpowiednik w JSF (z Managed Bean), porównując ilość i charakter kodu potrzebnego w obu podejściach.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. JAX-RS — RESTful Web Services w Java EE</h2>
+
+<p>Natywna specyfikacja Java EE/Jakarta do budowania REST API — alternatywa dla "gołych" serwletów (punkt 2), znacznie lepiej dopasowana do zwracania danych (JSON/XML) niż generowania HTML.</p>
+
+<h3>Podstawowy zasób REST</h3>
+<pre>@Path("/produkty")
+public class ProduktResource {
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List&lt;Produkt&gt; wszystkie() {
+        return produktService.znajdzWszystkie();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Produkt jeden(@PathParam("id") Long id) {
+        return produktService.znajdzPoId(id);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response dodaj(Produkt p) {
+        produktService.zapisz(p);
+        return Response.status(Response.Status.CREATED).entity(p).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Produkt aktualizuj(@PathParam("id") Long id, Produkt p) { ... }
+
+    @DELETE
+    @Path("/{id}")
+    public Response usun(@PathParam("id") Long id) {
+        produktService.usun(id);
+        return Response.noContent().build();
+    }
+}</pre>
+
+<h3>Kluczowe adnotacje</h3>
+<table>
+<tr><th>Adnotacja</th><th>Znaczenie</th></tr>
+<tr><td><code>@Path</code></td><td>ścieżka URL zasobu/metody (może zawierać parametry <code>{id}</code>)</td></tr>
+<tr><td><code>@GET</code>/<code>@POST</code>/<code>@PUT</code>/<code>@DELETE</code></td><td>metoda HTTP obsługiwana przez daną metodę Java</td></tr>
+<tr><td><code>@Produces</code></td><td>typ MIME zwracanej odpowiedzi (np. JSON, XML)</td></tr>
+<tr><td><code>@Consumes</code></td><td>typ MIME oczekiwanego ciała żądania</td></tr>
+<tr><td><code>@PathParam</code></td><td>wartość wyciągnięta z segmentu ścieżki URL</td></tr>
+<tr><td><code>@QueryParam</code></td><td>wartość z parametru zapytania (<code>?klucz=wartosc</code>)</td></tr>
+</table>
+
+<h3>Automatyczna konwersja JSON — JAX-B/JSON-B</h3>
+<p>JAX-RS automatycznie (przy odpowiedniej konfiguracji dostawcy, np. Jackson lub JSON-B) zamienia obiekty Java na JSON i odwrotnie — programista operuje na zwykłych obiektach (podobnie jak encje JPA, patrz punkt 4), bez ręcznego budowania stringów JSON.</p>
+
+<h3>JAX-RS vs zwykły serwlet</h3>
+<table>
+<tr><th></th><th>Serwlet</th><th>JAX-RS</th></tr>
+<tr><td>Naturalne zastosowanie</td><td>generowanie HTML, obsługa formularzy</td><td>API zwracające dane (JSON/XML)</td></tr>
+<tr><td>Mapowanie URL/metod HTTP</td><td>ręczne (<code>doGet</code>/<code>doPost</code>, jeden URL pattern na serwlet)</td><td>deklaratywne przez adnotacje, wiele metod/ścieżek w jednej klasie zasobu</td></tr>
+<tr><td>Parsowanie danych</td><td>ręczne (<code>request.getParameter</code>)</td><td>automatyczne wstrzykiwanie parametrów/ciała żądania</td></tr>
+</table>
+
+<div class="uwaga">Powiązanie z innymi przedmiotami: JAX-RS to odpowiednik tego, co Spring Boot (<code>@RestController</code>) robi w ekosystemie Spring (patrz przedmiot Programowanie sieciowe) — inna biblioteka/specyfikacja, ta sama idea REST API z CRUD.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Bezpieczeństwo w Java EE/Jakarta</h2>
+
+<h3>Uwierzytelnianie zarządzane przez kontener</h3>
+<p>Java EE pozwala delegować logikę logowania <strong>do kontenera</strong> (serwera aplikacyjnego), zamiast implementować ją ręcznie w kodzie — konfiguracja w <code>web.xml</code>:</p>
+<pre>&lt;login-config&gt;
+    &lt;auth-method&gt;FORM&lt;/auth-method&gt;
+    &lt;form-login-config&gt;
+        &lt;form-login-page&gt;/logowanie.jsp&lt;/form-login-page&gt;
+        &lt;form-error-page&gt;/blad-logowania.jsp&lt;/form-error-page&gt;
+    &lt;/form-login-config&gt;
+&lt;/login-config&gt;</pre>
+
+<h3>Metody uwierzytelniania (<code>auth-method</code>)</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr><td>BASIC</td><td>wbudowane okno logowania przeglądarki (login/hasło w nagłówku HTTP, kodowane Base64 — nie szyfrowane, wymaga HTTPS)</td></tr>
+<tr><td>FORM</td><td>własny, konfigurowalny formularz logowania (HTML/JSP) — najczęściej używane w praktyce</td></tr>
+<tr><td>CLIENT-CERT</td><td>uwierzytelnianie certyfikatem klienckim (TLS mutual auth)</td></tr>
+</table>
+
+<h3>Autoryzacja — role i ograniczenia dostępu</h3>
+<pre>&lt;security-constraint&gt;
+    &lt;web-resource-collection&gt;
+        &lt;url-pattern&gt;/admin/*&lt;/url-pattern&gt;
+    &lt;/web-resource-collection&gt;
+    &lt;auth-constraint&gt;
+        &lt;role-name&gt;ADMIN&lt;/role-name&gt;
+    &lt;/auth-constraint&gt;
+&lt;/security-constraint&gt;</pre>
+<p>Deklaratywne ograniczenie — wszystkie zasoby pod <code>/admin/*</code> wymagają roli <code>ADMIN</code>, weryfikowanej automatycznie przez kontener <strong>przed</strong> dotarciem żądania do serwletu — programista nie musi pisać tej logiki ręcznie.</p>
+
+<h3>Adnotacje bezpieczeństwa (programowe, na poziomie klas/metod)</h3>
+<pre>@RolesAllowed("ADMIN")
+public class AdminServlet extends HttpServlet { ... }
+
+@GET
+@RolesAllowed({"ADMIN", "MODERATOR"})
+public List&lt;Uzytkownik&gt; wszyscyUzytkownicy() { ... }   // np. w zasobie JAX-RS z punktu 6</pre>
+<table>
+<tr><th>Adnotacja</th><th>Znaczenie</th></tr>
+<tr><td><code>@RolesAllowed</code></td><td>dostęp tylko dla wskazanych ról</td></tr>
+<tr><td><code>@PermitAll</code></td><td>dostęp dla każdego (uwierzytelnionego lub nie)</td></tr>
+<tr><td><code>@DenyAll</code></td><td>zablokowanie dostępu dla wszystkich</td></tr>
+</table>
+
+<h3>Sprawdzanie roli/tożsamości programowo</h3>
+<pre>protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+    if (request.isUserInRole("ADMIN")) {
+        // logika dostępna tylko dla administratora
+    }
+    Principal uzytkownik = request.getUserPrincipal();   // tożsamość zalogowanego użytkownika (lub null)
+}</pre>
+
+<h3>Bezpieczeństwo deklaratywne vs programowe</h3>
+<table>
+<tr><th></th><th>Deklaratywne (<code>web.xml</code>, adnotacje)</th><th>Programowe (kod w serwlecie)</th></tr>
+<tr><td>Gdzie logika</td><td>konfiguracja, poza kodem biznesowym</td><td>wewnątrz metod, jawnie sprawdzane</td></tr>
+<tr><td>Elastyczność</td><td>niższa — proste reguły "ścieżka → rola"</td><td>wyższa — dowolnie złożone warunki</td></tr>
+<tr><td>Łatwość utrzymania</td><td>łatwiej przeglądać reguły w jednym miejscu</td><td>rozproszone po kodzie</td></tr>
+</table>
+
+<div class="uwaga">Zasada ogólna: preferuj bezpieczeństwo <strong>deklaratywne</strong>, gdy reguły są proste (rola → dostęp do ścieżki) — kontener robi to automatycznie, przed jakimkolwiek kodem aplikacji; sięgaj po sprawdzanie <strong>programowe</strong>, gdy potrzebna bardziej złożona logika (np. "użytkownik może edytować tylko własne zamówienia").</div>
+</div>
+
+</body>
+</html>

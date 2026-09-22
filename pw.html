@@ -1,0 +1,602 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie współbieżne – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie współbieżne</h1>
+
+<div class="zagadnienie">
+<h2>1. Abstrakcja współbieżności</h2>
+
+<h3>Współbieżność vs równoległość</h3>
+<table>
+<tr><th></th><th>Współbieżność (concurrency)</th><th>Równoległość (parallelism)</th></tr>
+<tr><td>Definicja</td><td>wiele zadań <strong>zaczętych</strong>, przeplatanych w czasie — niekoniecznie wykonywanych w tym samym momencie</td><td>wiele zadań wykonywanych <strong>faktycznie jednocześnie</strong> (wymaga wielu rdzeni/procesorów)</td></tr>
+<tr><td>Możliwe na 1 rdzeniu?</td><td>tak (przełączanie kontekstu, patrz przedmiot Wprowadzenie do systemów operacyjnych)</td><td>nie — wymaga fizycznie wielu jednostek wykonawczych</td></tr>
+<tr><td>Cel</td><td>struktura programu — obsługa wielu niezależnych aktywności (np. GUI + obliczenia w tle)</td><td>przyspieszenie — szybsze wykonanie przez podział pracy</td></tr>
+</table>
+<p>Współbieżność to sposób <strong>myślenia</strong> o programie (jak zorganizować niezależne, przeplatające się aktywności); równoległość to sposób <strong>wykonania</strong> (fizycznie na wielu jednostkach obliczeniowych) — program może być współbieżny bez bycia równoległym (jeden rdzeń, przełączanie kontekstu) i odwrotnie.</p>
+
+<h3>Procesy vs wątki (przypomnienie)</h3>
+<p>Pełne porównanie w przedmiocie Wprowadzenie do systemów operacyjnych — proces ma własną, izolowaną pamięć; wątki tego samego procesu współdzielą pamięć, co ułatwia komunikację, ale wymaga synchronizacji dostępu do współdzielonego stanu.</p>
+
+<h3>Poziomy abstrakcji współbieżności</h3>
+<table>
+<tr><th>Poziom</th><th>Przykład</th></tr>
+<tr><td>Sprzętowy</td><td>instrukcje atomowe procesora (Test-and-Set, Compare-and-Swap — patrz Wprowadzenie do systemów operacyjnych)</td></tr>
+<tr><td>Niskopoziomowy (OS/biblioteka)</td><td>wątki, mutexy, semafory (patrz punkt 3)</td></tr>
+<tr><td>Strukturalny</td><td>monitory (patrz punkt 4)</td></tr>
+<tr><td>Wysokopoziomowy/deklaratywny</td><td>modele aktorów, komunikacja przez przekazywanie komunikatów (message passing), programowanie funkcyjne bez współdzielonego stanu</td></tr>
+</table>
+
+<h3>Model pamięci współdzielonej vs przekazywania komunikatów</h3>
+<ul>
+<li><strong>pamięć współdzielona</strong> — wątki komunikują się przez wspólne zmienne — szybkie, ale wymaga jawnej synchronizacji (ryzyko race condition, deadlock)</li>
+<li><strong>przekazywanie komunikatów (message passing)</strong> — brak współdzielonego stanu, jednostki komunikują się wyłącznie wysyłając sobie komunikaty (np. model aktorów, kolejki komunikatów — patrz też RabbitMQ, przedmiot Programowanie sieciowe) — łatwiejsze do rozumowania (brak subtelnych błędów synchronizacji), ale narzut komunikacji</li>
+</ul>
+
+<div class="uwaga">Fundamentalny problem współbieżności: nieprzewidywalna <strong>kolejność przeplotu (interleaving)</strong> instrukcji różnych wątków — ten sam program może dać różne wyniki w różnych przebiegach, jeśli dostęp do współdzielonych danych nie jest odpowiednio synchronizowany.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Klasyczne problemy synchronizacyjne</h2>
+
+<h3>Producent-konsument (bounded buffer)</h3>
+<p>Producent(-ci) wytwarzają dane do współdzielonego bufora o ograniczonym rozmiarze, konsument(-ci) je odbierają i przetwarzają.</p>
+<ul>
+<li>producent musi czekać, gdy bufor jest <strong>pełny</strong></li>
+<li>konsument musi czekać, gdy bufor jest <strong>pusty</strong></li>
+<li>dostęp do samego bufora (wskaźniki wstawiania/odczytu) musi być wzajemnie wykluczający</li>
+</ul>
+<p>Klasyczne rozwiązanie: dwa semafory zliczające (<code>pusteMiejsca</code>, <code>zajeteMiejsca</code>) + mutex chroniący sam bufor.</p>
+
+<h3>Pięciu filozofów (dining philosophers)</h3>
+<p>Pięciu filozofów siedzi przy okrągłym stole, między każdą parą jest jeden widelec (5 widelców łącznie) — każdy filozof potrzebuje <strong>dwóch</strong> widelców (lewego i prawego) do jedzenia.</p>
+<p>Ilustruje problem <strong>zakleszczenia (deadlock)</strong> — jeśli wszyscy naraz podniosą lewy widelec i czekają na prawy, żaden nie może kontynuować (patrz cztery warunki Coffmana, przedmiot Wprowadzenie do systemów operacyjnych).</p>
+<p>Rozwiązania: ustalona globalna kolejność zajmowania zasobów (np. filozof zawsze bierze widelec o niższym numerze najpierw — łamie warunek cyklicznego czekania), albo ograniczenie liczby filozofów jedzących naraz (np. przez semafor), albo asymetryczne rozwiązanie (jeden filozof bierze prawy przed lewym).</p>
+
+<h3>Czytelnicy-pisarze (readers-writers)</h3>
+<p>Współdzielony zasób (np. dane), z dwoma typami dostępu:</p>
+<ul>
+<li><strong>czytelnicy</strong> — wielu może czytać <strong>jednocześnie</strong> (odczyt nie zmienia danych, brak konfliktu)</li>
+<li><strong>pisarze</strong> — potrzebują <strong>wyłącznego</strong> dostępu (podczas pisania nikt inny — ani czytelnik, ani inny pisarz — nie może dotykać danych)</li>
+</ul>
+<p>Warianty priorytetowe: "readers-preference" (czytelnicy nie czekają, jeśli inni czytelnicy już czytają — ryzyko zagłodzenia pisarzy przy dużym ruchu czytelników), "writers-preference" (pisarz ma priorytet, gdy czeka).</p>
+
+<h3>Śpiący golarz (sleeping barber)</h3>
+<p>Golarz śpi, gdy nie ma klientów; klient budzi golarza, jeśli jest wolny fotel, albo czeka (jeśli są miejsca w poczekalni), albo odchodzi (jeśli poczekalnia pełna). Ilustruje synchronizację przy <strong>ograniczonej</strong> liczbie "miejsc czekania" — podobne do producenta-konsumenta, ale z dodatkowym aspektem "odrzucenia", gdy zasób (poczekalnia) jest przepełniony.</p>
+
+<div class="uwaga">Typowe zadanie: zaimplementuj rozwiązanie problemu producenta-konsumenta (lub czytelników-pisarzy) używając semaforów/mutexów, i wskaż, w którym miejscu kodu mogłoby dojść do race condition, gdyby zabrakło odpowiedniej synchronizacji.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Wysokopoziomowe narzędzia synchronizacji</h2>
+
+<h3>Mutex (mutual exclusion lock)</h3>
+<p>Najprostszy mechanizm — "zamek" gwarantujący, że tylko jeden wątek naraz wykonuje sekcję krytyczną. Wątek, który już go trzyma, nie może go ponownie zablokować (poza specjalnym wariantem <strong>reentrant/recursive mutex</strong>, dopuszczającym wielokrotne blokowanie przez ten sam wątek).</p>
+
+<h3>Semafor (przypomnienie i rozwinięcie)</h3>
+<p>Licznik z atomowymi operacjami <code>wait</code> (P, dekrementacja — blokuje, jeśli wynik byłby ujemny) i <code>signal</code> (V, inkrementacja). Semafor <strong>binarny</strong> (0/1) działa jak mutex; semafor <strong>zliczający</strong> ogranicza liczbę wątków mających dostęp do zasobu naraz (np. pool połączeń — max \(N\) wątków korzysta jednocześnie).</p>
+
+<h3>Bariera (barrier)</h3>
+<p>Punkt synchronizacji, w którym <strong>wszystkie</strong> wątki muszą się "zebrać", zanim <strong>jakikolwiek</strong> z nich może kontynuować dalej — używane, gdy obliczenia dzielą się na fazy, a każda faza wymaga zakończenia poprzedniej przez wszystkie wątki (typowe w obliczeniach równoległych, np. symulacjach iteracyjnych).</p>
+
+<h3>Zamek odczytu-zapisu (read-write lock)</h3>
+<p>Wyspecjalizowany mechanizm dla problemu czytelników-pisarzy (patrz punkt 2) — pozwala wielu czytelnikom trzymać blokadę <strong>jednocześnie</strong>, ale pisarz wymaga blokady <strong>wyłącznej</strong> (żaden czytelnik/pisarz nie może działać równolegle z nim).</p>
+
+<h3>Zmienne atomowe</h3>
+<p>Typy danych z operacjami (inkrementacja, porównanie-i-zamiana) wykonywanymi <strong>atomowo</strong> na poziomie sprzętu — pozwalają uniknąć jawnych mutexów dla prostych operacji (np. licznik odwiedzin), korzystając z instrukcji sprzętowych jak Compare-and-Swap.</p>
+
+<h3>Latch (zatrzask) / CountDownLatch</h3>
+<p>Mechanizm jednorazowego czekania — wątek(-i) czeka, aż licznik (inicjalizowany na \(N\)) spadnie do zera (każde wywołanie "odlicza" o jeden) — w odróżnieniu od bariery, po zakończeniu nie da się go "zresetować" i użyć ponownie.</p>
+
+<table>
+<tr><th>Narzędzie</th><th>Główne zastosowanie</th></tr>
+<tr><td>Mutex</td><td>wzajemne wykluczanie dla sekcji krytycznej</td></tr>
+<tr><td>Semafor zliczający</td><td>ograniczenie liczby wątków korzystających z zasobu naraz</td></tr>
+<tr><td>Bariera</td><td>synchronizacja faz obliczeń między wieloma wątkami</td></tr>
+<tr><td>Read-write lock</td><td>problem czytelników-pisarzy</td></tr>
+<tr><td>Zmienne atomowe</td><td>proste, pojedyncze operacje bez narzutu pełnego mutexu</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dla opisanego scenariusza (np. "wielu wątków czyta konfigurację, jeden wątek okresowo ją aktualizuje") wskaż najbardziej odpowiednie narzędzie synchronizacji (tu: read-write lock) i uzasadnij, czemu zwykły mutex byłby nieoptymalny (blokowałby czytelników wzajemnie, mimo że odczyt nie powoduje konfliktów).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Monitor jako strukturalne narzędzie synchronizacji</h2>
+
+<p>Monitor to konstrukcja <strong>językowa/strukturalna</strong> łącząca dane, metody operujące na nich, i <strong>automatyczną</strong> synchronizację wzajemnego wykluczania — w odróżnieniu od "ręcznego" łączenia mutexów z danymi (jak w C z pthread), monitor "wbudowuje" synchronizację w samą strukturę obiektu.</p>
+
+<h3>Kluczowa własność</h3>
+<p>W danym momencie <strong>tylko jeden</strong> wątek może wykonywać kod <strong>jakiejkolwiek</strong> metody danego monitora — kompilator/runtime automatycznie wstawia wzajemne wykluczanie, programista nie musi jawnie zarządzać mutexem.</p>
+
+<h3>Przykład — <code>synchronized</code> w Javie jako monitor</h3>
+<pre>class BufforOgraniczony {
+    private Queue&lt;Integer&gt; kolejka = new LinkedList&lt;&gt;();
+    private final int MAX = 10;
+
+    public synchronized void dodaj(int wartosc) throws InterruptedException {
+        while (kolejka.size() == MAX) {
+            wait();               // zwolnij monitor, czekaj na signal
+        }
+        kolejka.add(wartosc);
+        notifyAll();               // obudź czekające wątki (np. konsumentów)
+    }
+
+    public synchronized int odbierz() throws InterruptedException {
+        while (kolejka.isEmpty()) {
+            wait();
+        }
+        int wartosc = kolejka.poll();
+        notifyAll();
+        return wartosc;
+    }
+}</pre>
+<p>Cała klasa (każda metoda <code>synchronized</code>) działa jak monitor — każdy obiekt tej klasy ma niejawnie skojarzony "zamek" (patrz przedmiot Programowanie sieciowe — <code>synchronized</code> w Javie).</p>
+
+<h3>Zmienne warunku (condition variables) w monitorze</h3>
+<p><code>wait()</code>/<code>notify()</code>/<code>notifyAll()</code> w Javie to zmienne warunku wbudowane w monitor — <code>wait()</code> <strong>zwalnia</strong> zamek monitora (żeby inne wątki mogły wejść) i usypia wątek do momentu obudzenia; <code>notify()</code>/<code>notifyAll()</code> budzi jeden/wszystkie czekające wątki (które potem muszą ponownie zdobyć zamek, zanim będą kontynuować).</p>
+
+<h3>Monitor vs "ręczna" synchronizacja mutex + zmienne warunku</h3>
+<table>
+<tr><th></th><th>Monitor (np. <code>synchronized</code> w Javie)</th><th>Ręczny mutex + cond. variable (np. pthread w C)</th></tr>
+<tr><td>Wzajemne wykluczanie</td><td>automatyczne, "wbudowane" w strukturę</td><td>trzeba jawnie blokować/odblokowywać mutex</td></tr>
+<tr><td>Ryzyko błędu</td><td>niższe — trudniej "zapomnieć" o synchronizacji</td><td>wyższe — łatwo zapomnieć unlock, albo zablokować niewłaściwy mutex</td></tr>
+<tr><td>Elastyczność</td><td>mniejsza — struktura wymuszona przez język</td><td>większa — pełna kontrola nad każdym aspektem</td></tr>
+</table>
+
+<div class="uwaga">Monitor to <strong>strukturalne</strong> (wyższego poziomu) opakowanie tych samych podstawowych mechanizmów (mutex + zmienne warunku) opisanych w punkcie 5 dla pthread — cel identyczny, różny poziom abstrakcji/automatyzacji.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Zmienne warunku w bibliotece pthread</h2>
+
+<p>W C (biblioteka POSIX threads, pthread) synchronizacja nie jest "wbudowana" w strukturę jak monitor w Javie — programista jawnie łączy <strong>mutex</strong> z <strong>zmienną warunku (condition variable)</strong>.</p>
+
+<h3>Podstawowe funkcje</h3>
+<table>
+<tr><th>Funkcja</th><th>Działanie</th></tr>
+<tr><td><code>pthread_mutex_lock/unlock</code></td><td>zablokowanie/odblokowanie mutexu</td></tr>
+<tr><td><code>pthread_cond_wait(cond, mutex)</code></td><td>zwalnia mutex i usypia wątek, aż do sygnału; po obudzeniu automatycznie ponownie blokuje mutex przed powrotem</td></tr>
+<tr><td><code>pthread_cond_signal(cond)</code></td><td>budzi <strong>jeden</strong> czekający wątek (jeśli jakiś czeka)</td></tr>
+<tr><td><code>pthread_cond_broadcast(cond)</code></td><td>budzi <strong>wszystkie</strong> czekające wątki</td></tr>
+</table>
+
+<h3>Przykład — producent-konsument z pthread</h3>
+<pre>pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t warunek_niepusty = PTHREAD_COND_INITIALIZER;
+pthread_cond_t warunek_niepelny = PTHREAD_COND_INITIALIZER;
+int bufor[MAX], liczba_elementow = 0;
+
+void* producent(void* arg) {
+    pthread_mutex_lock(&mutex);
+    while (liczba_elementow == MAX) {
+        pthread_cond_wait(&warunek_niepelny, &mutex);   // czekaj, aż będzie miejsce
+    }
+    // ... dodaj element do bufora, liczba_elementow++
+    pthread_cond_signal(&warunek_niepusty);              // obudź konsumenta
+    pthread_mutex_unlock(&mutex);
+}
+
+void* konsument(void* arg) {
+    pthread_mutex_lock(&mutex);
+    while (liczba_elementow == 0) {
+        pthread_cond_wait(&warunek_niepusty, &mutex);    // czekaj, aż będzie element
+    }
+    // ... zdejmij element z bufora, liczba_elementow--
+    pthread_cond_signal(&warunek_niepelny);               // obudź producenta
+    pthread_mutex_unlock(&mutex);
+}</pre>
+
+<h3>Dlaczego <code>while</code>, nie <code>if</code>, wokół <code>pthread_cond_wait</code></h3>
+<div class="uwaga">Kluczowa zasada: warunek trzeba sprawdzać w <strong>pętli</strong> (<code>while</code>), nie tylko raz (<code>if</code>) — po obudzeniu z <code>pthread_cond_wait</code>, warunek mógł już przestać być prawdziwy (np. inny wątek "zabrał" ostatnie wolne miejsce, zanim obudzony wątek zdążył zareagować) — to tzw. <strong>spurious wakeup</strong> (fałszywe obudzenie) — sam standard POSIX dopuszcza, że wątek może się obudzić bez żadnego <code>signal</code>.</div>
+
+<h3>Dlaczego zmienna warunku wymaga mutexu</h3>
+<p><code>pthread_cond_wait</code> <strong>musi</strong> być wywołane z zablokowanym mutexem — funkcja atomowo zwalnia mutex i usypia wątek jako jedną, niepodzielną operację, zapobiegając wyścigowi między "sprawdzeniem warunku" a "zaśnięciem" (bez tego, sygnał mógłby zostać wysłany <strong>między</strong> sprawdzeniem warunku a wywołaniem <code>wait</code>, i zostałby "zgubiony" — klasyczny błąd "lost wakeup").</p>
+
+<h3>Porównanie z monitorem (punkt 4)</h3>
+<p>Zmienne warunku pthread to niższopoziomowy, bardziej "surowy" budulec tego samego mechanizmu, który w Javie jest ukryty za <code>synchronized</code>/<code>wait</code>/<code>notify</code> — w pthread programista musi jawnie: stworzyć mutex, stworzyć zmienną warunku, pamiętać o blokowaniu/odblokowywaniu w odpowiednich momentach, i użyć pętli <code>while</code> zamiast <code>if</code>.</p>
+
+<div class="uwaga">Typowe pytanie: zaimplementuj rozwiązanie problemu producenta-konsumenta (albo innego klasycznego problemu z punktu 2) w C z użyciem pthread mutex i zmiennych warunku, zwracając uwagę na poprawne użycie pętli <code>while</code> i atomowość <code>pthread_cond_wait</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Model PRAM i formalne definicje współbieżności</h2>
+
+<h3>Model PRAM (Parallel Random Access Machine)</h3>
+<p>Teoretyczny model komputera wieloprocesorowego, na którym analizuje się programy współbieżne:</p>
+<ul>
+<li><strong>synchroniczność</strong> — wszystkie procesory taktowane wspólnym zegarem</li>
+<li><strong>pamięć wspólna</strong> — komunikacja między procesorami wyłącznie przez pamięć wspólną</li>
+<li><strong>stały czas dostępu</strong> — każdy procesor ma taki sam czas dostępu do pamięci wspólnej</li>
+<li><strong>wyłączność dostępu</strong> — (w modelu idealnym) niedopuszczalny jest jednoczesny dostęp kilku procesorów do tej samej komórki pamięci</li>
+</ul>
+<div class="uwaga">W rzeczywistości model jest idealizacją — synchroniczność procesorów i stały czas dostępu do pamięci są trudne do zapewnienia przy dużej liczbie procesorów.</div>
+
+<h3>Podstawowe definicje formalne</h3>
+<table>
+<tr><th>Termin</th><th>Definicja</th></tr>
+<tr><td>Proces</td><td>program załadowany do pamięci, wykonujący instrukcje w ściśle określonej sekwencji (w tym wykładzie: proces = wątek = zadanie)</td></tr>
+<tr><td>Program sekwencyjny</td><td>kolejność instrukcji wynika z zapisu w kodzie, wykonywany przez jeden proces</td></tr>
+<tr><td>Program współbieżny</td><td>skończona liczba programów sekwencyjnych (procesów); kolejność wykonania instrukcji całego programu nie jest z góry określona</td></tr>
+<tr><td>Przeplot</td><td>ciąg instrukcji atomowych programu współbieżnego, wykonanych przez różne procesy, ułożonych w kolejności wykonania</td></tr>
+<tr><td>Scenariusz</td><td>konkretna realizacja (instancja) przeplotu</td></tr>
+<tr><td>Obliczenie</td><td>ciąg stanów \(\{s_1, s_2, \dots\}\), gdzie przejście między stanami wynika z wykonania instrukcji</td></tr>
+<tr><td>Stan programu</td><td>krotka: etykieta procesu (miejsce w kodzie) dla każdego procesu + wartości zmiennych globalnych + wartości zmiennych lokalnych każdego procesu</td></tr>
+</table>
+
+<h3>Stany procesu</h3>
+<table>
+<tr><th>Stan</th><th>Opis</th></tr>
+<tr><td>Wykonywany</td><td>proces posiada procesor i wykonuje instrukcje</td></tr>
+<tr><td>Gotowy</td><td>czeka na przydział procesora</td></tr>
+<tr><td>Wstrzymany</td><td>otrzymał sygnał wstrzymania od sprzętu/systemu (np. czeka na dane z wejścia)</td></tr>
+<tr><td>Zakończony</td><td>zakończył działanie (exit albo sygnał końca)</td></tr>
+</table>
+<p><strong>Przełączanie kontekstu</strong> — mechanizm pozwalający na działanie wielu procesów, gdy jest ich więcej niż procesorów. Jeśli liczba procesorów \(\ge\) liczba procesów — mówimy o obliczeniach <strong>równoległych</strong>.</p>
+
+<h3>Atomowość i zmienne krytyczne</h3>
+<p><strong>Instrukcja atomowa</strong> — taka, której wykonania nie można przerwać. Atomowe są instrukcje asemblera (<code>load</code>, <code>store</code>) — instrukcje wysokiego poziomu (np. <code>n = n+1</code>) <strong>nie są</strong> atomowe (składają się z odczytu, dodawania i zapisu).</p>
+<p><strong>Zmienna krytyczna</strong> — zmienna przetwarzana w różnych procesach.</p>
+<table>
+<tr><th>Rodzaj wystąpienia krytycznego</th><th>Opis</th></tr>
+<tr><td>I rodzaju</td><td>zmienna modyfikowana w naszym procesie (po lewej stronie przypisania) i jednocześnie występująca w innym procesie</td></tr>
+<tr><td>II rodzaju</td><td>zmienna w wyrażeniu naszego procesu (po prawej stronie), a jednocześnie modyfikowana w innym procesie</td></tr>
+</table>
+
+<h3>Zasada przewidywalności</h3>
+<p>Jeśli instrukcja zawiera <strong>co najwyżej jedno</strong> wystąpienie krytyczne (I lub II rodzaju), zachowuje się tak, jakby była atomowa — wynik programu złożonego z takich instrukcji można przewidzieć, badając przeploty utworzone z tych instrukcji.</p>
+
+<p><strong>Sekcja krytyczna</strong> — fragment kodu, w którym proces uzyskuje dostęp do współdzielonego zasobu (zmiennej, pliku, drukarki).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Poprawność programów współbieżnych — Safety, Liveness, uczciwość</h2>
+
+<h3>Dwie własności poprawności</h3>
+<table>
+<tr><th>Własność</th><th>Definicja</th><th>Naruszenie prowadzi do</th></tr>
+<tr>
+<td><strong>Bezpieczeństwo (Safety)</strong></td>
+<td>warunek logiczny prawdziwy w <strong>każdym</strong> stanie każdego obliczenia ("nic złego się nie dzieje")</td>
+<td>błędów, zakleszczenia (deadlock)</td>
+</tr>
+<tr>
+<td><strong>Żywotność (Liveness)</strong></td>
+<td>warunek logiczny, który <strong>w końcu</strong> stanie się prawdziwy w pewnym stanie każdego obliczenia ("coś dobrego w końcu się wydarzy")</td>
+<td>zagłodzenia (starvation)</td>
+</tr>
+</table>
+
+<h3>Zakleszczenie vs zagłodzenie</h3>
+<ul>
+<li><strong>Zakleszczenie (deadlock)</strong> — grupa procesów wzajemnie na siebie czeka (każdy czeka na zasób trzymany przez inny proces z tej grupy) — żaden nie może kontynuować</li>
+<li><strong>Zagłodzenie (starvation)</strong> — proces jest w stanie "gotowy", ale mechanizmy synchronizacji/planista wciąż wybierają inne procesy, odmawiając mu dostępu do zasobu/procesora</li>
+</ul>
+
+<h3>Uczciwość (fairness)</h3>
+<p>Założenie o sposobie wybierania procesów do wykonania — niezbędne, by móc dowodzić większości własności żywotności.</p>
+<table>
+<tr><th>Rodzaj</th><th>Definicja</th></tr>
+<tr>
+<td>Uczciwość bezwarunkowa</td>
+<td>najsilniejsza — każdy proces musi otrzymać czas procesora nieskończenie wiele razy, niezależnie, czy o niego "prosi" (rzadko stosowana w praktyce teorii)</td>
+</tr>
+<tr>
+<td>Słaba uczciwość</td>
+<td>jeśli instrukcja procesu staje się aktywna i pozostaje aktywna <strong>nieprzerwanie (stale)</strong>, musi zostać w końcu wykonana</td>
+</tr>
+<tr>
+<td>Silna uczciwość</td>
+<td>jeśli instrukcja jest aktywna <strong>nieskończenie wiele razy</strong> (może się pojawiać i znikać, np. flaga migająca true/false), musi zostać w końcu wykonana</td>
+</tr>
+</table>
+<p>Silna uczciwość jest "mocniejsza" — gwarantuje wykonanie nawet, gdy warunek pojawia się tylko na krótkie, ale regularne chwile. Wynikiem wykonania programu współbieżnego jest <strong>dowolny uczciwy scenariusz</strong>.</p>
+
+<h3>Program sekwencyjny vs współbieżny — porównanie poprawności</h3>
+<table>
+<tr><th>Cecha</th><th>Program sekwencyjny</th><th>Program współbieżny</th></tr>
+<tr><td>Kiedy poprawny?</td><td>gdy zatrzymuje się i daje jeden, konkretny dobry wynik</td><td>gdy zachowuje własności bezpieczeństwa i żywotności podczas obliczeń</td></tr>
+<tr><td>Kiedy kończy działanie?</td><td>po wykonaniu ostatniej instrukcji</td><td>dopiero gdy zakończą działanie wszystkie procesy składowe</td></tr>
+<tr><td>Wynik końcowy</td><td>zawsze taki sam dla tych samych danych (determinizm)</td><td>może być różny w zależności od scenariusza (przeplotu)</td></tr>
+<tr><td>Definicja poprawności</td><td>oparta na wyniku ("co wyszło na końcu?")</td><td>oparta na zachowaniu ("co działo się w trakcie?")</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Problem wzajemnego wykluczania i algorytmy programowe</h2>
+
+<h3>Formalna struktura problemu</h3>
+<pre>powtarzaj
+    sekcja_lokalna
+    protokół_wstępny
+    sekcja_krytyczna
+    protokół_końcowy</pre>
+<table>
+<tr><th>Element</th><th>Rola</th></tr>
+<tr><td>Sekcja lokalna</td><td>proces wykonuje własne obliczenia (może tu "utknąć" — to nie narusza własności problemu wykluczania)</td></tr>
+<tr><td>Protokół wstępny</td><td>kod zapewniający dostęp do sekcji krytycznej</td></tr>
+<tr><td>Sekcja krytyczna</td><td>dostęp do zasobu współdzielonego — musi być wykonywana "z postępem" (proces nie może się w niej zatrzymać na zawsze)</td></tr>
+<tr><td>Protokół końcowy</td><td>zwolnienie zasobu (musi zapewniać brak zagłodzenia innych)</td></tr>
+</table>
+
+<h3>Własności problemu wzajemnego wykluczania</h3>
+<ul>
+<li><strong>Bezpieczeństwo</strong>: w danej chwili w sekcji krytycznej jest <strong>tylko jeden</strong> proces</li>
+<li><strong>Żywotność</strong>: każdy proces, który opuści sekcję lokalną, <strong>w końcu</strong> wejdzie do sekcji krytycznej</li>
+</ul>
+
+<h3>Algorytm Dekkera (dla 2 procesów)</h3>
+<p>Wykorzystuje zmienne <code>chcep</code>, <code>chceq</code> (flagi zgłoszenia gotowości) i <code>czyja_kolej</code> (rozstrzyga spory) — jeśli oba procesy chcą wejść naraz, jeden ustępuje drugiemu na podstawie <code>czyja_kolej</code>.</p>
+<p>Formalny dowód poprawności korzysta z logiki temporalnej: \(\Box\) (zawsze), \(\Diamond\) (w końcu). Bezpieczeństwo zapisuje się jako \(\Box\neg(p_8 \land q_8)\) — nigdy nie zdarzy się, że oba procesy są równocześnie w sekcji krytycznej.</p>
+
+<h3>Algorytm piekarniany (bakery algorithm, dla n procesów)</h3>
+<p>Opiera się na pobieraniu "numerka" (biletu): $$\text{numer\_biletu}[i] = \max(\text{wszystkie\_bilety}) + 1$$</p>
+<p>Priorytet (<code>&lt;&lt;</code>): proces wchodzi do sekcji krytycznej, jeśli ma <strong>mniejszy</strong> numer biletu; przy równych numerach decyduje mniejszy identyfikator procesu (\(i&lt;j\)).</p>
+<div class="uwaga">Numery biletów w algorytmie piekarnianym mogą rosnąć w nieskończoność — to teoretyczna wada, choć w praktyce nie przeszkadza (liczby wystarczająco duże, żeby to nie było praktycznym problemem w typowym czasie działania).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Formalna definicja semafora i mutexu</h2>
+
+<h3>Definicja klasyczna semafora</h3>
+<p>Obiekt przechowujący wartość całkowitą nieujemną, na którym wykonywane są atomowe operacje <code>wait</code> i <code>signal</code>.</p>
+<table>
+<tr><th>Składowa</th><th>Opis</th></tr>
+<tr><td>S.V (Value)</td><td>wartość całkowita, nieujemna (\(S.V \ge 0\))</td></tr>
+<tr><td>S.L (List)</td><td>zbiór (kolejka) procesów wstrzymanych, czekających na semaforze</td></tr>
+</table>
+
+<h3>Operacje atomowe</h3>
+<table>
+<tr><th>Operacja</th><th>Zasada</th></tr>
+<tr>
+<td><code>wait(S)</code> (P, opuszczanie)</td>
+<td>jeśli \(S.V=0\): proces wstrzymany, dodany do \(S.L\). Jeśli \(S.V&gt;0\): \(S.V \mathrel{-}= 1\)</td>
+</tr>
+<tr>
+<td><code>signal(S)</code> (V, podnoszenie)</td>
+<td>jeśli \(S.L\) jest puste: \(S.V \mathrel{+}= 1\). Jeśli w \(S.L\) są procesy: jeden usuwany z \(S.L\) i przechodzi w stan gotowy — <strong>wartość \(S.V\) się nie zmienia</strong> (nadal 0)</td>
+</tr>
+</table>
+
+<h3>Niezmienniki semafora</h3>
+<ol>
+<li>\(S.V \ge 0\) (wartość nigdy nie jest ujemna)</li>
+<li>$$S.V = k - \#wait(S) + \#signal(S)$$ gdzie \(k\) — wartość początkowa, \(\#wait(S)\) — liczba <strong>zakończonych</strong> operacji wait, \(\#signal(S)\) — liczba wykonanych operacji signal</li>
+</ol>
+
+<h3>Typy semaforów</h3>
+<table>
+<tr><th>Typ</th><th>Opis</th></tr>
+<tr><td>Binarny</td><td>przyjmuje tylko 0 lub 1 — do wzajemnego wykluczania (zastępuje lock/unlock)</td></tr>
+<tr><td>Ogólny (licznikowy)</td><td>dowolne wartości nieujemne — kontrola puli zasobów (np. 5 drukarek)</td></tr>
+<tr><td>Słaby</td><td>proces do wznowienia w <code>signal</code> wybierany <strong>losowo</strong> — możliwe zagłodzenie</td></tr>
+<tr><td>Silny</td><td>procesy budzone wg kolejki <strong>FIFO</strong> — gwarantuje żywotność (brak zagłodzenia)</td></tr>
+</table>
+
+<h3>Mutex — definicja formalna</h3>
+<p>Wyspecjalizowane narzędzie do sekcji krytycznej: operacje <code>lock(m)</code>/<code>unlock(m)</code> — "zdobycie klucza", który może mieć tylko jeden proces; jeśli klucz jest zajęty, proces czekający przechodzi w stan wstrzymany.</p>
+
+<h3>Mutex vs semafor binarny — kluczowa różnica</h3>
+<table>
+<tr><th></th><th>Mutex</th><th>Semafor binarny</th></tr>
+<tr><td>Własność (ownership)</td><td><strong>ma właściciela</strong> — tylko wątek, który wykonał <code>lock</code>, może wykonać <code>unlock</code></td><td><strong>brak właściciela</strong> — jeden wątek może wykonać <code>wait</code>, inny <code>signal</code></td></tr>
+<tr><td>Typowe zastosowanie</td><td>"biorę i oddaję" przez tego samego właściciela — ochrona sekcji krytycznej</td><td>sygnalizacja między procesami (np. synchronizacja zakończenia obliczeń)</td></tr>
+<tr><td>Złożoność/waga</td><td>lżejszy, zoptymalizowany pod szybkie blokowanie</td><td>bardziej ogólne narzędzie "sterowania ruchem"</td></tr>
+</table>
+
+<div class="uwaga">Reguła praktyczna: mutex, gdy chcesz zapewnić wyłączny dostęp do jednej struktury danych ("teraz ja korzystam, nikt inny nie ma prawa zaglądać"). Semafor, gdy zarządzasz pulą wielu zasobów, potrzebujesz sygnalizacji między wątkami, albo synchronizujesz procesy bez wspólnej pamięci (semafory nazwane).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Obiekty chronione (Ada) — alternatywa dla monitora</h2>
+
+<p>Nowocześniejszy od monitora mechanizm synchronizacji z języka Ada — <strong>nie używa</strong> zmiennych warunkowych.</p>
+
+<h3>Zasada działania — dozory (guards)</h3>
+<ul>
+<li>każda operacja (wejście) może być opatrzona <strong>dozorem</strong>: "operacja X <em>kiedy</em> warunek"</li>
+<li>jeśli dozór jest fałszywy, proces trafia do kolejki związanej z tym konkretnym dozorem</li>
+<li>przy wyjściu z <strong>dowolnej</strong> operacji, system automatycznie sprawdza wszystkie dozory i wznawia procesy, których warunki stały się prawdziwe</li>
+</ul>
+
+<h3>Priorytety kolejek</h3>
+<p>Reguła: <strong>E &lt; W</strong></p>
+<table>
+<tr><th>Kolejka</th><th>Opis</th></tr>
+<tr><td>E</td><td>FIFO procesów rywalizujących o dostęp do operacji na obiekcie (nowe wywołania)</td></tr>
+<tr><td>W</td><td>FIFO związana z dozorowanym wejściem operacji (procesy czekające na spełnienie warunku)</td></tr>
+</table>
+<p>Procesy czekające na dozorach (W) mają <strong>pierwszeństwo</strong> przed nowymi procesami (E) — zapewnia to większą efektywność (brak niepotrzebnych przełączeń kontekstu, bo od razu wiadomo, który warunek "czeka" na spełnienie).</p>
+
+<h3>Porównanie z monitorem klasycznym</h3>
+<table>
+<tr><th></th><th>Monitor</th><th>Obiekty chronione (Ada)</th></tr>
+<tr><td>Mechanizm oczekiwania</td><td>zmienne warunkowe (<code>waitc</code>/<code>signalc</code>) — programista jawnie wywołuje wait</td><td>dozory — system automatycznie sprawdza je po każdej operacji</td></tr>
+<tr><td>Kolejki</td><td>trzy: E (wejście), W (warunkowa), S (signal/urgent)</td><td>dwie: E (wejście), W (dozorowana)</td></tr>
+<tr><td>Ryzyko błędu programisty</td><td>wyższe — trzeba pamiętać o jawnym <code>signalc</code></td><td>niższe — sprawdzanie dozorów jest automatyczne</td></tr>
+</table>
+
+<h3>Przypomnienie — kolejki w monitorze klasycznym</h3>
+<table>
+<tr><th>Kolejka</th><th>Opis</th></tr>
+<tr><td>E (Entrance)</td><td>procesy czekające na wejście do monitora</td></tr>
+<tr><td>W (Waiting)</td><td>procesy wstrzymane na konkretnej zmiennej warunkowej (<code>waitc</code>)</td></tr>
+<tr><td>S (Signal/Urgent)</td><td>procesy, które wykonały <code>signalc</code> i czekają, aż wznowiony proces opuści monitor</td></tr>
+</table>
+<p>Priorytety (WNW — natychmiastowe wznowienie): <strong>E &lt; S &lt; W</strong> — najwyższy priorytet ma proces wznowiony z kolejki warunkowej, potem proces, który go obudził, najniższy — nowe procesy chcące wejść.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Wątki w praktyce — pthread_create, join, detach, thread-safety</h2>
+
+<h3>Czym jest wątek — definicja formalna</h3>
+<p>"Lekki proces" — najmniejsza jednostka wykonawcza wewnątrz procesu. Wątki tego samego procesu współdzielą przestrzeń adresową (pamięć, zmienne globalne, deskryptory plików), ale każdy ma <strong>własny</strong> stos, licznik rozkazów (PC) i zestaw rejestrów.</p>
+
+<h3>Tworzenie wątku — <code>pthread_create</code></h3>
+<pre>int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                    void *(*start_routine)(void *), void *arg);</pre>
+<table>
+<tr><th>Parametr</th><th>Znaczenie</th></tr>
+<tr><td><code>pthread_t *thread</code></td><td>wskaźnik na zmienną, w której zapisany zostanie identyfikator nowego wątku</td></tr>
+<tr><td><code>const pthread_attr_t *attr</code></td><td>atrybuty wątku (np. rozmiar stosu); <code>NULL</code> = atrybuty domyślne</td></tr>
+<tr><td><code>start_routine</code></td><td>funkcja, od której wątek zaczyna działanie</td></tr>
+<tr><td><code>void *arg</code></td><td>jedyny argument przekazywany do funkcji wątku (więcej danych → wskaźnik na strukturę)</td></tr>
+</table>
+
+<h3>Sygnatura funkcji wątku</h3>
+<pre>void* moja_funkcja_watku(void* arg) {
+    // treść wątku
+    return NULL;
+}</pre>
+<p>Musi zwracać <code>void*</code> i przyjmować jeden argument <code>void*</code> — użycie <code>void*</code> pozwala przekazać (i zwrócić) wskaźnik na dowolny typ danych przez rzutowanie.</p>
+
+<h3><code>pthread_join</code> — synchronizacja zakończenia</h3>
+<p>Wątek wywołujący <code>pthread_join</code>: zostaje zawieszony do czasu zakończenia wskazanego wątku, "sprząta" jego zasoby (zapobiega wątkom-zombie) i może odebrać wartość zwróconą (przez <code>return</code> lub <code>pthread_exit</code>).</p>
+<div class="uwaga">Powiązanie z teorią (punkt 7): <code>pthread_join</code> realizuje definicję, że program współbieżny kończy się dopiero, gdy zakończą działanie <strong>wszystkie</strong> jego procesy składowe.</div>
+
+<h3>Wątek trwały (joinable) vs ulotny (detached)</h3>
+<table>
+<tr><th></th><th>Trwały (joinable, domyślny)</th><th>Ulotny (detached)</th></tr>
+<tr><td>Zasoby po zakończeniu</td><td>nie są zwalniane, dopóki inny wątek nie wywoła <code>pthread_join</code></td><td>system automatycznie i natychmiastowo zwalnia zasoby</td></tr>
+<tr><td>Można <code>pthread_join</code>?</td><td>tak</td><td>nie — nie można odebrać wyniku ani czekać na zakończenie</td></tr>
+</table>
+
+<h3>Zmiana atrybutu na ulotny</h3>
+<pre># w trakcie działania wątku:
+pthread_detach(identyfikator_watku);
+
+# podczas tworzenia:
+pthread_attr_t attr;
+pthread_attr_init(&attr);
+pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+pthread_create(&tid, &attr, func, arg);</pre>
+
+<h3>Zmienne lokalne vs globalne w wątku</h3>
+<ul>
+<li><strong>globalne</strong> — wspólne dla wszystkich wątków; zmiana przez jeden wątek widoczna dla wszystkich (wymagają synchronizacji)</li>
+<li><strong>lokalne</strong> (wewnątrz funkcji wątku) — prywatne, na własnym stosie wątku — inne wątki nie mają do nich dostępu</li>
+</ul>
+
+<h3>Bezpieczeństwo funkcji względem wielowątkowości (thread-safety)</h3>
+<p>Funkcja jest bezpieczna, jeśli może być wywoływana przez wiele wątków jednocześnie i zawsze zwraca poprawne wyniki. Zasady projektowania:</p>
+<ul>
+<li><strong>unikaj zmiennych globalnych/statycznych</strong> — jeśli musisz z nich korzystać, każda taka operacja wymaga ochrony mutexem</li>
+<li><strong>używaj zmiennych lokalnych</strong> — z natury bezpieczne (każdy wątek ma własny stos)</li>
+<li><strong>reentrancja</strong> — funkcja nie powinna trzymać stanu między wywołaniami (zamiast wewnętrznych buforów statycznych, przyjmuj wskaźnik do bufora od wywołującego)</li>
+<li><strong>kopiuj dane, nie współdziel</strong> — jeśli możliwe, przekaż wątkowi kopię danych, nie wskaźnik do oryginału, który mógłby zostać zmieniony przez inny wątek</li>
+</ul>
+
+<h3>Ogólny schemat synchronizacji sekcji krytycznej w pthread</h3>
+<ol>
+<li><strong>identyfikacja</strong> — znajdź fragmenty operujące na zmiennych współdzielonych (np. <code>n = n+1</code>)</li>
+<li><strong>blokada</strong> — przed sekcją: <code>pthread_mutex_lock(&mutex)</code> lub <code>sem_wait(&semafor)</code> (wątek zaśnie, jeśli zasób zajęty)</li>
+<li><strong>sekcja krytyczna</strong> — bezpieczna operacja na danych</li>
+<li><strong>zwolnienie</strong> — <code>pthread_mutex_unlock(&mutex)</code> lub <code>sem_post(&semafor)</code>, wpuszczające kolejny czekający wątek</li>
+</ol>
+
+<div class="uwaga">Typowe pytanie: napisz funkcję wątku wykonującą bezpieczną inkrementację zmiennej globalnej z użyciem <code>pthread_mutex_t</code>, i wyjaśnij, co by się stało (race condition) bez blokady mutexu — powiązanie z zasadą przewidywalności i wystąpieniami krytycznymi z punktu 6.</div>
+</div>
+
+</body>
+</html>

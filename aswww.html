@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Administracja serwerami WWW – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Administracja serwerami WWW</h1>
+
+<div class="zagadnienie">
+<h2>1. HTTP, HTTPS, TLS, handshake TLS</h2>
+
+<p><em>(podstawy HTTP — patrz przedmiot Sieci komputerowe/Języki hipertekstowe; tu głębsze omówienie TLS)</em></p>
+
+<h3>HTTP — przypomnienie</h3>
+<p>Protokół żądanie-odpowiedź, bezstanowy, domyślny port 80. Metody GET/POST/PUT/DELETE, kody statusu 2xx/3xx/4xx/5xx.</p>
+
+<h3>HTTPS = HTTP + TLS</h3>
+<p>HTTPS to HTTP przesyłane przez <strong>szyfrowany</strong> kanał TLS (Transport Layer Security, następca SSL) — domyślny port 443. Zapewnia trzy własności bezpieczeństwa:</p>
+<ul>
+<li><strong>poufność (confidentiality)</strong> — dane szyfrowane, niezrozumiałe dla podsłuchującego po drodze</li>
+<li><strong>integralność (integrity)</strong> — wykrycie, czy dane zostały zmodyfikowane w transmisji</li>
+<li><strong>autentyczność (authentication)</strong> — potwierdzenie, że łączymy się z prawdziwym, oczekiwanym serwerem (przez certyfikat), nie z podszywającym się atakującym</li>
+</ul>
+
+<h3>Certyfikat X.509</h3>
+<p>Elektroniczny dokument potwierdzający tożsamość serwera — zawiera nazwę domeny, klucz publiczny serwera, okres ważności, i <strong>podpis</strong> zaufanej instytucji certyfikującej (CA — Certificate Authority). Przeglądarka ufa certyfikatowi, jeśli CA, która go podpisała, jest w jej wbudowanej liście zaufanych CA (łańcuch zaufania — chain of trust).</p>
+
+<h3>Handshake TLS 1.2 (klasyczny, pełny przebieg)</h3>
+<ol>
+<li><strong>ClientHello</strong> — klient wysyła obsługiwane wersje TLS, listę szyfrów (cipher suites), losową wartość</li>
+<li><strong>ServerHello</strong> — serwer wybiera wersję/szyfr, wysyła swój <strong>certyfikat</strong> (z kluczem publicznym) i swoją losową wartość</li>
+<li><strong>weryfikacja certyfikatu</strong> — klient sprawdza podpis CA, ważność, zgodność nazwy domeny</li>
+<li><strong>wymiana kluczy</strong> — klient generuje tajny materiał (pre-master secret), szyfruje go kluczem <strong>publicznym</strong> serwera (kryptografia asymetryczna) i wysyła; obie strony na tej podstawie (+ obie losowe wartości) wyliczają identyczny <strong>klucz sesyjny</strong></li>
+<li><strong>Finished</strong> — obie strony potwierdzają zakończenie handshake'u (zaszyfrowaną wiadomością testową)</li>
+<li>dalsza komunikacja szyfrowana <strong>symetrycznie</strong> uzgodnionym kluczem sesyjnym (szybsze niż szyfrowanie asymetryczne dla dużych ilości danych)</li>
+</ol>
+
+<h3>TLS 1.3 — uproszczenie i skrócenie</h3>
+<p>TLS 1.3 redukuje handshake do <strong>jednej</strong> rundy wymiany (1-RTT) zamiast dwóch w TLS 1.2 — szybsze nawiązanie połączenia; usuwa też przestarzałe, słabsze algorytmy kryptograficzne dostępne jeszcze w 1.2.</p>
+
+<h3>Kryptografia symetryczna vs asymetryczna w TLS (przypomnienie)</h3>
+<table>
+<tr><th></th><th>Symetryczna</th><th>Asymetryczna</th></tr>
+<tr><td>Klucz</td><td>ten sam do szyfrowania/deszyfrowania</td><td>para: publiczny/prywatny</td></tr>
+<tr><td>Szybkość</td><td>szybka</td><td>wolniejsza</td></tr>
+<tr><td>Rola w TLS</td><td>szyfrowanie właściwych danych po handshake</td><td>tylko podczas handshake, do bezpiecznej wymiany klucza sesyjnego</td></tr>
+</table>
+
+<h3>SNI (Server Name Indication)</h3>
+<p>Rozszerzenie TLS pozwalające klientowi już w <code>ClientHello</code> podać nazwę domeny, do której się łączy — niezbędne, żeby jeden serwer (adres IP) mógł hostować <strong>wiele</strong> różnych domen z <strong>różnymi</strong> certyfikatami (bez SNI, serwer nie wiedziałby, którego certyfikatu użyć, zanim jeszcze poznałby żądaną domenę).</p>
+
+<div class="uwaga">Typowe pytanie: opisz krok po kroku pełny handshake TLS 1.2, wskazując, w którym momencie używana jest kryptografia asymetryczna, a w którym symetryczna, i wyjaśnij rolę certyfikatu X.509 w budowaniu zaufania.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Zadania klienta i serwera WWW</h2>
+
+<h3>Zadania klienta (przeglądarki)</h3>
+<ul>
+<li><strong>rozwiązanie nazwy domeny</strong> — zapytanie DNS o adres IP serwera (patrz przedmiot Sieci komputerowe)</li>
+<li><strong>nawiązanie połączenia</strong> — TCP handshake, potencjalnie TLS handshake (patrz punkt 1)</li>
+<li><strong>wysłanie żądania HTTP</strong> — metoda, ścieżka, nagłówki (np. <code>User-Agent</code>, <code>Accept</code>, <code>Cookie</code>)</li>
+<li><strong>odebranie i interpretacja odpowiedzi</strong> — parsowanie HTML/CSS/JS, budowa DOM (patrz przedmiot Języki hipertekstowe), renderowanie strony</li>
+<li><strong>zarządzanie cache</strong> — przechowywanie zasobów lokalnie wg nagłówków (<code>Cache-Control</code>, <code>ETag</code>), by nie pobierać ich ponownie bez potrzeby</li>
+<li><strong>obsługa cookies/sesji</strong> — przechowywanie i odsyłanie identyfikatorów sesji</li>
+</ul>
+
+<h3>Zadania serwera WWW</h3>
+<ul>
+<li><strong>nasłuchiwanie połączeń</strong> na skonfigurowanych portach (80/443)</li>
+<li><strong>parsowanie żądania HTTP</strong> — metoda, ścieżka, nagłówki, ewentualne ciało żądania</li>
+<li><strong>routing żądania</strong> — decyzja, jak obsłużyć dane URL: plik statyczny, przekazanie do backendu aplikacyjnego, przekierowanie, błąd 404</li>
+<li><strong>obsługa treści statycznej</strong> — bezpośrednie wysłanie plików HTML/CSS/JS/obrazów z dysku</li>
+<li><strong>delegacja do backendu</strong> — dla treści dynamicznej, przekazanie żądania do aplikacji (PHP-FPM, serwer aplikacyjny Java, proces Node.js itd. — patrz punkt 3, reverse proxy)</li>
+<li><strong>zarządzanie połączeniami</strong> — obsługa wielu klientów jednocześnie (procesy/wątki/event loop, zależnie od architektury serwera)</li>
+<li><strong>logowanie</strong> — zapisywanie informacji o żądaniach (adres IP, czas, kod odpowiedzi) do logów dostępu</li>
+<li><strong>bezpieczeństwo</strong> — TLS termination (patrz punkt 1), nagłówki bezpieczeństwa, ograniczenia dostępu</li>
+</ul>
+
+<h3>Architektury obsługi wielu połączeń przez serwer</h3>
+<table>
+<tr><th>Model</th><th>Zasada</th><th>Przykład</th></tr>
+<tr><td>Proces/wątek na połączenie</td><td>każde połączenie obsługiwane w osobnym procesie/wątku</td><td>klasyczny Apache (mod_prefork/mod_worker)</td></tr>
+<tr><td>Event loop (asynchroniczny)</td><td>jeden (lub kilka) wątek obsługuje wiele połączeń naraz, przełączając się między nimi bez blokowania na I/O</td><td>Nginx, Node.js</td></tr>
+</table>
+<p>Model event loop zwykle skaluje się lepiej przy dużej liczbie <strong>równoczesnych</strong> połączeń (mniejszy narzut pamięciowy niż jeden proces/wątek na połączenie), stąd popularność Nginx jako serwera front-endowego dla dużego ruchu.</p>
+
+<div class="uwaga">Typowe pytanie: opisz pełną sekwencję zdarzeń od wpisania adresu URL do wyświetlenia strony, uwzględniając zadania klienta i serwera w każdym kroku (DNS, TCP/TLS handshake, żądanie/odpowiedź HTTP, renderowanie).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Konfiguracja hostów WWW i serwerów Proxy</h2>
+
+<h3>Wirtualne hosty (virtual hosts)</h3>
+<p>Mechanizm hostowania <strong>wielu</strong> niezależnych witryn/domen na <strong>jednym</strong> fizycznym serwerze (jednym adresie IP) — serwer rozróżnia, o którą witrynę chodzi, na podstawie nagłówka <code>Host</code> żądania HTTP (i SNI dla HTTPS, patrz punkt 1).</p>
+
+<h3>Konfiguracja Apache — <code>VirtualHost</code></h3>
+<pre>&lt;VirtualHost *:80&gt;
+    ServerName example.com
+    DocumentRoot /var/www/example.com
+    ErrorLog /var/log/apache2/example.com-error.log
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+    ServerName drugastrona.pl
+    DocumentRoot /var/www/drugastrona.pl
+&lt;/VirtualHost&gt;</pre>
+
+<h3>Konfiguracja Nginx — <code>server</code> block</h3>
+<pre>server {
+    listen 80;
+    server_name example.com;
+    root /var/www/example.com;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}</pre>
+
+<h3>Reverse proxy — zasada działania</h3>
+<p>Serwer pośredniczący, który przyjmuje żądania od klientów i przekazuje je do <strong>jednego lub wielu</strong> serwerów "za sobą" (backendów) — z perspektywy klienta widoczny jest tylko reverse proxy, nie rzeczywiste serwery aplikacyjne.</p>
+<pre>Klient → Reverse Proxy (np. Nginx) → Backend (np. aplikacja Node.js/Java/Python na porcie 8080)</pre>
+
+<h3>Konfiguracja reverse proxy w Nginx</h3>
+<pre>server {
+    listen 80;
+    server_name aplikacja.example.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</pre>
+<p><code>proxy_set_header X-Real-IP</code> — backend "za" proxy widziałby normalnie adres IP proxy jako źródło żądania; ten nagłówek przekazuje <strong>prawdziwy</strong> adres klienta do backendu.</p>
+
+<h3>Zastosowania reverse proxy</h3>
+<table>
+<tr><th>Zastosowanie</th><th>Opis</th></tr>
+<tr><td>Load balancing</td><td>rozdzielanie ruchu między wiele instancji backendu (patrz przedmiot Sieci komputerowe/Technologie DevOps)</td></tr>
+<tr><td>TLS termination</td><td>szyfrowanie TLS obsługiwane na poziomie proxy, komunikacja z backendem "za nim" niezaszyfrowanym HTTP w bezpiecznej sieci wewnętrznej — backend nie musi zarządzać certyfikatami</td></tr>
+<tr><td>Serwowanie treści statycznej</td><td>proxy (np. Nginx) obsługuje pliki statyczne bezpośrednio, przekazując do backendu tylko żądania wymagające logiki aplikacji — odciąża wolniejszy backend</td></tr>
+<tr><td>Cache</td><td>przechowywanie kopii odpowiedzi backendu, żeby nie generować ich ponownie dla identycznych żądań</td></tr>
+<tr><td>Bezpieczeństwo</td><td>skrywanie rzeczywistej struktury/wersji backendu, filtrowanie złośliwych żądań przed dotarciem do aplikacji</td></tr>
+</table>
+
+<h3>Forward proxy vs reverse proxy</h3>
+<table>
+<tr><th></th><th>Forward proxy</th><th>Reverse proxy</th></tr>
+<tr><td>Działa w imieniu</td><td>klienta (np. firmowy proxy filtrujący wychodzący ruch pracowników)</td><td>serwera (skrywa/agreguje backendy przed klientami)</td></tr>
+<tr><td>Klient wie o proxy?</td><td>tak, jest skonfigurowany do korzystania z niego</td><td>zwykle nie — dla klienta wygląda jak zwykły serwer docelowy</td></tr>
+</table>
+
+<h3>Load balancing — podstawowe strategie</h3>
+<table>
+<tr><th>Strategia</th><th>Zasada</th></tr>
+<tr><td>Round-robin</td><td>żądania rozdzielane po kolei, cyklicznie między backendy</td></tr>
+<tr><td>Least connections</td><td>żądanie idzie do backendu z najmniejszą liczbą aktualnie obsługiwanych połączeń</td></tr>
+<tr><td>IP hash</td><td>ten sam klient (adres IP) trafia zawsze do tego samego backendu — przydatne przy sesjach niereplikowanych między serwerami (sticky session)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: skonfiguruj Nginx jako reverse proxy z load balancingiem dla dwóch instancji backendu, i wyjaśnij, dlaczego terminacja TLS na poziomie proxy jest praktyczna w architekturze z wieloma serwerami aplikacyjnymi za nim.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. HTTP/2 i HTTP/3</h2>
+
+<h3>Problem HTTP/1.1 — head-of-line blocking</h3>
+<p>W HTTP/1.1 każde żądanie w ramach jednego połączenia TCP musi zaczekać na zakończenie poprzedniego (albo przeglądarka otwiera wiele osobnych połączeń równolegle, co ma swój narzut) — powolne pobranie jednego zasobu blokuje kolejkę pozostałych.</p>
+
+<h3>HTTP/2 — multipleksowanie</h3>
+<table>
+<tr><th>Cecha</th><th>Opis</th></tr>
+<tr><td>Multipleksowanie</td><td>wiele żądań/odpowiedzi przesyłanych <strong>równolegle</strong> przez <strong>jedno</strong> połączenie TCP, w niezależnych "strumieniach" (streams) — koniec head-of-line blocking na poziomie HTTP</td></tr>
+<tr><td>Kompresja nagłówków (HPACK)</td><td>nagłówki HTTP (często powtarzalne między żądaniami) kompresowane, redukując narzut przesyłu</td></tr>
+<tr><td>Server push</td><td>serwer może "z góry" wysłać zasoby, o które klient jeszcze nie poprosił, ale prawdopodobnie będzie potrzebował (np. CSS/JS przy pierwszym żądaniu HTML) — w praktyce rzadko używane, częściowo wycofywane</td></tr>
+<tr><td>Binarny format</td><td>ramki binarne zamiast czystego tekstu (jak w HTTP/1.1) — bardziej efektywne parsowanie</td></tr>
+</table>
+<p>HTTP/2 nadal działa <strong>na TCP</strong> — dziedziczy więc pewne ograniczenia TCP (np. head-of-line blocking na poziomie <strong>samego</strong> TCP, gdy zgubi się pakiet — wszystkie strumienie czekają na retransmisję, nawet jeśli dotyczyła tylko jednego z nich).</p>
+
+<h3>HTTP/3 — oparty na QUIC (UDP)</h3>
+<p>Zamiast TCP, HTTP/3 działa na protokole <strong>QUIC</strong>, zbudowanym na UDP (patrz przedmiot Sieci komputerowe) — rozwiązuje head-of-line blocking na poziomie transportowym, bo utrata jednego pakietu wpływa tylko na jeden strumień, nie na wszystkie.</p>
+<table>
+<tr><th>Zaleta QUIC/HTTP3</th><th>Wyjaśnienie</th></tr>
+<tr><td>Szybsze nawiązanie połączenia</td><td>QUIC integruje uzgodnienie transportu i szyfrowania (TLS 1.3) w jednym uzgodnieniu — mniej rund komunikacji niż TCP+TLS osobno</td></tr>
+<tr><td>Migracja połączenia</td><td>połączenie może "przetrwać" zmianę adresu IP klienta (np. przełączenie Wi-Fi → dane mobilne) bez zrywania sesji</td></tr>
+<tr><td>Wbudowane szyfrowanie</td><td>QUIC jest zawsze szyfrowany (TLS 1.3 wbudowany), nie istnieje "QUIC bez TLS"</td></tr>
+</table>
+
+<h3>Porównanie wersji</h3>
+<table>
+<tr><th></th><th>HTTP/1.1</th><th>HTTP/2</th><th>HTTP/3</th></tr>
+<tr><td>Transport</td><td>TCP</td><td>TCP</td><td>QUIC (UDP)</td></tr>
+<tr><td>Multipleksowanie</td><td>nie (lub przez wiele połączeń)</td><td>tak</td><td>tak</td></tr>
+<tr><td>Head-of-line blocking</td><td>tak (na poziomie HTTP)</td><td>częściowo (na poziomie TCP)</td><td>brak</td></tr>
+</table>
+
+<div class="uwaga">Konfiguracja Nginx dla HTTP/2/3 wymaga odpowiedniej wersji serwera i skompilowanych modułów (<code>listen 443 ssl http2;</code>, dla HTTP/3 dodatkowo <code>listen 443 quic;</code>) — obie wersje wymagają HTTPS (w praktyce przeglądarki nie negocjują HTTP/2 bez TLS).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Nagłówki bezpieczeństwa HTTP</h2>
+
+<p>Nagłówki odpowiedzi HTTP konfigurowane po stronie serwera, instruujące przeglądarkę, jak bezpiecznie traktować odebraną treść — jeden z podstawowych, praktycznych elementów utwardzania (hardening) serwera WWW.</p>
+
+<h3>HSTS (HTTP Strict Transport Security)</h3>
+<pre>Strict-Transport-Security: max-age=31536000; includeSubDomains</pre>
+<p>Instruuje przeglądarkę, żeby przez podany czas (w sekundach) <strong>zawsze</strong> łączyła się z domeną przez HTTPS, nawet jeśli użytkownik wpisze <code>http://</code> — chroni przed atakiem "downgrade" (zmuszenie ofiary do połączenia przez niezaszyfrowane HTTP, gdzie łatwiej podsłuchać/zmodyfikować ruch).</p>
+
+<h3>CSP (Content Security Policy)</h3>
+<pre>Content-Security-Policy: default-src 'self'; script-src 'self' cdn.example.com</pre>
+<p>Ogranicza, z jakich źródeł strona może wczytywać skrypty/style/obrazy itd. — kluczowa ochrona przed <strong>XSS</strong> (patrz przedmiot Projektowanie aplikacji internetowych): nawet jeśli atakującemu uda się wstrzyknąć złośliwy <code>&lt;script&gt;</code>, przeglądarka odmówi jego wykonania, jeśli nie pochodzi z dozwolonego źródła.</p>
+
+<h3>X-Frame-Options</h3>
+<pre>X-Frame-Options: DENY</pre>
+<p>Zabrania (albo ogranicza) osadzania strony w <code>&lt;iframe&gt;</code> na innej witrynie — chroni przed <strong>clickjackingiem</strong> (nakłonienie użytkownika do kliknięcia czegoś innego, niż mu się wydaje, przez przezroczystą ramkę nałożoną na inną stronę).</p>
+
+<h3>Inne istotne nagłówki</h3>
+<table>
+<tr><th>Nagłówek</th><th>Zastosowanie</th></tr>
+<tr><td><code>X-Content-Type-Options: nosniff</code></td><td>zabrania przeglądarce "zgadywania" typu MIME innego niż zadeklarowany — zapobiega niektórym atakom opartym na błędnej interpretacji treści</td></tr>
+<tr><td><code>Referrer-Policy</code></td><td>kontroluje, ile informacji o adresie poprzedniej strony (referrer) jest wysyłane przy przechodzeniu na inną domenę — ochrona prywatności</td></tr>
+<tr><td><code>Set-Cookie: ...; Secure; HttpOnly; SameSite=Strict</code></td><td><code>Secure</code> — cookie wysyłane tylko przez HTTPS; <code>HttpOnly</code> — niedostępne dla JavaScript (ochrona przed XSS wykradającym cookie sesji); <code>SameSite</code> — ograniczenie wysyłania cookie przy żądaniach z innych domen (ochrona przed CSRF, patrz przedmiot Projektowanie aplikacji internetowych)</td></tr>
+</table>
+
+<h3>Konfiguracja w Nginx</h3>
+<pre>server {
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Content-Security-Policy "default-src 'self'" always;
+}</pre>
+
+<div class="uwaga">Typowe pytanie: dla opisanej podatności (np. "strona podatna na osadzenie w iframe innej witryny" albo "wstrzykiwanie złośliwych skryptów") wskaż odpowiedni nagłówek bezpieczeństwa jako część rozwiązania i wyjaśnij mechanizm jego działania.</div>
+</div>
+
+</body>
+</html>

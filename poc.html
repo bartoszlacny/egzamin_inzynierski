@@ -1,0 +1,364 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Przetwarzanie obrazów cyfrowych – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Przetwarzanie obrazów cyfrowych</h1>
+
+<div class="zagadnienie">
+<h2>1. Filtracja obrazu — filtry dolno- i górnoprzepustowe</h2>
+
+<h3>Splot (konwolucja) — podstawa filtracji</h3>
+<p>Filtracja przestrzenna polega na przesuwaniu <strong>maski/jądra (kernel)</strong> po obrazie — nowa wartość każdego piksela to ważona suma jego samego i pikseli sąsiednich, według wag zapisanych w masce:</p>
+<p>$$g(x,y) = \sum_{i,j} h(i,j)\cdot f(x-i, y-j)$$</p>
+<p>gdzie \(f\) to obraz oryginalny, \(h\) to maska (jądro filtru), \(g\) to obraz wynikowy.</p>
+
+<h3>Filtry dolnoprzepustowe (low-pass) — wygładzanie</h3>
+<p>Przepuszczają niskie częstotliwości (płynne, wolno zmieniające się obszary), <strong>tłumią</strong> wysokie częstotliwości (szczegóły, szum, ostre krawędzie) — efekt: rozmycie obrazu.</p>
+<table>
+<tr><th>Filtr</th><th>Zasada</th></tr>
+<tr>
+<td>Filtr średniej (box blur)</td>
+<td>każdy piksel zastąpiony średnią arytmetyczną z otaczającego okna (np. 3×3) — prosty, ale rozmywa krawędzie równomiernie</td>
+</tr>
+<tr>
+<td>Filtr Gaussa</td>
+<td>waga sąsiadów zmniejsza się wraz z odległością od centralnego piksela wg rozkładu Gaussa — daje bardziej "naturalne" rozmycie niż filtr średniej</td>
+</tr>
+<tr>
+<td>Filtr medianowy</td>
+<td>piksel zastąpiony medianą (nie średnią!) wartości z okna — nieliniowy, bardzo dobry do usuwania szumu impulsowego ("sól i pieprz"), przy zachowaniu ostrości krawędzi lepiej niż filtry liniowe</td>
+</tr>
+</table>
+
+<h3>Filtry górnoprzepustowe (high-pass) — wyostrzanie, wykrywanie krawędzi</h3>
+<p>Przepuszczają wysokie częstotliwości (szczegóły, krawędzie), <strong>tłumią</strong> niskie (jednolite obszary) — efekt: podkreślenie krawędzi/szczegółów.</p>
+<table>
+<tr><th>Filtr</th><th>Zasada</th></tr>
+<tr>
+<td>Laplasjan</td>
+<td>oparty na drugiej pochodnej (drugiej różnicy) intensywności — wykrywa miejsca szybkiej zmiany (krawędzie) niezależnie od kierunku</td>
+</tr>
+<tr>
+<td>Sobel, Prewitt</td>
+<td>oparte na pierwszej pochodnej (gradiencie) — osobne maski dla kierunku poziomego i pionowego, łączone by uzyskać moduł i kierunek gradientu</td>
+</tr>
+<tr>
+<td>Wyostrzanie (unsharp masking)</td>
+<td>obraz oryginalny + wzmocniona różnica (oryginał minus wersja rozmyta) — podkreśla krawędzie, zachowując ogólny wygląd obrazu</td>
+</tr>
+</table>
+
+<h3>Przykładowa maska filtru dolnoprzepustowego (3×3, uśredniająca)</h3>
+<pre>1/9 * | 1 1 1 |
+      | 1 1 1 |
+      | 1 1 1 |</pre>
+
+<h3>Przykładowa maska Laplasjanu</h3>
+<pre>|  0 -1  0 |
+| -1  4 -1 |
+|  0 -1  0 |</pre>
+
+<div class="uwaga">Kompromis: filtry dolnoprzepustowe redukują szum, ale rozmywają też prawdziwe krawędzie; filtry górnoprzepustowe podkreślają krawędzie, ale też wzmacniają szum — dlatego często najpierw odszumia się obraz (dolnoprzepustowo), a potem wyostrza (górnoprzepustowo).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Binaryzacja obrazu</h2>
+
+<p>Zamiana obrazu w skali szarości na obraz <strong>binarny</strong> (tylko dwie wartości: 0 — czarny, 1/255 — biały) — piksel jest klasyfikowany na podstawie porównania z <strong>progiem (threshold)</strong>.</p>
+
+<h3>Binaryzacja z progiem globalnym</h3>
+<p>$$g(x,y) = \begin{cases}1 & \text{jeśli } f(x,y) \ge T \\ 0 & \text{jeśli } f(x,y) < T\end{cases}$$</p>
+<p>Jeden, stały próg \(T\) dla całego obrazu — proste, ale zawodzi przy nierównomiernym oświetleniu (np. część obrazu w cieniu).</p>
+
+<h3>Metoda Otsu — automatyczny dobór progu</h3>
+<p>Wybiera próg \(T\), który <strong>maksymalizuje wariancję międzyklasową</strong> (albo równoważnie minimalizuje wariancję wewnątrzklasową) między pikselami "poniżej" i "powyżej" progu — działa dobrze, gdy histogram obrazu ma wyraźnie dwa "szczyty" (bimodalny — tło i obiekt).</p>
+
+<h3>Binaryzacja adaptacyjna (lokalna)</h3>
+<p>Próg jest wyliczany <strong>lokalnie</strong>, osobno dla każdego fragmentu obrazu (np. na podstawie średniej jasności w otaczającym oknie) — radzi sobie znacznie lepiej z nierównomiernym oświetleniem niż próg globalny.</p>
+
+<h3>Zastosowania binaryzacji</h3>
+<p>wstępny etap przed segmentacją (punkt 5), rozpoznawanie tekstu (OCR — oddzielenie liter od tła), analiza obrazów medycznych (oddzielenie struktury od tła), wykrywanie prostych obiektów na jednolitym tle.</p>
+
+<div class="uwaga">Typowe pytanie: kiedy próg globalny zawiedzie, a adaptacyjny/Otsu zadziała lepiej — np. zdjęcie dokumentu z nierównym oświetleniem (jeden róg jaśniejszy, drugi w cieniu) — globalny próg "zgubi" tekst w ciemniejszym rogu albo "zaleje" jaśniejszy tłem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Algorytm K-NN w klasyfikacji obrazów</h2>
+
+<p>K-NN (K Nearest Neighbors, k najbliższych sąsiadów) — prosty algorytm klasyfikacji nadzorowanej: nowy obiekt (obraz) jest klasyfikowany na podstawie klas jego \(k\) najbliższych "sąsiadów" ze zbioru danych treningowych.</p>
+
+<h3>Zasada działania</h3>
+<ol>
+<li>oblicz <strong>odległość</strong> nowego obrazu (reprezentowanego jako wektor cech) do wszystkich obrazów w zbiorze treningowym</li>
+<li>wybierz \(k\) obrazów treningowych o najmniejszej odległości (najbardziej "podobnych")</li>
+<li>przypisz klasę na podstawie <strong>głosowania większościowego</strong> wśród tych \(k\) sąsiadów</li>
+</ol>
+
+<h3>Miary odległości</h3>
+<p>Odległość euklidesowa (najczęstsza): $$d(x,y) = \sqrt{\sum_i (x_i-y_i)^2}$$</p>
+<p>Odległość Manhattan: $$d(x,y) = \sum_i |x_i-y_i|$$</p>
+
+<h3>Reprezentacja obrazu jako wektora cech</h3>
+<p>Zamiast porównywać obrazy piksel-po-pikselu (kosztowne, mało odporne na przesunięcia/skalę), zwykle wyznacza się cechy — np. histogram kolorów, histogram gradientów (HOG), cechy tekstury, albo (w podejściu głębokim) wektor cech z warstwy sieci neuronowej.</p>
+
+<h3>Wybór parametru \(k\)</h3>
+<ul>
+<li><strong>mały \(k\)</strong> (np. \(k=1\)) — bardzo czuły na szum/odstające obrazy w danych treningowych (przeuczenie)</li>
+<li><strong>duży \(k\)</strong> — bardziej "wygładzona" decyzja, ale ryzyko pomieszania klas przy niejednorodnym zbiorze (niedouczenie)</li>
+<li typowo wybiera się \(k\) przez walidację krzyżową (sprawdzenie, jakie \(k\) daje najlepszą dokładność na zbiorze walidacyjnym)</li>
+</ul>
+
+<h3>Zalety i wady</h3>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>proste do zrozumienia i implementacji</td><td>kosztowne obliczeniowo przy dużych zbiorach (trzeba porównać z każdym przykładem treningowym)</td></tr>
+<tr><td>brak fazy "uczenia" (leniwy algorytm — lazy learning)</td><td>czułe na skalę cech (wymaga normalizacji danych)</td></tr>
+<tr><td>naturalnie obsługuje wiele klas</td><td>słabo radzi sobie w przestrzeniach o bardzo dużej liczbie wymiarów (curse of dimensionality)</td></tr>
+</table>
+
+<div class="uwaga">K-NN to algorytm <strong>leniwy (lazy)</strong> — nie buduje żadnego jawnego modelu podczas "treningu" (po prostu zapamiętuje dane), cała praca odbywa się w momencie klasyfikacji nowego przykładu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Metody wyszukiwania różnic w obrazach</h2>
+
+<h3>Różnica bezwzględna (image differencing)</h3>
+<p>Najprostsza metoda — piksel po pikselu odejmij dwa obrazy i weź wartość absolutną:</p>
+<p>$$D(x,y) = |I_1(x,y) - I_2(x,y)|$$</p>
+<p>Duże wartości \(D\) wskazują obszary różnicy. Wymaga, by obrazy były dobrze <strong>zarejestrowane</strong> (ten sam kadr/perspektywa) — inaczej drobne przesunięcia dają fałszywe różnice na całym obrazie.</p>
+
+<h3>Binaryzacja mapy różnic</h3>
+<p>Po obliczeniu \(D(x,y)\), stosuje się próg (patrz punkt 2), żeby wyodrębnić <strong>istotne</strong> różnice od szumu tła — piksele powyżej progu oznaczają realną zmianę.</p>
+
+<h3>Detekcja zmian z uwzględnieniem szumu</h3>
+<p>Proste odejmowanie jest czułe na szum sensora i drobne zmiany oświetlenia — poprawa: filtracja dolnoprzepustowa przed odejmowaniem (redukcja szumu), albo porównywanie <strong>regionów/bloków</strong> obrazu, a nie pojedynczych pikseli (np. statystyki lokalne — średnia, wariancja bloku).</p>
+
+<h3>Metody oparte na cechach (feature-based)</h3>
+<p>Wykrycie punktów charakterystycznych (np. narożniki, punkty SIFT/SURF/ORB) w obu obrazach, dopasowanie odpowiadających sobie punktów — pozwala wykryć różnice nawet gdy obrazy nie są idealnie zarejestrowane (np. kamera się lekko poruszyła), bo najpierw można "wyrównać" (zarejestrować) obrazy geometrycznie, a potem szukać różnic.</p>
+
+<h3>Zastosowania</h3>
+<p>wykrywanie ruchu/intruzów w monitoringu wideo (różnica kolejnych ramek), analiza zmian terenu na zdjęciach satelitarnych, kontrola jakości w produkcji (wykrywanie defektów przez porównanie z wzorcem), medycyna (porównanie skanów z różnych badań w czasie).</p>
+
+<div class="uwaga">Kluczowy krok wstępny przy porównywaniu zdjęć z różnych momentów w czasie (np. satelitarnych) to <strong>rejestracja obrazu</strong> (image registration) — geometryczne wyrównanie obu obrazów do wspólnego układu odniesienia, zanim jakiekolwiek odejmowanie/porównywanie ma sens.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Segmentacja i detekcja obiektów</h2>
+
+<h3>Segmentacja obrazu</h3>
+<p>Podział obrazu na regiony o wspólnych własnościach (jednolity kolor/tekstura/jasność) — cel: wyodrębnić obszary odpowiadające konkretnym obiektom/strukturom.</p>
+
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Segmentacja progowa</td>
+<td>rozwinięcie binaryzacji (punkt 2) — wiele progów wydzielających różne regiony jasności</td>
+</tr>
+<tr>
+<td>Segmentacja przez narastanie regionów (region growing)</td>
+<td>startuje z punktu "zarodkowego", dołącza sąsiadujące piksele podobne (w ramach tolerancji), rozrastając region</td>
+</tr>
+<tr>
+<td>Segmentacja przez podział i scalanie (split & merge)</td>
+<td>dzieli obraz rekurencyjnie na mniejsze fragmenty (jeśli niejednolite), a potem scala sąsiadujące, podobne fragmenty</td>
+</tr>
+<tr>
+<td>Watershed ("działowa")</td>
+<td>traktuje obraz jak mapę wysokości (na podstawie gradientu jasności) i symuluje "zalewanie wodą" od minimów — granice regionów to "grzbiety" między basenami</td>
+</tr>
+<tr>
+<td>Segmentacja oparta na klasteryzacji (np. k-means)</td>
+<td>grupuje piksele w przestrzeni cech (kolor, pozycja) w klastry — każdy klaster to jeden segment</td>
+</tr>
+</table>
+
+<h3>Detekcja krawędzi (przypomnienie z punktu 1)</h3>
+<p>Wykrywanie krawędzi (Sobel, Laplasjan, Canny) to często <strong>pierwszy etap</strong> przed segmentacją — obszary ograniczone wykrytymi krawędziami stają się kandydatami na segmenty/obiekty.</p>
+
+<h3>Algorytm Canny'ego (klasyczny detektor krawędzi)</h3>
+<ol>
+<li>wygładzenie obrazu filtrem Gaussa (redukcja szumu)</li>
+<li>obliczenie gradientu (magnitude i kierunek) — np. operatorem Sobela</li>
+<li><strong>non-maximum suppression</strong> — zachowanie tylko lokalnych maksimów gradientu (pocienienie krawędzi do jednego piksela szerokości)</li>
+<li><strong>podwójne progowanie (hysteresis)</strong> — piksele powyżej wyższego progu są "na pewno" krawędzią; piksele między progami są krawędzią tylko, jeśli łączą się z pikselem powyżej wyższego progu</li>
+</ol>
+
+<h3>Detekcja obiektów (object detection)</h3>
+<p>Nie tylko segmentacja regionu, ale też <strong>klasyfikacja</strong> ("co to za obiekt") i lokalizacja (zwykle prostokąt otaczający — bounding box). Klasyczne podejścia: kaskady Haara (np. detekcja twarzy), HOG + klasyfikator (np. SVM); nowoczesne — sieci konwolucyjne (CNN), np. YOLO, R-CNN (spoza podstawowego zakresu tego przedmiotu, ale warto wiedzieć o istnieniu).</p>
+
+<div class="uwaga">Różnica segmentacja vs detekcja: segmentacja odpowiada "które piksele należą do czego" (podział całego obrazu na regiony), detekcja odpowiada "gdzie jest dany obiekt i jaki to obiekt" (zwykle z ramką ograniczającą, niekoniecznie z precyzyjnym konturem pikseli).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Histogram obrazu i wyrównywanie histogramu</h2>
+
+<h3>Histogram obrazu</h3>
+<p>Wykres liczby pikseli przypadających na każdy poziom jasności (dla obrazu w skali szarości: poziomy 0-255):</p>
+<p>$$h(i) = \text{liczba pikseli o jasności } i, \qquad i=0,1,\dots,255$$</p>
+<ul>
+<li>histogram <strong>skoncentrowany</strong> w jednym miejscu → niski kontrast (obraz "płaski", ciemny lub jasny)</li>
+<li>histogram <strong>szeroko rozciągnięty</strong> → wysoki kontrast</li>
+<li>histogram <strong>bimodalny</strong> (dwa wyraźne szczyty) → typowy sygnał, że obraz ma wyraźnie oddzielone tło i obiekt — dobry kandydat do binaryzacji metodą Otsu (patrz punkt 2)</li>
+</ul>
+
+<h3>Rozciąganie histogramu (contrast stretching)</h3>
+<p>Liniowe przeskalowanie zakresu jasności, tak by wykorzystać pełny dostępny zakres (np. 0-255):</p>
+<p>$$g(x,y) = \frac{f(x,y) - f_{min}}{f_{max}-f_{min}} \times 255$$</p>
+
+<h3>Wyrównywanie histogramu (histogram equalization)</h3>
+<p>Bardziej zaawansowana technika — przekształca obraz tak, by wynikowy histogram był <strong>możliwie płaski</strong> (jednostajny rozkład jasności), poprawiając kontrast zwłaszcza w obrazach, gdzie większość pikseli skupia się w wąskim zakresie jasności.</p>
+<p>Metoda: nowa jasność piksela wyznaczana na podstawie <strong>skumulowanego</strong> histogramu (CDF — cumulative distribution function) oryginalnego obrazu:</p>
+<p>$$g(x,y) = \text{round}\left((L-1)\cdot \frac{\text{CDF}(f(x,y))}{\text{liczba pikseli}}\right)$$</p>
+<p>gdzie \(L\) to liczba poziomów jasności (256 dla 8-bit).</p>
+
+<h3>Wyrównywanie adaptacyjne (CLAHE)</h3>
+<p>Wyrównywanie histogramu wykonywane <strong>lokalnie</strong> (w małych, nakładających się fragmentach obrazu) zamiast globalnie — lepiej radzi sobie z obrazami o nierównomiernym oświetleniu w różnych częściach (podobny problem jak przy binaryzacji globalnej vs adaptacyjnej z punktu 2).</p>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj/opisz działanie wyrównywania histogramu dla przykładowego, małego obrazu (np. 4×4, kilka poziomów szarości) — trzeba policzyć histogram, CDF, a potem nowe wartości jasności każdego poziomu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Operacje morfologiczne</h2>
+
+<p>Operacje na obrazach <strong>binarnych</strong> (lub w skali szarości), analizujące/modyfikujące kształt regionów za pomocą tzw. <strong>elementu strukturalnego</strong> (małej maski, np. 3×3 krzyż lub kwadrat) — podstawowe "narzędzia porządkujące" po binaryzacji/segmentacji.</p>
+
+<h3>Erozja (erosion)</h3>
+<p>"Wyjada" piksele z <strong>krawędzi</strong> obiektów (obiekty się zmniejszają) — piksel zostaje "1" tylko, jeśli <strong>cały</strong> element strukturalny w tym miejscu pokrywa się z obiektem (wszystkie sprawdzane piksele muszą być "1").</p>
+<ul>
+<li>usuwa małe, izolowane grupki pikseli (szum "sól")</li>
+<li>rozdziela obiekty połączone wąskim "mostkiem"</li>
+<li>zmniejsza obiekty, poszerza dziury/tło</li>
+</ul>
+
+<h3>Dylatacja (dilation)</h3>
+<p>"Dobudowuje" piksele na <strong>krawędziach</strong> obiektów (obiekty się powiększają) — piksel zostaje "1", jeśli <strong>przynajmniej jeden</strong> piksel elementu strukturalnego pokrywa się z obiektem.</p>
+<ul>
+<li>zamyka małe dziury/przerwy w obiekcie</li>
+<li>łączy obiekty znajdujące się bardzo blisko siebie</li>
+<li>powiększa obiekty, zmniejsza dziury/tło</li>
+</ul>
+
+<h3>Otwarcie (opening) = erozja, potem dylatacja</h3>
+<p>$$\text{otwarcie}(A) = \text{dylatacja}(\text{erozja}(A))$$</p>
+<p>Usuwa małe wypustki i izolowany szum, <strong>zachowując</strong> ogólny rozmiar i kształt większych obiektów (bo dylatacja "odbudowuje" to, co erozja niepotrzebnie zmniejszyła na głównym obiekcie).</p>
+
+<h3>Zamknięcie (closing) = dylatacja, potem erozja</h3>
+<p>$$\text{zamkniecie}(A) = \text{erozja}(\text{dylatacja}(A))$$</p>
+<p>Wypełnia małe dziury i wąskie zatoki w obiekcie, <strong>zachowując</strong> ogólny rozmiar (bo erozja z powrotem "przycina" to, co dylatacja niepotrzebnie dobudowała wokół).</p>
+
+<table>
+<tr><th>Operacja</th><th>Efekt na obiekcie</th><th>Typowe zastosowanie</th></tr>
+<tr><td>Erozja</td><td>zmniejsza, rozdziela</td><td>usuwanie drobnego szumu, rozdzielanie sklejonych obiektów</td></tr>
+<tr><td>Dylatacja</td><td>powiększa, łączy</td><td>zamykanie przerw, łączenie fragmentów tego samego obiektu</td></tr>
+<tr><td>Otwarcie</td><td>usuwa wypustki/szum, zachowuje rozmiar</td><td>czyszczenie szumu bez zmiany wielkości głównych obiektów</td></tr>
+<tr><td>Zamknięcie</td><td>wypełnia dziury, zachowuje rozmiar</td><td>domykanie konturów, usuwanie małych dziur wewnątrz obiektu</td></tr>
+</table>
+
+<div class="uwaga">Mnemonik: <strong>otwarcie "otwiera" (usuwa) drobne elementy</strong> wystające z obiektu, <strong>zamknięcie "zamyka" (wypełnia) drobne dziury</strong> w obiekcie — obie operacje są "przeciwne" względem tła i obiektu (otwarcie = zamknięcie zastosowane do dopełnienia obrazu, i odwrotnie).</div>
+
+<h3>Inne operacje morfologiczne</h3>
+<p><strong>szkieletyzacja (skeletonization)</strong> — redukcja obiektu do jego "osi" o szerokości jednego piksela (zachowuje topologię, np. do rozpoznawania odcisków palców); <strong>gradient morfologiczny</strong> = dylatacja − erozja (podkreśla kontur obiektu).</p>
+</div>
+
+</body>
+</html>

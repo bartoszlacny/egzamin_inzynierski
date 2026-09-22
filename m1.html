@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Matematyka 1 – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Matematyka 1</h1>
+
+<div class="zagadnienie">
+<h2>1. Tautologie i kontrtautologie — rachunek zdań i kwantyfikatorów</h2>
+
+<h3>Klasyczny rachunek zdań</h3>
+<p>Zdanie logiczne ma wartość logiczną: prawda (1) lub fałsz (0). Podstawowe spójniki:</p>
+<table>
+<tr><th>Spójnik</th><th>Symbol</th><th>Nazwa</th></tr>
+<tr><td>negacja</td><td>\(\neg p\)</td><td>"nieprawda, że p"</td></tr>
+<tr><td>koniunkcja</td><td>\(p \land q\)</td><td>"p i q" (prawda tylko gdy oba prawdziwe)</td></tr>
+<tr><td>alternatywa</td><td>\(p \lor q\)</td><td>"p lub q" (fałsz tylko gdy oba fałszywe)</td></tr>
+<tr><td>implikacja</td><td>\(p \Rightarrow q\)</td><td>"jeśli p, to q" (fałsz tylko gdy p=1, q=0)</td></tr>
+<tr><td>równoważność</td><td>\(p \iff q\)</td><td>"p wtedy i tylko wtedy, gdy q" (prawda gdy p=q)</td></tr>
+</table>
+
+<h3>Tautologia i kontrtautologia</h3>
+<ul>
+<li><strong>tautologia</strong> — formuła prawdziwa dla <strong>każdego</strong> podstawienia wartości logicznych (zawsze prawda), np. \(p \lor \neg p\) (prawo wyłączonego środka)</li>
+<li><strong>kontrtautologia (sprzeczność)</strong> — formuła fałszywa dla każdego podstawienia, np. \(p \land \neg p\)</li>
+<li formuła, która nie jest ani tautologią, ani kontrtautologią — jest <strong>spełnialna</strong> (prawdziwa dla niektórych podstawień)</li>
+</ul>
+
+<h3>Ważne tautologie</h3>
+<ul>
+<li>prawa De Morgana: \(\neg(p\land q) \iff (\neg p \lor \neg q)\), \(\neg(p\lor q) \iff (\neg p \land \neg q)\)</li>
+<li>prawo kontrapozycji: \((p\Rightarrow q) \iff (\neg q \Rightarrow \neg p)\)</li>
+<li>prawo przechodniości: \(((p\Rightarrow q)\land(q\Rightarrow r)) \Rightarrow (p\Rightarrow r)\)</li>
+<li>eliminacja implikacji: \((p\Rightarrow q) \iff (\neg p \lor q)\)</li>
+</ul>
+
+<div class="uwaga">Sprawdzanie tautologii: budujesz tabelę prawdy dla wszystkich kombinacji wartości zmiennych — jeśli wynik jest zawsze 1, to tautologia.</div>
+
+<h3>Rachunek kwantyfikatorów</h3>
+<ul>
+<li>kwantyfikator ogólny (duży): \(\forall x\, \phi(x)\) — "dla każdego x zachodzi φ(x)"</li>
+<li>kwantyfikator szczegółowy (mały): \(\exists x\, \phi(x)\) — "istnieje x, dla którego zachodzi φ(x)"</li>
+</ul>
+
+<h3>Negacja kwantyfikatorów</h3>
+<p>$$\neg \forall x\, \phi(x) \iff \exists x\, \neg\phi(x)$$</p>
+<p>$$\neg \exists x\, \phi(x) \iff \forall x\, \neg\phi(x)$$</p>
+
+<div class="uwaga">Klasyczny błąd: negując zdanie z kwantyfikatorem, kwantyfikator ogólny zamienia się na szczegółowy (i odwrotnie) — nie zostaje ten sam kwantyfikator z zanegowanym tylko warunkiem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Funkcje zdaniowe</h2>
+
+<p>Funkcja zdaniowa (predykat) \(\phi(x)\) to wyrażenie zawierające zmienną \(x\), które <strong>staje się zdaniem logicznym</strong> (ma wartość prawda/fałsz) dopiero po podstawieniu konkretnej wartości za x, lub po związaniu zmiennej kwantyfikatorem.</p>
+
+<h3>Przykład</h3>
+<p>\(\phi(x): "x^2 > 4"\) — samo w sobie nie jest zdaniem (nie ma wartości logicznej, dopóki nie wiemy, czym jest x)</p>
+<ul>
+<li>\(\phi(3)\): "9 > 4" → zdanie prawdziwe</li>
+<li>\(\phi(1)\): "1 > 4" → zdanie fałszywe</li>
+<li>\(\forall x \in \mathbb{R}\, \phi(x)\) → zdanie (fałszywe, bo nie każde x spełnia warunek)</li>
+<li>\(\exists x \in \mathbb{R}\, \phi(x)\) → zdanie (prawdziwe, np. x=3)</li>
+</ul>
+
+<h3>Zbiór prawdziwości funkcji zdaniowej</h3>
+<p>Zbiór wszystkich \(x\), dla których \(\phi(x)\) jest prawdziwe: \(\{x \in X : \phi(x)\}\) — to właśnie sposób, w jaki funkcje zdaniowe łączą się z określaniem zbiorów (np. zbiorów rozwiązań nierówności).</p>
+
+<h3>Funkcje zdaniowe wielu zmiennych</h3>
+<p>\(\phi(x,y)\) — zdanie po związaniu obu zmiennych kwantyfikatorami, np. \(\forall x\,\exists y\, (y > x)\) — kolejność kwantyfikatorów ma znaczenie! \(\exists y\,\forall x\,(y>x)\) to zupełnie inne (i fałszywe dla liczb rzeczywistych) zdanie.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Indukcja matematyczna</h2>
+
+<p>Metoda dowodzenia, że własność \(P(n)\) zachodzi dla <strong>wszystkich</strong> liczb naturalnych \(n \ge n_0\).</p>
+
+<h3>Zasada indukcji matematycznej</h3>
+<ol>
+<li><strong>krok bazowy</strong> — sprawdzamy, że \(P(n_0)\) jest prawdziwe (zwykle \(n_0=1\) lub \(0\))</li>
+<li><strong>krok indukcyjny</strong> — zakładamy (założenie indukcyjne), że \(P(k)\) zachodzi dla pewnego \(k \ge n_0\), i na tej podstawie dowodzimy, że \(P(k+1)\) też zachodzi</li>
+<li>wniosek: \(P(n)\) zachodzi dla wszystkich \(n \ge n_0\)</li>
+</ol>
+
+<h3>Przykład — suma liczb naturalnych</h3>
+<p>Dowód, że \(1+2+\dots+n = \dfrac{n(n+1)}{2}\) dla każdego \(n\ge1\):</p>
+<ul>
+<li>baza (n=1): \(1 = \dfrac{1\cdot2}{2} = 1\) ✓</li>
+<li>założenie indukcyjne: \(1+2+\dots+k = \dfrac{k(k+1)}{2}\)</li>
+<li>krok indukcyjny: \(1+2+\dots+k+(k+1) = \dfrac{k(k+1)}{2}+(k+1) = \dfrac{k(k+1)+2(k+1)}{2} = \dfrac{(k+1)(k+2)}{2}\) — czyli wzór zachodzi dla \(k+1\) ✓</li>
+</ul>
+
+<h3>Zastosowania</h3>
+<ul>
+<li>dowodzenie wzorów na sumy (jak wyżej), np. suma kwadratów: \(1^2+2^2+\dots+n^2 = \dfrac{n(n+1)(2n+1)}{6}\)</li>
+<li>dowodzenie nierówności, np. \(2^n > n\) dla każdego \(n\ge1\)</li>
+<li>dowodzenie podzielności, np. \(n^3-n\) jest podzielne przez 3 dla każdego \(n\)</li>
+<li>poprawność definicji rekurencyjnych (ciągi, algorytmy rekurencyjne — patrz przedmiot Podstawy programowania)</li>
+</ul>
+
+<div class="uwaga">Wariant: indukcja zupełna (silna) — w kroku indukcyjnym zakłada się prawdziwość \(P(n_0), P(n_0+1), \dots, P(k)\) (wszystkich poprzednich), a nie tylko ostatniego \(P(k)\). Przydatne np. przy dowodzeniu własności liczb pierwszych albo dla ciągów typu Fibonacciego, gdzie \(k+1\)-szy wyraz zależy od dwóch poprzednich.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Relacje. Relacje równoważności i porządku</h2>
+
+<h3>Relacja</h3>
+<p>Relacja \(R\) między zbiorami \(A\) i \(B\) to podzbiór iloczynu kartezjańskiego: \(R \subseteq A \times B\). Zapis \(aRb\) oznacza \((a,b) \in R\). Relacja na zbiorze \(A\) to \(R \subseteq A\times A\).</p>
+
+<h3>Własności relacji (na zbiorze A)</h3>
+<ul>
+<li><strong>zwrotność</strong>: \(\forall a\in A\ (aRa)\)</li>
+<li><strong>symetryczność</strong>: \(aRb \Rightarrow bRa\)</li>
+<li><strong>antysymetryczność</strong>: \((aRb \land bRa) \Rightarrow a=b\)</li>
+<li><strong>przechodniość</strong>: \((aRb \land bRc) \Rightarrow aRc\)</li>
+<li><strong>spójność</strong>: \(\forall a,b\in A\ (aRb \lor bRa)\) (każde dwa elementy są porównywalne)</li>
+</ul>
+
+<h3>Relacja równoważności</h3>
+<p>Relacja <strong>zwrotna, symetryczna i przechodnia</strong>. Przykład: relacja "reszty z dzielenia przez 3 są równe" na liczbach całkowitych.</p>
+
+<h3>Klasy abstrakcji</h3>
+<p>Dla relacji równoważności \(R\) na zbiorze \(A\), klasa abstrakcji elementu \(a\) to zbiór wszystkich elementów powiązanych z \(a\):</p>
+<p>$$[a]_R = \{x \in A : xRa\}$$</p>
+<ul>
+<li>klasy abstrakcji tworzą <strong>podział</strong> zbioru \(A\) na rozłączne, niepuste podzbiory, których suma daje cały \(A\)</li>
+<li> zbiór wszystkich klas abstrakcji nazywa się zbiorem ilorazowym \(A/R\)</li>
+</ul>
+
+<h3>Relacja porządku</h3>
+<p>Relacja <strong>zwrotna, antysymetryczna i przechodnia</strong> — nazywana <strong>porządkiem częściowym</strong>. Przykład: \(\subseteq\) na zbiorach, \(\le\) na liczbach.</p>
+<ul>
+<li><strong>porządek liniowy (całkowity)</strong> — porządek częściowy, który jest dodatkowo spójny (każde dwa elementy są porównywalne), np. \(\le\) na liczbach rzeczywistych</li>
+<li> elementy nieporównywalne mogą istnieć tylko w porządku częściowym, np. w \(\subseteq\) na zbiorach: \(\{1,2\}\) i \(\{2,3\}\) nie są w relacji \(\subseteq\) w żadną stronę</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Funkcja jako relacja — własności funkcji</h2>
+
+<p>Funkcja \(f: A \to B\) to szczególny przypadek relacji \(R \subseteq A\times B\), spełniający warunek: <strong>każdemu</strong> \(a\in A\) odpowiada <strong>dokładnie jeden</strong> \(b\in B\) taki, że \((a,b)\in R\).</p>
+
+<h3>Injekcja (różnowartościowość)</h3>
+<p>$$x_1 \ne x_2 \Rightarrow f(x_1) \ne f(x_2)$$</p>
+<p>równoważnie: \(f(x_1)=f(x_2) \Rightarrow x_1=x_2\). Żaden element przeciwdziedziny nie ma więcej niż jednego przeciwobrazu.</p>
+
+<h3>Surjekcja ("na")</h3>
+<p>$$\forall y \in B\ \exists x \in A: f(x) = y$$</p>
+<p>Każdy element zbioru \(B\) (przeciwdziedziny) jest wartością funkcji dla jakiegoś argumentu — cała przeciwdziedzina jest "pokryta".</p>
+
+<h3>Bijekcja</h3>
+<p>Funkcja jednocześnie injektywna i surjektywna — każdemu elementowi \(B\) odpowiada <strong>dokładnie jeden</strong> element \(A\). Tylko dla bijekcji istnieje funkcja odwrotna \(f^{-1}: B\to A\).</p>
+
+<table>
+<tr><th>Typ</th><th>Warunek</th><th>Przykład (f: \(\mathbb{R}\to\mathbb{R}\))</th></tr>
+<tr><td>injekcja</td><td>różne x dają różne f(x)</td><td>\(f(x)=x^3\)</td></tr>
+<tr><td>surjekcja</td><td>każde y jest osiągnięte</td><td>\(f(x)=x^3\)</td></tr>
+<tr><td>bijekcja</td><td>injekcja + surjekcja</td><td>\(f(x)=x^3\)</td></tr>
+<tr><td>ani jedno, ani drugie</td><td>—</td><td>\(f(x)=x^2\) (nie injekcja: f(-1)=f(1); nie surjekcja: brak wartości ujemnych)</td></tr>
+</table>
+
+<h3>Składanie funkcji</h3>
+<p>$$(f\circ g)(x) = f(g(x))$$</p>
+<ul>
+<li>złożenie dwóch injekcji jest injekcją; złożenie dwóch surjekcji jest surjekcją; złożenie dwóch bijekcji jest bijekcją</li>
+<li>składanie funkcji nie jest przemienne: na ogół \(f\circ g \ne g\circ f\)</li>
+<li>składanie jest łączne: \((f\circ g)\circ h = f\circ(g\circ h)\)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Kombinatoryka i rachunek prawdopodobieństwa</h2>
+
+<h3>Podstawowe reguły zliczania</h3>
+<ul>
+<li><strong>reguła mnożenia</strong>: jeśli czynność 1 można wykonać na \(n_1\) sposobów, a czynność 2 na \(n_2\) sposobów (niezależnie), to obie razem na \(n_1\cdot n_2\) sposobów</li>
+</ul>
+
+<h3>Permutacje</h3>
+<p>Liczba sposobów ustawienia \(n\) różnych elementów w ciąg: \(P(n) = n!\)</p>
+
+<h3>Wariacje</h3>
+<ul>
+<li><strong>bez powtórzeń</strong> — wybór \(k\) z \(n\) elementów z uwzględnieniem kolejności: \(V(n,k) = \dfrac{n!}{(n-k)!}\)</li>
+<li><strong>z powtórzeniami</strong>: \(V^p(n,k) = n^k\)</li>
+</ul>
+
+<h3>Kombinacje</h3>
+<p>Wybór \(k\) elementów z \(n\) <strong>bez</strong> uwzględniania kolejności:</p>
+<p>$$C(n,k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}$$</p>
+
+<h3>Prawdopodobieństwo klasyczne (definicja Laplace'a)</h3>
+<p>$$P(A) = \frac{|A|}{|\Omega|} = \frac{\text{liczba zdarzeń sprzyjających}}{\text{liczba zdarzeń możliwych}}$$</p>
+<p>(zakłada się, że wszystkie zdarzenia elementarne są jednakowo prawdopodobne)</p>
+
+<h3>Aksjomaty prawdopodobieństwa (Kołmogorowa)</h3>
+<ul>
+<li>\(P(A) \ge 0\) dla każdego zdarzenia A</li>
+<li>\(P(\Omega) = 1\)</li>
+<li>dla zdarzeń rozłącznych: \(P(A\cup B) = P(A)+P(B)\)</li>
+</ul>
+
+<h3>Prawdopodobieństwo warunkowe</h3>
+<p>$$P(A|B) = \frac{P(A\cap B)}{P(B)}, \quad P(B)>0$$</p>
+
+<h3>Wzór na prawdopodobieństwo całkowite</h3>
+<p>Jeśli \(B_1,\dots,B_n\) to podział \(\Omega\) na zdarzenia rozłączne (\(P(B_i)>0\)):</p>
+<p>$$P(A) = \sum_{i=1}^n P(A|B_i)P(B_i)$$</p>
+
+<h3>Wzór Bayesa</h3>
+<p>$$P(B_i|A) = \frac{P(A|B_i)P(B_i)}{\sum_j P(A|B_j)P(B_j)}$$</p>
+
+<h3>Niezależność zdarzeń</h3>
+<p>A i B są niezależne \(\iff P(A\cap B) = P(A)\cdot P(B)\)</p>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Zmienna losowa</h2>
+
+<p>Zmienna losowa \(X\) to funkcja przypisująca liczbę rzeczywistą każdemu zdarzeniu elementarnemu ze zbioru \(\Omega\).</p>
+
+<h3>Zmienna losowa dyskretna</h3>
+<p>Przyjmuje przeliczalny (skończony lub nieskończony) zbiór wartości. Opisywana <strong>rozkładem prawdopodobieństwa</strong> \(p_i = P(X=x_i)\), przy czym \(\sum_i p_i = 1\).</p>
+
+<h3>Wartość oczekiwana (dyskretna)</h3>
+<p>$$E(X) = \sum_i x_i \, p_i$$</p>
+
+<h3>Wariancja i odchylenie standardowe</h3>
+<p>$$D^2(X) = E[(X-E(X))^2] = E(X^2) - [E(X)]^2$$</p>
+<p>Odchylenie standardowe: \(D(X) = \sqrt{D^2(X)}\) — mierzy "rozrzut" wartości wokół średniej.</p>
+
+<h3>Dystrybuanta</h3>
+<p>$$F(x) = P(X \le x)$$</p>
+<ul>
+<li>funkcja niemalejąca, \(\lim_{x\to-\infty}F(x)=0\), \(\lim_{x\to\infty}F(x)=1\)</li>
+</ul>
+
+<h3>Zmienna losowa ciągła</h3>
+<p>Opisywana <strong>gęstością prawdopodobieństwa</strong> \(f(x)\), gdzie:</p>
+<p>$$P(a \le X \le b) = \int_a^b f(x)\,dx, \qquad E(X) = \int_{-\infty}^{\infty} x f(x)\,dx$$</p>
+
+<h3>Przykładowe rozkłady</h3>
+<table>
+<tr><th>Rozkład</th><th>Typ</th><th>Zastosowanie</th></tr>
+<tr><td>dwumianowy (Bernoulliego)</td><td>dyskretny</td><td>liczba sukcesów w n niezależnych próbach</td></tr>
+<tr><td>Poissona</td><td>dyskretny</td><td>liczba zdarzeń rzadkich w ustalonym czasie/obszarze</td></tr>
+<tr><td>jednostajny</td><td>ciągły</td><td>wartość "równie prawdopodobna" w przedziale</td></tr>
+<tr><td>normalny (Gaussa)</td><td>ciągły</td><td>zjawiska naturalne, błędy pomiarowe (krzywa dzwonowa)</td></tr>
+</table>
+
+<div class="uwaga">Typowe zadanie: dany rozkład prawdopodobieństwa zmiennej losowej dyskretnej (tabelka wartości i prawdopodobieństw) — policz wartość oczekiwaną, wariancję i odchylenie standardowe.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Zasada włączeń i wyłączeń</h2>
+
+<p>Sposób liczenia mocy sumy zbiorów, które mogą się nakładać (bez tego wzoru elementy wspólne policzylibyśmy kilka razy).</p>
+
+<h3>Dla dwóch zbiorów</h3>
+<p>$$|A\cup B| = |A|+|B|-|A\cap B|$$</p>
+
+<h3>Dla trzech zbiorów</h3>
+<p>$$|A\cup B\cup C| = |A|+|B|+|C| - |A\cap B|-|A\cap C|-|B\cap C| + |A\cap B\cap C|$$</p>
+
+<h3>Ogólna zasada</h3>
+<p>Dla \(n\) zbiorów: sumujemy moce pojedynczych zbiorów, odejmujemy moce wszystkich przecięć par, dodajemy moce przecięć trójek, odejmujemy czwórki, itd. (na przemian +/−).</p>
+
+<h3>Zastosowanie w prawdopodobieństwie</h3>
+<p>$$P(A\cup B) = P(A)+P(B)-P(A\cap B)$$</p>
+
+<div class="uwaga">Typowe zadanie: "ilu studentów zdało matematykę LUB fizykę", mając dane ilu zdało każdy przedmiot osobno i ilu zdało oba — klasyczne zastosowanie zasady włączeń i wyłączeń.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Wzory rozkładów prawdopodobieństwa</h2>
+
+<h3>Rozkład dwumianowy (Bernoulliego)</h3>
+<p>Liczba sukcesów \(k\) w \(n\) niezależnych próbach, gdzie \(p\) to prawdopodobieństwo sukcesu w pojedynczej próbie:</p>
+<p>$$P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}, \qquad k=0,1,\dots,n$$</p>
+<p>Wartość oczekiwana i wariancja: \(E(X)=np\), \(D^2(X)=np(1-p)\)</p>
+
+<h3>Rozkład Poissona</h3>
+<p>Liczba zdarzeń rzadkich w ustalonym przedziale czasu/obszarze, ze średnią liczbą zdarzeń \(\lambda\):</p>
+<p>$$P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}, \qquad k=0,1,2,\dots$$</p>
+<p>Wartość oczekiwana i wariancja: \(E(X)=\lambda\), \(D^2(X)=\lambda\) (obie równe!)</p>
+<div class="uwaga">Rozkład Poissona jest przybliżeniem rozkładu dwumianowego, gdy \(n\) jest duże, \(p\) małe, a \(np=\lambda\) jest umiarkowane (np. liczba awarii, liczba klientów na godzinę).</div>
+
+<h3>Rozkład normalny (Gaussa)</h3>
+<p>Gęstość prawdopodobieństwa dla zmiennej ciągłej o średniej \(\mu\) i odchyleniu standardowym \(\sigma\):</p>
+<p>$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}$$</p>
+<ul>
+<li>wykres w kształcie "dzwonu", symetryczny względem \(x=\mu\)</li>
+<li><strong>standaryzacja</strong>: \(Z = \dfrac{X-\mu}{\sigma}\) — zamienia dowolny rozkład normalny na standardowy \(N(0,1)\), dla którego korzysta się z tablic dystrybuanty</li>
+<li>reguła "3 sigm": ok. 68% wartości mieści się w \((\mu-\sigma,\mu+\sigma)\), ok. 95% w \((\mu-2\sigma,\mu+2\sigma)\), ok. 99.7% w \((\mu-3\sigma,\mu+3\sigma)\)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Prawo wielkich liczb i centralne twierdzenie graniczne</h2>
+
+<h3>Prawo wielkich liczb (słabe)</h3>
+<p>Średnia z \(n\) niezależnych, tak samo rozłożonych zmiennych losowych zbiega (w sensie prawdopodobieństwa) do wartości oczekiwanej, gdy \(n \to \infty\):</p>
+<p>$$\bar{X}_n = \frac{X_1+X_2+\dots+X_n}{n} \xrightarrow{P} E(X) \quad \text{gdy } n\to\infty$$</p>
+<p>Intuicja: im więcej powtórzeń eksperymentu, tym średnia z wyników jest bliższa "teoretycznej" wartości oczekiwanej (np. średnia z wielu rzutów kostką dąży do 3.5).</p>
+
+<h3>Centralne twierdzenie graniczne (CTG)</h3>
+<p>Suma (lub średnia) dużej liczby niezależnych zmiennych losowych o tym samym rozkładzie, po standaryzacji, zbiega do rozkładu normalnego — <strong>niezależnie od tego, jaki był rozkład wyjściowy</strong> zmiennych składowych:</p>
+<p>$$\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1) \quad \text{gdy } n\to\infty$$</p>
+
+<div class="uwaga">To dlatego rozkład normalny jest tak "wszechobecny" w naturze i statystyce — mnóstwo zjawisk to suma wielu drobnych, niezależnych czynników losowych (błędy pomiarowe, wzrost ludzi, itp.), więc z CTG wynika, że będą miały w przybliżeniu rozkład normalny.</div>
+
+<h3>Praktyczne zastosowanie</h3>
+<p>CTG pozwala przybliżać rozkład dwumianowy rozkładem normalnym, gdy \(n\) jest duże (w praktyce \(np\ge5\) i \(n(1-p)\ge5\)), co znacznie ułatwia obliczenia bez tablic dwumianowych.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Kowariancja i korelacja</h2>
+
+<p>Miary opisujące <strong>współzależność</strong> dwóch zmiennych losowych \(X\) i \(Y\).</p>
+
+<h3>Kowariancja</h3>
+<p>$$\text{Cov}(X,Y) = E[(X-E(X))(Y-E(Y))] = E(XY)-E(X)E(Y)$$</p>
+<ul>
+<li>\(\text{Cov}(X,Y) > 0\) — zmienne rosną/maleją razem (zależność dodatnia)</li>
+<li>\(\text{Cov}(X,Y) < 0\) — gdy jedna rośnie, druga zwykle maleje</li>
+<li>\(\text{Cov}(X,Y) = 0\) — brak zależności liniowej (zmienne niezależne mają zawsze kowariancję 0, ale nie odwrotnie!)</li>
+</ul>
+
+<h3>Współczynnik korelacji (Pearsona)</h3>
+<p>$$\rho_{X,Y} = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$$</p>
+<ul>
+<li>zawsze \(-1 \le \rho \le 1\) (kowariancja "znormalizowana" — nie zależy od jednostek, w jakich mierzymy X i Y)</li>
+<li>\(\rho = 1\) — pełna dodatnia zależność liniowa; \(\rho=-1\) — pełna ujemna; \(\rho=0\) — brak zależności liniowej</li>
+</ul>
+
+<div class="uwaga">Korelacja mierzy tylko zależność <strong>liniową</strong> — dwie zmienne mogą być silnie powiązane (np. \(Y=X^2\)), a mieć korelację bliską 0, jeśli zależność nie jest liniowa.</div>
+
+<h3>Wariancja sumy zmiennych losowych</h3>
+<p>$$D^2(X+Y) = D^2(X) + D^2(Y) + 2\,\text{Cov}(X,Y)$$</p>
+<p>Dla zmiennych niezależnych (Cov=0): \(D^2(X+Y) = D^2(X)+D^2(Y)\)</p>
+</div>
+
+</body>
+</html>

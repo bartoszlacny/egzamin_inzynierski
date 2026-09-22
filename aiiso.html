@@ -1,0 +1,402 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Administracja i integracja systemów operacyjnych – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Administracja i integracja systemów operacyjnych</h1>
+
+<div class="zagadnienie">
+<h2>1. Etapy bootowania systemu operacyjnego</h2>
+
+<h3>Ogólna sekwencja (Linux, BIOS/legacy)</h3>
+<ol>
+<li><strong>POST (Power-On Self-Test)</strong> — sprzętowy test podstawowych komponentów (RAM, CPU) wykonywany przez firmware płyty głównej</li>
+<li><strong>BIOS/UEFI</strong> — firmware inicjalizuje sprzęt, odnajduje urządzenie startowe, przekazuje kontrolę dalej</li>
+<li><strong>MBR/GPT + bootloader (np. GRUB)</strong> — mały program wskazujący, jaki kernel wczytać i z jakimi parametrami; wyświetla menu wyboru systemu/wersji kernela, jeśli skonfigurowano więcej niż jedną opcję</li>
+<li><strong>wczytanie jądra (kernel)</strong> — kernel Linuksa jest ładowany do pamięci wraz z initramfs/initrd (minimalny system plików z niezbędnymi sterownikami do zamontowania rzeczywistego dysku)</li>
+<li><strong>init / systemd (PID 1)</strong> — pierwszy proces użytkownika, uruchamia kolejne usługi systemowe (sieć, logowanie, itd.) zgodnie ze zdefiniowanymi zależnościami (jednostkami systemd) lub poziomami uruchomienia (runlevels — starszy System V init)</li>
+<li><strong>uruchomienie usług i menedżera logowania</strong> — system dochodzi do stanu gotowości (konsola tekstowa albo graficzny ekran logowania)</li>
+</ol>
+
+<h3>BIOS vs UEFI</h3>
+<table>
+<tr><th></th><th>BIOS (legacy)</th><th>UEFI</th></tr>
+<tr><td>Tablica partycji</td><td>MBR (max. 4 partycje podstawowe, dysk do 2TB)</td><td>GPT (dużo więcej partycji, dyski &gt;2TB)</td></tr>
+<tr><td>Interfejs</td><td>tekstowy, ograniczony</td><td>graficzny, bardziej rozbudowany, wsparcie dla myszy</td></tr>
+<tr><td>Bezpieczeństwo</td><td>brak</td><td>Secure Boot — weryfikacja podpisu cyfrowego bootloadera</td></tr>
+</table>
+
+<h3>systemd — jednostki (units) i cele (targets)</h3>
+<p>Nowoczesne dystrybucje Linuksa (np. Ubuntu, Fedora, Debian) używają <code>systemd</code> jako systemu init — usługi definiowane jako jednostki (<code>.service</code>), z zależnościami między nimi, grupowane w <strong>targets</strong> (odpowiedniki starych runlevels, np. <code>multi-user.target</code>, <code>graphical.target</code>).</p>
+<pre>systemctl status              # status usług
+systemctl list-units --type=service
+journalctl -b                 # logi z bieżącego bootowania</pre>
+
+<h3>Bootowanie Windows (skrótowo)</h3>
+<p>UEFI/BIOS → Windows Boot Manager (<code>bootmgr</code>) → wczytanie <code>winload.exe</code> i jądra (<code>ntoskrnl.exe</code>) → inicjalizacja sterowników i usług → menedżer logowania.</p>
+
+<div class="uwaga">Typowe pytanie: uszereguj podane etapy bootowania w poprawnej kolejności, albo wyjaśnij różnicę między MBR a GPT / BIOS a UEFI.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Konfiguracja serwera SSH (sshd)</h2>
+
+<h3>SSH — podstawy</h3>
+<p>Protokół (i usługa <code>sshd</code>) do bezpiecznego, szyfrowanego zdalnego dostępu do terminala — zastąpił niezaszyfrowane, starsze protokoły jak Telnet.</p>
+
+<h3>Plik konfiguracyjny — <code>/etc/ssh/sshd_config</code></h3>
+<pre>Port 22                      # port, na którym nasłuchuje serwer (zmiana utrudnia automatyczne skanowanie)
+PermitRootLogin no           # zablokowanie logowania bezpośrednio jako root (dobra praktyka bezpieczeństwa)
+PasswordAuthentication no    # wyłączenie logowania hasłem — wymusza uwierzytelnianie kluczem
+PubkeyAuthentication yes     # zezwolenie na logowanie kluczem publicznym
+AllowUsers jan anna          # ograniczenie logowania tylko do wskazanych użytkowników
+MaxAuthTries 3               # limit liczby prób uwierzytelnienia</pre>
+<p>Po zmianie konfiguracji: <code>systemctl restart sshd</code> (żeby zmiany zaczęły działać).</p>
+
+<h3>Uwierzytelnianie kluczem publicznym</h3>
+<pre># na kliencie — generowanie pary kluczy
+ssh-keygen -t ed25519
+
+# skopiowanie klucza publicznego na serwer
+ssh-copy-id uzytkownik@serwer
+
+# logowanie (bez podawania hasła, jeśli klucz skonfigurowany)
+ssh uzytkownik@serwer</pre>
+<p>Klucz <strong>prywatny</strong> pozostaje wyłącznie na komputerze klienta (nigdy się go nie udostępnia!), klucz <strong>publiczny</strong> trafia do pliku <code>~/.ssh/authorized_keys</code> na serwerze.</p>
+
+<h3>Dlaczego klucz jest bezpieczniejszy niż hasło</h3>
+<ul>
+<li>odporny na atak brute-force (klucz kryptograficzny, nie krótkie hasło do odgadnięcia)</li>
+<li klucz prywatny może być dodatkowo chroniony hasłem (passphrase) — dwa niezależne czynniki</li>
+<li łatwe do zarządzania na wielu serwerach (jeden klucz, wiele maszyn) i łatwe do unieważnienia (usunięcie z <code>authorized_keys</code>)</li>
+</ul>
+
+<h3>Tunelowanie SSH i przekazywanie portów</h3>
+<pre>ssh -L 8080:localhost:80 serwer     # tunel lokalny — dostęp do usługi na serwerze przez lokalny port
+ssh -D 1080 serwer                  # tunel SOCKS — proxy przez SSH</pre>
+
+<div class="uwaga">Podstawowa checklist "utwardzania" (hardening) SSH: zmiana domyślnego portu, wyłączenie logowania jako root, wyłączenie logowania hasłem (tylko klucze), ograniczenie listy dozwolonych użytkowników, ewentualnie fail2ban do automatycznego blokowania adresów IP po nieudanych próbach logowania.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Układy dysków RAID</h2>
+
+<p>RAID (Redundant Array of Independent Disks) — sposób łączenia wielu fizycznych dysków w jeden logiczny wolumen, dla zwiększenia <strong>wydajności</strong> i/lub <strong>odporności na awarię</strong> pojedynczego dysku.</p>
+
+<table>
+<tr><th>Poziom</th><th>Zasada</th><th>Odporność na awarię</th><th>Wykorzystanie pojemności</th></tr>
+<tr>
+<td>RAID 0 (stripowanie)</td>
+<td>dane dzielone (stripe) na wiele dysków, zapis/odczyt równolegle</td>
+<td>brak — awaria jednego dysku = utrata wszystkich danych</td>
+<td>100% (suma wszystkich dysków)</td>
+</tr>
+<tr>
+<td>RAID 1 (mirroring)</td>
+<td>pełna kopia (mirror) danych na każdym dysku</td>
+<td>przetrwa awarię wszystkich dysków poza jednym</td>
+<td>50% (dla 2 dysków) — reszta to duplikat</td>
+</tr>
+<tr>
+<td>RAID 5</td>
+<td>stripowanie danych + rozproszona parzystość (parity) na wszystkich dyskach</td>
+<td>przetrwa awarię <strong>jednego</strong> dysku</td>
+<td>\((n-1)/n\) — jeden dysk "efektywnie" na parzystość</td>
+</tr>
+<tr>
+<td>RAID 6</td>
+<td>jak RAID 5, ale z <strong>podwójną</strong> parzystością</td>
+<td>przetrwa awarię <strong>dwóch</strong> dysków</td>
+<td>\((n-2)/n\)</td>
+</tr>
+<tr>
+<td>RAID 10 (1+0)</td>
+<td>zestaw par mirror (RAID 1), połączonych stripingiem (RAID 0)</td>
+<td>przetrwa awarię wielu dysków (o ile nie obu z tej samej pary)</td>
+<td>50%</td>
+</tr>
+</table>
+
+<h3>Parzystość (parity) w RAID 5/6</h3>
+<p>Dodatkowe dane obliczone (najczęściej operacją XOR) z danych na innych dyskach — pozwalają <strong>odtworzyć</strong> zawartość uszkodzonego dysku na podstawie parzystości i pozostałych, sprawnych dysków.</p>
+
+<h3>RAID sprzętowy vs programowy</h3>
+<ul>
+<li><strong>sprzętowy</strong> — dedykowany kontroler RAID wykonuje obliczenia (np. parzystość) niezależnie od CPU systemu</li>
+<li><strong>programowy</strong> — RAID zarządzany przez system operacyjny (np. <code>mdadm</code> w Linuksie), obciąża CPU hosta, ale bardziej elastyczny i tańszy</li>
+</ul>
+
+<h3>RAID a backup</h3>
+<div class="uwaga">RAID <strong>nie jest</strong> substytutem backupu! Chroni przed awarią <strong>fizyczną</strong> dysku, ale nie przed przypadkowym usunięciem plików, błędem użytkownika, ransomware czy błędem w samym systemie plików — te problemy replikują się na wszystkie dyski RAID identycznie.</div>
+
+<h3>Wybór poziomu — kompromis</h3>
+<p>RAID 0 — maksymalna wydajność, zero bezpieczeństwa (np. dane tymczasowe, cache). RAID 1 — prostota i bezpieczeństwo, kosztem pojemności. RAID 5/6 — dobry kompromis pojemność/bezpieczeństwo dla większej liczby dysków, ale wolniejszy zapis (obliczanie parzystości) i długi czas odbudowy (rebuild) po awarii.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Logiczne wolumeny dyskowe (LVM)</h2>
+
+<p>LVM (Logical Volume Manager) — warstwa abstrakcji między fizycznymi dyskami a systemami plików, pozwalająca elastycznie zarządzać przestrzenią dyskową bez sztywnego przywiązania do fizycznych partycji.</p>
+
+<h3>Hierarchia LVM</h3>
+<table>
+<tr><th>Poziom</th><th>Nazwa</th><th>Opis</th></tr>
+<tr><td>1</td><td>PV (Physical Volume)</td><td>fizyczna partycja/dysk przygotowany do użycia przez LVM</td></tr>
+<tr><td>2</td><td>VG (Volume Group)</td><td>"pula" przestrzeni złożona z jednego lub wielu PV — traktowana jako jeden duży zbiór dostępnej pamięci</td></tr>
+<tr><td>3</td><td>LV (Logical Volume)</td><td>"wirtualna partycja" wykrojona z VG — na niej dopiero tworzy się system plików</td></tr>
+</table>
+<pre>PV (dysk1) ┐
+PV (dysk2) ├─→ VG (grupa1) ─┬─→ LV (root) → system plików ext4
+PV (dysk3) ┘                 ├─→ LV (home) → system plików ext4
+                              └─→ LV (dane) → system plików xfs</pre>
+
+<h3>Podstawowe komendy</h3>
+<pre>pvcreate /dev/sdb1              # oznacz partycję jako Physical Volume
+vgcreate grupa1 /dev/sdb1        # utwórz Volume Group z PV
+lvcreate -L 10G -n dane grupa1   # utwórz Logical Volume 10GB w grupa1
+mkfs.ext4 /dev/grupa1/dane       # utwórz system plików na LV</pre>
+
+<h3>Kluczowa zaleta — elastyczność</h3>
+<ul>
+<li><strong>zmiana rozmiaru "w locie"</strong> — LV można powiększyć (<code>lvextend</code>) lub (ostrożniej) zmniejszyć bez przenoszenia danych na inny fizyczny dysk, o ile w VG jest dostępna wolna przestrzeń</li>
+<li><strong>rozciąganie na wiele dysków</strong> — VG może obejmować wiele fizycznych dysków, LV może "rozlać się" na nie wszystkie, ułatwiając dodawanie przestrzeni bez zmiany struktury partycji</li>
+<li><strong>snapshoty</strong> — LVM pozwala zrobić migawkę (snapshot) stanu LV w danym momencie — przydatne do backupów "na żywo" bez zatrzymywania systemu</li>
+</ul>
+
+<h3>LVM vs zwykłe partycjonowanie</h3>
+<table>
+<tr><th></th><th>Partycje "klasyczne"</th><th>LVM</th></tr>
+<tr><td>Zmiana rozmiaru</td><td>trudna, często wymaga przenoszenia danych</td><td>łatwa, "w locie" (przy wolnym miejscu w VG)</td></tr>
+<tr><td>Rozciąganie na wiele dysków</td><td>nie (partycja jest ograniczona do jednego dysku, poza RAID)</td><td>tak, natywnie</td></tr>
+<tr><td>Złożoność</td><td>prostsza koncepcyjnie</td><td>dodatkowa warstwa abstrakcji do zrozumienia</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: opisz kroki potrzebne do powiększenia partycji <code>/home</code> zarządzanej przez LVM o dodatkowe 20GB, zakładając wolne miejsce w Volume Group.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Zarządzanie systemami plików i użytkownikami</h2>
+
+<h3>Montowanie systemów plików (Linux)</h3>
+<pre>mount /dev/sdb1 /mnt/dane          # ręczne zamontowanie
+umount /mnt/dane                   # odmontowanie
+
+# /etc/fstab — automatyczne montowanie przy starcie systemu
+/dev/sdb1   /mnt/dane   ext4   defaults   0   2</pre>
+
+<h3>Uprawnienia do plików (Linux)</h3>
+<pre>-rwxr-xr--  1 jan  grupa  1024  plik.txt</pre>
+<p>Trzy grupy uprawnień: właściciel (owner), grupa (group), inni (others) — każda z prawami <strong>r</strong>ead (odczyt), <strong>w</strong>rite (zapis), e<strong>x</strong>ecute (wykonanie):</p>
+<pre>chmod 754 plik.txt      # 7=rwx (właściciel), 5=r-x (grupa), 4=r-- (inni)
+chmod u+x plik.txt      # dodanie prawa wykonania właścicielowi
+chown jan:grupa plik.txt  # zmiana właściciela i grupy</pre>
+
+<h3>Zarządzanie użytkownikami i grupami (Linux)</h3>
+<pre>useradd -m -s /bin/bash jan     # nowy użytkownik (-m: utwórz katalog domowy)
+passwd jan                      # ustawienie hasła
+usermod -aG sudo jan             # dodanie do grupy (np. sudo — uprawnienia administracyjne)
+userdel -r jan                   # usunięcie użytkownika (-r: wraz z katalogiem domowym)
+
+groupadd deweloperzy
+groups jan                       # lista grup, do których należy jan</pre>
+<p>Pliki systemowe: <code>/etc/passwd</code> (lista użytkowników i podstawowe dane), <code>/etc/shadow</code> (zahaszowane hasła), <code>/etc/group</code> (definicje grup).</p>
+
+<h3>Model uprawnień — <code>sudo</code> vs root</h3>
+<p>Zamiast logować się jako <code>root</code> na stałe (ryzykowne — każdy błąd/awaria ma pełne uprawnienia), standardowa praktyka to praca jako zwykły użytkownik i używanie <code>sudo</code> do pojedynczych komend wymagających podniesionych uprawnień — z pełnym logowaniem, kto i kiedy użył jakiego polecenia z podniesieniem uprawnień.</p>
+
+<h3>Zarządzanie użytkownikami (Windows, dla porównania)</h3>
+<pre>net user jan HasloTest /add
+net localgroup Administratorzy jan /add</pre>
+<p>Koncepcyjnie analogiczne mechanizmy: konta użytkowników, grupy, uprawnienia NTFS do plików/folderów (odczyt, zapis, modyfikacja, pełna kontrola).</p>
+
+<h3>Systemy plików — wybór i zarządzanie</h3>
+<p>Formatowanie: <code>mkfs.ext4</code>, <code>mkfs.xfs</code> (Linux), sprawdzanie/naprawa: <code>fsck</code> (patrz przedmiot Wprowadzenie do systemów operacyjnych — organizacja systemów plików).</p>
+
+<div class="uwaga">Typowe zadanie: dla podanych uprawnień w formie <code>rwxr-x---</code> zdekoduj, co może zrobić właściciel/grupa/inni, albo napisz polecenie <code>chmod</code>/<code>chown</code> realizujące opisane słownie wymaganie dostępu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Wirtualizacja i konteneryzacja</h2>
+
+<h3>Maszyny wirtualne (VM)</h3>
+<p>Program (<strong>hipervizor</strong>) emuluje kompletny wirtualny komputer — z własnym, pełnym systemem operacyjnym (kernelem), na którym działają aplikacje, tak jak na fizycznej maszynie.</p>
+<table>
+<tr><th>Typ hipervizora</th><th>Zasada</th><th>Przykłady</th></tr>
+<tr><td>Typ 1 (bare-metal)</td><td>działa bezpośrednio na sprzęcie, bez systemu-hosta pod sobą</td><td>VMware ESXi, Microsoft Hyper-V, KVM</td></tr>
+<tr><td>Typ 2 (hosted)</td><td>działa jako aplikacja na "zwykłym" systemie operacyjnym</td><td>VirtualBox, VMware Workstation</td></tr>
+</table>
+
+<h3>Kontenery (np. Docker)</h3>
+<p>Izolują <strong>procesy</strong> aplikacji na poziomie systemu operacyjnego — kontenery <strong>współdzielą jądro</strong> systemu-hosta (nie ma osobnego kernela w każdym kontenerze), pakując tylko aplikację i jej zależności (biblioteki, konfigurację).</p>
+
+<h3>VM vs kontener — porównanie</h3>
+<table>
+<tr><th></th><th>Maszyna wirtualna</th><th>Kontener</th></tr>
+<tr><td>Jądro systemu</td><td>własne, pełne (w każdej VM)</td><td>współdzielone z hostem</td></tr>
+<tr><td>Rozmiar</td><td>duży (GB) — cały system operacyjny</td><td>mały (MB) — tylko aplikacja + zależności</td></tr>
+<tr><td>Czas startu</td><td>sekundy/minuty (boot całego OS)</td><td>ułamki sekundy (start procesu)</td></tr>
+<tr><td>Izolacja</td><td>silna (pełna, na poziomie sprzętu wirtualnego)</td><td>słabsza (na poziomie procesów/przestrzeni nazw jądra)</td></tr>
+<tr><td>Można różne systemy na hoście?</td><td>tak (np. Windows VM na Linux hoście)</td><td>nie — kontener wymaga zgodności z jądrem hosta (Linux kontenery na Linux hoście)</td></tr>
+</table>
+
+<h3>Podstawowe komendy Docker</h3>
+<pre>docker build -t mojaapp .          # zbudowanie obrazu z Dockerfile
+docker run -d -p 8080:80 mojaapp    # uruchomienie kontenera w tle, mapowanie portu
+docker ps                           # lista działających kontenerów
+docker exec -it &lt;id&gt; bash          # wejście do działającego kontenera
+docker stop &lt;id&gt;</pre>
+
+<h3>Obraz vs kontener</h3>
+<p><strong>Obraz (image)</strong> — statyczny, tylko-do-odczytu "szablon" (jak klasa) zawierający aplikację i jej środowisko; <strong>kontener</strong> — działająca instancja obrazu (jak obiekt) — z tego samego obrazu można uruchomić wiele niezależnych kontenerów.</p>
+
+<h3>Orkiestracja kontenerów</h3>
+<p>Przy wielu kontenerach (mikroserwisy — patrz przedmiot Projektowanie aplikacji internetowych) potrzebne narzędzia zarządzające ich cyklem życia na wielu maszynach — np. <strong>Kubernetes</strong>, Docker Compose (dla prostszych, jednomaszynowych scenariuszy).</p>
+
+<div class="uwaga">Typowe pytanie: kiedy wybrać VM, a kiedy kontener — VM gdy potrzeba pełnej izolacji/innego systemu operacyjnego (np. hostowanie wielu klientów na jednym serwerze fizycznym); kontener gdy liczy się szybkość, gęstość upakowania i łatwa przenośność tej samej aplikacji między środowiskami (dev/test/produkcja).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Automatyzacja zadań administracyjnych</h2>
+
+<h3>cron (Linux) — harmonogram zadań</h3>
+<p>Demon systemowy wykonujący zadania w zaplanowanych momentach, zdefiniowanych w plikach <strong>crontab</strong>:</p>
+<pre>crontab -e     # edycja crontab bieżącego użytkownika
+crontab -l     # wyświetlenie aktualnych zaplanowanych zadań</pre>
+
+<h3>Składnia crontab</h3>
+<pre># minuta godzina dzień_miesiąca miesiąc dzień_tygodnia   komenda
+0    2      *              *       *                /skrypty/backup.sh
+*/15 *      *              *       *                /skrypty/sprawdz_dysk.sh
+0    0      1              *       *                /skrypty/raport_miesieczny.sh
+30   8      *              *       1-5               /skrypty/powiadomienie.sh</pre>
+<table>
+<tr><th>Pole</th><th>Zakres</th></tr>
+<tr><td>minuta</td><td>0-59</td></tr>
+<tr><td>godzina</td><td>0-23</td></tr>
+<tr><td>dzień miesiąca</td><td>1-31</td></tr>
+<tr><td>miesiąc</td><td>1-12</td></tr>
+<tr><td>dzień tygodnia</td><td>0-6 (0 = niedziela)</td></tr>
+</table>
+<p><code>*</code> oznacza "każdy" (dowolna wartość), <code>*/15</code> — "co 15 jednostek", <code>1-5</code> — zakres.</p>
+
+<h3>systemd timers — nowocześniejsza alternatywa</h3>
+<p>W dystrybucjach z <code>systemd</code> zadania okresowe można definiować przez parę plików: jednostka <code>.service</code> (co wykonać) + jednostka <code>.timer</code> (kiedy wykonać):</p>
+<pre># /etc/systemd/system/backup.timer
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target</pre>
+<pre>systemctl enable --now backup.timer
+systemctl list-timers          # lista zaplanowanych timerów</pre>
+
+<h3>cron vs systemd timers</h3>
+<table>
+<tr><th></th><th>cron</th><th>systemd timers</th></tr>
+<tr><td>Prostota</td><td>bardzo prosta, jedna linia</td><td>wymaga dwóch plików (.service + .timer)</td></tr>
+<tr><td>Logowanie</td><td>ograniczone (zależnie od konfiguracji)</td><td>zintegrowane z <code>journalctl</code> — pełne logi</td></tr>
+<tr><td>Zależności między zadaniami</td><td>brak natywnego wsparcia</td><td>można wykorzystać mechanizm zależności jednostek systemd</td></tr>
+<tr><td>Uruchomienie "zaległego" zadania po restarcie</td><td>nie (jeśli system był wyłączony w zaplanowanym momencie, zadanie przepada)</td><td>tak, z opcją <code>Persistent=true</code></td></tr>
+</table>
+
+<h3>Typowe zastosowania automatyzacji</h3>
+<p>automatyczne backupy (nawiązanie do RAID z punktu 3 — RAID nie zastępuje backupu, ale cron/systemd timer może go zautomatyzować), czyszczenie starych logów/plików tymczasowych, okresowe raporty/monitoring, odnawianie certyfikatów (np. Let's Encrypt), aktualizacje systemu w oknie serwisowym.</p>
+
+<div class="uwaga">Typowe zadanie: napisz wpis crontab wykonujący dany skrypt co godzinę w dni robocze, albo w każdą niedzielę o 3:00 w nocy — trzeba poprawnie rozpisać pola minuta/godzina/dzień_miesiąca/miesiąc/dzień_tygodnia.</div>
+</div>
+
+</body>
+</html>

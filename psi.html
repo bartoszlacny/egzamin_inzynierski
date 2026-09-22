@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Podstawy sztucznej inteligencji – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Podstawy sztucznej inteligencji</h1>
+
+<div class="zagadnienie">
+<h2>1. Praca z danymi w Pythonie</h2>
+
+<h3>NumPy — obliczenia numeryczne</h3>
+<pre>import numpy as np
+
+a = np.array([1, 2, 3, 4])
+b = np.array([[1,2],[3,4]])   # macierz 2×2
+
+a * 2          # operacje elementowe, bez pisania pętli
+a + a
+b.T            # transpozycja
+np.dot(b, b)   # mnożenie macierzowe
+a.mean(), a.std(), a.sum()</pre>
+<p>Tablice NumPy (<code>ndarray</code>) są znacznie szybsze niż listy Pythona dla operacji numerycznych — dane przechowywane w ciągłym blob pamięci, operacje wektoryzowane (bez interpretowanej pętli Pythona pod spodem).</p>
+
+<h3>Pandas — dane tabelaryczne</h3>
+<pre>import pandas as pd
+
+df = pd.read_csv("dane.csv")
+df.head()                  # pierwsze 5 wierszy
+df["kolumna"].mean()
+df[df["wiek"] &gt; 18]         # filtrowanie wierszy
+df.groupby("kategoria").sum()
+df.dropna()                 # usunięcie wierszy z brakującymi danymi</pre>
+<p><code>DataFrame</code> — dwuwymiarowa struktura tabelaryczna (jak arkusz kalkulacyjny/tabela SQL) — podstawowe narzędzie do wczytywania, czyszczenia i eksploracji danych przed dalszą analizą/uczeniem maszynowym.</p>
+
+<h3>Typowy przepływ pracy z danymi</h3>
+<ol>
+<li>wczytanie danych (CSV, JSON, baza danych)</li>
+<li>czyszczenie — brakujące wartości, duplikaty, błędne typy</li>
+<li>eksploracja — statystyki opisowe, wizualizacja (histogram, wykres rozrzutu)</li>
+<li>przekształcenie — normalizacja, kodowanie kategorii, tworzenie nowych cech (feature engineering)</li>
+<li>podział na zbiór treningowy/testowy (przed uczeniem maszynowym — patrz punkt 6)</li>
+</ol>
+
+<h3>Wizualizacja — Matplotlib</h3>
+<pre>import matplotlib.pyplot as plt
+
+plt.plot(x, y)
+plt.scatter(x, y)
+plt.hist(dane, bins=20)
+plt.xlabel("X"); plt.ylabel("Y"); plt.show()</pre>
+
+<div class="uwaga">Praca z danymi to zwykle 80% czasu w projektach AI/ML — jakość i przygotowanie danych ma większy wpływ na wynik końcowy niż wybór samego algorytmu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Podstawy chatbotów i przetwarzania tekstu (NLP)</h2>
+
+<h3>Podstawowe pojęcia przetwarzania języka naturalnego</h3>
+<ul>
+<li><strong>tokenizacja</strong> — podział tekstu na jednostki (słowa, znaki interpunkcyjne, czasem podsłowa)</li>
+<li><strong>lematyzacja</strong> — sprowadzenie słowa do formy podstawowej (np. "biegał" → "biegać")</li>
+<li><strong>stemming</strong> — uproszczone "obcinanie" słowa do rdzenia (mniej precyzyjne niż lematyzacja, ale szybsze)</li>
+<li><strong>stop words</strong> — częste, mało znaczące słowa (np. "i", "the", "w") często usuwane przed analizą</li>
+</ul>
+
+<h3>Reprezentacja tekstu jako liczb</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Bag of Words (BoW)</td>
+<td>wektor zliczający wystąpienia każdego słowa ze słownika — ignoruje kolejność słów</td>
+</tr>
+<tr>
+<td>TF-IDF</td>
+<td>waży słowo przez częstość w dokumencie (TF) i rzadkość w całym zbiorze dokumentów (IDF) — podkreśla słowa charakterystyczne, nie ogólnie częste</td>
+</tr>
+<tr>
+<td>Word embeddings (np. Word2Vec, GloVe)</td>
+<td>gęsty wektor liczb rzeczywistych dla każdego słowa, uczony tak, by podobne znaczeniowo słowa miały podobne wektory (bliskie w przestrzeni)</td>
+</tr>
+</table>
+
+<h3>Architektura prostego chatbota</h3>
+<ul>
+<li><strong>oparty na regułach</strong> — dopasowanie wzorców/słów kluczowych do zestawu predefiniowanych odpowiedzi (proste, przewidywalne, ale niegibkie)</li>
+<li><strong>oparty na intencjach (intent-based)</strong> — klasyfikacja wypowiedzi użytkownika do jednej z predefiniowanych "intencji" (np. "zapytanie o godziny otwarcia"), a następnie odpowiedź przypisana do tej intencji; często wspomagany ekstrakcją encji (np. daty, miasta)</li>
+<li><strong>generatywny (oparty na modelach językowych)</strong> — model (np. sieć neuronowa typu transformer) generuje odpowiedź "od zera" na podstawie kontekstu rozmowy, bez sztywnego zestawu reguł</li>
+</ul>
+
+<h3>Miary podobieństwa tekstu</h3>
+<p>Podobieństwo kosinusowe między wektorami tekstu (np. TF-IDF lub embeddingami) — najczęściej używana miara do porównywania, jak "podobne" są dwa fragmenty tekstu:</p>
+<p>$$\text{sim}(A,B) = \frac{A\cdot B}{|A||B|}$$</p>
+
+<div class="uwaga">Nowoczesne chatboty (jak np. asystenci oparte na dużych modelach językowych) łączą wiele z powyższych elementów, ale kluczowa różnica względem starszych podejść to skala modelu i danych treningowych, nie fundamentalnie inna zasada działania.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Grafy, kolejki i algorytmy przeszukiwania</h2>
+
+<p>Wiele problemów AI (np. planowanie, gry, wyszukiwanie ścieżki) sprowadza się do przeszukiwania <strong>przestrzeni stanów</strong> — reprezentowanej jako grafu, gdzie węzły to stany, a krawędzie to możliwe akcje/przejścia.</p>
+
+<h3>Przeszukiwanie ślepe (bez wiedzy o problemie)</h3>
+<table>
+<tr><th>Algorytm</th><th>Struktura danych</th><th>Zasada</th></tr>
+<tr><td>BFS (przeszukiwanie wszerz)</td><td>kolejka (FIFO)</td><td>przeszukuje warstwami — gwarantuje najkrótszą ścieżkę (w liczbie kroków, dla grafu nieważonego)</td></tr>
+<tr><td>DFS (przeszukiwanie w głąb)</td><td>stos (LIFO) / rekurencja</td><td>zagłębia się maksymalnie w jedną gałąź — mniej pamięci niż BFS, ale nie gwarantuje najkrótszej ścieżki</td></tr>
+</table>
+<p>(patrz też przedmiot Algorytmy i struktury danych — te same algorytmy, tu w kontekście przestrzeni stanów AI)</p>
+
+<h3>Przeszukiwanie heurystyczne (z wiedzą o problemie)</h3>
+<table>
+<tr><th>Algorytm</th><th>Zasada</th></tr>
+<tr>
+<td>Greedy Best-First Search</td>
+<td>zawsze wybiera stan "najbliższy" celowi według heurystyki \(h(n)\) — szybki, ale nie gwarantuje optymalności</td>
+</tr>
+<tr>
+<td>A* (A-star)</td>
+<td>wybiera stan minimalizujący \(f(n) = g(n) + h(n)\), gdzie \(g(n)\) to koszt dotarcia do \(n\), a \(h(n)\) to szacowany koszt od \(n\) do celu — gwarantuje optymalną ścieżkę, jeśli heurystyka jest <strong>dopuszczalna</strong> (nigdy nie przeszacowuje rzeczywistego kosztu)</td>
+</tr>
+</table>
+
+<h3>Heurystyka</h3>
+<p>Funkcja szacująca "jak blisko" celu jest dany stan, bez konieczności pełnego przeszukania — np. odległość euklidesowa/Manhattan do celu w problemie znajdowania trasy. Dobra heurystyka drastycznie skraca przeszukiwanie względem ślepego BFS/DFS.</p>
+
+<h3>Przeszukiwanie w grach — Minimax</h3>
+<p>Algorytm dla gier dwuosobowych z pełną informacją (np. szachy, kółko i krzyżyk) — jeden gracz maksymalizuje wynik, drugi minimalizuje, na przemian, budując drzewo możliwych ruchów. <strong>Przycinanie alfa-beta (alpha-beta pruning)</strong> — optymalizacja odcinająca gałęzie drzewa, które nie mogą wpłynąć na finalną decyzję, bez zmiany wyniku.</p>
+
+<div class="uwaga">Typowe pytanie: porównaj BFS/DFS/A* pod względem gwarancji optymalności, zużycia pamięci i wymaganej wiedzy o problemie (heurystyka).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Logika, bazy wiedzy i biblioteka Pytholog</h2>
+
+<h3>Logika w reprezentacji wiedzy</h3>
+<p>Logika predykatów pierwszego rzędu (rachunek kwantyfikatorów — patrz przedmiot Matematyka 1) pozwala formalnie zapisywać fakty i reguły o świecie, na których można przeprowadzać wnioskowanie.</p>
+
+<h3>Baza wiedzy</h3>
+<p>Zbiór <strong>faktów</strong> (stwierdzenia zawsze prawdziwe w danym kontekście) i <strong>reguł</strong> (implikacje — "jeśli warunek, to wniosek"), na podstawie których system może wnioskować nowe fakty.</p>
+
+<h3>Pytholog — programowanie logiczne (składnia Prologa) w Pythonie</h3>
+<p>Biblioteka Pythona pozwalająca pisać fakty i reguły w składni zbliżonej do Prologa, bez wychodzenia z ekosystemu Pythona (łączenie symbolicznego rozumowania z uczeniem maszynowym w jednym języku).</p>
+<pre>import pytholog as pl
+
+kb = pl.KnowledgeBase("rodzina")
+kb([
+    "rodzic(anna, jan)",
+    "rodzic(jan, piotr)",
+    "dziadek(X, Y) :- rodzic(X, Z), rodzic(Z, Y)"
+])
+
+kb.query(pl.Expr("dziadek(anna, piotr)"))   # [{}]  — zapytanie prawdziwe (pusty dict = sukces bez zmiennych)
+kb.query(pl.Expr("rodzic(anna, Kto)"))      # [{'Kto': 'jan'}]</pre>
+
+<h3>Konwencja nazewnictwa (jak w Prologu)</h3>
+<ul>
+<li>małe litery na początku (np. <code>anna</code>, <code>jan</code>) — <strong>stałe/atomy</strong> (konkretne, niezmienne wartości)</li>
+<li>Wielka litera na początku (np. <code>X</code>, <code>Kto</code>) — <strong>zmienne</strong>, które silnik ma podstawić podczas wnioskowania</li>
+<li>fakty i reguły oddzielone od siebie operatorem <code>:-</code> (reguła) — po lewej wniosek (head), po prawej warunki (body), rozdzielone przecinkami (koniunkcja)</li>
+</ul>
+
+<h3>Nierówność — <code>neq()</code></h3>
+<p>Pytholog udostępnia wbudowaną funkcję <code>neq(X, Y)</code> do wyrażania warunku nierówności w regułach (odpowiednik <code>\=</code> w standardowym Prologu):</p>
+<pre>kb(["rozne(X, Y) :- neq(X, Y)"])</pre>
+
+<h3>Obsługa prawdopodobieństw (rozszerzenie względem klasycznego Prologa)</h3>
+<p>Pytholog dodatkowo wspiera <strong>prawdopodobieństwa</strong> w regułach — pozwala to łączyć symboliczne wnioskowanie logiczne z niepewnością, typową dla podejść uczenia maszynowego:</p>
+<pre>kb(["choruje(X, 0.4) :- pali(X)"])   # reguła z przypisanym prawdopodobieństwem</pre>
+
+<h3>Wydajność — indeksowanie faktów</h3>
+<p>Pytholog indeksuje fakty po ich <strong>pierwszym argumencie</strong> i wykorzystuje wyszukiwanie binarne do znajdowania odpowiednich faktów, zamiast przeglądać całą bazę wiedzy liniowo — stąd praktyczna wskazówka: w regułach warto umieszczać najbardziej "selektywny" argument (po którym się filtruje) jako pierwszy, dla szybszych zapytań.</p>
+
+<h3>Mechanizm wnioskowania — unifikacja i nawroty (backtracking)</h3>
+<ul>
+<li><strong>unifikacja</strong> — próba "dopasowania" zapytania do faktów/reguł w bazie, z podstawieniem zmiennych</li>
+<li><strong>nawroty (backtracking)</strong> — jeśli dana ścieżka wnioskowania zawiedzie, silnik wraca i próbuje innej możliwości dopasowania zapytania — mechanizm dziedziczony wprost z klasycznego Prologa</li>
+</ul>
+
+<h3>Zastosowanie jako logiczna baza danych</h3>
+<p>Pytholog może też służyć jako "logiczna nakładka" na dane tabelaryczne (np. wczytane z bazy SQL przez pandas) — zamieniając wiersze tabel na fakty, a potem odpytując je zapytaniami logicznymi łączącymi wiele relacji (podobnie do złączeń SQL, ale w stylu Prologa).</p>
+
+<div class="uwaga">Klasyczne zastosowania logiki/Prologu w AI: systemy ekspertowe (wnioskowanie na podstawie reguł zdefiniowanych przez ekspertów danej domeny), przetwarzanie języka naturalnego (parsowanie gramatyk), rozwiązywanie łamigłówek logicznych — Pytholog pozwala robić to samo, ale integrując wynik bezpośrednio z resztą pipeline'u w Pythonie (np. danymi z NumPy/pandas czy modelami ML).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Reprezentacja, wizualizacja i analiza obrazów</h2>
+
+<p><em>(patrz też przedmiot Przetwarzanie obrazów cyfrowych — mocne powiązanie tematów)</em></p>
+
+<h3>Obraz jako dane numeryczne</h3>
+<p>Obraz cyfrowy to macierz (albo tensor 3D dla kolorowego RGB) liczb — wysokość × szerokość × liczba kanałów. W Pythonie zwykle reprezentowany jako tablica NumPy (patrz punkt 1):</p>
+<pre>import numpy as np
+from PIL import Image
+
+img = Image.open("zdjecie.jpg")
+tab = np.array(img)      # tab.shape = (wysokość, szerokość, 3) dla RGB</pre>
+
+<h3>Podstawowe operacje/analiza</h3>
+<ul>
+<li>zmiana rozmiaru, przycinanie, konwersja do skali szarości</li>
+<li normalizacja wartości pikseli (np. skalowanie do zakresu [0,1]) — typowy krok przed podaniem obrazu do modelu uczenia maszynowego</li>
+<li>wyznaczanie cech obrazu — histogram kolorów, cechy tekstury, gradient (patrz filtracja — przedmiot Przetwarzanie obrazów cyfrowych)</li>
+</ul>
+
+<h3>Wizualizacja</h3>
+<pre>import matplotlib.pyplot as plt
+plt.imshow(tab)
+plt.axis("off")
+plt.show()</pre>
+
+<h3>Obrazy jako wejście do sieci neuronowych</h3>
+<p>Konwolucyjne sieci neuronowe (CNN, patrz punkt 7) przyjmują obraz bezpośrednio jako tensor wejściowy — warstwy konwolucyjne same "uczą się" wykrywać istotne cechy (krawędzie, tekstury, kształty), bez ręcznego projektowania filtrów (w odróżnieniu od klasycznego przetwarzania obrazów z Sobel/Laplasjan).</p>
+
+<div class="uwaga">Kluczowa różnica względem klasycznego przetwarzania obrazów: w podejściu uczenia maszynowego cechy obrazu (filtry, wzorce) są <strong>uczone z danych</strong>, a nie zaprojektowane ręcznie przez człowieka (jak filtry Sobel czy maski Laplasjanu).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Podstawy uczenia maszynowego</h2>
+
+<h3>Rodzaje uczenia</h3>
+<table>
+<tr><th>Typ</th><th>Zasada</th><th>Przykład zadania</th></tr>
+<tr><td>Nadzorowane (supervised)</td><td>dane treningowe z etykietami (poprawną odpowiedzią)</td><td>klasyfikacja (K-NN — patrz Przetwarzanie obrazów), regresja</td></tr>
+<tr><td>Nienadzorowane (unsupervised)</td><td>dane bez etykiet — model sam znajduje strukturę/wzorce</td><td>klasteryzacja (k-means), redukcja wymiarowości</td></tr>
+<tr><td>Uczenie przez wzmacnianie (reinforcement learning)</td><td>agent uczy się przez interakcję ze środowiskiem, otrzymując nagrody/kary za akcje</td><td>gry, robotyka, systemy decyzyjne</td></tr>
+</table>
+
+<h3>Podział danych</h3>
+<p>Zbiór treningowy (uczenie modelu), walidacyjny (dostrajanie hiperparametrów), testowy (ostateczna, "uczciwa" ocena na danych, których model nigdy nie widział).</p>
+
+<h3>Przeuczenie i niedouczenie</h3>
+<ul>
+<li><strong>przeuczenie (overfitting)</strong> — model "zapamiętuje" dane treningowe (nawet ich szum), słabo generalizuje na nowe dane — wysoka dokładność na treningu, niska na teście</li>
+<li><strong>niedouczenie (underfitting)</strong> — model za prosty, żeby uchwycić wzorce w danych — niska dokładność nawet na treningu</li>
+</ul>
+
+<h3>Ocena modelu klasyfikacji</h3>
+<p>Macierz błędów (confusion matrix), dokładność (accuracy), precyzja (precision), czułość/recall, F1-score — kompleksowa ocena, bo sama dokładność bywa myląca (np. przy niezbalansowanych klasach).</p>
+
+<h3>Regularyzacja</h3>
+<p>Techniki zapobiegające przeuczeniu — np. dodanie "kary" za zbyt złożony model (L1/L2), albo <strong>dropout</strong> w sieciach neuronowych (losowe "wyłączanie" części neuronów podczas treningu, żeby model nie polegał nadmiernie na konkretnych neuronach).</p>
+
+<div class="uwaga">Klasyczny objaw przeuczenia widoczny na wykresie: krzywa błędu na zbiorze treningowym stale spada, a na zbiorze walidacyjnym po pewnym momencie zaczyna <strong>rosnąć</strong> — to sygnał, żeby zatrzymać trening (early stopping) lub zwiększyć regularyzację.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Podstawy sieci neuronowych</h2>
+
+<h3>Neuron (jednostka sieci)</h3>
+<p>Podstawowa jednostka obliczeniowa — sumuje ważone wejścia, dodaje bias, przepuszcza przez <strong>funkcję aktywacji</strong>:</p>
+<p>$$y = f\left(\sum_i w_i x_i + b\right)$$</p>
+
+<h3>Funkcje aktywacji</h3>
+<table>
+<tr><th>Funkcja</th><th>Wzór</th><th>Zastosowanie</th></tr>
+<tr><td>Sigmoid</td><td>\(\dfrac{1}{1+e^{-x}}\)</td><td>wyjście w (0,1) — klasyfikacja binarna</td></tr>
+<tr><td>ReLU</td><td>\(\max(0,x)\)</td><td>najpopularniejsza w warstwach ukrytych — szybka, redukuje problem zanikającego gradientu</td></tr>
+<tr><td>Softmax</td><td>normalizuje wektor do rozkładu prawdopodobieństwa</td><td>warstwa wyjściowa przy klasyfikacji wieloklasowej</td></tr>
+</table>
+
+<h3>Architektura sieci — warstwy</h3>
+<p>Warstwa wejściowa → jedna lub więcej warstw ukrytych → warstwa wyjściowa. Sieć w pełni połączona (fully connected / dense) — każdy neuron połączony z każdym neuronem następnej warstwy.</p>
+
+<h3>Uczenie — propagacja wsteczna (backpropagation)</h3>
+<ol>
+<li><strong>forward pass</strong> — dane przechodzą przez sieć, obliczana jest predykcja i błąd (funkcja straty) względem prawdziwej wartości</li>
+<li><strong>backward pass</strong> — błąd jest propagowany od wyjścia do wejścia, obliczając gradient straty względem każdej wagi (reguła łańcuchowa — patrz przedmiot Matematyka 2, pochodna złożenia)</li>
+<li><strong>aktualizacja wag</strong> — wagi modyfikowane w kierunku zmniejszającym błąd (metoda gradientu prostego / jej warianty jak Adam)</li>
+</ol>
+
+<h3>Sieci konwolucyjne (CNN)</h3>
+<p>Wyspecjalizowane do danych o strukturze przestrzennej (obrazy) — warstwy konwolucyjne uczą się lokalnych filtrów (patrz punkt 5), warstwy pooling redukują rozmiar (agregacja, np. max-pooling), na końcu zwykle warstwy w pełni połączone do klasyfikacji.</p>
+
+<h3>Sieci rekurencyjne (RNN) i transformery</h3>
+<p>RNN — przetwarzają sekwencje (tekst, szeregi czasowe), przekazując "pamięć" (stan skryty) między krokami czasowymi. Transformery (dzisiejszy standard w NLP, patrz punkt 2) — mechanizm <strong>uwagi (attention)</strong> pozwala modelowi ważyć znaczenie różnych fragmentów sekwencji naraz, bez sekwencyjnego przetwarzania krok po kroku jak w RNN — stąd dużo lepsza skalowalność i wydajność treningu.</p>
+
+<div class="uwaga">Typowe pytanie: dlaczego głębokie sieci neuronowe potrzebują nieliniowych funkcji aktywacji (jak ReLU) — bez nich, złożenie wielu warstw liniowych to wciąż tylko funkcja liniowa, tracąca całą "moc" wielowarstwowej architektury do modelowania złożonych, nieliniowych zależności.</div>
+</div>
+
+</body>
+</html>

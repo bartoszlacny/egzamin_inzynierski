@@ -1,0 +1,287 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Bazy danych w aplikacjach internetowych – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Bazy danych w aplikacjach internetowych</h1>
+
+<div class="zagadnienie">
+<h2>1. Procedury składowe, funkcje, wyzwalacze</h2>
+
+<h3>Procedura składowa (stored procedure)</h3>
+<p>Blok kodu SQL zapisany i przechowywany <strong>w bazie danych</strong>, wywoływany po nazwie — pozwala przenieść część logiki (nie tylko surowe zapytania) bliżej danych, na serwer bazy.</p>
+<pre>CREATE PROCEDURE DodajZamowienie(IN p_klient INT, IN p_produkt VARCHAR(50), IN p_cena DECIMAL(10,2))
+BEGIN
+    INSERT INTO Zamowienie (id_klient, produkt, cena) VALUES (p_klient, p_produkt, p_cena);
+    UPDATE Klient SET liczba_zamowien = liczba_zamowien + 1 WHERE id = p_klient;
+END;
+
+CALL DodajZamowienie(1, 'Laptop', 3500.00);</pre>
+
+<h3>Funkcja składowana</h3>
+<p>Podobna do procedury, ale <strong>zawsze zwraca wartość</strong> i można ją użyć wewnątrz zapytania SQL (tam, gdzie procedury nie można):</p>
+<pre>CREATE FUNCTION SumaZamowien(p_klient INT) RETURNS DECIMAL(10,2)
+BEGIN
+    DECLARE suma DECIMAL(10,2);
+    SELECT SUM(cena) INTO suma FROM Zamowienie WHERE id_klient = p_klient;
+    RETURN suma;
+END;
+
+SELECT nazwa, SumaZamowien(id) AS suma FROM Klient;</pre>
+
+<h3>Wyzwalacz (trigger)</h3>
+<p>Blok kodu wykonywany <strong>automatycznie</strong> w reakcji na zdarzenie w tabeli (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>) — bez konieczności jawnego wywołania.</p>
+<pre>CREATE TRIGGER PoZamowieniu
+AFTER INSERT ON Zamowienie
+FOR EACH ROW
+BEGIN
+    UPDATE Produkt SET stan_magazynu = stan_magazynu - 1 WHERE nazwa = NEW.produkt;
+END;</pre>
+<table>
+<tr><th>Moment</th><th><code>BEFORE</code></th><th><code>AFTER</code></th></tr>
+<tr><td>Zdarzenie</td><td>przed zapisaniem zmiany — można ją jeszcze zmodyfikować/odrzucić</td><td>po zapisaniu zmiany — do reakcji "skutkowej" (np. aktualizacja innej tabeli)</td></tr>
+</table>
+<p><code>NEW</code> — nowe wartości wiersza (dla <code>INSERT</code>/<code>UPDATE</code>); <code>OLD</code> — poprzednie wartości (dla <code>UPDATE</code>/<code>DELETE</code>).</p>
+
+<h3>Zalety i wady logiki po stronie bazy</h3>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>szybsze wykonanie (bliżej danych, mniej ruchu sieciowego między aplikacją i bazą)</td><td>trudniejsze wersjonowanie/testowanie niż kod aplikacji</td></tr>
+<tr><td>logika wspólna dla wielu aplikacji korzystających z tej samej bazy</td><td>logika "rozmyta" między aplikacją i bazą — trudniej o pełny obraz w jednym miejscu</td></tr>
+<tr><td>wymuszenie reguł niezależnie od tego, przez co dokonano zmiany danych</td><td>przenośność między różnymi systemami baz danych jest ograniczona (różna składnia)</td></tr>
+</table>
+
+<div class="uwaga">Typowe zastosowanie triggerów: automatyczne logowanie historii zmian (audit log), wymuszanie reguł biznesowych niezależnie od tego, czy zmiana pochodzi z aplikacji webowej czy z bezpośredniego zapytania administratora.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Transakcje</h2>
+
+<p><em>(pełny opis własności ACID i poziomów izolacji — patrz przedmiot Relacyjne bazy danych; tu skrócenie + kontekst aplikacji webowej)</em></p>
+
+<h3>Transakcje w kontekście aplikacji webowej</h3>
+<pre>BEGIN TRANSACTION;
+UPDATE Konto SET saldo = saldo - 100 WHERE id = 1;
+UPDATE Konto SET saldo = saldo + 100 WHERE id = 2;
+COMMIT;</pre>
+<p>W typowej aplikacji webowej transakcja zwykle odpowiada <strong>jednej operacji biznesowej</strong> zainicjowanej przez użytkownika (np. "złóż zamówienie" — zapis zamówienia + aktualizacja stanu magazynu + ewentualne obciążenie płatności — wszystko musi się powiodło razem, albo nic).</p>
+
+<h3>Transakcje a połączenia z bazą (connection pooling)</h3>
+<p>Aplikacje webowe zwykle korzystają z <strong>puli połączeń</strong> (connection pool) do bazy danych — transakcja jest związana z konkretnym połączeniem, więc framework/ORM musi zapewnić, że wszystkie zapytania danej transakcji idą przez to samo połączenie.</p>
+
+<h3>Typowy wzorzec w kodzie backendu</h3>
+<pre>try:
+    conn.begin()
+    conn.execute("UPDATE Konto SET saldo = saldo - 100 WHERE id = 1")
+    conn.execute("UPDATE Konto SET saldo = saldo + 100 WHERE id = 2")
+    conn.commit()
+except Exception as e:
+    conn.rollback()
+    raise e</pre>
+
+<h3>Transakcje rozproszone (skrótowo)</h3>
+<p>Gdy operacja biznesowa obejmuje <strong>wiele</strong> niezależnych systemów/baz danych (np. mikroserwisy — patrz przedmiot Projektowanie aplikacji internetowych), klasyczna transakcja ACID nie wystarcza — stosuje się wzorce jak <strong>Saga</strong> (sekwencja lokalnych transakcji z akcjami kompensującymi w razie błędu) zamiast jednej, globalnej transakcji.</p>
+
+<div class="uwaga">Typowe pytanie: dla scenariusza "rezerwacja lotu + płatność" wskaż, dlaczego te dwie operacje powinny (lub w architekturze mikroserwisowej: nie mogą łatwo) być jedną transakcją ACID, i jak inaczej zapewnić spójność.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Wzorzec MVC (Model-View-Controller)</h2>
+
+<p>Wzorzec architektoniczny rozdzielający aplikację na trzy niezależne warstwy odpowiedzialności — szczególnie istotny w aplikacjach z bazą danych, bo jasno określa, <strong>gdzie</strong> powinna żyć logika dostępu do danych.</p>
+
+<table>
+<tr><th>Warstwa</th><th>Odpowiedzialność</th><th>Przykład</th></tr>
+<tr>
+<td>Model</td>
+<td>dane i logika biznesowa — komunikacja z bazą danych, walidacja, reguły domenowe</td>
+<td>klasa <code>Zamowienie</code> z metodami do zapisu/odczytu z bazy</td>
+</tr>
+<tr>
+<td>View (widok)</td>
+<td>prezentacja danych użytkownikowi — HTML/szablon, bez logiki biznesowej</td>
+<td>szablon strony wyświetlający listę zamówień</td>
+</tr>
+<tr>
+<td>Controller (kontroler)</td>
+<td>odbiera żądania użytkownika, koordynuje Model i View — "dyrygent"</td>
+<td>funkcja obsługująca żądanie HTTP <code>POST /zamowienia</code></td>
+</tr>
+</table>
+
+<h3>Przepływ żądania w MVC</h3>
+<pre>Żądanie HTTP → Controller → (odczyt/zapis) → Model → baza danych
+                    ↓
+                  View → wygenerowana odpowiedź HTML/JSON → użytkownik</pre>
+
+<h3>Dlaczego MVC pomaga przy bazach danych</h3>
+<ul>
+<li>logika SQL/ORM jest <strong>izolowana</strong> w Modelu — nie rozsiana po całym kodzie (kontrolerach, widokach), co ułatwia zmianę bazy danych albo refaktoryzację</li>
+<li>Kontroler nie zawiera bezpośrednio zapytań SQL — tylko woła metody Modelu (np. <code>Zamowienie.znajdzPoId(5)</code>), co ułatwia testowanie (można "podłożyć" fałszywy Model w testach)</li>
+<li>View nie ma dostępu do bazy — otrzymuje już przygotowane dane od Kontrolera, co zapobiega przypadkowemu wstrzykiwaniu logiki biznesowej do szablonów</li>
+</ul>
+
+<h3>Warianty i pokrewne wzorce</h3>
+<p>MVVM (Model-View-ViewModel — częste w aplikacjach frontendowych/desktopowych), MVP (Model-View-Presenter) — różne rozłożenie odpowiedzialności między "pośrednikiem" a widokiem, ale ta sama idea rozdzielenia danych/logiki od prezentacji.</p>
+
+<div class="uwaga">Typowe pytanie: dla podanego (złego) fragmentu kodu z zapytaniem SQL wklejonym prosto w szablon HTML, wskaż naruszenie zasad MVC i zaproponuj poprawną strukturę (przeniesienie zapytania do Modelu).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Projektowanie baz danych dla aplikacji webowych</h2>
+
+<h3>Specyfika projektowania dla web (względem "ogólnego" projektowania z RBD)</h3>
+<ul>
+<li><strong>skalowalność odczytu</strong> — aplikacje webowe zwykle mają znacznie więcej odczytów niż zapisów (read-heavy) — warto przewidzieć indeksy (patrz przedmiot Relacyjne bazy danych) na kolumnach filtrowanych przy typowych żądaniach stron</li>
+<li><strong>sesje użytkowników</strong> — tabela/mechanizm przechowywania stanu sesji (albo zewnętrzny magazyn jak Redis, zamiast bazy relacyjnej, dla wydajności)</li>
+<li><strong>dane "miękko" usuwane (soft delete)</strong> — zamiast <code>DELETE</code>, często oznacza się wiersz jako usunięty (flaga <code>usunieto = true</code>) — zachowuje historię, ułatwia "przywracanie", ale wymaga pamiętać o filtrowaniu takich wierszy we wszystkich zapytaniach</li>
+</ul>
+
+<h3>ORM (Object-Relational Mapping)</h3>
+<p>Warstwa mapująca wiersze tabel na obiekty w kodzie aplikacji (i odwrotnie) — programista operuje na obiektach/klasach, a ORM generuje odpowiednie zapytania SQL "pod maską".</p>
+<pre># przykład koncepcyjny (styl Django/SQLAlchemy)
+klient = Klient.objects.get(id=5)
+klient.email = "nowy@example.com"
+klient.save()          # ORM generuje UPDATE ... WHERE id=5</pre>
+<table>
+<tr><th>Zalety ORM</th><th>Wady ORM</th></tr>
+<tr><td>mniej ręcznie pisanego SQL, bezpieczniejsze domyślnie (chroni przed SQL injection)</td><td>mniejsza kontrola nad wygenerowanym zapytaniem — czasem nieoptymalne</td></tr>
+<tr><td>przenośność między różnymi bazami danych (ORM "tłumaczy" różnice składniowe)</td><td>problem N+1 — nieuważne użycie może generować masę osobnych zapytań tam, gdzie jedno złączenie (JOIN) by wystarczyło</td></tr>
+</table>
+
+<h3>Migracje bazy danych</h3>
+<p>Wersjonowane, uporządkowane zmiany struktury bazy danych (dodanie kolumny, nowej tabeli) — pozwalają zespołowi śledzić historię zmian schematu (podobnie jak Git dla kodu) i odtworzyć/zaktualizować strukturę bazy na każdym środowisku (dev/test/produkcja) w tej samej, znanej kolejności.</p>
+
+<h3>Cache'owanie zapytań</h3>
+<p>Wyniki często powtarzanych, kosztownych zapytań (np. lista popularnych produktów) przechowywane tymczasowo w szybszej pamięci (Redis, Memcached) — zmniejsza obciążenie bazy głównej przy dużym ruchu, kosztem ryzyka "nieaktualnych" danych (trzeba świadomie zarządzać unieważnianiem cache przy zmianie danych).</p>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj schemat bazy dla prostego systemu blogowego (użytkownicy, posty, komentarze) z uwzględnieniem typowych potrzeb aplikacji webowej — indeksy na kolumnach często filtrowanych (np. data publikacji), rozważenie soft delete dla komentarzy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Bezpieczeństwo baz danych w aplikacjach webowych</h2>
+
+<h3>SQL Injection (przypomnienie z Języków hipertekstowych)</h3>
+<p>Wstrzyknięcie złośliwego kodu SQL przez niesprawdzone dane wejściowe — <strong>podstawowa</strong> ochrona to zapytania przygotowane (prepared statements) lub użycie ORM (patrz punkt 4), nigdy bezpośrednie wklejanie danych użytkownika do zapytania SQL jako tekstu.</p>
+<pre># NIEBEZPIECZNE
+query = f"SELECT * FROM Uzytkownicy WHERE login = '{login}'"
+
+# BEZPIECZNE — zapytanie przygotowane
+query = "SELECT * FROM Uzytkownicy WHERE login = %s"
+cursor.execute(query, (login,))</pre>
+
+<h3>Zasada najmniejszych uprawnień (least privilege)</h3>
+<p>Konto bazy danych używane przez aplikację webową powinno mieć <strong>tylko</strong> uprawnienia faktycznie potrzebne (np. <code>SELECT</code>/<code>INSERT</code>/<code>UPDATE</code> na konkretnych tabelach) — nigdy uprawnienia administratora bazy. W razie włamania przez inną podatność (np. SQL injection, którego jakoś nie wychwycono), ograniczone uprawnienia konta minimalizują potencjalne szkody.</p>
+
+<h3>Szyfrowanie danych wrażliwych</h3>
+<ul>
+<li><strong>hasła</strong> — nigdy w postaci czystego tekstu; hashowanie (bcrypt, Argon2) z solą (salt) — nawet wyciek bazy nie odkrywa hasła (patrz przedmiot Projektowanie aplikacji internetowych)</li>
+<li><strong>inne dane wrażliwe</strong> (numery kart, dane osobowe) — szyfrowanie "w spoczynku" (encryption at rest) na poziomie kolumny lub całej bazy</li>
+</ul>
+
+<h3>Backup i disaster recovery</h3>
+<p>Regularne, zautomatyzowane kopie zapasowe bazy danych (patrz przedmiot Administracja i integracja systemów operacyjnych — automatyzacja przez cron/systemd timers) — testowane pod kątem <strong>faktycznej</strong> możliwości odtworzenia (backup, którego nikt nigdy nie próbował przywrócić, to backup tylko "w teorii").</p>
+
+<h3>Audyt i logowanie</h3>
+<p>Rejestrowanie, kto i kiedy dokonał istotnych zmian w danych (np. przez trigery z punktu 1, albo dedykowane mechanizmy audytu bazy) — pomaga wykryć nieautoryzowany dostęp i spełnić wymogi regulacyjne (patrz RODO — przedmiot Projektowanie aplikacji internetowych).</p>
+
+<h3>Izolacja środowisk</h3>
+<p>Baza produkcyjna (z realnymi danymi użytkowników) powinna być odseparowana od środowisk deweloperskich/testowych — dane testowe/deweloperskie powinny być <strong>zanonimizowane</strong> lub sztucznie wygenerowane, nie kopią rzeczywistych, wrażliwych danych klientów.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego kodu backendu z widoczną podatnością (np. konkatenacja stringów w zapytaniu SQL, hasła zapisywane jako plaintext) wskaż wszystkie problemy bezpieczeństwa i zaproponuj poprawki zgodne z dobrymi praktykami.</div>
+</div>
+
+</body>
+</html>

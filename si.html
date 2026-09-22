@@ -1,0 +1,367 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Sztuczna Inteligencja – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Sztuczna Inteligencja</h1>
+
+<div class="zagadnienie">
+<h2>1. Drzewa decyzyjne, entropia, indeks Giniego, pruning</h2>
+
+<h3>Zasada działania</h3>
+<p>Model klasyfikacji/regresji w postaci drzewa — każdy węzeł wewnętrzny testuje warunek na jednej cesze (np. "wiek &gt; 30?"), każda gałąź to wynik testu, każdy liść to finalna predykcja (klasa/wartość).</p>
+
+<h3>Entropia — kryterium podziału</h3>
+<p>Miara "nieczystości" (niepewności) zbioru względem klas (patrz też przedmiot Teoretyczne podstawy informatyki):</p>
+<p>$$H(S) = -\sum_{i} p_i \log_2 p_i$$</p>
+<p>gdzie \(p_i\) to udział klasy \(i\) w zbiorze \(S\). \(H=0\) — zbiór czysty (jedna klasa); \(H\) maksymalne — klasy równo wymieszane.</p>
+
+<h3>Przyrost informacji (information gain)</h3>
+<p>Wybór podziału (cechy i progu) maksymalizującego <strong>zmniejszenie</strong> entropii po podziale:</p>
+<p>$$IG(S, A) = H(S) - \sum_{v} \frac{|S_v|}{|S|} H(S_v)$$</p>
+<p>gdzie \(S_v\) to podzbiory powstałe po podziale wg cechy \(A\).</p>
+
+<h3>Indeks Giniego — alternatywne kryterium</h3>
+<p>$$Gini(S) = 1 - \sum_i p_i^2$$</p>
+<p>Podobna interpretacja do entropii (0 = czysty zbiór, maksimum przy równym wymieszaniu klas), ale <strong>szybszy</strong> obliczeniowo (bez logarytmów) — używany domyślnie np. w algorytmie CART, entropia w ID3/C4.5.</p>
+
+<h3>Przycinanie (pruning)</h3>
+<p>Redukcja rozmiaru w pełni wyrośniętego drzewa, żeby ograniczyć przeuczenie (patrz przedmiot Podstawy sztucznej inteligencji):</p>
+<ul>
+<li><strong>pre-pruning</strong> — zatrzymanie wzrostu drzewa "z góry" (np. max. głębokość, min. liczba przykładów w liściu)</li>
+<li><strong>post-pruning</strong> — najpierw wyrośnij pełne drzewo, potem usuwaj/scalaj węzły, które nie poprawiają (albo pogarszają) dokładności na zbiorze walidacyjnym</li>
+</ul>
+
+<h3>Zalety i wady drzew decyzyjnych</h3>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>łatwa interpretacja — można "przeczytać" logikę decyzji</td><td>bardzo podatne na przeuczenie bez ograniczeń/przycinania</td></tr>
+<tr><td>nie wymagają normalizacji/skalowania cech</td><td>niestabilne — mała zmiana danych treningowych może dać zupełnie inne drzewo</td></tr>
+<tr><td>obsługują naturalnie cechy kategoryczne i numeryczne</td><td>granice decyzyjne "schodkowe" (prostopadłe do osi) — słabo modelują ukośne zależności</td></tr>
+<tr><td>szybkie w predykcji</td><td>pojedyncze drzewo rzadko konkuruje dokładnością z ensemble (patrz punkt 2)</td></tr>
+</table>
+
+<div class="uwaga">Typowe zadanie: dla małego zbioru danych policz entropię/indeks Giniego przed i po konkretnym podziale, wyznacz przyrost informacji i zdecyduj, która cecha powinna być użyta w korzeniu drzewa.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Ensemble learning: bagging, boosting, Random Forest, AdaBoost</h2>
+
+<p>Idea: połączenie <strong>wielu</strong> "słabszych" modeli w jeden, silniejszy — zbiorowa predykcja jest zwykle dokładniejsza i bardziej stabilna niż pojedynczy model.</p>
+
+<h3>Bagging (Bootstrap Aggregating)</h3>
+<ol>
+<li>wylosuj wielokrotnie (z powtórzeniami) próbki bootstrap ze zbioru treningowego — każda tego samego rozmiaru co oryginał, ale inny skład</li>
+<li wytrenuj <strong>niezależnie</strong> (równolegle) model na każdej próbce</li>
+<li>predykcja finalna: głosowanie większościowe (klasyfikacja) lub średnia (regresja) wyników wszystkich modeli</li>
+</ol>
+<p>Redukuje głównie <strong>wariancję</strong> modelu (przeuczenie) — dobre dla modeli bazowych o wysokiej wariancji, jak głębokie drzewa decyzyjne.</p>
+
+<h3>Random Forest</h3>
+<p>Bagging <strong>drzew decyzyjnych</strong>, z dodatkowym elementem losowości: przy każdym podziale węzła, rozważany jest tylko <strong>losowy podzbiór</strong> cech (nie wszystkie) — dodatkowo dywersyfikuje drzewa, redukując korelację między nimi (silnie skorelowane drzewa mniej zyskują na uśrednianiu).</p>
+
+<h3>Boosting</h3>
+<p>W odróżnieniu od baggingu — modele budowane <strong>sekwencyjnie</strong>, każdy kolejny model skupia się na przykładach, z którymi poprzednie modele sobie <strong>nie radziły</strong> (błędnie klasyfikowanych/o dużym błędzie).</p>
+<p>Redukuje głównie <strong>obciążenie (bias)</strong> — dobre dla słabych modeli bazowych (np. "pieńki" decyzyjne — drzewa głębokości 1).</p>
+
+<h3>AdaBoost (Adaptive Boosting)</h3>
+<ol>
+<li>każdy przykład treningowy zaczyna z takim samym wagą</li>
+<li wytrenuj słaby model (np. pień decyzyjny) na aktualnie zważonych danych</li>
+<li><strong>zwiększ wagę</strong> przykładów błędnie sklasyfikowanych przez ten model (żeby kolejny model bardziej się na nich skupił)</li>
+<li>powtórz dla kolejnych modeli; finalna predykcja to zważone (wg "jakości" każdego modelu) głosowanie wszystkich modeli</li>
+</ol>
+
+<h3>Bagging vs Boosting</h3>
+<table>
+<tr><th></th><th>Bagging</th><th>Boosting</th></tr>
+<tr><td>Budowa modeli</td><td>równolegle, niezależnie</td><td>sekwencyjnie, każdy zależy od poprzednich</td></tr>
+<tr><td>Redukuje</td><td>wariancję</td><td>obciążenie (bias)</td></tr>
+<tr><td>Ryzyko przeuczenia</td><td>niższe</td><td>wyższe (zbyt wiele iteracji może przeuczyć)</td></tr>
+<tr><td>Przykład</td><td>Random Forest</td><td>AdaBoost, Gradient Boosting, XGBoost</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego Random Forest dodaje losowość cech przy podziale (nie tylko losowanie próbek jak w baggingu) — bo bez tego drzewa byłyby do siebie bardzo podobne (te same najlepsze cechy zawsze wygrywałyby podział), co ograniczałoby korzyść z uśredniania wielu modeli.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Regresja i Mean Squared Error</h2>
+
+<h3>Regresja vs klasyfikacja</h3>
+<p>Regresja przewiduje wartość <strong>ciągłą</strong> (liczbę), klasyfikacja przewiduje przynależność do <strong>dyskretnej</strong> kategorii (klasy) — inny charakter zadania, inne metryki oceny (patrz punkt 4).</p>
+
+<h3>Regresja liniowa</h3>
+<p>$$\hat{y} = w_0 + w_1x_1 + w_2x_2 + \dots + w_nx_n$$</p>
+<p>Model zakłada <strong>liniową</strong> zależność między cechami i przewidywaną wartością — parametry \(w_i\) dobierane tak, żeby minimalizować błąd predykcji na danych treningowych.</p>
+
+<h3>Mean Squared Error (MSE)</h3>
+<p>Najczęstsza funkcja straty dla regresji — średnia kwadratów różnic między predykcją i rzeczywistą wartością:</p>
+<p>$$MSE = \frac{1}{n}\sum_{i=1}^n (y_i - \hat{y}_i)^2$$</p>
+<ul>
+<li>kwadrat "karze" bardziej za <strong>duże</strong> błędy niż proporcjonalnie (błąd 2x większy → 4x większy wkład do MSE)</li>
+<li>zawsze \(\ge 0\), im mniejsze, tym lepszy model; \(MSE=0\) = idealne predykcje</li>
+</ul>
+
+<h3>Powiązane metryki regresyjne</h3>
+<table>
+<tr><th>Metryka</th><th>Wzór</th><th>Cecha</th></tr>
+<tr><td>RMSE (Root MSE)</td><td>\(\sqrt{MSE}\)</td><td>w tych samych jednostkach co \(y\) (łatwiejsza interpretacja niż MSE)</td></tr>
+<tr><td>MAE (Mean Absolute Error)</td><td>\(\frac{1}{n}\sum|y_i-\hat{y}_i|\)</td><td>mniej czuła na odstające wartości (outliers) niż MSE (brak kwadratu)</td></tr>
+<tr><td>\(R^2\) (współczynnik determinacji)</td><td>\(1 - \dfrac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}\)</td><td>jaka część wariancji \(y\) jest "wyjaśniona" przez model; 1 = idealny, 0 = nie lepszy niż średnia</td></tr>
+</table>
+
+<h3>Estymacja parametrów — metoda najmniejszych kwadratów</h3>
+<p>Parametry regresji liniowej wybierane tak, by zminimalizować MSE na zbiorze treningowym — rozwiązanie analityczne (wzór zamknięty) albo iteracyjne (gradient descent — patrz punkt 6, wspólny mechanizm z sieciami neuronowymi).</p>
+
+<div class="uwaga">Typowe zadanie: dla podanych par (rzeczywista wartość, predykcja) policz MSE, RMSE i MAE, porównaj interpretację wyników.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Ocena modeli — confusion matrix i metryki</h2>
+
+<h3>Macierz błędów (confusion matrix) — klasyfikacja binarna</h3>
+<table>
+<tr><th></th><th>Predykcja: pozytywna</th><th>Predykcja: negatywna</th></tr>
+<tr><td>Rzeczywistość: pozytywna</td><td>TP (True Positive)</td><td>FN (False Negative)</td></tr>
+<tr><td>Rzeczywistość: negatywna</td><td>FP (False Positive)</td><td>TN (True Negative)</td></tr>
+</table>
+
+<h3>Podstawowe metryki klasyfikacyjne</h3>
+<p>$$\text{Accuracy} = \frac{TP+TN}{TP+TN+FP+FN}$$</p>
+<p>$$\text{Precision} = \frac{TP}{TP+FP} \qquad \text{(spośród przewidzianych "pozytywnie", ile faktycznie było pozytywne)}$$</p>
+<p>$$\text{Recall (czułość)} = \frac{TP}{TP+FN} \qquad \text{(spośród faktycznie pozytywnych, ile wykryto)}$$</p>
+<p>$$F1 = 2\cdot\frac{Precision \cdot Recall}{Precision + Recall} \qquad \text{(średnia harmoniczna precision i recall)}$$</p>
+
+<h3>Kompromis precision-recall</h3>
+<p>Zwykle nie da się maksymalizować obu naraz — obniżenie progu klasyfikacji (łatwiej "złapać" pozytywy) zwiększa recall, ale zwykle zmniejsza precision (więcej false positive). Wybór priorytetu zależy od kosztu błędów w konkretnym zastosowaniu (np. w diagnostyce medycznej recall często ważniejszy — lepiej "fałszywy alarm" niż przeoczona choroba).</p>
+
+<h3>Krzywa ROC i AUC</h3>
+<p>Krzywa ROC (Receiver Operating Characteristic) — wykres <strong>True Positive Rate</strong> (= recall) względem <strong>False Positive Rate</strong> (\(FPR=FP/(FP+TN)\)) dla różnych progów klasyfikacji.</p>
+<ul>
+<li><strong>AUC</strong> (Area Under Curve) — powierzchnia pod krzywą ROC, liczba z zakresu [0,1]</li>
+<li>\(AUC=1\) — idealny klasyfikator; \(AUC=0.5\) — klasyfikator nie lepszy niż losowe zgadywanie (przekątna wykresu)</li>
+<li>AUC jest niezależne od wyboru konkretnego progu — mierzy ogólną "zdolność rozróżniającą" modelu</li>
+</ul>
+
+<h3>Różnica metryk klasyfikacyjnych i regresyjnych</h3>
+<table>
+<tr><th></th><th>Klasyfikacja</th><th>Regresja</th></tr>
+<tr><td>Co oceniają</td><td>poprawność przypisania do dyskretnej kategorii</td><td>bliskość przewidzianej wartości ciągłej do rzeczywistej</td></tr>
+<tr><td>Przykłady metryk</td><td>accuracy, precision, recall, F1, AUC</td><td>MSE, RMSE, MAE, \(R^2\)</td></tr>
+<tr><td>Confusion matrix?</td><td>tak, podstawowe narzędzie</td><td>nie ma sensu (brak dyskretnych klas)</td></tr>
+</table>
+
+<div class="uwaga">Typowe zadanie: dla podanej confusion matrix (konkretne liczby TP/FP/FN/TN) policz accuracy, precision, recall i F1, oraz zinterpretuj wynik w kontekście opisanego problemu (np. wykrywanie spamu, diagnostyka medyczna).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Niezrównoważone zbiory danych</h2>
+
+<p>Sytuacja, gdy jedna klasa jest znacznie <strong>rzadsza</strong> niż inne (np. 99% transakcji to "normalne", 1% to "oszustwo") — typowy problem w wykrywaniu fraudu, diagnostyce rzadkich chorób, wykrywaniu awarii.</p>
+
+<h3>Dlaczego accuracy jest wtedy myląca</h3>
+<p>Model, który <strong>zawsze</strong> przewiduje klasę większościową, osiąga 99% accuracy przy 1% klasy mniejszościowej — mimo że jest bezużyteczny (nigdy nie wykrywa tego, co faktycznie ważne). Stąd potrzeba metryk jak precision/recall/F1/AUC (patrz punkt 4), które lepiej oddają jakość wykrywania klasy mniejszościowej.</p>
+
+<h3>Metody na poziomie danych</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Undersampling</td>
+<td>usunięcie części przykładów klasy większościowej, żeby zrównoważyć proporcje</td>
+</tr>
+<tr>
+<td>Oversampling</td>
+<td>powielenie (lub wygenerowanie nowych) przykładów klasy mniejszościowej</td>
+</tr>
+<tr>
+<td>SMOTE (Synthetic Minority Oversampling Technique)</td>
+<td>generuje <strong>nowe, syntetyczne</strong> przykłady klasy mniejszościowej — interpolacja między istniejącymi przykładami tej klasy w przestrzeni cech, nie zwykłe powielanie</td>
+</tr>
+</table>
+
+<h3>Metody na poziomie algorytmu</h3>
+<ul>
+<li><strong>ważenie klas (class weights)</strong> — nadanie większej "kary" za błędną klasyfikację przykładów z klasy mniejszościowej podczas treningu (funkcja straty ważona odwrotnie proporcjonalnie do częstości klasy)</li>
+<li><strong>dostosowanie progu decyzyjnego</strong> — domyślny próg 0.5 (dla klasyfikatora probabilistycznego) może nie być optymalny; przesunięcie progu może poprawić recall dla klasy mniejszościowej</li>
+<li><strong>algorytmy specjalnie zaprojektowane</strong> pod niezrównoważone dane (np. warianty boosting z wagami)</li>
+</ul>
+
+<h3>Ewaluacja przy niezrównoważonych danych</h3>
+<p>Zamiast accuracy: F1-score, AUC-ROC, albo (jeszcze lepiej dla silnie niezrównoważonych danych) <strong>AUC-PR</strong> (krzywa precision-recall) — bardziej informatywna niż ROC, gdy klasa pozytywna jest rzadka.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego problemu (np. wykrywanie rzadkiej choroby, 0.5% przypadków pozytywnych) wskaż, czemu accuracy jest złym wyborem metryki, i zaproponuj konkretne metody radzenia sobie z niezrównoważeniem (np. SMOTE + ważenie klas + ocena przez F1/AUC).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Sieci neuronowe feedforward</h2>
+
+<p><em>(rozwinięcie tematu z przedmiotu Podstawy sztucznej inteligencji)</em></p>
+
+<h3>Architektura</h3>
+<p>Warstwa <strong>wejściowa</strong> (surowe dane/cechy) → jedna lub więcej warstw <strong>ukrytych</strong> → warstwa <strong>wyjściowa</strong> (predykcja) — sygnał przepływa tylko "do przodu" (feedforward), bez cykli/pętli zwrotnych (w odróżnieniu od sieci rekurencyjnych).</p>
+
+<h3>Neuron</h3>
+<p>$$z = \sum_i w_i x_i + b, \qquad y = f(z)$$</p>
+<p>gdzie \(f\) to funkcja aktywacji.</p>
+
+<h3>Funkcje aktywacji (przypomnienie i rozwinięcie)</h3>
+<table>
+<tr><th>Funkcja</th><th>Wzór</th><th>Cecha</th></tr>
+<tr><td>Sigmoid</td><td>\(\dfrac{1}{1+e^{-x}}\)</td><td>wyjście (0,1); problem zanikającego gradientu dla dużych \(|x|\)</td></tr>
+<tr><td>Tanh</td><td>\(\dfrac{e^x-e^{-x}}{e^x+e^{-x}}\)</td><td>wyjście (-1,1), wyśrodkowana wokół 0 (lepsza niż sigmoid do warstw ukrytych)</td></tr>
+<tr><td>ReLU</td><td>\(\max(0,x)\)</td><td>szybka, redukuje zanikanie gradientu dla \(x&gt;0\); problem "martwych neuronów" dla \(x\le0\)</td></tr>
+<tr><td>Softmax</td><td>\(\dfrac{e^{x_i}}{\sum_j e^{x_j}}\)</td><td>warstwa wyjściowa klasyfikacji wieloklasowej — zamienia wektor na rozkład prawdopodobieństwa</td></tr>
+</table>
+
+<h3>Gradient descent (opadanie gradientu)</h3>
+<p>Iteracyjny algorytm minimalizacji funkcji straty \(L\) (np. MSE dla regresji, entropia krzyżowa dla klasyfikacji) — aktualizacja każdej wagi w kierunku <strong>przeciwnym</strong> do gradientu (bo gradient wskazuje kierunek najszybszego <strong>wzrostu</strong> funkcji):</p>
+<p>$$w \leftarrow w - \eta \frac{\partial L}{\partial w}$$</p>
+<p>gdzie \(\eta\) to <strong>współczynnik uczenia (learning rate)</strong> — zbyt duży może "przeskakiwać" minimum (brak zbieżności), zbyt mały spowalnia uczenie (długi czas treningu, ryzyko utknięcia w płaskim obszarze).</p>
+
+<h3>Warianty gradient descent</h3>
+<table>
+<tr><th>Wariant</th><th>Ile danych na krok aktualizacji</th></tr>
+<tr><td>Batch (pełny)</td><td>cały zbiór treningowy — stabilny, ale wolny dla dużych danych</td></tr>
+<tr><td>Stochastic (SGD)</td><td>jeden przykład na krok — szybki, ale "szumny" (niestabilna trajektoria)</td></tr>
+<tr><td>Mini-batch</td><td>mała partia (np. 32-256 przykładów) — kompromis, standard w praktyce</td></tr>
+</table>
+
+<h3>Propagacja wsteczna (backpropagation, przypomnienie)</h3>
+<p>Efektywny algorytm obliczania gradientu funkcji straty względem <strong>każdej</strong> wagi sieci, korzystając z reguły łańcuchowej (pochodna złożenia — patrz przedmiot Matematyka 2) — propaguje błąd od wyjścia do wejścia, warstwa po warstwie.</p>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego zbyt wysoki learning rate może uniemożliwić zbieżność gradient descent, i naszkicuj trajektorię wag na wykresie funkcji straty dla zbyt małego, odpowiedniego i zbyt dużego \(\eta\).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Konwolucyjne sieci neuronowe (CNN)</h2>
+
+<p>Architektura wyspecjalizowana do danych o strukturze przestrzennej (przede wszystkim obrazy) — wykorzystuje <strong>lokalne</strong> wzorce i <strong>współdzielenie wag</strong>, drastycznie redukując liczbę parametrów względem w pełni połączonej sieci feedforward na tak dużych danych (np. obrazie).</p>
+
+<h3>Warstwa konwolucyjna i kernel (filtr)</h3>
+<p>Mała macierz wag (np. 3×3 lub 5×5) — <strong>kernel</strong> — przesuwana po całym obrazie (splot/konwolucja, patrz przedmiot Przetwarzanie obrazów cyfrowych), obliczając w każdej pozycji ważoną sumę pikseli w oknie:</p>
+<p>$$\text{wyjście}(i,j) = \sum_{m,n} \text{kernel}(m,n)\cdot \text{obraz}(i+m,j+n)$$</p>
+<ul>
+<li><strong>ten sam kernel</strong> jest używany w każdej pozycji obrazu (współdzielenie wag) — sieć uczy się wykrywać dany wzorzec (np. pionowa krawędź) <strong>niezależnie od tego, gdzie</strong> on się znajduje na obrazie</li>
+<li>wiele różnych kerneli w jednej warstwie wykrywa wiele różnych cech naraz (różne "mapy cech" na wyjściu)</li>
+<li>w odróżnieniu od klasycznego przetwarzania obrazów (Sobel, Laplasjan), wartości kernela są <strong>uczone</strong> z danych, nie zaprojektowane ręcznie (patrz przedmiot Podstawy sztucznej inteligencji, punkt 5)</li>
+</ul>
+
+<h3>Warstwa pooling</h3>
+<p>Redukuje rozmiar przestrzenny mapy cech (agregując sąsiadujące wartości), zmniejszając liczbę parametrów w kolejnych warstwach i wprowadzając pewną odporność na małe przesunięcia obrazu.</p>
+<table>
+<tr><th>Typ pooling</th><th>Zasada</th></tr>
+<tr><td>Max pooling</td><td>bierze maksimum z okna (np. 2×2) — najpopularniejszy, zachowuje "najsilniejszą" aktywację</td></tr>
+<tr><td>Average pooling</td><td>bierze średnią z okna — bardziej "wygładzone" niż max pooling</td></tr>
+</table>
+
+<h3>Typowa architektura CNN</h3>
+<pre>Obraz wejściowy → [Konwolucja → Aktywacja (ReLU) → Pooling] × kilka warstw → Flatten → warstwy w pełni połączone → Softmax (klasyfikacja)</pre>
+<p>Kolejne warstwy konwolucyjne wykrywają coraz bardziej <strong>złożone</strong> cechy — pierwsze warstwy: proste krawędzie/kontrasty; głębsze warstwy: kombinacje krawędzi w kształty, tekstury, aż do rozpoznawania całych obiektów.</p>
+
+<h3>Zastosowania CNN</h3>
+<p>klasyfikacja obrazów, detekcja obiektów (patrz przedmiot Przetwarzanie obrazów cyfrowych — YOLO, R-CNN), segmentacja semantyczna, rozpoznawanie twarzy, analiza obrazów medycznych, a także (poza obrazami) dane o podobnej strukturze przestrzennej/sekwencyjnej — np. niektóre zastosowania w analizie sygnałów, tekstu.</p>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego CNN ma <strong>znacznie mniej</strong> parametrów niż w pełni połączona sieć feedforward dla obrazu tego samego rozmiaru — dzięki współdzieleniu wag kernela (ten sam mały filtr używany w każdej pozycji), a nie osobna waga dla każdego połączenia piksel-neuron.</div>
+</div>
+
+</body>
+</html>

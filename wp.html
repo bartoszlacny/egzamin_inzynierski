@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Wzorce projektowe – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.wzorzec {
+    border-left: 3px solid #007bff;
+    padding-left: 14px;
+    margin: 18px 0;
+}
+
+.wzorzec h3 {
+    margin-bottom: 4px;
+    color: #0056b3;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Wzorce projektowe</h1>
+
+<div class="zagadnienie">
+<h2>1. Pojęcie wzorca projektowego — Alexander i "Banda Czterech"</h2>
+
+<h3>Christopher Alexander — pierwotna idea (architektura budynków)</h3>
+<p>Pojęcie wzorca zostało zapożyczone z <strong>architektury</strong> (budynków, nie oprogramowania!). Alexander opisywał wzorzec jako sprawdzony, powtarzalny sposób rozwiązania <strong>określonego problemu</strong>, występującego wielokrotnie w <strong>określonym kontekście</strong> (środowisku) — tak, że można go zastosować wielokrotnie, dostosowując do konkretnej sytuacji, bez rozwiązywania problemu "od zera" za każdym razem.</p>
+<p>Zauważył, że dobre rozwiązania architektoniczne (np. "okno z widokiem na ogród", "wejście na poziomie ulicy") powtarzają się w wielu dobrze zaprojektowanych budynkach — nazwał i skatalogował takie powtarzalne rozwiązania jako wzorce, w swojej książce <em>"A Pattern Language"</em>.</p>
+
+<h3>"Banda Czterech" (Gang of Four) — przeniesienie do programowania</h3>
+<p>Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides — autorzy książki <em>"Design Patterns: Elements of Reusable Object-Oriented Software"</em> (1994), która przeniosła ideę Alexandra na programowanie obiektowe.</p>
+<p>Definicja GoF: wzorzec projektowy to <strong>ogólne, nazwane rozwiązanie</strong> powszechnie występującego problemu <strong>projektowego</strong> w programowaniu obiektowym — opisane niezależnie od konkretnego języka/implementacji, gotowe do wielokrotnego zastosowania w różnych projektach.</p>
+
+<h3>Struktura opisu wzorca (wg GoF)</h3>
+<table>
+<tr><th>Element</th><th>Opis</th></tr>
+<tr><td>Nazwa</td><td>krótka, powszechnie rozpoznawalna etykieta ułatwiająca komunikację między programistami ("użyj tu Observera" mówi więcej niż długi opis słowny)</td></tr>
+<tr><td>Problem</td><td>kiedy stosować wzorzec — jaki problem/sytuacja go wymaga, jakie są objawy "braku" tego wzorca w kodzie</td></tr>
+<tr><td>Rozwiązanie</td><td>opis elementów projektu (klasy, relacje) rozwiązujących problem, w formie ogólnej (szablonu), nie konkretnego kodu</td></tr>
+<tr><td>Konsekwencje</td><td>kompromisy — co wzorzec zyskuje, a co kosztuje (np. elastyczność vs dodatkowa złożoność, więcej klas)</td></tr>
+</table>
+
+<h3>Klasyfikacja wzorców GoF</h3>
+<p>23 klasyczne wzorce podzielone na trzy kategorie wg <strong>celu</strong>:</p>
+<table>
+<tr><th>Kategoria</th><th>Cel</th></tr>
+<tr><td>Kreacyjne (creational)</td><td>sposoby <strong>tworzenia obiektów</strong>, ukrywające logikę tworzenia i zwiększające elastyczność (punkt 3)</td></tr>
+<tr><td>Strukturalne (structural)</td><td>sposoby <strong>komponowania</strong> klas/obiektów w większe struktury (punkt 4)</td></tr>
+<tr><td>Behawioralne (behavioral)</td><td>sposoby <strong>komunikacji i przydziału odpowiedzialności</strong> między obiektami (punkt 2)</td></tr>
+</table>
+
+<div class="uwaga">Kluczowa różnica podejść: Alexander opisywał wzorce dla <strong>fizycznych struktur</strong> (budynki, przestrzenie), GoF przeniosło samą <strong>ideę</strong> (nazwany, powtarzalny szablon rozwiązania problemu w kontekście) na świat abstrakcyjnych struktur kodu obiektowego — sam sposób myślenia o "katalogowaniu sprawdzonych rozwiązań" pozostał ten sam.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Wzorce behawioralne</h2>
+
+<div class="wzorzec">
+<h3>Chain of Responsibility (łańcuch zobowiązań)</h3>
+<p>Przekazuje żądanie po łańcuchu potencjalnych obsługujących, aż jeden z nich je obsłuży — nadawca żądania nie musi znać, który konkretnie obiekt w łańcuchu je obsłuży, co odsprzęga nadawcę od konkretnych odbiorców.</p>
+<pre>abstract class Handler {
+    protected Handler nastepny;
+    void ustawNastepny(Handler h) { nastepny = h; }
+    abstract void obsluz(Zadanie z);
+}
+class HandlerA extends Handler {
+    void obsluz(Zadanie z) {
+        if (pasuje(z)) { /* obsłuż */ }
+        else if (nastepny != null) nastepny.obsluz(z);
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> middleware/filtry HTTP (patrz przedmiot Programowanie aplikacji internetowych), obsługa zdarzeń UI propagowana od dziecka do rodzica, systemy autoryzacji sprawdzające kolejne poziomy uprawnień.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Command (polecenie)</h3>
+<p>Zamienia żądanie/akcję w samodzielny obiekt, hermetyzujący wszystkie informacje potrzebne do jej wykonania — pozwala parametryzować obiekty akcjami, kolejkować je, logować i wycofywać (undo).</p>
+<pre>interface Command { void wykonaj(); void cofnij(); }
+
+class DodajTekstCommand implements Command {
+    Dokument doc; String tekst;
+    void wykonaj() { doc.dodaj(tekst); }
+    void cofnij() { doc.usun(tekst); }
+}</pre>
+<p><strong>Zastosowanie:</strong> mechanizmy undo/redo w edytorach, kolejki zadań, makra nagrywające sekwencję akcji, przyciski/menu w GUI (każdy powiązany z obiektem Command).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Interpreter</h3>
+<p>Definiuje reprezentację gramatyki prostego języka i interpreter zdań tego języka — każda reguła gramatyki odpowiada klasie, drzewo obiektów reprezentuje konkretne zdanie do zinterpretowania.</p>
+<pre>interface Wyrazenie { int interpretuj(); }
+class Liczba implements Wyrazenie {
+    int wartosc;
+    int interpretuj() { return wartosc; }
+}
+class Dodawanie implements Wyrazenie {
+    Wyrazenie lewy, prawy;
+    int interpretuj() { return lewy.interpretuj() + prawy.interpretuj(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> parsery prostych wyrażeń matematycznych/logicznych, silniki reguł biznesowych, języki konfiguracyjne — rzadko stosowany "wprost" dziś (zastępowany gotowymi bibliotekami parserów), ale ważny koncepcyjnie.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Iterator</h3>
+<p>Zapewnia jednolity sposób sekwencyjnego przechodzenia po elementach kolekcji, bez ujawniania jej wewnętrznej reprezentacji (tablica, lista, drzewo) — patrz przedmiot Programowanie obiektowe 2, protokół <code>__iter__</code>/<code>__next__</code> w Pythonie, czy <code>Iterator</code> w Javie.</p>
+<pre>Iterator&lt;Integer&gt; it = lista.iterator();
+while (it.hasNext()) {
+    int x = it.next();
+}</pre>
+<p><strong>Zastosowanie:</strong> wszystkie kolekcje standardowych bibliotek (List, Set, Map), pętle <code>for-each</code>, generatory (patrz przedmiot Języki skryptowe).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Mediator (mediator)</h3>
+<p>Centralizuje komunikację między grupą obiektów w jednym obiekcie-pośredniku — obiekty nie odwołują się bezpośrednio do siebie nawzajem (co dałoby "gęstą siatkę" zależności), tylko przez mediatora, co redukuje liczbę wzajemnych powiązań.</p>
+<pre>class DialogMediator {
+    Checkbox chk; Button btn;
+    void powiadom(Object nadawca, String zdarzenie) {
+        if (nadawca == chk && zdarzenie.equals("zmiana")) {
+            btn.setEnabled(chk.isChecked());
+        }
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> koordynacja komponentów formularza GUI (włączanie/wyłączanie pól zależnie od innych), kontroler ruchu lotniczego jako klasyczna analogia, chat room łączący uczestników.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Memento</h3>
+<p>Pozwala zapisać i później przywrócić wewnętrzny stan obiektu, <strong>bez naruszania</strong> jego enkapsulacji (zewnętrzny kod nie widzi szczegółów tego stanu) — podstawa mechanizmów undo/redo, obok wzorca Command.</p>
+<pre>class Memento { private String stan; Memento(String s) { stan = s; } String getStan() { return stan; } }
+
+class Edytor {
+    String tresc;
+    Memento zapisz() { return new Memento(tresc); }
+    void przywroc(Memento m) { tresc = m.getStan(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> historia zmian w edytorach tekstu/grafiki, punkty zapisu w grach (save states), transakcje z możliwością wycofania (rollback).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Observer (obserwator)</h3>
+<p>Definiuje zależność jeden-do-wielu między obiektami — gdy stan jednego obiektu (subjekt/podmiot) się zmienia, wszyscy zarejestrowani obserwatorzy są automatycznie powiadamiani i mogą zaktualizować się w odpowiedzi.</p>
+<pre>interface Observer { void aktualizuj(String dane); }
+
+class Subjekt {
+    List&lt;Observer&gt; obserwatorzy = new ArrayList&lt;&gt;();
+    void dodajObserwatora(Observer o) { obserwatorzy.add(o); }
+    void powiadom(String dane) {
+        for (Observer o : obserwatorzy) o.aktualizuj(dane);
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> obsługa zdarzeń GUI, mechanizm publish-subscribe (patrz RabbitMQ, przedmiot Programowanie sieciowe), reaktywne frameworki UI (React, Vue), Observer to podstawa wielu architektur event-driven.</p>
+</div>
+
+<div class="wzorzec">
+<h3>State (stan)</h3>
+<p>Obiekt zmienia swoje zachowanie w zależności od wewnętrznego stanu, tak jakby zmieniał klasę — logika każdego stanu wydzielona do osobnej klasy implementującej wspólny interfejs, zamiast rozbudowanej instrukcji <code>if/switch</code> na polu-fladze stanu.</p>
+<pre>interface Stan { void obsluz(Zamowienie z); }
+class StanNowe implements Stan {
+    void obsluz(Zamowienie z) { z.ustawStan(new StanWyslane()); }
+}</pre>
+<p><strong>Zastosowanie:</strong> maszyny stanów (np. stan zamówienia: nowe → opłacone → wysłane → dostarczone), gry (stan gracza: bieganie/skakanie/atakowanie), protokoły sieciowe z formalnymi stanami.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Strategy (strategia)</h3>
+<p>Definiuje rodzinę wymiennych algorytmów rozwiązujących ten sam problem, kapsułkuje każdy w osobną klasę o wspólnym interfejsie i pozwala wybierać/podmieniać algorytm w czasie działania, bez zmiany kodu korzystającego z niego.</p>
+<pre>interface StrategiaSortowania { void sortuj(int[] tab); }
+class QuickSort implements StrategiaSortowania { void sortuj(int[] tab) { /*...*/ } }
+class MergeSort implements StrategiaSortowania { void sortuj(int[] tab) { /*...*/ } }
+
+class Sorter {
+    StrategiaSortowania strategia;
+    void wykonaj(int[] tab) { strategia.sortuj(tab); }
+}</pre>
+<p><strong>Zastosowanie:</strong> różne algorytmy sortowania/wyszukiwania wymienne w locie, różne strategie walidacji, różne metody płatności w sklepie internetowym, funkcja porównująca przekazywana do <code>sort()</code>.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Template Method (metoda szablonowa)</h3>
+<p>Definiuje ogólny "szkielet" algorytmu w metodzie klasy bazowej (z ustaloną kolejnością kroków), pozwalając podklasom nadpisać <strong>tylko</strong> poszczególne kroki, bez zmiany całej struktury algorytmu.</p>
+<pre>abstract class ProcesGotowania {
+    final void gotuj() {           // metoda szablonowa — "final", struktura niezmienna
+        przygotujSkladniki();
+        gotujGlownaCzesc();
+        podaj();
+    }
+    abstract void gotujGlownaCzesc();   // krok do nadpisania przez podklasy
+    void przygotujSkladniki() { /* domyślna implementacja */ }
+    void podaj() { /* domyślna implementacja */ }
+}</pre>
+<p><strong>Zastosowanie:</strong> frameworki definiujące ogólny cykl życia (np. cykl życia serwletu — patrz przedmiot Programowanie aplikacji internetowych), algorytmy różniące się tylko jednym krokiem (np. różne formaty eksportu danych z tym samym procesem walidacji).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Visitor (odwiedzający)</h3>
+<p>Pozwala dodać <strong>nową operację</strong> do całej hierarchii klas <strong>bez modyfikowania</strong> tych klas — operacja "odwiedza" strukturę obiektów z zewnątrz, dzięki mechanizmowi podwójnej dyspozycji (double dispatch).</p>
+<pre>interface Visitor { void odwiedz(Kolo k); void odwiedz(Kwadrat k); }
+interface Figura { void akceptuj(Visitor v); }
+class Kolo implements Figura {
+    void akceptuj(Visitor v) { v.odwiedz(this); }
+}
+class ObliczPoleVisitor implements Visitor {
+    void odwiedz(Kolo k) { /* oblicz pole koła */ }
+    void odwiedz(Kwadrat k) { /* oblicz pole kwadratu */ }
+}</pre>
+<p><strong>Zastosowanie:</strong> operacje na drzewach składni (AST) w kompilatorach, eksport tej samej struktury danych do wielu formatów (XML, JSON, PDF) bez "zaśmiecania" klas modelu logiką eksportu.</p>
+</div>
+
+<div class="uwaga">Wspólny mianownik wzorców behawioralnych: skupiają się na <strong>tym, jak obiekty współpracują i komunikują się</strong>, oraz jak rozdzielona jest odpowiedzialność za konkretne zachowanie — w odróżnieniu od tworzenia obiektów (kreacyjne) czy ich strukturalnej kompozycji (strukturalne).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Wzorce kreacyjne</h2>
+
+<div class="wzorzec">
+<h3>Abstract Factory (fabryka abstrakcyjna)</h3>
+<p>Zapewnia interfejs do tworzenia <strong>całych rodzin</strong> powiązanych/zależnych obiektów, bez określania ich konkretnych klas — klient korzysta wyłącznie z abstrakcyjnego interfejsu fabryki i produktów, niezależnie od tego, która konkretna "rodzina" jest aktualnie używana.</p>
+<pre>interface GUIFactory {
+    Button tworzButton();
+    Checkbox tworzCheckbox();
+}
+class WindowsFactory implements GUIFactory {
+    Button tworzButton() { return new WindowsButton(); }
+    Checkbox tworzCheckbox() { return new WindowsCheckbox(); }
+}
+class MacFactory implements GUIFactory {
+    Button tworzButton() { return new MacButton(); }
+    Checkbox tworzCheckbox() { return new MacCheckbox(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> zestawy komponentów UI zgodne z jednym stylem/systemem (Windows/macOS), sterowniki baz danych zgodne z jednym dostawcą (różne, ale spójne implementacje Connection/Statement).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Builder (budowniczy)</h3>
+<p>Oddziela konstrukcję złożonego obiektu (z wieloma opcjonalnymi/wymaganymi polami) od jego finalnej reprezentacji — pozwala budować obiekt <strong>krok po kroku</strong>, z czytelnym, "płynnym" API, zamiast konstruktora z dziesiątkami parametrów.</p>
+<pre>Pizza p = new Pizza.Builder()
+    .rozmiar("duża")
+    .dodajSkladnik("ser")
+    .dodajSkladnik("pieczarki")
+    .build();</pre>
+<p><strong>Zastosowanie:</strong> obiekty z wieloma opcjonalnymi parametrami (konfiguracje, zapytania SQL budowane programowo — Query Builder), obiekty niemutowalne wymagające wielu kroków inicjalizacji przed finalnym utworzeniem.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Factory Method (metoda fabrykująca)</h3>
+<p>Definiuje interfejs (metodę) tworzenia obiektu w klasie bazowej, ale pozwala <strong>podklasom</strong> decydować, jaką konkretną klasę instancjonować — odracza decyzję o konkretnym typie do podklasy.</p>
+<pre>abstract class Dokument {
+    abstract Strona tworzStrone();   // metoda fabrykująca
+    void otworz() {
+        Strona s = tworzStrone();
+        s.wyswietl();
+    }
+}
+class DokumentTekstowy extends Dokument {
+    Strona tworzStrone() { return new StronaTekstowa(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> frameworki, gdzie biblioteka definiuje ogólny proces, a aplikacja kliencka dostarcza konkretne typy obiektów (np. różne typy dokumentów, różne typy połączeń sieciowych).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Prototype (prototyp)</h3>
+<p>Tworzy nowe obiekty przez <strong>klonowanie</strong> istniejącego obiektu-prototypu, zamiast budowania od zera — przydatne, gdy tworzenie obiektu jest kosztowne (np. wymaga odczytu z bazy/pliku), a nowy obiekt ma być tylko niewielką modyfikacją istniejącego.</p>
+<pre>interface Prototype { Prototype klonuj(); }
+class Ksztalt implements Prototype {
+    int x, y, kolor;
+    Prototype klonuj() { return new Ksztalt(this.x, this.y, this.kolor); }
+}</pre>
+<p><strong>Zastosowanie:</strong> kopiowanie obiektów w grach (klonowanie wrogów/przedmiotów tego samego typu), obiekty z kosztowną inicjalizacją, patrz też przedmiot Programowanie obiektowe 2 — <code>copy</code>/<code>deepcopy</code> w Pythonie realizuje podobną ideę.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Singleton</h3>
+<p>Zapewnia, że klasa ma <strong>tylko jedną</strong> instancję w całej aplikacji, i udostępnia do niej globalny punkt dostępu — kontroluje <strong>liczbę</strong> instancji (zawsze dokładnie jedna), nie sposób ich tworzenia jak pozostałe wzorce kreacyjne.</p>
+<pre>class Konfiguracja {
+    private static Konfiguracja instancja;
+    private Konfiguracja() { /* prywatny konstruktor */ }
+
+    public static Konfiguracja getInstance() {
+        if (instancja == null) {
+            instancja = new Konfiguracja();
+        }
+        return instancja;
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> globalna konfiguracja aplikacji, pula połączeń do bazy danych, logger — obiekty, których z definicji powinna istnieć tylko jedna, współdzielona instancja.</p>
+<div class="uwaga">Singleton bywa krytykowany jako "antywzorzec" przy nadużywaniu — wprowadza globalny, ukryty stan (utrudnia testowanie w izolacji, tworzy niejawne zależności między odległymi częściami kodu) — warto rozważyć wstrzykiwanie zależności (dependency injection) jako alternatywę.</div>
+</div>
+
+<div class="uwaga">Wspólny mianownik wzorców kreacyjnych: <strong>oddzielają proces tworzenia obiektu</strong> od kodu, który go używa — kod klienta zwykle nie musi znać konkretnej klasy tworzonego obiektu. Ułatwia to wymianę implementacji bez zmiany kodu korzystającego z obiektów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Wzorce strukturalne</h2>
+
+<div class="wzorzec">
+<h3>Adapter</h3>
+<p>"Tłumaczy" interfejs jednej klasy na interfejs, którego oczekuje kod klienta — pozwala współpracować klasom z niekompatybilnymi interfejsami, bez modyfikowania żadnej z nich (np. integracja starej/zewnętrznej biblioteki z nowym kodem).</p>
+<pre>interface NowyInterfejs { void dzialaj(); }
+class StaraKlasa { void staraMetoda() { /*...*/ } }
+
+class Adapter implements NowyInterfejs {
+    StaraKlasa stara = new StaraKlasa();
+    void dzialaj() { stara.staraMetoda(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> integracja z zewnętrznymi API o innym kształcie niż oczekiwany, adaptacja starszych bibliotek do nowego kodu bez ich przepisywania.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Bridge (mostek)</h3>
+<p>Oddziela abstrakcję (interfejs "od strony klienta") od jej implementacji — tak, by obie strony (abstrakcja i implementacja) mogły się rozwijać/zmieniać <strong>niezależnie</strong> od siebie, unikając kombinatorycznej eksplozji klas przy wielu wariantach każdej strony.</p>
+<pre>interface Implementacja { void narysujKolo(); }
+class ImplementacjaOpenGL implements Implementacja { void narysujKolo() { /*...*/ } }
+
+abstract class Ksztalt {
+    protected Implementacja impl;
+    abstract void rysuj();
+}
+class Kolo extends Ksztalt {
+    void rysuj() { impl.narysujKolo(); }
+}</pre>
+<p><strong>Zastosowanie:</strong> sterowniki graficzne wspierające wiele platform renderujących (OpenGL/DirectX) niezależnie od hierarchii kształtów, sterowniki bazodanowe wspierające wiele silników SQL.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Composite (kompozyt)</h3>
+<p>Komponuje obiekty w struktury drzewiaste typu "część-całość" i pozwala klientowi <strong>jednolicie</strong> traktować pojedyncze obiekty i ich grupy (kompozycje) przez wspólny interfejs.</p>
+<pre>interface Komponent { int rozmiar(); }
+class Plik implements Komponent {
+    int rozmiarBajtow;
+    int rozmiar() { return rozmiarBajtow; }
+}
+class Folder implements Komponent {
+    List&lt;Komponent&gt; dzieci = new ArrayList&lt;&gt;();
+    int rozmiar() {
+        int suma = 0;
+        for (Komponent k : dzieci) suma += k.rozmiar();
+        return suma;
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> struktury plików/folderów, drzewo komponentów UI (kontener zawierający inne komponenty), struktura organizacyjna firmy (pracownik/menadżer z podwładnymi).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Decorator (dekorator)</h3>
+<p>Dynamicznie dodaje nowe zachowanie/odpowiedzialności do <strong>pojedynczego</strong> obiektu, "owijając" go inną klasą implementującą ten sam interfejs — elastyczniejsza alternatywa dla dziedziczenia, bo kombinacje "dekoracji" można łączyć w dowolnej kolejności w czasie działania.</p>
+<pre>interface Kawa { double cena(); }
+class KawaZwykla implements Kawa { double cena() { return 5; } }
+
+class ZMlekiem implements Kawa {
+    Kawa opakowana;
+    ZMlekiem(Kawa k) { opakowana = k; }
+    double cena() { return opakowana.cena() + 2; }
+}
+// użycie: new ZMlekiem(new KawaZwykla()).cena()  → 7</pre>
+<p><strong>Zastosowanie:</strong> strumienie I/O w Javie (<code>BufferedReader</code> owijający <code>FileReader</code>), dodawanie funkcji do obiektów UI (przewijanie, ramka), warstwy middleware.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Facade (fasada)</h3>
+<p>Zapewnia <strong>jeden, uproszczony</strong> interfejs do złożonego podsystemu (wielu współpracujących klas), ułatwiając jego użycie klientom, którzy nie muszą znać wewnętrznych szczegółów/zależności między tymi klasami.</p>
+<pre>class KinoDomoweFacade {
+    Projektor projektor; Glosniki glosniki; Odtwarzacz odtwarzacz;
+    void ogladajFilm() {
+        projektor.wlacz();
+        glosniki.ustawTryb("kino");
+        odtwarzacz.odtworz();
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> uproszczone API do złożonych bibliotek (np. jedna metoda inicjalizująca cały skomplikowany framework), warstwa "serwisów" ukrywająca szczegóły wielu repozytoriów/klas dostępu do danych.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Flyweight (waga piórkowa)</h3>
+<p>Redukuje zużycie pamięci przy <strong>bardzo dużej liczbie</strong> podobnych obiektów przez współdzielenie części ich stanu (stan wewnętrzny/intrinsic — wspólny dla wielu instancji, np. kształt litery), a przechowywanie tylko unikalnej części (stan zewnętrzny/extrinsic, np. pozycja) osobno dla każdej.</p>
+<pre>class Znak {   // flyweight — współdzielony dla wszystkich wystąpień tej samej litery
+    char litera; Font font;
+}
+class PozycjaZnaku {  // stan zewnętrzny, unikalny per wystąpienie
+    Znak znak; int x, y;
+}</pre>
+<p><strong>Zastosowanie:</strong> renderowanie tekstu (tysiące liter, ale tylko kilkadziesiąt unikalnych kształtów-glifów), obiekty w grach z tysiącami podobnych jednostek (drzewa w lesie, cząsteczki), edytory graficzne z dużą liczbą powtarzalnych elementów.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Proxy (pełnomocnik)</h3>
+<p>Obiekt zastępczy o tym samym interfejsie co obiekt docelowy, kontrolujący dostęp do niego — pośredniczy w wywołaniach, mogąc dodać logikę przed/po faktycznym wywołaniu (kontrola dostępu, leniwe ładowanie, logowanie, cache).</p>
+<pre>interface Obraz { void wyswietl(); }
+class ObrazRzeczywisty implements Obraz {
+    ObrazRzeczywisty(String plik) { wczytajZDysku(plik); }  // kosztowne
+    void wyswietl() { /*...*/ }
+}
+class ObrazProxy implements Obraz {
+    String plik; ObrazRzeczywisty rzeczywisty;
+    void wyswietl() {
+        if (rzeczywisty == null) rzeczywisty = new ObrazRzeczywisty(plik);  // leniwe tworzenie
+        rzeczywisty.wyswietl();
+    }
+}</pre>
+<p><strong>Zastosowanie:</strong> leniwe ładowanie (lazy loading) kosztownych zasobów, proxy zdalne (obiekt lokalny reprezentujący usługę sieciową — patrz komunikacja klient-serwer), proxy zabezpieczające (sprawdzanie uprawnień przed faktycznym wywołaniem), reverse proxy na poziomie sieci (patrz przedmiot Administracja serwerami WWW — to ta sama idea, na poziomie infrastruktury).</p>
+</div>
+
+<div class="uwaga">Wspólny mianownik wzorców strukturalnych: dotyczą <strong>jak klasy/obiekty są komponowane</strong> w większe struktury, zachowując elastyczność i wydajność systemu — w odróżnieniu od tworzenia obiektów (kreacyjne) czy sposobów ich interakcji w czasie (behawioralne).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Wzorce architektoniczne</h2>
+
+<p>W odróżnieniu od wzorców GoF (poziom pojedynczych klas/obiektów), wzorce architektoniczne operują na <strong>wyższym</strong> poziomie — organizują <strong>całą</strong> strukturę aplikacji/systemu.</p>
+
+<div class="wzorzec">
+<h3>MVC (Model-View-Controller)</h3>
+<p>Rozdzielenie danych/logiki biznesowej (Model), prezentacji (View) i obsługi żądań/koordynacji (Controller) — patrz przedmiot Bazy danych w aplikacjach internetowych po pełny opis. Kontroler odbiera żądanie, woła Model, przekazuje dane do View, View generuje odpowiedź.</p>
+</div>
+
+<div class="wzorzec">
+<h3>MVP (Model-View-Presenter)</h3>
+<p>Wariant MVC, w którym Presenter przejmuje <strong>więcej</strong> logiki prezentacji z widoku — widok jest "cienki" (pasywny), zawiera minimum logiki, praktycznie tylko wyświetla to, co każe mu Presenter — ułatwia to testowanie logiki prezentacji w izolacji od faktycznego UI (widok można łatwo zamockować).</p>
+</div>
+
+<div class="wzorzec">
+<h3>MVVM (Model-View-ViewModel)</h3>
+<p>Wariant popularny w aplikacjach z <strong>dwustronnym wiązaniem danych</strong> (data binding, np. Angular, WPF) — ViewModel eksponuje dane i komendy w formie, którą widok automatycznie "obserwuje" i synchronizuje się z nią, bez ręcznego, jawnego "przepisywania" wartości między warstwami (jak trzeba by robić w klasycznym MVC/MVP).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Architektura warstwowa (Layered / N-tier)</h3>
+<p>Podział systemu na poziome warstwy (typowo: prezentacja → logika biznesowa → dostęp do danych), gdzie każda warstwa komunikuje się <strong>tylko</strong> z warstwami bezpośrednio sąsiednimi — zmiana w jednej warstwie (np. zmiana bazy danych) nie powinna wymagać zmian w warstwach odległych (np. UI), o ile interfejs między warstwami pozostaje stabilny.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Mikroserwisy</h3>
+<p>System podzielony na małe, <strong>niezależnie wdrażane</strong> serwisy, komunikujące się przez sieć (REST, komunikaty asynchroniczne) — patrz przedmioty Projektowanie aplikacji internetowych i Technologie DevOps po pełny opis, w tym porównanie z architekturą monolityczną.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Event-Driven Architecture (architektura sterowana zdarzeniami)</h3>
+<p>Komponenty komunikują się przez <strong>publikowanie/nasłuchiwanie zdarzeń</strong>, zamiast bezpośrednich wywołań metod — silne odsprzęglenie: nadawca zdarzenia nie musi wiedzieć, kto (i ile komponentów) je odbiera. Bezpośrednio realizuje na poziomie architektury tę samą ideę, co wzorzec Observer na poziomie obiektów (patrz punkt 2). Praktyczna implementacja: brokery komunikatów jak RabbitMQ (patrz przedmiot Programowanie sieciowe).</p>
+</div>
+
+<div class="wzorzec">
+<h3>Architektura klient-serwer</h3>
+<p>Podział na komponent <strong>żądający</strong> usług (klient) i <strong>dostarczający</strong> je (serwer) — fundamentalny podział większości aplikacji sieciowych (patrz przedmioty Sieci komputerowe, Programowanie sieciowe). Serwer skupia logikę/dane, klient (przeglądarka, aplikacja mobilna) prezentuje interfejs i wysyła żądania.</p>
+</div>
+
+<div class="wzorzec">
+<h3>Potok-filtr (Pipe-and-Filter)</h3>
+<p>Dane przepływają przez sekwencję <strong>niezależnych, wymiennych</strong> "filtrów", z których każdy przetwarza dane i przekazuje wynik do następnego w łańcuchu (potoku) — analogia do potoków powłoki systemowej (patrz przedmiot Wprowadzenie do systemów operacyjnych, komenda <code>|</code>). Każdy filtr można rozwijać/testować/wymieniać niezależnie od pozostałych.</p>
+</div>
+
+<div class="uwaga">Różnica poziomu abstrakcji: wzorce GoF (punkty 2-4) rozwiązują <strong>lokalne</strong> problemy projektowe w kodzie (relacje między kilkoma klasami); wzorce architektoniczne definiują <strong>globalną</strong> strukturę całej aplikacji/systemu — oba poziomy zwykle współistnieją w jednym projekcie (np. aplikacja w architekturze MVC, gdzie wewnątrz kontrolerów/modeli używane są wzorce Strategy, Factory Method, Observer itd.).</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Organizacja i architektura komputerów – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Organizacja i architektura komputerów</h1>
+
+<div class="zagadnienie">
+<h2>1. Architektury CISC i RISC</h2>
+
+<table>
+<tr><th></th><th>CISC</th><th>RISC</th></tr>
+<tr>
+<td>Rozwinięcie</td>
+<td>Complex Instruction Set Computer</td>
+<td>Reduced Instruction Set Computer</td>
+</tr>
+<tr>
+<td>Zestaw instrukcji</td>
+<td>duży, złożone instrukcje (jedna instrukcja może wykonywać wiele operacji, np. odczyt z pamięci + operacja arytmetyczna + zapis)</td>
+<td>mały, proste instrukcje (każda wykonuje jedną, prostą operację)</td>
+</tr>
+<tr>
+<td>Czas wykonania instrukcji</td>
+<td>zmienny, różne instrukcje trwają różną liczbę cykli</td>
+<td>zwykle jeden cykl zegara na instrukcję (jednolity czas)</td>
+</tr>
+<tr>
+<td>Dostęp do pamięci</td>
+<td>wiele instrukcji może operować bezpośrednio na pamięci</td>
+<td>tylko dedykowane instrukcje load/store — resztę operacji wykonuje się na rejestrach</td>
+</tr>
+<tr>
+<td>Złożoność sprzętu vs kompilatora</td>
+<td>skomplikowany układ sterowania w procesorze (mikroprogram), prostszy kompilator</td>
+<td>prostszy, szybszy sprzęt, ale bardziej wymagający, "sprytniejszy" kompilator (musi ułożyć więcej prostych instrukcji)</td>
+</tr>
+<tr>
+<td>Liczba rejestrów</td>
+<td>zwykle mniej</td>
+<td>zwykle więcej (mniej odwołań do pamięci)</td>
+</tr>
+<tr>
+<td>Przykłady</td>
+<td>x86, x86-64 (Intel, AMD)</td>
+<td>ARM, RISC-V, MIPS, dawne SPARC</td>
+</tr>
+</table>
+
+<h3>Filozofia projektowa</h3>
+<ul>
+<li><strong>CISC</strong> — "przenieś złożoność do sprzętu": mniej instrukcji w programie (bo każda robi więcej), ale trudniejszy do zaprojektowania i zoptymalizowania sam procesor</li>
+<li><strong>RISC</strong> — "przenieś złożoność do kompilatora": prostszy, szybszy procesor (łatwiejszy potokowanie — patrz punkt 2), ale programy potrzebują więcej instrukcji</li>
+</ul>
+
+<div class="uwaga">Współczesne procesory x86 (formalnie CISC) wewnętrznie tłumaczą złożone instrukcje na prostsze mikrooperacje podobne do RISC — granica między architekturami się zatarła, ale rozróżnienie wciąż jest ważne koncepcyjnie i wciąż widoczne "na zewnątrz" (w zestawie instrukcji dostępnym programiście).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Jednostka wykonawcza procesora (ALU) i cykl rozkazowy</h2>
+
+<h3>Jednostka arytmetyczno-logiczna (ALU)</h3>
+<p>Komponent wykonujący operacje arytmetyczne (dodawanie, odejmowanie, czasem mnożenie/dzielenie) i logiczne (AND, OR, XOR, NOT, przesunięcia bitowe) na danych z rejestrów. Wynik trafia z powrotem do rejestru, a flagi (znaczniki) w rejestrze flag informują o właściwościach wyniku (np. czy wystąpiło przeniesienie, czy wynik był zerem, czy ujemny).</p>
+
+<h3>Cykl rozkazowy (instruction cycle)</h3>
+<p>Podstawowa sekwencja kroków wykonywana dla każdej instrukcji:</p>
+<ol>
+<li><strong>Fetch (pobranie)</strong> — pobranie instrukcji z pamięci na podstawie licznika rozkazów (Program Counter)</li>
+<li><strong>Decode (dekodowanie)</strong> — rozpoznanie, jaka to instrukcja i jakich operandów wymaga</li>
+<li><strong>Execute (wykonanie)</strong> — faktyczne wykonanie operacji (np. w ALU)</li>
+<li><strong>Store/Writeback (zapis wyniku)</strong> — zapisanie wyniku do rejestru lub pamięci</li>
+</ol>
+<p>Po zakończeniu cyklu licznik rozkazów (PC) jest inkrementowany (lub zmieniany przy skoku) i cykl powtarza się dla kolejnej instrukcji.</p>
+
+<h3>Przetwarzanie potokowe (pipelining)</h3>
+<p>Technika przyspieszania wykonania — kolejne etapy cyklu rozkazowego dla <strong>różnych</strong> instrukcji wykonują się równolegle (jak na linii produkcyjnej): gdy jedna instrukcja jest w fazie "execute", następna może już być w fazie "decode", a kolejna w fazie "fetch".</p>
+<ul>
+<li>zwiększa <strong>przepustowość</strong> (liczbę instrukcji na jednostkę czasu), nie zmniejsza czasu wykonania pojedynczej instrukcji</li>
+<li><strong>hazardy potokowe</strong> — sytuacje zakłócające płynność potoku: hazard danych (kolejna instrukcja potrzebuje wyniku poprzedniej, która jeszcze się nie zakończyła), hazard sterowania (skoki warunkowe — nie wiadomo z góry, którą instrukcję pobrać dalej), hazard strukturalny (dwie instrukcje chcą użyć tego samego zasobu sprzętowego naraz)</li>
+</ul>
+
+<div class="uwaga">Przewidywanie rozgałęzień (branch prediction) to technika łagodząca hazard sterowania — procesor "zgaduje" wynik skoku warunkowego, żeby nie zatrzymywać potoku, czekając na faktyczne obliczenie warunku.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Procesor i jego komponenty</h2>
+
+<table>
+<tr><th>Komponent</th><th>Funkcja</th></tr>
+<tr>
+<td>ALU</td>
+<td>wykonuje operacje arytmetyczne i logiczne (patrz punkt 2)</td>
+</tr>
+<tr>
+<td>Jednostka sterująca (Control Unit)</td>
+<td>dekoduje instrukcje i generuje sygnały sterujące dla innych komponentów — "dyryguje" pracą procesora</td>
+</tr>
+<tr>
+<td>Rejestry</td>
+<td>bardzo szybka pamięć wewnątrz procesora (najmniejsza, ale najszybsza w hierarchii pamięci — patrz punkt 4)</td>
+</tr>
+<tr>
+<td>Licznik rozkazów (Program Counter, PC)</td>
+<td>przechowuje adres <strong>następnej</strong> instrukcji do wykonania</td>
+</tr>
+<tr>
+<td>Rejestr instrukcji (Instruction Register)</td>
+<td>przechowuje aktualnie dekodowaną/wykonywaną instrukcję</td>
+</tr>
+<tr>
+<td>Rejestr flag (status register)</td>
+<td>przechowuje flagi wynikające z ostatniej operacji ALU (zero, przeniesienie, znak, przepełnienie)</td>
+</tr>
+<tr>
+<td>Pamięć podręczna (cache)</td>
+<td>szybka pamięć buforująca dane/instrukcje między procesorem a wolniejszą pamięcią RAM (patrz punkt 4)</td>
+</tr>
+<tr>
+<td>Jednostka zmiennoprzecinkowa (FPU)</td>
+<td>dedykowany sprzęt do operacji na liczbach zmiennoprzecinkowych (IEEE 754 — patrz przedmiot Teoretyczne podstawy informatyki)</td>
+</tr>
+</table>
+
+<h3>Rejestry ogólnego przeznaczenia vs specjalne</h3>
+<ul>
+<li><strong>ogólnego przeznaczenia</strong> — do przechowywania danych/wyników pośrednich w trakcie obliczeń (dostępne programiście/kompilatorowi)</li>
+<li><strong>specjalne</strong> — PC, rejestr flag, wskaźnik stosu (Stack Pointer) — mają dedykowaną, ustaloną rolę w działaniu procesora</li>
+</ul>
+
+<h3>Wielordzędowość (multi-core)</h3>
+<p>Współczesne procesory zawierają wiele niezależnych rdzeni (każdy z własną ALU, jednostką sterującą, rejestrami), umożliwiając równoległe wykonywanie wielu wątków/procesów naraz.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Pamięć komputera</h2>
+
+<h3>Hierarchia pamięci</h3>
+<p>Pamięci różnią się kompromisem między szybkością, ceną (za bajt) i pojemnością — od najszybszej/najmniejszej do najwolniejszej/największej:</p>
+<p>Rejestry &rarr; Cache (L1 &rarr; L2 &rarr; L3) &rarr; RAM (pamięć główna) &rarr; Dysk (pamięć masowa)</p>
+<ul>
+<li>im wyżej w hierarchii, tym <strong>szybsza, mniejsza i droższa</strong> za bajt pamięć</li>
+<li im niżej, tym <strong>wolniejsza, większa i tańsza</strong></li>
+</ul>
+
+<h3>Pamięć podręczna (cache)</h3>
+<p>Wykorzystuje zjawisko <strong>lokalności odwołań</strong> (czasowej — niedawno użyte dane są prawdopodobnie użyte znowu; przestrzennej — dane blisko niedawno użytych są prawdopodobnie użyte wkrótce), żeby trzymać "pod ręką" najczęściej/niedawno używane dane z wolniejszej pamięci RAM.</p>
+
+<h3>Pamięć RAM</h3>
+<table>
+<tr><th>Typ</th><th>Cecha</th></tr>
+<tr><td>DRAM (Dynamic RAM)</td><td>tania, gęsta, wymaga okresowego odświeżania (naboj na kondensatorze rozprasza się) — używana jako pamięć główna (RAM systemowy)</td></tr>
+<tr><td>SRAM (Static RAM)</td><td>szybsza, droższa, nie wymaga odświeżania — używana w pamięciach cache</td></tr>
+</table>
+<p><strong>Pamięć ulotna (volatile)</strong> — RAM traci zawartość po wyłączeniu zasilania.</p>
+
+<h3>Pamięć ROM i pochodne</h3>
+<p><strong>Pamięć nieulotna (non-volatile)</strong> — zachowuje dane bez zasilania. ROM (Read-Only Memory, tylko odczyt, programowana raz), EEPROM/Flash (elektrycznie przeprogramowywalna, np. pendrive'y, SSD, BIOS/UEFI).</p>
+
+<h3>Pamięć wirtualna</h3>
+<p>Technika pozwalająca programom "widzieć" więcej pamięci, niż fizycznie jest dostępne w RAM — system operacyjny mapuje adresy wirtualne (używane przez programy) na adresy fizyczne, a rzadziej używane strony pamięci przenosi tymczasowo na dysk (obszar wymiany, swap).</p>
+
+<h3>Pamięć masowa (trwała)</h3>
+<p>HDD (dyski magnetyczne, talerze + głowica, wolniejsze, tańsze za GB) vs SSD (pamięć flash, brak części mechanicznych, znacznie szybszy dostęp swobodny) — służą do trwałego przechowywania danych/programów, nie tylko na czas działania programu (w odróżnieniu od RAM).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Magistrale i interfejsy</h2>
+
+<p>Magistrala (bus) — zestaw linii (przewodów/połączeń) służących do przesyłania danych między komponentami komputera.</p>
+
+<h3>Typy magistral wg przesyłanej informacji</h3>
+<ul>
+<li><strong>magistrala adresowa</strong> — przesyła adres komórki pamięci/urządzenia, do którego kierowane jest żądanie</li>
+<li><strong>magistrala danych</strong> — przesyła same dane (dwukierunkowa — odczyt i zapis)</li>
+<li><strong>magistrala sterująca</strong> — przesyła sygnały sterujące (np. odczyt/zapis, przerwania, zegar)</li>
+</ul>
+
+<h3>Magistrala systemowa</h3>
+<p>Łączy procesor, pamięć RAM i kontrolery urządzeń wejścia/wyjścia — w nowszych architekturach często zastąpiona/wsparta przez dedykowane, szybsze łącza punkt-punkt (np. między CPU a chipsetem).</p>
+
+<h3>Przykładowe interfejsy/magistrale zewnętrzne</h3>
+<table>
+<tr><th>Interfejs</th><th>Zastosowanie</th></tr>
+<tr><td>PCIe</td><td>karty graficzne, dyski SSD (NVMe), karty sieciowe — szybka magistrala wewnętrzna komputera</td></tr>
+<tr><td>USB</td><td>uniwersalny interfejs do urządzeń peryferyjnych (klawiatura, mysz, pendrive, dyski zewnętrzne)</td></tr>
+<tr><td>SATA</td><td>dyski HDD/SSD (starszy standard niż NVMe/PCIe)</td></tr>
+<tr><td>HDMI/DisplayPort</td><td>przesył obrazu (i dźwięku) do monitora</td></tr>
+</table>
+
+<h3>Transmisja szeregowa vs równoległa</h3>
+<ul>
+<li><strong>równoległa</strong> — wiele bitów przesyłanych naraz, na osobnych liniach — teoretycznie szybsza "za jednym razem", ale podatna na zakłócenia i różnice czasowe (skew) między liniami przy dużych prędkościach</li>
+<li><strong>szeregowa</strong> — bity przesyłane jeden za drugim, jedną linią — dziś dominuje w szybkich interfejsach (USB, PCIe, SATA), bo łatwiej osiągnąć bardzo wysokie częstotliwości bez problemów synchronizacji między wieloma liniami</li>
+</ul>
+
+<h3>Arbitraż magistrali</h3>
+<p>Mechanizm decydujący, które urządzenie ma prawo aktualnie korzystać ze współdzielonej magistrali, gdy więcej niż jedno urządzenie chce nadawać jednocześnie.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Układy wejścia/wyjścia</h2>
+
+<h3>Kontroler urządzenia (I/O controller)</h3>
+<p>Pośredniczy między procesorem a fizycznym urządzeniem peryferyjnym — tłumaczy ogólne żądania procesora na konkretne sygnały elektryczne rozumiane przez urządzenie (i odwrotnie).</p>
+
+<h3>Metody komunikacji procesora z urządzeniami I/O</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th><th>Wada/zaleta</th></tr>
+<tr>
+<td>Odpytywanie (polling)</td>
+<td>procesor cyklicznie sprawdza status urządzenia (czy dane są gotowe)</td>
+<td>proste, ale marnuje czas procesora na sprawdzanie "na pusto"</td>
+</tr>
+<tr>
+<td>Przerwania (interrupts)</td>
+<td>urządzenie samo "sygnalizuje" procesorowi zdarzenie (np. dane gotowe) — procesor przerywa aktualną pracę i obsługuje zdarzenie</td>
+<td>procesor nie traci czasu na sprawdzanie, ale obsługa przerwania ma swój narzut (przełączenie kontekstu)</td>
+</tr>
+<tr>
+<td>DMA (Direct Memory Access)</td>
+<td>dedykowany układ przesyła dane bezpośrednio między urządzeniem a pamięcią RAM, <strong>bez</strong> udziału procesora w samym transferze</td>
+<td>procesor jest informowany tylko na początku i na końcu transferu — może w tym czasie robić coś innego</td>
+</tr>
+</table>
+
+<h3>Przerwania — obsługa</h3>
+<ol>
+<li>urządzenie zgłasza sygnał przerwania</li>
+<li>procesor kończy aktualnie wykonywaną instrukcję, zapamiętuje swój stan (kontekst — rejestry, PC)</li>
+<li>wykonuje procedurę obsługi przerwania (interrupt handler / ISR) — zwykle skok do adresu z tablicy wektorów przerwań</li>
+<li>po obsłudze, przywraca zapamiętany stan i wraca do przerwanego programu</li>
+</ol>
+
+<h3>Adresowanie urządzeń I/O</h3>
+<ul>
+<li><strong>izolowane (I/O mapped)</strong> — urządzenia mają osobną przestrzeń adresową niż pamięć RAM, dedykowane instrukcje (np. <code>IN</code>/<code>OUT</code> w x86)</li>
+<li><strong>odwzorowane w pamięci (memory-mapped I/O)</strong> — rejestry urządzeń widoczne jako zwykłe adresy w tej samej przestrzeni pamięci co RAM — dostęp tymi samymi instrukcjami, co do zwykłej pamięci</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Struktura komputera</h2>
+
+<h3>Architektura von Neumanna</h3>
+<p>Klasyczny model współczesnego komputera — cztery główne bloki połączone magistralami:</p>
+<ul>
+<li><strong>jednostka centralna (CPU)</strong> — wykonuje instrukcje (ALU + jednostka sterująca + rejestry)</li>
+<li><strong>pamięć</strong> — przechowuje jednocześnie <strong>zarówno instrukcje programu, jak i dane</strong> (kluczowa cecha architektury von Neumanna, w odróżnieniu np. od architektury harwardzkiej z rozdzielonymi pamięciami dla kodu i danych)</li>
+<li><strong>urządzenia wejścia/wyjścia</strong> — komunikacja ze światem zewnętrznym</li>
+<li><strong>magistrale</strong> — łączą wszystkie powyższe elementy (patrz punkt 5)</li>
+</ul>
+
+<h3>Konsekwencja: program przechowywany (stored program concept)</h3>
+<p>Program jest zwykłymi danymi w pamięci, tak samo adresowalnymi jak dane przetwarzane — dzięki temu ten sam komputer można "przeprogramować" do zupełnie innego zadania bez zmian sprzętowych, tylko wczytując inny program do tej samej pamięci.</p>
+
+<h3>Architektura harwardzka</h3>
+<p>Alternatywa — <strong>rozdzielone</strong> pamięci/magistrale dla instrukcji i danych, co pozwala procesorowi pobierać jednocześnie instrukcję i dane (bez konfliktu o tę samą magistralę) — stosowana głównie w mikrokontrolerach i systemach wbudowanych, rzadziej w komputerach ogólnego przeznaczenia.</p>
+
+<h3>Ogólny schemat przepływu danych</h3>
+<pre>[Urządzenia wejścia] → [Pamięć] &lt;→ [CPU: ALU + sterowanie + rejestry]
+                                          ↓
+                              [Urządzenia wyjścia]</pre>
+<p>Wszystkie elementy komunikują się poprzez magistrale (adresową, danych, sterującą — patrz punkt 5), a procesor koordynuje cały przepływ zgodnie z aktualnie wykonywanym programem.</p>
+
+<div class="uwaga">Typowe pytanie: różnica między architekturą von Neumanna a harwardzką — kluczowa różnica to <strong>wspólna vs rozdzielona</strong> pamięć/magistrala dla instrukcji i danych, co wpływa na to, czy procesor może pobierać instrukcję i dane jednocześnie.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Organizacja pamięci cache</h2>
+
+<p>Cache dzieli się na linie (blocks) — najmniejsze jednostki danych przenoszone między RAM i cache naraz (typowo 64 bajty). Sposób <strong>mapowania</strong> określa, w którym miejscu cache może wylądować dana linia z pamięci głównej.</p>
+
+<h3>Sposoby mapowania</h3>
+<table>
+<tr><th>Typ</th><th>Zasada</th><th>Zaleta/wada</th></tr>
+<tr>
+<td>Mapowanie bezpośrednie (direct-mapped)</td>
+<td>każdy adres pamięci ma <strong>dokładnie jedno</strong> możliwe miejsce w cache (adres mod liczba linii)</td>
+<td>proste i szybkie, ale podatne na konflikty (dwa różne, często używane adresy mogą "walczyć" o to samo miejsce)</td>
+</tr>
+<tr>
+<td>W pełni skojarzeniowa (fully associative)</td>
+<td>dana może trafić do <strong>dowolnego</strong> miejsca w cache</td>
+<td>brak konfliktów mapowania, ale drogie i wolne sprawdzanie (trzeba przeszukać całą pamięć cache)</td>
+</tr>
+<tr>
+<td>Zbiorowo-skojarzeniowa (set-associative)</td>
+<td>kompromis — cache podzielony na zbiory (sety), dana może trafić do dowolnego miejsca <strong>w ramach jednego zbioru</strong> (np. 4-way = 4 możliwe miejsca)</td>
+<td>rozwiązanie stosowane w praktyce w większości procesorów — balans między szybkością a liczbą konfliktów</td>
+</tr>
+</table>
+
+<h3>Polityki zapisu (write policy)</h3>
+<table>
+<tr><th>Polityka</th><th>Zasada</th></tr>
+<tr>
+<td>Write-through</td>
+<td>każdy zapis do cache jest <strong>natychmiast</strong> propagowany też do pamięci głównej — cache i RAM zawsze zsynchronizowane, ale więcej zapisów do (wolniejszego) RAM</td>
+</tr>
+<tr>
+<td>Write-back</td>
+<td>zapis trafia tylko do cache, oznaczony jako "zmodyfikowany" (dirty bit); do RAM trafia dopiero, gdy linia jest usuwana z cache (np. zastępowana inną) — mniej zapisów do RAM, ale RAM może chwilowo mieć "nieaktualne" dane</td>
+</tr>
+</table>
+
+<h3>Trafienie i pominięcie (hit/miss)</h3>
+<ul>
+<li><strong>cache hit</strong> — potrzebne dane już są w cache — szybki dostęp</li>
+<li><strong>cache miss</strong> — danych nie ma w cache — trzeba pobrać z wolniejszej pamięci (RAM), co dodatkowo może wymagać wyrzucenia (eviction) innej linii, żeby zrobić miejsce</li>
+</ul>
+
+<h3>Polityki zastępowania (przy pełnym cache)</h3>
+<p>LRU (Least Recently Used — wyrzuć najdawniej nieużywaną linię), FIFO, losowa — decydują, którą linię usunąć z cache, gdy trzeba zrobić miejsce dla nowej.</p>
+
+<div class="uwaga">Typowe pytanie: dlaczego mapowanie zbiorowo-skojarzeniowe jest "złotym środkiem" — bo unika zarówno wolnego przeszukiwania całej pamięci (jak w fully-associative), jak i częstych konfliktów (jak w direct-mapped).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Prawo Amdahla</h2>
+
+<p>Opisuje <strong>teoretyczne ograniczenie</strong> maksymalnego przyspieszenia programu poprzez zrównoleglenie (np. na wielu rdzeniach), gdy część kodu jest z natury sekwencyjna (nie da się jej zrównoleglić).</p>
+
+<h3>Wzór</h3>
+<p>Niech \(p\) będzie częścią programu, którą <strong>da się zrównoleglić</strong> (\(0\le p\le1\)), a \(1-p\) częścią czysto sekwencyjną. Dla \(n\) procesorów maksymalne przyspieszenie:</p>
+<p>$$S(n) = \frac{1}{(1-p) + \dfrac{p}{n}}$$</p>
+
+<h3>Granica przy \(n\to\infty\)</h3>
+<p>$$S_{max} = \lim_{n\to\infty} S(n) = \frac{1}{1-p}$$</p>
+<p>Nawet z <strong>nieskończoną</strong> liczbą procesorów, przyspieszenie jest ograniczone przez część sekwencyjną programu — jeśli 10% kodu jest sekwencyjne (\(p=0.9\)), maksymalne przyspieszenie to \(1/(1-0.9) = 10\times\), niezależnie od tego, ile rdzeni dodamy.</p>
+
+<h3>Przykład liczbowy</h3>
+<p>Program, w którym 80% można zrównoleglić (\(p=0.8\)), uruchomiony na 4 procesorach:</p>
+<p>$$S(4) = \frac{1}{0.2 + \dfrac{0.8}{4}} = \frac{1}{0.2+0.2} = \frac{1}{0.4} = 2.5$$</p>
+
+<div class="uwaga">Wniosek praktyczny: dodawanie kolejnych rdzeni ma <strong>coraz mniejszy</strong> efekt (zwroty krańcowe maleją) — po pewnym momencie opłaca się bardziej zoptymalizować/zrównoleglić sekwencyjną część kodu niż dokładać więcej procesorów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Wielowątkowość sprzętowa (SMT / Hyper-Threading)</h2>
+
+<h3>Wielordzędowość (multi-core) — przypomnienie</h3>
+<p>Wiele <strong>fizycznie niezależnych</strong> rdzeni na jednym chipie procesora — każdy ma własną ALU, jednostkę sterującą i rejestry, mogą wykonywać zupełnie niezależne instrukcje w tym samym momencie (patrz punkt 3).</p>
+
+<h3>SMT (Simultaneous Multithreading) / Hyper-Threading (nazwa handlowa Intela)</h3>
+<p>Technika pozwalająca <strong>jednemu</strong> fizycznemu rdzeniowi obsługiwać (zazwyczaj) dwa wątki jednocześnie, symulując dwa "logiczne" procesory — bez fizycznego duplikowania całego rdzenia.</p>
+
+<h3>Jak to działa</h3>
+<p>Rdzeń duplikuje tylko część zasobów potrzebnych do śledzenia stanu wątku (np. rejestry, licznik rozkazów), ale współdzieli między wątkami "kosztowne" zasoby wykonawcze (ALU, jednostki funkcjonalne, cache). Gdy jeden wątek "czeka" (np. na dane z pamięci — cache miss), procesor może w tym czasie wykonywać instrukcje drugiego wątku, wypełniając przerwy w potoku (patrz hazardy potokowe, punkt 2), które inaczej byłyby "puste".</p>
+
+<h3>Różnica względem prawdziwego dodatkowego rdzenia</h3>
+<table>
+<tr><th></th><th>Dodatkowy rdzeń (multi-core)</th><th>SMT (Hyper-Threading)</th></tr>
+<tr><td>Zasoby wykonawcze</td><td>całkowicie niezależne, zduplikowane</td><td>współdzielone między wątkami logicznymi</td></tr>
+<tr><td>Rzeczywiste przyspieszenie</td><td>bliskie 2× (dla dobrze zrównoleglonego kodu)</td><td>zwykle 10-30%, bo wątki "walczą" o te same zasoby</td></tr>
+<tr><td>Koszt sprzętowy</td><td>wysoki (cały rdzeń)</td><td>niski (tylko dodatkowe rejestry stanu)</td></tr>
+</table>
+
+<div class="uwaga">SMT najbardziej pomaga, gdy wątki często "czekają" (np. na pamięć) — wtedy drugi wątek wykorzystuje przestoje. Dla kodu intensywnie obliczeniowego, który non-stop zajmuje ALU, korzyść z SMT jest niewielka, bo brakuje "wolnych" cykli do wypełnienia.</div>
+</div>
+
+</body>
+</html>

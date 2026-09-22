@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Podstawy programowania – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.5;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Podstawy programowania (C)</h1>
+
+<div class="zagadnienie">
+<h2>1. Typy danych, operatory i wyrażenia</h2>
+
+<h3>Typy danych</h3>
+<ul>
+<li>całkowite: <code>char, short, int, long, long long</code> (+ warianty <code>unsigned</code>)</li>
+<li>zmiennoprzecinkowe: <code>float, double, long double</code></li>
+<li><code>char</code> — 1 bajt, kod ASCII, traktowany też jak liczba</li>
+<li><code>void</code> — brak typu</li>
+</ul>
+<p>Rozmiary (typowo 64-bit): <code>int</code>=4B, <code>float</code>=4B, <code>double</code>=8B — sprawdzasz <code>sizeof()</code>.</p>
+
+<h3>Operatory</h3>
+<ul>
+<li>arytmetyczne: <code>+ - * / %</code> (dzielenie int/int = int! <code>%</code> tylko dla całkowitych)</li>
+<li>relacyjne: <code>== != &lt; &gt; &lt;= &gt;=</code></li>
+<li>logiczne: <code>&& || !</code></li>
+<li>bitowe: <code>& | ^ ~ &lt;&lt; &gt;&gt;</code></li>
+<li>przypisania: <code>= += -= *= /= %=</code> itd.</li>
+<li>inkrementacja/dekrementacja: <code>++ --</code> (pre vs post)</li>
+<li>ternary: <code>warunek ? a : b</code></li>
+</ul>
+
+<h3>Konwersje typów</h3>
+<p>niejawna (int→float) i jawna / rzutowanie: <code>(int) 3.14</code></p>
+
+<div class="uwaga">Pułapka: <code>5/2</code> = <code>2</code>, żeby dostać <code>2.5</code> trzeba <code>(float)5/2</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Instrukcje sterujące</h2>
+
+<h3>Warunkowe</h3>
+<pre>if (warunek) { ... } else if (...) { ... } else { ... }
+
+switch (zmienna) {
+    case 1: ...; break;
+    default: ...;
+}</pre>
+<div class="uwaga">Brak <code>break</code> w <code>switch</code> → "przelatywanie" (fall-through).</div>
+
+<h3>Iteracyjne</h3>
+<pre>for (init; warunek; krok) { ... }
+while (warunek) { ... }
+do { ... } while (warunek);   // wykona się min. 1 raz</pre>
+
+<p><code>break</code> — przerywa pętlę/switch. <code>continue</code> — przechodzi do kolejnej iteracji.</p>
+<p>Różnica <code>while</code> vs <code>do-while</code>: <code>do-while</code> sprawdza warunek <strong>po</strong> wykonaniu ciała, więc zawsze wykona się przynajmniej raz.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Struktura programu i funkcje</h2>
+
+<h3>Struktura pliku .c</h3>
+<pre>#include &lt;stdio.h&gt;      // dyrektywy preprocesora
+#define MAX 100         // stałe/makra
+
+int suma(int a, int b); // deklaracja (prototyp) funkcji
+
+int main() {            // punkt startowy programu
+    ...
+    return 0;
+}
+
+int suma(int a, int b) { // definicja funkcji
+    return a + b;
+}</pre>
+
+<h3>Funkcje</h3>
+<ul>
+<li>deklaracja (prototyp) vs definicja</li>
+<li>parametry przekazywane <strong>przez wartość</strong> (kopia) domyślnie; przez wskaźnik, żeby modyfikować oryginał</li>
+<li><code>return</code> zwraca wartość i kończy funkcję</li>
+<li>zmienne lokalne (widoczne w funkcji) vs globalne (widoczne w całym pliku)</li>
+<li>zasięg (scope) i czas życia zmiennej (lokalna na stosie vs globalna/<code>static</code>)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Tablice jednowymiarowe i dwuwymiarowe</h2>
+
+<h3>1D</h3>
+<pre>int tab[5];                    // deklaracja, wartości niezainicjalizowane
+int tab[5] = {1,2,3,4,5};      // inicjalizacja
+int tab[] = {1,2,3};           // rozmiar wywnioskowany</pre>
+<p>Indeksowanie od 0. Brak sprawdzania granic w C — wyjście poza tablicę to niezdefiniowane zachowanie (UB).</p>
+
+<h3>2D (macierze)</h3>
+<pre>int m[3][4];               // 3 wiersze, 4 kolumny
+int m[2][2] = {{1,2},{3,4}};
+
+for (int i = 0; i &lt; 3; i++)
+    for (int j = 0; j &lt; 4; j++)
+        m[i][j] = i*4+j;</pre>
+<p>W pamięci tablica 2D jest ułożona wierszami (row-major order) — jeden ciągły blok pamięci.</p>
+
+<div class="uwaga">Tablica jako argument funkcji jest przekazywana jako wskaźnik na pierwszy element (traci info o rozmiarze — trzeba przekazać rozmiar osobno).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Wskaźniki — podstawy</h2>
+
+<pre>int x = 10;
+int *p = &x;    // p przechowuje adres x
+printf("%d", *p); // *p = "wartość spod adresu" = 10
+*p = 20;        // zmienia x na 20</pre>
+
+<ul>
+<li><code>&</code> — operator adresu ("adres zmiennej")</li>
+<li><code>*</code> — operator dereferencji ("wartość spod wskaźnika")</li>
+<li>wskaźnik <code>NULL</code> — nie wskazuje nigdzie, warto sprawdzać przed użyciem</li>
+</ul>
+
+<h3>Parametry funkcji typu wskaźnikowego</h3>
+<p>pozwalają modyfikować oryginalną zmienną (bo C przekazuje domyślnie przez wartość):</p>
+<pre>void zwieksz(int *p) {
+    (*p)++;
+}
+int main() {
+    int a = 5;
+    zwieksz(&a);   // a = 6
+}</pre>
+<p>To symulacja przekazania przez referencję w C — klasyczne pytanie: różnica przekazania przez wartość vs przez wskaźnik.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Związek wskaźników i tablic</h2>
+
+<p>Nazwa tablicy to (w większości kontekstów) adres jej pierwszego elementu — <code>tab</code> ≈ <code>&tab[0]</code>.</p>
+
+<pre>int tab[5] = {1,2,3,4,5};
+int *p = tab;        // p wskazuje na tab[0]
+printf("%d", *(p+2)); // to samo co tab[2]</pre>
+
+<h3>Arytmetyka wskaźników</h3>
+<ul>
+<li><code>p+1</code> przesuwa się o <code>sizeof(typ)</code> bajtów, nie o 1 bajt</li>
+<li><code>*(p+i)</code> ≡ <code>p[i]</code> ≡ <code>tab[i]</code></li>
+<li>różnica dwóch wskaźników do elementów tej samej tablicy = liczba elementów między nimi</li>
+</ul>
+
+<p>Różnica tablica vs wskaźnik: tablica ma zarezerwowaną, stałą pamięć (nie da się jej "przestawić"), wskaźnik można przestawiać na dowolny adres.</p>
+
+<h3>Napisy (stringi)</h3>
+<p>w C to tablice <code>char</code> zakończone <code>'\0'</code>:</p>
+<pre>char napis[] = "abc";  // {'a','b','c','\0'}
+char *p = "abc";</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Rekurencja</h2>
+
+<p>Funkcja wywołuje samą siebie. Musi mieć:</p>
+<ol>
+<li><strong>przypadek bazowy</strong> (warunek stopu) — bez niego nieskończona rekurencja → przepełnienie stosu (stack overflow)</li>
+<li><strong>przypadek rekurencyjny</strong> — wywołanie z "mniejszym" problemem, zbliżające do bazy</li>
+</ol>
+
+<h3>Przykład — silnia</h3>
+<pre>int silnia(int n) {
+    if (n <= 1) return 1;       // przypadek bazowy
+    return n * silnia(n - 1);   // przypadek rekurencyjny
+}</pre>
+
+<h3>Przykład — Fibonacci</h3>
+<pre>int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}</pre>
+
+<p>Warto umieć narysować drzewo wywołań (np. dla fib) i pokazać jak stos wywołań się buduje i zwija.</p>
+<p>Rekurencja vs iteracja: rekurencja czytelniejsza dla problemów "z natury rekurencyjnych" (drzewa, dziel i zwyciężaj), ale kosztuje pamięć stosu i zwykle jest wolniejsza od pętli.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Dynamiczna alokacja pamięci</h2>
+
+<p>Pamięć przydzielana w czasie działania programu (na stercie), gdy nie znamy rozmiaru z góry (np. w czasie kompilacji).</p>
+
+<h3>Funkcje z <code>&lt;stdlib.h&gt;</code></h3>
+<pre>int *p = malloc(5 * sizeof(int));   // 5 nieinicjalizowanych intów
+int *q = calloc(5, sizeof(int));    // 5 intów wyzerowanych
+p = realloc(p, 10 * sizeof(int));   // zmiana rozmiaru (zachowuje dane)
+free(p);                            // zwolnienie pamięci</pre>
+
+<ul>
+<li><code>malloc</code> — nie zeruje pamięci; <code>calloc</code> — zeruje</li>
+<li><code>realloc</code> może przenieść blok w inne miejsce pamięci (zwraca nowy adres!)</li>
+<li>zawsze sprawdzaj, czy <code>malloc</code>/<code>calloc</code> nie zwróciło <code>NULL</code> (brak pamięci)</li>
+</ul>
+
+<div class="uwaga">Klasyczne błędy: <strong>wyciek pamięci</strong> (memory leak) — zapomniane <code>free()</code>; <strong>dangling pointer</strong> — użycie wskaźnika po <code>free()</code>; <strong>double free</strong> — dwukrotne zwolnienie tego samego bloku.</div>
+
+<p>Dobra praktyka: po <code>free(p)</code> ustawić <code>p = NULL;</code>, żeby przypadkowo nie użyć go ponownie.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Operacje na plikach</h2>
+
+<h3>Otwieranie i zamykanie</h3>
+<pre>FILE *f = fopen("dane.txt", "r");
+if (f == NULL) { /* błąd otwarcia */ }
+...
+fclose(f);</pre>
+
+<h3>Tryby otwarcia</h3>
+<ul>
+<li><code>"r"</code> — odczyt (plik musi istnieć)</li>
+<li><code>"w"</code> — zapis (nadpisuje / tworzy nowy plik)</li>
+<li><code>"a"</code> — dopisywanie na końcu pliku</li>
+<li><code>"r+"</code>, <code>"w+"</code>, <code>"a+"</code> — odczyt i zapis jednocześnie</li>
+<li>dodanie <code>b</code> (np. <code>"rb"</code>) — tryb binarny</li>
+</ul>
+
+<h3>Funkcje odczytu/zapisu</h3>
+<pre>fprintf(f, "%d %s", liczba, napis);   // zapis sformatowany
+fscanf(f, "%d", &liczba);             // odczyt sformatowany
+
+fputc('a', f);   fgetc(f);            // pojedynczy znak
+fputs("tekst", f);   fgets(bufor, rozmiar, f);   // linia tekstu
+
+fwrite(tab, sizeof(int), n, f);       // zapis binarny
+fread(tab, sizeof(int), n, f);        // odczyt binarny</pre>
+
+<div class="uwaga">Zawsze sprawdzaj wynik <code>fopen</code> (może zwrócić <code>NULL</code>) i pamiętaj o <code>fclose</code> — inaczej dane mogą nie zostać zapisane na dysk (bufor).</div>
+
+<p><code>feof(f)</code> — sprawdza, czy osiągnięto koniec pliku.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Struktury</h2>
+
+<h3>Definicja</h3>
+<pre>struct Punkt {
+    int x;
+    int y;
+};
+
+struct Punkt p1 = {1, 2};
+p1.x = 5;              // dostęp przez kropkę</pre>
+
+<h3>Struktury a wskaźniki</h3>
+<pre>struct Punkt *wp = &p1;
+wp->x = 10;            // strzałka = (*wp).x, skrót dostępu przez wskaźnik</pre>
+
+<h3><code>typedef</code></h3>
+<pre>typedef struct {
+    int x;
+    int y;
+} Punkt;
+
+Punkt p2 = {3, 4};     // nie trzeba pisać "struct Punkt"</pre>
+
+<ul>
+<li>struktury mogą zawierać inne struktury, tablice, wskaźniki</li>
+<li>tablice struktur: <code>struct Punkt tab[10];</code></li>
+<li>struktury jako parametry funkcji — domyślnie kopiowane przez wartość (dla dużych struktur lepiej przekazywać wskaźnik)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Stos vs sterta</h2>
+
+<table style="border-collapse: collapse; width: 100%;">
+<tr style="background:#e9edf2;">
+<th style="border:1px solid #ccc; padding:6px; text-align:left;">Stos (stack)</th>
+<th style="border:1px solid #ccc; padding:6px; text-align:left;">Sterta (heap)</th>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">zmienne lokalne, parametry funkcji</td>
+<td style="border:1px solid #ccc; padding:6px;">pamięć z <code>malloc/calloc/realloc</code></td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">automatycznie zarządzany (alokacja/zwolnienie przy wejściu/wyjściu z funkcji)</td>
+<td style="border:1px solid #ccc; padding:6px;">zarządzany ręcznie przez programistę (<code>free</code>)</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">szybki dostęp, ograniczony rozmiar</td>
+<td style="border:1px solid #ccc; padding:6px;">wolniejszy, dużo większy rozmiar</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">przepełnienie: stack overflow (np. zbyt głęboka rekurencja)</td>
+<td style="border:1px solid #ccc; padding:6px;">problem: wycieki pamięci, fragmentacja</td>
+</tr>
+</table>
+
+<div class="uwaga">Klasyczne pytanie: co się stanie, gdy zwrócisz z funkcji wskaźnik do zmiennej lokalnej (na stosie)? → błąd, bo pamięć jest zwalniana po wyjściu z funkcji (dangling pointer).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>12. <code>const</code> i <code>static</code></h2>
+
+<h3><code>const</code></h3>
+<pre>const int MAX = 100;   // nie można zmienić wartości po inicjalizacji
+
+void f(const int *p) {  // funkcja nie może zmienić wartości spod wskaźnika
+    // *p = 5;  // błąd kompilacji
+}</pre>
+<ul>
+<li><code>const int *p</code> — wskaźnik na stałą (nie można zmienić wartości, można zmienić adres)</li>
+<li><code>int *const p</code> — stały wskaźnik (nie można zmienić adresu, można zmienić wartość)</li>
+</ul>
+
+<h3><code>static</code></h3>
+<p>znaczenie zależy od kontekstu:</p>
+<ul>
+<li><strong>zmienna lokalna w funkcji</strong> — zachowuje wartość między wywołaniami (inicjalizowana tylko raz, żyje przez cały czas trwania programu, ale widoczna tylko w funkcji)</li>
+<li><strong>zmienna/funkcja globalna</strong> — widoczna tylko w danym pliku (ogranicza zasięg, ukrywa przed innymi plikami .c)</li>
+</ul>
+
+<pre>void licz() {
+    static int wywolania = 0;   // zapamiętuje wartość między wywołaniami
+    wywolania++;
+    printf("%d\n", wywolania);
+}
+// kolejne wywołania licz(): 1, 2, 3, ...</pre>
+
+<div class="uwaga">Częste pytanie egzaminacyjne: różnica między zmienną lokalną zwykłą a <code>static</code> lokalną — ta druga nie jest tworzona na nowo przy każdym wywołaniu funkcji.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>13. Unie i enumeracje</h2>
+
+<h3>Unia (<code>union</code>)</h3>
+<p>Wszystkie pola dzielą <strong>to samo miejsce w pamięci</strong> — rozmiar unii to rozmiar jej największego pola, a nie suma rozmiarów (jak w strukturze).</p>
+<pre>union Dane {
+    int i;
+    float f;
+    char c[4];
+};
+
+union Dane d;
+d.i = 65;
+printf("%d", d.i);   // 65
+printf("%c", d.c[0]); // 'A' (bo w little-endian bajt 65 znajduje się na pierwszej pozycji)</pre>
+
+<div class="uwaga">Zapisanie wartości do jednego pola i odczytanie przez inne pole daje dostęp do tych samych bajtów w pamięci, interpretowanych jako inny typ — używane np. do reinterpretacji bitów (float ↔ int) albo do oszczędzania pamięci, gdy tylko jedno pole jest używane naraz.</div>
+
+<h3>Struktura vs unia — różnica rozmiaru</h3>
+<pre>struct S { int a; float b; };   // sizeof(S) = 8 (4+4), pola obok siebie
+union  U { int a; float b; };   // sizeof(U) = 4, pola nakładają się</pre>
+
+<h3>Enumeracja (<code>enum</code>)</h3>
+<p>Nazwany zbiór stałych całkowitych — poprawia czytelność kodu (nazwy zamiast "magicznych liczb").</p>
+<pre>enum Dzien { PON, WT, SR, CZW, PT, SOB, NIEDZ };
+// domyślnie: PON=0, WT=1, SR=2, ... kolejne wartości
+
+enum Dzien d = SR;
+if (d == SR) printf("Środa\n");</pre>
+
+<ul>
+<li>można nadać własne wartości startowe: <code>enum { A=10, B, C };</code> → A=10, B=11, C=12 (kolejne rosną od ostatniej)</li>
+<li>w C wartości enum to w praktyce zwykłe <code>int</code> — kompilator nie sprawdza, czy przypisujesz "poprawną" wartość z enuma</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>14. Wskaźniki do funkcji</h2>
+
+<p>Wskaźnik może przechowywać adres funkcji, a nie tylko adres zmiennej — pozwala przekazywać funkcje jako parametry lub wybierać funkcję do wywołania w czasie działania programu.</p>
+
+<h3>Deklaracja i użycie</h3>
+<pre>int dodaj(int a, int b) { return a + b; }
+int odejmij(int a, int b) { return a - b; }
+
+int (*operacja)(int, int);   // wskaźnik na funkcję o sygnaturze int f(int,int)
+
+operacja = dodaj;
+printf("%d", operacja(2, 3));   // 5
+
+operacja = odejmij;
+printf("%d", operacja(5, 3));   // 2</pre>
+
+<div class="uwaga">Nawiasy wokół <code>*operacja</code> są konieczne — <code>int *operacja(int, int)</code> (bez nawiasu) to zupełnie inna deklaracja: funkcja zwracająca <code>int*</code>, a nie wskaźnik na funkcję.</div>
+
+<h3>Typowe zastosowanie — funkcja jako parametr</h3>
+<pre>int wykonaj(int (*f)(int, int), int a, int b) {
+    return f(a, b);
+}
+
+wykonaj(dodaj, 3, 4);     // 7
+wykonaj(odejmij, 3, 4);   // -1</pre>
+
+<p>To mechanizm pozwalający np. przekazać funkcję porównującą do <code>qsort()</code>, albo zbudować tablicę wskaźników do funkcji (dyspozytor operacji na podstawie indeksu/znaku).</p>
+
+<h3>Tablica wskaźników do funkcji</h3>
+<pre>int (*tab[2])(int, int) = { dodaj, odejmij };
+printf("%d", tab[0](2, 3));  // 5</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>15. Dyrektywy preprocesora</h2>
+
+<p>Preprocesor przetwarza kod <strong>przed</strong> kompilacją — operuje na tekście źródłowym, nie zna typów ani składni C.</p>
+
+<h3>Proste makra (stałe)</h3>
+<pre>#define MAX 100
+#define PI 3.14159
+
+int tab[MAX];   // podczas preprocesingu MAX zamienia się na 100</pre>
+
+<h3>Makra z parametrami (makro-funkcje)</h3>
+<pre>#define KWADRAT(x) ((x)*(x))
+#define MAX2(a,b) ((a) > (b) ? (a) : (b))
+
+int y = KWADRAT(5);      // rozwija się do ((5)*(5)) = 25
+int m = MAX2(3, 7);      // ((3) > (7) ? (3) : (7)) = 7</pre>
+
+<div class="uwaga">Zawsze otaczaj parametry makra nawiasami! <code>#define KWADRAT(x) x*x</code> dla <code>KWADRAT(2+3)</code> rozwinie się do <code>2+3*2+3</code> = 11, a nie do 25 — klasyczna pułapka na egzaminie.</div>
+
+<h3>Kompilacja warunkowa</h3>
+<pre>#ifdef DEBUG
+    printf("Tryb debugowania\n");
+#endif
+
+#ifndef MAX
+    #define MAX 100
+#endif
+
+#if VERSION >= 2
+    // kod tylko dla wersji 2 i wyższych
+#else
+    // kod dla starszych wersji
+#endif</pre>
+
+<ul>
+<li><code>#ifdef X</code> — kompiluj blok, jeśli X jest zdefiniowany (dowolnie, nawet bez wartości)</li>
+<li><code>#ifndef X</code> — kompiluj blok, jeśli X <strong>nie</strong> jest zdefiniowany (częste przy strażnikach nagłówków, patrz niżej)</li>
+<li><code>#undef X</code> — usuwa definicję makra</li>
+</ul>
+
+<h3>Strażnik nagłówka (include guard)</h3>
+<pre>#ifndef MOJPLIK_H
+#define MOJPLIK_H
+
+// zawartość pliku nagłówkowego .h
+
+#endif</pre>
+<p>Zapobiega wielokrotnemu dołączeniu tego samego pliku nagłówkowego (co powodowałoby błąd redefinicji przy wielu <code>#include</code>).</p>
+
+<h3>Inne dyrektywy</h3>
+<ul>
+<li><code>#include</code> — dołącza zawartość innego pliku (<code>&lt;plik&gt;</code> — biblioteki systemowe, <code>"plik"</code> — pliki własne)</li>
+<li><code>#pragma</code> — dyrektywy specyficzne dla kompilatora (np. <code>#pragma once</code> — nowocześniejsza alternatywa dla strażnika nagłówka)</li>
+</ul>
+</div>
+
+</body>
+</html>

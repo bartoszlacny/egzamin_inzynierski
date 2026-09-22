@@ -1,0 +1,570 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie obiektowe 2 (Python) – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie obiektowe 2 (Python)</h1>
+
+<div class="zagadnienie">
+<h2>1. Klasy i obiekty w Pythonie — podstawy</h2>
+
+<h3>Definicja klasy i inicjalizator</h3>
+<pre>class Osoba:
+    def __init__(self, imie, wiek):   # inicjalizator — wywoływany przy tworzeniu obiektu
+        self.imie = imie               # atrybut instancyjny
+        self.wiek = wiek
+
+    def przywitaj(self):               # metoda instancyjna — pierwszy parametr to self
+        print(f"Cześć, jestem {self.imie}")
+
+o1 = Osoba("Jan", 25)   # tworzenie instancji — Python wywołuje __new__, potem __init__
+o1.przywitaj()</pre>
+
+<h3><code>self</code> — jawne odwołanie do instancji</h3>
+<p>W Pythonie <code>self</code> nie jest słowem kluczowym (to tylko konwencja nazewnicza) — każda metoda instancyjna otrzymuje odwołanie do obiektu, na którym została wywołana, jako <strong>pierwszy, jawny</strong> parametr — inaczej niż w C++/Javie, gdzie <code>this</code> jest niejawne.</p>
+
+<h3>Wszystko w Pythonie jest obiektem</h3>
+<p>Liczby, stringi, funkcje, klasy same są obiektami (instancjami swoich klas) — <code>type(5)</code> zwraca <code>&lt;class 'int'&gt;</code>, <code>type(Osoba)</code> zwraca <code>&lt;class 'type'&gt;</code> (patrz metaklasy, punkt 5).</p>
+
+<h3>Reprezentacja obiektów — <code>__str__</code> i <code>__repr__</code></h3>
+<pre>class Punkt:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+    def __str__(self):     # reprezentacja "czytelna dla człowieka" — print(obj), str(obj)
+        return f"({self.x}, {self.y})"
+
+    def __repr__(self):    # reprezentacja "dla programisty" — repr(obj), w konsoli interaktywnej
+        return f"Punkt(x={self.x}, y={self.y})"
+
+p = Punkt(1, 2)
+print(p)        # (1, 2)          — używa __str__
+print([p])      # [Punkt(x=1, y=2)] — elementy listy używają __repr__!</pre>
+<div class="uwaga">Zasada: <code>__repr__</code> powinien (idealnie) dać się skopiować i wkleić jako poprawny kod odtwarzający obiekt; <code>__str__</code> to swobodniejszy, czytelny opis. Jeśli zdefiniujesz tylko <code>__repr__</code>, Python użyje go też jako fallback dla <code>__str__</code>.</div>
+
+<h3>Atrybuty dynamiczne</h3>
+<p>W przeciwieństwie do Javy/C++, obiektom Pythona można dodawać atrybuty <strong>po</strong> utworzeniu, nawet nieprzewidziane w <code>__init__</code> (o ile klasa nie używa <code>__slots__</code>):</p>
+<pre>o1.email = "jan@example.com"   # dodanie zupełnie nowego atrybutu w locie</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Atrybuty i metody klasowe, właściwości, przeciążanie operatorów</h2>
+
+<h3>Atrybut klasowy vs instancyjny</h3>
+<pre>class Licznik:
+    ilosc = 0            # atrybut KLASOWY — współdzielony przez wszystkie instancje
+
+    def __init__(self):
+        Licznik.ilosc += 1   # modyfikacja przez nazwę klasy
+
+a = Licznik()
+b = Licznik()
+print(Licznik.ilosc)   # 2</pre>
+<div class="uwaga">Pułapka: <code>self.ilosc += 1</code> (zamiast <code>Licznik.ilosc += 1</code>) stworzyłoby nowy atrybut <strong>instancyjny</strong> "przesłaniający" klasowy dla tego jednego obiektu, nie modyfikując wspólnej wartości — częsty błąd początkujących.</div>
+
+<h3>Metody statyczne i klasowe</h3>
+<pre>class Matematyka:
+    @staticmethod
+    def kwadrat(x):          # brak dostępu do self/cls — jak zwykła funkcja "przypisana" do klasy
+        return x * x
+
+    @classmethod
+    def z_stringa(cls, s):    # otrzymuje klasę (cls), często jako alternatywny konstruktor
+        return cls(int(s))
+
+Matematyka.kwadrat(5)   # 25</pre>
+
+<h3>Właściwości (<code>@property</code>)</h3>
+<pre>class Kolo:
+    def __init__(self, r):
+        self._r = r
+
+    @property
+    def promien(self):          # getter — dostęp jak do zwykłego pola: obj.promien
+        return self._r
+
+    @promien.setter
+    def promien(self, wartosc):  # setter — z możliwością walidacji
+        if wartosc &lt; 0:
+            raise ValueError("Promień nie może być ujemny")
+        self._r = wartosc
+
+    @property
+    def pole(self):               # właściwość tylko do odczytu (brak settera)
+        return 3.14159 * self._r**2
+
+k = Kolo(5)
+k.promien = 10       # wywołuje setter, z walidacją
+print(k.pole)        # wywołuje getter — bez nawiasów wywołania!</pre>
+<p><code>@property</code> pozwala "ukryć" logikę gettera/settera za składnią zwykłego dostępu do pola — enkapsulacja bez konieczności pisania jawnych <code>getX()</code>/<code>setX()</code> jak w Javie/C++.</p>
+
+<h3>Przeciążanie operatorów — metody magiczne (dunder)</h3>
+<pre>class Wektor:
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+    def __add__(self, inny):        # obj1 + obj2
+        return Wektor(self.x+inny.x, self.y+inny.y)
+
+    def __eq__(self, inny):          # obj1 == obj2
+        return self.x==inny.x and self.y==inny.y
+
+    def __len__(self):               # len(obj)
+        return int((self.x**2+self.y**2)**0.5)
+
+w1, w2 = Wektor(1,2), Wektor(3,4)
+w3 = w1 + w2      # wywołuje __add__</pre>
+
+<table>
+<tr><th>Metoda</th><th>Operator/funkcja</th></tr>
+<tr><td><code>__add__</code>, <code>__sub__</code>, <code>__mul__</code></td><td><code>+</code>, <code>-</code>, <code>*</code></td></tr>
+<tr><td><code>__eq__</code>, <code>__lt__</code>, <code>__gt__</code></td><td><code>==</code>, <code>&lt;</code>, <code>&gt;</code></td></tr>
+<tr><td><code>__len__</code></td><td><code>len(obj)</code></td></tr>
+<tr><td><code>__getitem__</code></td><td><code>obj[i]</code></td></tr>
+<tr><td><code>__call__</code></td><td><code>obj(...)</code> — obiekt "wywoływalny" jak funkcja</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Iterowalność, iteratory i elementy funkcyjne</h2>
+
+<h3>Protokół iteracji</h3>
+<ul>
+<li><strong>iterowalny (iterable)</strong> — obiekt implementujący <code>__iter__</code>, zwracający iterator</li>
+<li><strong>iterator</strong> — obiekt implementujący <code>__next__</code> (zwraca kolejny element albo rzuca <code>StopIteration</code>), zwykle też <code>__iter__</code> zwracające <code>self</code></li>
+</ul>
+<pre>class Zakres:
+    def __init__(self, start, koniec):
+        self.aktualny = start
+        self.koniec = koniec
+
+    def __iter__(self):
+        return self                    # sam siebie jest iteratorem
+
+    def __next__(self):
+        if self.aktualny &gt;= self.koniec:
+            raise StopIteration
+        wartosc = self.aktualny
+        self.aktualny += 1
+        return wartosc
+
+for x in Zakres(1, 5):    # 1 2 3 4
+    print(x)</pre>
+
+<h3>Generatory jako łatwiejszy sposób pisania iteratorów</h3>
+<pre>def zakres_gen(start, koniec):
+    aktualny = start
+    while aktualny &lt; koniec:
+        yield aktualny
+        aktualny += 1</pre>
+<p><code>yield</code> automatycznie tworzy obiekt implementujący cały protokół iteracji — dużo mniej kodu niż ręczne pisanie <code>__iter__</code>/<code>__next__</code> (patrz też przedmiot Języki skryptowe).</p>
+
+<h3>Funkcje wyższego rzędu</h3>
+<p>Funkcje przyjmujące inne funkcje jako argumenty lub zwracające funkcje — możliwe, bo w Pythonie funkcje są <strong>obiektami pierwszej klasy</strong>.</p>
+
+<h3>Lambda — funkcje anonimowe</h3>
+<pre>kwadrat = lambda x: x**2
+dodaj = lambda a, b: a + b</pre>
+<p>Ograniczenie: ciało lambdy to <strong>jedno wyrażenie</strong> (nie może zawierać wielu instrukcji, pętli itd.) — do bardziej złożonej logiki potrzeba zwykłej funkcji <code>def</code>.</p>
+
+<h3><code>map</code>, <code>filter</code>, <code>reduce</code></h3>
+<pre>from functools import reduce
+
+liczby = [1, 2, 3, 4, 5]
+
+kwadraty = list(map(lambda x: x**2, liczby))          # [1,4,9,16,25]
+parzyste = list(filter(lambda x: x%2==0, liczby))     # [2,4]
+suma = reduce(lambda a,b: a+b, liczby)                 # 15 (kumulatywnie: ((((1+2)+3)+4)+5))</pre>
+<table>
+<tr><th>Funkcja</th><th>Działanie</th></tr>
+<tr><td><code>map(f, iterable)</code></td><td>zastosuj <code>f</code> do każdego elementu — zwraca nowy iterator wyników</td></tr>
+<tr><td><code>filter(f, iterable)</code></td><td>zachowaj tylko elementy, dla których <code>f</code> zwraca <code>True</code></td></tr>
+<tr><td><code>reduce(f, iterable)</code></td><td>"zwiń" sekwencję do jednej wartości, stosując <code>f</code> kumulatywnie parami</td></tr>
+</table>
+
+<div class="uwaga">W praktyce w "pythonicznym" stylu <strong>listy składane</strong> (list comprehensions, patrz przedmiot Języki skryptowe) często zastępują <code>map</code>/<code>filter</code> — <code>[x**2 for x in liczby if x%2==0]</code> bywa uznawane za bardziej czytelne niż zagnieżdżone <code>map(filter(...))</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Relacje między klasami i zaawansowane dziedziczenie</h2>
+
+<h3>Dziedziczenie i <code>super()</code></h3>
+<pre>class Zwierze:
+    def __init__(self, imie):
+        self.imie = imie
+    def opis(self):
+        return f"Zwierzę o imieniu {self.imie}"
+
+class Pies(Zwierze):
+    def __init__(self, imie, rasa):
+        super().__init__(imie)   # wywołanie konstruktora klasy bazowej
+        self.rasa = rasa
+    def opis(self):
+        return super().opis() + f", rasa {self.rasa}"   # rozszerzenie zachowania bazowego</pre>
+
+<h3>Wielodziedziczenie i MRO (Method Resolution Order)</h3>
+<p>Python zezwala na dziedziczenie po wielu klasach naraz — kolejność przeszukiwania metod przy takim dziedziczeniu określa <strong>MRO</strong> (algorytm C3 linearization), sprawdzalne przez <code>KlasaX.__mro__</code>.</p>
+<pre>class A: 
+    def kto(self): return "A"
+class B(A): 
+    def kto(self): return "B"
+class C(A): 
+    def kto(self): return "C"
+class D(B, C): pass
+
+D().kto()          # "B" — bo B jest pierwsze w MRO
+print(D.__mro__)   # (D, B, C, A, object)</pre>
+
+<h3>Agregacja vs kompozycja</h3>
+<table>
+<tr><th></th><th>Agregacja</th><th>Kompozycja</th></tr>
+<tr><td>Relacja</td><td>"ma" (has-a), słabsza</td><td>"jest zbudowany z" (part-of), silniejsza</td></tr>
+<tr><td>Czas życia części</td><td>niezależny od całości (część może istnieć bez całości)</td><td>zależny — usunięcie "całości" usuwa/dezaktualizuje "część"</td></tr>
+<tr><td>Przykład</td><td>Uniwersytet ma Studentów (studenci istnieją niezależnie)</td><td>Dom składa się z Pokoi (pokój bez domu nie ma sensu)</td></tr>
+</table>
+<pre># kompozycja — Silnik tworzony i "żyje" wewnątrz Samochodu
+class Silnik:
+    def __init__(self, moc): self.moc = moc
+
+class Samochod:
+    def __init__(self, moc_silnika):
+        self.silnik = Silnik(moc_silnika)   # Samochod "posiada" Silnik jako część siebie
+
+# agregacja — Student istnieje niezależnie, Uniwersytet tylko go referencjuje
+class Uniwersytet:
+    def __init__(self):
+        self.studenci = []
+    def zapisz(self, student):
+        self.studenci.append(student)   # student przekazany "z zewnątrz", nie tworzony wewnątrz</pre>
+
+<h3>Protokoły (duck typing)</h3>
+<p>Python nie wymaga formalnej implementacji interfejsu, żeby obiekt "pasował" do oczekiwanego zachowania — jeśli obiekt ma metody, których oczekujemy (np. <code>__len__</code>, <code>__iter__</code>), to "wystarczy", niezależnie od jego formalnej hierarchii klas ("<em>if it walks like a duck and quacks like a duck...</em>").</p>
+
+<h3>Abstrakcyjne klasy bazowe (<code>abc</code>)</h3>
+<pre>from abc import ABC, abstractmethod
+
+class Ksztalt(ABC):
+    @abstractmethod
+    def pole(self):
+        pass
+
+class Kwadrat(Ksztalt):
+    def __init__(self, bok): self.bok = bok
+    def pole(self):
+        return self.bok ** 2
+
+# Ksztalt()      # BŁĄD: nie można tworzyć instancji klasy abstrakcyjnej
+k = Kwadrat(5)    # OK — zaimplementowano pole()</pre>
+<p>Moduł <code>abc</code> (Abstract Base Classes) wymusza formalnie to, co przy "duck typing" jest tylko konwencją — analogicznie do klas abstrakcyjnych w C++/Javie.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Deskryptory i metaklasy</h2>
+
+<h3>Deskryptory</h3>
+<p>Obiekty implementujące <strong>protokół deskryptora</strong> — kontrolują, co się dzieje przy odczycie/zapisie atrybutu klasy, do której są przypisane. Metody: <code>__get__</code>, <code>__set__</code>, <code>__delete__</code>.</p>
+
+<table>
+<tr><th>Typ deskryptora</th><th>Implementuje</th></tr>
+<tr><td>Deskryptor danych (data descriptor)</td><td><code>__get__</code> i (<code>__set__</code> lub <code>__delete__</code>) — ma priorytet nad słownikiem instancji</td></tr>
+<tr><td>Deskryptor niebędący danymi (non-data)</td><td>tylko <code>__get__</code> — np. zwykłe metody i <code>@property</code> bez settera</td></tr>
+</table>
+
+<pre>class Dodatnia:
+    def __set_name__(self, owner, name):
+        self.name = "_" + name
+
+    def __get__(self, instance, owner):
+        return getattr(instance, self.name)
+
+    def __set__(self, instance, value):
+        if value &lt; 0:
+            raise ValueError(f"{self.name} musi być dodatnia")
+        setattr(instance, self.name, value)
+
+class Produkt:
+    cena = Dodatnia()    # deskryptor stosowany do każdej instancji Produkt
+
+    def __init__(self, cena):
+        self.cena = cena   # wywołuje Dodatnia.__set__
+
+p = Produkt(100)
+p.cena = -5   # ValueError!</pre>
+<p><code>@property</code> (patrz punkt 2) to w rzeczywistości "cukier syntaktyczny" zaimplementowany właśnie za pomocą deskryptorów — deskryptory dają bardziej ogólny, wielokrotnie używalny mechanizm (jeden deskryptor można przypisać do wielu atrybutów/klas, w odróżnieniu od <code>@property</code>, które definiuje się per-atrybut).</p>
+
+<h3>Mechanizm dostępu do atrybutów — kolejność wyszukiwania</h3>
+<p>Przy <code>obj.atrybut</code>, Python sprawdza (w skrócie): deskryptory danych w klasie → słownik instancji (<code>obj.__dict__</code>) → deskryptory niebędące danymi/zwykłe atrybuty klasy → <code>__getattr__</code> (jeśli zdefiniowane, jako "ostatnia szansa" gdy nic innego nie znaleziono).</p>
+
+<h3>Metaklasy</h3>
+<p>"Klasa klasy" — obiekt, który tworzy/definiuje inne klasy, tak jak klasa tworzy obiekty. Domyślną metaklasą wszystkich klas w Pythonie jest <code>type</code>.</p>
+<pre>class Osoba:
+    pass
+
+print(type(Osoba))        # &lt;class 'type'&gt; — Osoba jest instancją type!
+print(type(Osoba()))      # &lt;class '__main__.Osoba'&gt; — obiekt jest instancją Osoba</pre>
+
+<h3>Własna metaklasa</h3>
+<pre>class MojaMetaklasa(type):
+    def __new__(cls, nazwa, bazy, atrybuty):
+        atrybuty['wersja'] = "1.0"    # automatyczne dodanie atrybutu do KAŻDEJ klasy używającej tej metaklasy
+        return super().__new__(cls, nazwa, bazy, atrybuty)
+
+class MojaKlasa(metaclass=MojaMetaklasa):
+    pass
+
+print(MojaKlasa.wersja)   # "1.0" — dodane automatycznie przez metaklasę</pre>
+
+<h3>Zastosowania metaklas</h3>
+<ul>
+<li>automatyczna rejestracja podklas (np. wzorzec "plugin" — każda nowa podklasa sama się "zapisuje" do rejestru)</li>
+<li>walidacja struktury klasy w momencie jej <strong>definicji</strong> (nie tworzenia instancji) — np. wymuszenie obecności konkretnych metod</li>
+<li>ORM-y (np. Django Model) — metaklasy automatycznie przekształcają zwykłe atrybuty klasy (np. <code>pole = CharField()</code>) w logikę mapowania na kolumny bazy danych</li>
+</ul>
+
+<div class="uwaga">Metaklasy to jeden z najbardziej "magicznych" i rzadko potrzebnych mechanizmów Pythona — cytat przypisywany Timowi Petersowi: "metaklasy to głębsza magia, o której 99% użytkowników nawet nie musi się martwić" — ale są kluczowe do zrozumienia, jak biblioteki jak Django/SQLAlchemy "pod maską" budują swoje klasy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Context managery (menedżery kontekstu)</h2>
+
+<p>Protokół stojący za instrukcją <code>with</code> (patrz przedmiot Języki skryptowe, operacje na plikach) — pozwala zagwarantować wykonanie kodu "sprzątającego" (np. zamknięcie pliku, zwolnienie blokady) niezależnie od tego, czy w bloku wystąpił wyjątek.</p>
+
+<h3>Protokół — <code>__enter__</code> i <code>__exit__</code></h3>
+<pre>class Timer:
+    def __enter__(self):
+        import time
+        self.start = time.time()
+        return self                     # to, co trafia do zmiennej po "as"
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        import time
+        print(f"Czas: {time.time() - self.start:.4f}s")
+        return False                    # False = nie "połykaj" wyjątku (propaguj dalej)
+
+with Timer() as t:
+    suma = sum(range(1000000))
+# automatycznie wywołane __exit__ przy wyjściu z bloku</pre>
+
+<h3>Parametry <code>__exit__</code></h3>
+<p>Jeśli w bloku <code>with</code> wystąpił wyjątek, <code>__exit__</code> otrzymuje jego typ, wartość i traceback (wszystkie <code>None</code>, jeśli nie wystąpił żaden wyjątek):</p>
+<ul>
+<li><code>return False</code> (lub brak <code>return</code>) — wyjątek jest propagowany dalej, jak zwykle</li>
+<li><code>return True</code> — wyjątek zostaje "wygaszony" (nie propaguje się poza blok <code>with</code>) — używać ostrożnie, bo łatwo ukryć prawdziwy błąd</li>
+</ul>
+
+<h3>Prostsza alternatywa — <code>contextlib.contextmanager</code></h3>
+<pre>from contextlib import contextmanager
+import time
+
+@contextmanager
+def zmierz_czas():
+    start = time.time()
+    yield                          # tutaj wykonuje się kod bloku "with"
+    print(f"Czas: {time.time()-start:.4f}s")
+
+with zmierz_czas():
+    suma = sum(range(1000000))</pre>
+<p>Dekorator <code>@contextmanager</code> zamienia funkcję generatorową w context manager — kod <strong>przed</strong> <code>yield</code> odpowiada <code>__enter__</code>, kod <strong>po</strong> <code>yield</code> odpowiada <code>__exit__</code>.</p>
+
+<div class="uwaga">Typowe zastosowania: zarządzanie zasobami (pliki, połączenia sieciowe/bazodanowe, blokady/muteksy), tymczasowa zmiana stanu (np. tymczasowa zmiana katalogu roboczego, wyłączenie logowania na czas jakiejś operacji, a potem automatyczne przywrócenie).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. <code>__slots__</code> i dataclasses</h2>
+
+<h3><code>__slots__</code> — ograniczenie atrybutów instancji</h3>
+<p>Domyślnie każda instancja przechowuje swoje atrybuty w słowniku (<code>__dict__</code>) — elastyczne (można dodawać atrybuty dynamicznie, patrz punkt 1), ale zużywa więcej pamięci. <code>__slots__</code> jawnie ogranicza zestaw dozwolonych atrybutów, eliminując <code>__dict__</code>:</p>
+<pre>class Punkt:
+    __slots__ = ('x', 'y')     # tylko te dwa atrybuty są dozwolone
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+p = Punkt(1, 2)
+# p.z = 5   # BŁĄD: AttributeError — 'z' nie jest w __slots__</pre>
+
+<h3>Zalety i wady <code>__slots__</code></h3>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>mniejsze zużycie pamięci na instancję (istotne przy milionach obiektów)</td><td>brak możliwości dodawania nowych atrybutów w locie</td></tr>
+<tr><td>szybszy dostęp do atrybutów niż przez słownik</td><td>komplikacje przy wielodziedziczeniu z różnymi <code>__slots__</code></td></tr>
+<tr><td></td><td>domyślnie niekompatybilne z niektórymi mechanizmami (np. słabymi referencjami) bez dodatkowej konfiguracji</td></tr>
+</table>
+
+<h3>Dataclasses — ograniczenie boilerplate</h3>
+<p>Dekorator <code>@dataclass</code> (moduł <code>dataclasses</code>, od Python 3.7) automatycznie generuje <code>__init__</code>, <code>__repr__</code>, <code>__eq__</code> na podstawie zadeklarowanych pól — eliminuje powtarzalny kod dla klas, które głównie "przechowują dane":</p>
+<pre>from dataclasses import dataclass
+
+@dataclass
+class Punkt:
+    x: int
+    y: int
+    etykieta: str = "punkt"    # wartość domyślna
+
+p1 = Punkt(1, 2)
+p2 = Punkt(1, 2)
+print(p1)              # Punkt(x=1, y=2, etykieta='punkt') — __repr__ za darmo
+print(p1 == p2)        # True — __eq__ za darmo (porównuje wartości pól)</pre>
+
+<h3>Porównanie z "ręcznym" pisaniem klasy</h3>
+<pre># bez dataclass — trzeba napisać to wszystko ręcznie:
+class PunktRecznie:
+    def __init__(self, x, y, etykieta="punkt"):
+        self.x, self.y, self.etykieta = x, y, etykieta
+    def __repr__(self):
+        return f"PunktRecznie(x={self.x}, y={self.y}, etykieta={self.etykieta!r})"
+    def __eq__(self, inny):
+        return (self.x, self.y, self.etykieta) == (inny.x, inny.y, inny.etykieta)</pre>
+
+<h3><code>@dataclass</code> + <code>frozen=True</code> — niemutowalność</h3>
+<pre>@dataclass(frozen=True)
+class PunktStaly:
+    x: int
+    y: int
+
+p = PunktStaly(1, 2)
+# p.x = 5    # BŁĄD: FrozenInstanceError — jak niemutowalne typy z punktu o mutowalności</pre>
+
+<div class="uwaga"><code>@dataclass</code> i <code>__slots__</code> można łączyć (<code>@dataclass(slots=True)</code> od Python 3.10) — najlepsze z obu: mało boilerplate'u i mała pamięć na instancję.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Kopiowanie obiektów — <code>copy</code> i <code>deepcopy</code></h2>
+
+<p>Bezpośrednie nawiązanie do mutowalności (patrz przedmiot Języki skryptowe) — dla obiektów złożonych, samo przypisanie (<code>b = a</code>) tylko kopiuje referencję, nie tworzy nowego obiektu.</p>
+
+<h3>Kopia płytka (shallow copy)</h3>
+<pre>import copy
+
+a = [[1,2], [3,4]]
+b = copy.copy(a)          # albo a[:] / list(a)
+
+b.append([5,6])            # nie wpływa na a — to nowa, osobna lista "na zewnątrz"
+b[0].append(99)             # WPŁYWA na a[0]! — zagnieżdżone listy są WSPÓLNE
+print(a)   # [[1, 2, 99], [3, 4]]</pre>
+<p>Kopia płytka tworzy <strong>nowy</strong> obiekt "zewnętrzny", ale elementy wewnątrz (jeśli same są mutowalne, np. zagnieżdżone listy) są <strong>współdzielone</strong> (te same referencje) między oryginałem i kopią.</p>
+
+<h3>Kopia głęboka (deep copy)</h3>
+<pre>c = copy.deepcopy(a)
+c[0].append(100)
+print(a)   # bez zmian — c jest CAŁKOWICIE niezależne, rekurencyjnie skopiowane</pre>
+<p><code>deepcopy</code> rekurencyjnie kopiuje <strong>wszystkie</strong> zagnieżdżone obiekty mutowalne — wynikowy obiekt jest w pełni niezależny od oryginału, na każdym poziomie zagnieżdżenia.</p>
+
+<h3>Porównanie</h3>
+<table>
+<tr><th></th><th>Przypisanie (<code>b=a</code>)</th><th>Kopia płytka</th><th>Kopia głęboka</th></tr>
+<tr><td>Nowy obiekt "na zewnątrz"?</td><td>nie — to ten sam obiekt</td><td>tak</td><td>tak</td></tr>
+<tr><td>Zagnieżdżone obiekty współdzielone?</td><td>tak (to ten sam obiekt)</td><td>tak</td><td>nie — też skopiowane</td></tr>
+<tr><td>Koszt</td><td>minimalny</td><td>niski</td><td>wyższy (rekurencja przez całą strukturę)</td></tr>
+</table>
+
+<h3>Dostosowanie kopiowania własnych klas</h3>
+<pre>class Kontener:
+    def __init__(self, dane):
+        self.dane = dane
+
+    def __copy__(self):              # własna logika dla copy.copy()
+        return Kontener(self.dane)
+
+    def __deepcopy__(self, memo):    # własna logika dla copy.deepcopy()
+        return Kontener(copy.deepcopy(self.dane, memo))</pre>
+<p>Parametr <code>memo</code> (słownik) chroni przed nieskończoną rekurencją przy strukturach cyklicznych (obiekt zawierający referencję do samego siebie) — <code>deepcopy</code> pamięta, co już skopiował.</p>
+
+<div class="uwaga">Typowe pytanie: dla podanej struktury zagnieżdżonych list/obiektów, przewidź wynik modyfikacji po <code>copy.copy()</code> vs <code>copy.deepcopy()</code> — klasyczny sposób sprawdzenia zrozumienia różnicy między referencją a rzeczywistą, pełną kopią danych.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Matematyka 2 – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Matematyka 2</h1>
+
+<div class="zagadnienie">
+<h2>1. Rachunek różniczkowy funkcji jednej zmiennej</h2>
+
+<h3>Definicja pochodnej</h3>
+<p>$$f'(x_0) = \lim_{h\to0} \frac{f(x_0+h)-f(x_0)}{h}$$</p>
+<p>Interpretacja geometryczna: współczynnik kierunkowy stycznej do wykresu funkcji w punkcie \(x_0\). Interpretacja fizyczna: chwilowa szybkość zmiany (np. prędkość jako pochodna drogi względem czasu).</p>
+
+<h3>Podstawowe wzory różniczkowania</h3>
+<table>
+<tr><th>Funkcja</th><th>Pochodna</th></tr>
+<tr><td>\(c\) (stała)</td><td>\(0\)</td></tr>
+<tr><td>\(x^n\)</td><td>\(nx^{n-1}\)</td></tr>
+<tr><td>\(\sqrt{x}\)</td><td>\(\dfrac{1}{2\sqrt{x}}\)</td></tr>
+<tr><td>\(\sin x\)</td><td>\(\cos x\)</td></tr>
+<tr><td>\(\cos x\)</td><td>\(-\sin x\)</td></tr>
+<tr><td>\(\text{tg}\,x\)</td><td>\(\dfrac{1}{\cos^2 x} = \sec^2 x\)</td></tr>
+<tr><td>\(\text{ctg}\,x\)</td><td>\(-\dfrac{1}{\sin^2 x}\)</td></tr>
+<tr><td>\(e^x\)</td><td>\(e^x\)</td></tr>
+<tr><td>\(a^x\)</td><td>\(a^x \ln a\)</td></tr>
+<tr><td>\(\ln x\)</td><td>\(1/x\)</td></tr>
+<tr><td>\(\log_a x\)</td><td>\(\dfrac{1}{x\ln a}\)</td></tr>
+</table>
+
+<h3>Funkcje cyklometryczne (odwrotne trygonometryczne)</h3>
+<table>
+<tr><th>Funkcja</th><th>Pochodna</th></tr>
+<tr><td>\(\arcsin x\)</td><td>\(\dfrac{1}{\sqrt{1-x^2}}\)</td></tr>
+<tr><td>\(\arccos x\)</td><td>\(-\dfrac{1}{\sqrt{1-x^2}}\)</td></tr>
+<tr><td>\(\text{arctg}\,x\)</td><td>\(\dfrac{1}{1+x^2}\)</td></tr>
+<tr><td>\(\text{arcctg}\,x\)</td><td>\(-\dfrac{1}{1+x^2}\)</td></tr>
+</table>
+<div class="uwaga">Funkcje cyklometryczne to funkcje odwrotne do trygonometrycznych (obciętych do przedziału różnowartościowości) — np. \(\arcsin x\) to funkcja odwrotna do \(\sin x\) obciętego do \([-\pi/2,\pi/2]\). Ich dziedziny: \(\arcsin\), \(\arccos\) mają dziedzinę \([-1,1]\); \(\text{arctg}\), \(\text{arcctg}\) mają dziedzinę \(\mathbb{R}\).</div>
+
+<h3>Reguły różniczkowania</h3>
+<p>$$(f\pm g)' = f'\pm g'$$</p>
+<p>$$(f\cdot g)' = f'g + fg' \qquad \text{(reguła iloczynu)}$$</p>
+<p>$$\left(\frac{f}{g}\right)' = \frac{f'g-fg'}{g^2} \qquad \text{(reguła ilorazu)}$$</p>
+<p>$$(f(g(x)))' = f'(g(x))\cdot g'(x) \qquad \text{(reguła łańcucha / pochodna złożenia)}$$</p>
+
+<h3>Ciągłość i różniczkowalność</h3>
+<p>Funkcja różniczkowalna w punkcie musi być w tym punkcie <strong>ciągła</strong> (ale nie odwrotnie! — np. \(f(x)=|x|\) jest ciągła w 0, ale nie ma tam pochodnej — "ostry" punkt na wykresie).</p>
+
+<h3>Pochodne wyższych rzędów</h3>
+<p>\(f''(x)\) — pochodna drugiego rzędu (pochodna z pochodnej), analogicznie \(f'''(x)\), \(f^{(n)}(x)\).</p>
+
+<div class="uwaga">Typowe zadanie: policz pochodną funkcji złożonej, np. \(f(x)=\sin(x^2+1)\) — reguła łańcucha: \(f'(x) = \cos(x^2+1)\cdot 2x\).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Rachunek całkowy funkcji jednej zmiennej</h2>
+
+<h3>Całka nieoznaczona</h3>
+<p>Funkcja pierwotna \(F(x)\) taka, że \(F'(x)=f(x)\), zapisywana \(\int f(x)\,dx = F(x)+C\) (stała całkowania — bo pochodna stałej to 0, więc pierwotna nie jest jednoznaczna).</p>
+
+<h3>Podstawowe wzory</h3>
+<table>
+<tr><th>Całka</th><th>Wynik</th></tr>
+<tr><td>\(\int x^n\,dx\)</td><td>\(\dfrac{x^{n+1}}{n+1}+C\) (dla \(n\ne-1\))</td></tr>
+<tr><td>\(\int \dfrac{1}{x}\,dx\)</td><td>\(\ln|x|+C\)</td></tr>
+<tr><td>\(\int e^x\,dx\)</td><td>\(e^x+C\)</td></tr>
+<tr><td>\(\int a^x\,dx\)</td><td>\(\dfrac{a^x}{\ln a}+C\)</td></tr>
+<tr><td>\(\int \sin x\,dx\)</td><td>\(-\cos x+C\)</td></tr>
+<tr><td>\(\int \cos x\,dx\)</td><td>\(\sin x+C\)</td></tr>
+<tr><td>\(\int \dfrac{1}{\cos^2 x}\,dx\)</td><td>\(\text{tg}\,x+C\)</td></tr>
+<tr><td>\(\int \dfrac{1}{\sin^2 x}\,dx\)</td><td>\(-\text{ctg}\,x+C\)</td></tr>
+<tr><td>\(\int \text{tg}\,x\,dx\)</td><td>\(-\ln|\cos x|+C\)</td></tr>
+<tr><td>\(\int \text{ctg}\,x\,dx\)</td><td>\(\ln|\sin x|+C\)</td></tr>
+</table>
+
+<h3>Całki prowadzące do funkcji cyklometrycznych</h3>
+<table>
+<tr><th>Całka</th><th>Wynik</th></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{\sqrt{a^2-x^2}}\)</td><td>\(\arcsin\dfrac{x}{a}+C\) (\(a>0\))</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{a^2+x^2}\)</td><td>\(\dfrac{1}{a}\text{arctg}\dfrac{x}{a}+C\)</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{\sqrt{1-x^2}}\)</td><td>\(\arcsin x+C\) (przypadek \(a=1\))</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{1+x^2}\)</td><td>\(\text{arctg}\,x+C\) (przypadek \(a=1\))</td></tr>
+</table>
+
+<h3>Całki prowadzące do logarytmu z modułem</h3>
+<table>
+<tr><th>Całka</th><th>Wynik</th></tr>
+<tr><td>\(\displaystyle\int \dfrac{f'(x)}{f(x)}\,dx\)</td><td>\(\ln|f(x)|+C\) (ogólny wzór — "pochodna nad funkcją")</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{x-a}\)</td><td>\(\ln|x-a|+C\)</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{dx}{x^2-a^2}\)</td><td>\(\dfrac{1}{2a}\ln\left|\dfrac{x-a}{x+a}\right|+C\)</td></tr>
+<tr><td>\(\displaystyle\int \dfrac{2x}{x^2+1}\,dx\)</td><td>\(\ln(x^2+1)+C\) (bez modułu — \(x^2+1>0\) zawsze)</td></tr>
+</table>
+<div class="uwaga">Wzór \(\int \frac{f'(x)}{f(x)}dx=\ln|f(x)|+C\) to najczęściej spotykany "trik" na całki dające logarytm — trzeba rozpoznać, że licznik jest (proporcjonalny do) pochodnej mianownika. Moduł jest konieczny, bo \(\ln\) jest zdefiniowany tylko dla argumentów dodatnich, a \(f(x)\) może być ujemne.</div>
+
+<h3>Metody całkowania</h3>
+<p><strong>Całkowanie przez części:</strong></p>
+<p>$$\int f(x)g'(x)\,dx = f(x)g(x) - \int f'(x)g(x)\,dx$$</p>
+<p><strong>Całkowanie przez podstawienie:</strong></p>
+<p>$$\int f(g(x))g'(x)\,dx = \int f(u)\,du, \quad u=g(x)$$</p>
+
+<h3>Całka oznaczona</h3>
+<p>$$\int_a^b f(x)\,dx = F(b)-F(a)$$</p>
+<p>(twierdzenie fundamentalne rachunku całkowego — łączy pojęcie całki oznaczonej z funkcją pierwotną)</p>
+<p>Interpretacja geometryczna: pole "pod" wykresem funkcji między \(x=a\) i \(x=b\) (z uwzględnieniem znaku — obszary pod osią OX liczą się jako ujemne).</p>
+
+<h3>Własności całki oznaczonej</h3>
+<ul>
+<li>\(\int_a^b f(x)\,dx = -\int_b^a f(x)\,dx\)</li>
+<li>\(\int_a^b f(x)\,dx = \int_a^c f(x)\,dx + \int_c^b f(x)\,dx\)</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie: policz \(\int x e^x\,dx\) przez części (\(f=x\), \(g'=e^x\)) → \(xe^x - \int e^x\,dx = xe^x - e^x + C\).</div>
+
+<h3>Przykłady z logarytmem i arctan</h3>
+<p>\(\displaystyle\int \frac{2x}{x^2+5}\,dx\) — licznik to pochodna mianownika → \(\ln|x^2+5|+C = \ln(x^2+5)+C\) (moduł zbędny, bo \(x^2+5>0\))</p>
+<p>\(\displaystyle\int \frac{dx}{x^2+9} = \int\frac{dx}{x^2+3^2} = \frac{1}{3}\text{arctg}\frac{x}{3}+C\) (wzór z \(a=3\))</p>
+<p>\(\displaystyle\int \frac{dx}{\sqrt{4-x^2}} = \arcsin\frac{x}{2}+C\) (wzór z \(a=2\))</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Zastosowania pochodnych</h2>
+
+<h3>Monotoniczność</h3>
+<ul>
+<li>\(f'(x)>0\) na przedziale → funkcja rosnąca</li>
+<li>\(f'(x)<0\) na przedziale → funkcja malejąca</li>
+</ul>
+
+<h3>Ekstrema lokalne</h3>
+<p>Warunek konieczny (w punkcie wewnętrznym, gdzie funkcja jest różniczkowalna): \(f'(x_0)=0\) (punkt stacjonarny).</p>
+<p>Sprawdzenie, czy to maksimum czy minimum:</p>
+<ul>
+<li><strong>I kryterium (zmiana znaku \(f'\))</strong> — jeśli \(f'\) zmienia znak z + na − → maksimum; z − na + → minimum</li>
+<li><strong>II kryterium (druga pochodna)</strong> — jeśli \(f'(x_0)=0\) i \(f''(x_0)<0\) → maksimum; \(f''(x_0)>0\) → minimum; \(f''(x_0)=0\) — kryterium nie rozstrzyga, trzeba innej metody</li>
+</ul>
+
+<h3>Wypukłość/wklęsłość i punkty przegięcia</h3>
+<ul>
+<li>\(f''(x)>0\) → wykres wypukły (w dół, "jak miska")</li>
+<li>\(f''(x)<0\) → wykres wklęsły (w górę, "jak górka")</li>
+<li><strong>punkt przegięcia</strong> — miejsce zmiany wypukłości na wklęsłość (lub odwrotnie), gdzie \(f''(x_0)=0\) i \(f''\) zmienia znak</li>
+</ul>
+
+<h3>Reguła de l'Hôpitala</h3>
+<p>Dla granic w postaci nieoznaczonej \(\frac{0}{0}\) lub \(\frac{\infty}{\infty}\):</p>
+<p>$$\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f'(x)}{g'(x)}$$</p>
+<p>(o ile prawa granica istnieje — można stosować wielokrotnie, jeśli po pochodnych nadal wychodzi postać nieoznaczona)</p>
+
+<h3>Badanie przebiegu funkcji</h3>
+<p>Typowy schemat zadania: dziedzina → miejsca zerowe/asymptoty → \(f'\) (monotoniczność, ekstrema) → \(f''\) (wypukłość, przegięcia) → szkic wykresu.</p>
+
+<h3>Zadania optymalizacyjne</h3>
+<p>Znajdowanie wartości maksymalnej/minimalnej wielkości opisanej funkcją (np. minimalny koszt, maksymalna objętość) — buduje się funkcję jednej zmiennej, szuka ekstremum przez \(f'(x)=0\).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Zastosowania całek</h2>
+
+<h3>Pole obszaru między krzywymi</h3>
+<p>$$P = \int_a^b \big(f(x)-g(x)\big)\,dx$$</p>
+<p>gdzie \(f(x)\ge g(x)\) na \([a,b]\) — pole obszaru ograniczonego przez dwa wykresy.</p>
+
+<h3>Objętość ciała obrotowego</h3>
+<p>Objętość ciała powstałego z obrotu wykresu \(f(x)\) wokół osi OX, na przedziale \([a,b]\):</p>
+<p>$$V = \pi\int_a^b [f(x)]^2\,dx$$</p>
+
+<h3>Długość łuku krzywej</h3>
+<p>$$L = \int_a^b \sqrt{1+[f'(x)]^2}\,dx$$</p>
+
+<h3>Zastosowania fizyczne</h3>
+<ul>
+<li><strong>droga z prędkości</strong>: \(s(t) = \int v(t)\,dt\) (prędkość to pochodna drogi, więc droga to całka z prędkości)</li>
+<li><strong>praca</strong>: \(W = \int_a^b F(x)\,dx\) (praca siły zmiennej na drodze)</li>
+<li><strong>środek masy, momenty bezwładności</strong> — całki z gęstości/odległości</li>
+</ul>
+
+<h3>Całki niewłaściwe</h3>
+<p>Całka po nieograniczonym przedziale albo z funkcją nieograniczoną w punkcie:</p>
+<p>$$\int_a^{\infty} f(x)\,dx = \lim_{b\to\infty}\int_a^b f(x)\,dx$$</p>
+<p>Całka jest <strong>zbieżna</strong>, jeśli ta granica istnieje i jest skończona; w przeciwnym razie jest <strong>rozbieżna</strong>.</p>
+
+<div class="uwaga">Typowe zadanie: policz pole obszaru ograniczonego dwiema parabolami — najpierw znajdź punkty przecięcia (rozwiązując \(f(x)=g(x)\)), potem całkuj różnicę funkcji między tymi punktami.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Liczby zespolone</h2>
+
+<h3>Postać algebraiczna</h3>
+<p>$$z = a + bi, \qquad i^2 = -1$$</p>
+<p>gdzie \(a=\text{Re}(z)\) (część rzeczywista), \(b=\text{Im}(z)\) (część urojona).</p>
+
+<h3>Działania w postaci algebraicznej</h3>
+<ul>
+<li>dodawanie/odejmowanie: \((a+bi)\pm(c+di) = (a\pm c)+(b\pm d)i\)</li>
+<li>mnożenie: \((a+bi)(c+di) = (ac-bd)+(ad+bc)i\)</li>
+<li>sprzężenie: \(\bar{z} = a-bi\)</li>
+<li>dzielenie: mnożymy licznik i mianownik przez sprzężenie mianownika: \(\dfrac{z_1}{z_2} = \dfrac{z_1\bar{z_2}}{z_2\bar{z_2}}\)</li>
+</ul>
+
+<h3>Moduł i argument</h3>
+<p>$$|z| = \sqrt{a^2+b^2}, \qquad \arg(z) = \varphi \text{ (kąt z osią rzeczywistą)}$$</p>
+
+<h3>Postać trygonometryczna</h3>
+<p>$$z = |z|(\cos\varphi + i\sin\varphi)$$</p>
+
+<h3>Wzór de Moivre'a (mnożenie, potęgowanie)</h3>
+<p>$$z_1\cdot z_2 = |z_1||z_2|\big(\cos(\varphi_1+\varphi_2)+i\sin(\varphi_1+\varphi_2)\big)$$</p>
+<p>$$z^n = |z|^n\big(\cos(n\varphi)+i\sin(n\varphi)\big)$$</p>
+
+<h3>Postać wykładnicza (Eulera)</h3>
+<p>$$z = |z|e^{i\varphi}, \qquad e^{i\varphi} = \cos\varphi+i\sin\varphi$$</p>
+
+<h3>Pierwiastkowanie liczb zespolonych</h3>
+<p>Pierwiastki n-tego stopnia z \(z=|z|(\cos\varphi+i\sin\varphi)\):</p>
+<p>$$\sqrt[n]{z} = \sqrt[n]{|z|}\left(\cos\frac{\varphi+2k\pi}{n} + i\sin\frac{\varphi+2k\pi}{n}\right), \quad k=0,1,\dots,n-1$$</p>
+<p>Daje <strong>n różnych</strong> pierwiastków, równomiernie rozłożonych na okręgu o radiusie \(\sqrt[n]{|z|}\).</p>
+
+<h3>Płaszczyzna zespolona (Gaussa)</h3>
+<p>Liczba zespolona \(a+bi\) reprezentowana jako punkt \((a,b)\) na płaszczyźnie — oś X to część rzeczywista, oś Y to część urojona.</p>
+
+<div class="uwaga">Zasadnicze twierdzenie algebry: każdy wielomian stopnia \(n\ge1\) ma dokładnie \(n\) pierwiastków w zbiorze liczb zespolonych (licząc z wielokrotnościami) — dlatego liczby zespolone "domykają" rozwiązywanie równań wielomianowych, np. \(x^2+1=0\) nie ma rozwiązań rzeczywistych, ale ma \(x=\pm i\).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Macierze i wyznaczniki</h2>
+
+<h3>Podstawowe operacje na macierzach</h3>
+<ul>
+<li>dodawanie/odejmowanie — element po elemencie, tylko dla macierzy tego samego rozmiaru</li>
+<li>mnożenie przez skalar — każdy element razy skalar</li>
+<li>mnożenie macierzy: \((AB)_{ij} = \sum_k A_{ik}B_{kj}\) — możliwe tylko gdy liczba kolumn A = liczba wierszy B; <strong>mnożenie macierzy nie jest przemienne</strong> (\(AB\ne BA\) w ogólności)</li>
+<li>transpozycja \(A^T\) — zamiana wierszy z kolumnami</li>
+</ul>
+
+<h3>Wyznacznik (determinant)</h3>
+<p>Zdefiniowany tylko dla macierzy <strong>kwadratowych</strong>.</p>
+<p>Dla 2×2: $$\det\begin{pmatrix}a&b\\c&d\end{pmatrix} = ad-bc$$</p>
+<p>Dla 3×3 — rozwinięcie Laplace'a (wzór Sarrusa) albo rozwinięcie względem wiersza/kolumny.</p>
+
+<h3>Własności wyznacznika</h3>
+<ul>
+<li>\(\det(AB) = \det(A)\cdot\det(B)\)</li>
+<li>\(\det(A^T) = \det(A)\)</li>
+<li>zamiana dwóch wierszy/kolumn zmienia znak wyznacznika</li>
+<li>wyznacznik z zerowym wierszem/kolumną = 0</li>
+<li>\(\det(A) = 0 \iff\) macierz jest <strong>singularna</strong> (nieodwracalna)</li>
+</ul>
+
+<h3>Macierz odwrotna</h3>
+<p>$$A^{-1} \text{ istnieje} \iff \det(A)\ne0$$</p>
+<p>$$A^{-1} = \frac{1}{\det(A)} \cdot \text{adj}(A)$$</p>
+<p>gdzie \(\text{adj}(A)\) to macierz dołączona (transponowana macierz dopełnień algebraicznych). Warunek: \(A\cdot A^{-1} = A^{-1}\cdot A = I\) (macierz jednostkowa).</p>
+
+<h3>Rząd macierzy (rank)</h3>
+<p>Maksymalna liczba liniowo niezależnych wierszy (= liczba liniowo niezależnych kolumn) — wyznaczany np. przez sprowadzenie macierzy do postaci schodkowej (eliminacja Gaussa).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Macierze i układy równań liniowych</h2>
+
+<h3>Zapis macierzowy układu równań</h3>
+<p>Układ \(n\) równań z \(n\) niewiadomymi można zapisać jako \(A\vec{x} = \vec{b}\), gdzie \(A\) to macierz współczynników, \(\vec{x}\) wektor niewiadomych, \(\vec{b}\) wektor wyrazów wolnych.</p>
+
+<h3>Metoda macierzy odwrotnej</h3>
+<p>Jeśli \(\det(A)\ne0\), jedyne rozwiązanie: $$\vec{x} = A^{-1}\vec{b}$$</p>
+
+<h3>Wzory Cramera</h3>
+<p>Dla układu z jednoznacznym rozwiązaniem (\(\det(A)=W\ne0\)):</p>
+<p>$$x_i = \frac{W_i}{W}$$</p>
+<p>gdzie \(W_i\) to wyznacznik macierzy \(A\) z zastąpioną \(i\)-tą kolumną przez wektor \(\vec{b}\).</p>
+
+<h3>Metoda eliminacji Gaussa</h3>
+<p>Sprowadzenie macierzy rozszerzonej \([A|\vec{b}]\) do postaci schodkowej przez operacje elementarne na wierszach (dodawanie wielokrotności jednego wiersza do innego, zamiana wierszy, mnożenie wiersza przez niezerowy skalar), a następnie odczytanie rozwiązań przez podstawianie wstecz.</p>
+
+<h3>Klasyfikacja rozwiązań (twierdzenie Kroneckera-Capellego)</h3>
+<p>Porównanie rzędu macierzy współczynników \(r(A)\) z rzędem macierzy rozszerzonej \(r(A|\vec{b})\) i liczbą niewiadomych \(n\):</p>
+<table>
+<tr><th>Warunek</th><th>Rozwiązanie</th></tr>
+<tr><td>\(r(A) \ne r(A|\vec{b})\)</td><td>układ <strong>niesprzeczny/sprzeczny</strong> — brak rozwiązań</td></tr>
+<tr><td>\(r(A) = r(A|\vec{b}) = n\)</td><td>rozwiązanie <strong>jednoznaczne</strong></td></tr>
+<tr><td>\(r(A) = r(A|\vec{b}) < n\)</td><td><strong>nieskończenie wiele</strong> rozwiązań (zależnych od \(n-r\) parametrów)</td></tr>
+</table>
+
+<div class="uwaga">Praktyczna wskazówka wyboru metody: wzory Cramera / macierz odwrotna — dobre do niewielkich układów "na papierze" (2×2, 3×3) i gdy interesuje nas konkretny wzór; eliminacja Gaussa — uniwersalna, skaluje się do dużych układów, i jako jedyna radzi sobie łatwo z układami mającymi 0 lub nieskończenie wiele rozwiązań.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Granice funkcji</h2>
+
+<p>Granica opisuje zachowanie funkcji \(f(x)\), gdy \(x\) zbliża się do pewnego punktu \(x_0\) (lub do \(\pm\infty\)) — kluczowe pojęcie leżące u podstaw całego rachunku różniczkowego i całkowego (pochodna i całka to w istocie granice).</p>
+
+<h3>Definicja (intuicyjnie)</h3>
+<p>$$\lim_{x\to x_0} f(x) = L$$</p>
+<p>oznacza, że wartości \(f(x)\) można uczynić dowolnie bliskie \(L\), biorąc \(x\) dostatecznie bliskie \(x_0\) (ale niekoniecznie równe \(x_0\)).</p>
+
+<h3>Granice jednostronne</h3>
+<p>\(\lim_{x\to x_0^-} f(x)\) (z lewej) i \(\lim_{x\to x_0^+} f(x)\) (z prawej) — granica (dwustronna) istnieje tylko, gdy obie granice jednostronne istnieją i są równe.</p>
+
+<h3>Symbole nieoznaczone</h3>
+<p>Wyrażenia, których wartości nie da się wyznaczyć wprost z algebry granic — wymagają dodatkowych technik (przekształcenia algebraiczne, reguła de l'Hôpitala z punktu 3):</p>
+<p>$$\frac{0}{0}, \quad \frac{\infty}{\infty}, \quad 0\cdot\infty, \quad \infty-\infty, \quad 1^{\infty}, \quad 0^0, \quad \infty^0$$</p>
+
+<h3>Ważne granice (warto znać na pamięć)</h3>
+<table>
+<tr><th>Granica</th><th>Wartość</th></tr>
+<tr><td>\(\displaystyle\lim_{x\to0}\frac{\sin x}{x}\)</td><td>1</td></tr>
+<tr><td>\(\displaystyle\lim_{x\to\infty}\left(1+\frac{1}{x}\right)^x\)</td><td>\(e\)</td></tr>
+<tr><td>\(\displaystyle\lim_{x\to0}\frac{e^x-1}{x}\)</td><td>1</td></tr>
+<tr><td>\(\displaystyle\lim_{x\to0}\frac{\ln(1+x)}{x}\)</td><td>1</td></tr>
+<tr><td>\(\displaystyle\lim_{x\to\infty}\frac{1}{x^n}\) (\(n>0\))</td><td>0</td></tr>
+</table>
+
+<h3>Asymptoty (przypomnienie, połączenie z granicami)</h3>
+<ul>
+<li><strong>pozioma</strong>: \(y=L\), gdy \(\lim_{x\to\pm\infty}f(x)=L\)</li>
+<li><strong>pionowa</strong>: \(x=a\), gdy \(\lim_{x\to a^{\pm}}f(x)=\pm\infty\)</li>
+<li><strong>ukośna</strong>: \(y=ax+b\), gdy \(\lim_{x\to\infty}\dfrac{f(x)}{x}=a\) i \(\lim_{x\to\infty}(f(x)-ax)=b\)</li>
+</ul>
+
+<div class="uwaga">Typowa technika przy symbolu \(\frac{0}{0}\) z funkcjami wymiernymi: rozkład na czynniki i skrócenie wspólnego czynnika — np. \(\lim_{x\to2}\dfrac{x^2-4}{x-2} = \lim_{x\to2}\dfrac{(x-2)(x+2)}{x-2} = \lim_{x\to2}(x+2) = 4\).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Szeregi liczbowe</h2>
+
+<p>Szereg to "suma nieskończonego ciągu": \(\sum_{n=1}^{\infty} a_n = a_1+a_2+a_3+\dots\), rozumiana jako granica sum częściowych:</p>
+<p>$$S = \lim_{n\to\infty} S_n, \qquad S_n = \sum_{k=1}^{n} a_k$$</p>
+<ul>
+<li>szereg jest <strong>zbieżny</strong>, jeśli ta granica istnieje i jest skończona — sumą szeregu jest właśnie \(S\)</li>
+<li>w przeciwnym razie szereg jest <strong>rozbieżny</strong></li>
+</ul>
+
+<h3>Warunek konieczny zbieżności</h3>
+<p>Jeśli \(\sum a_n\) jest zbieżny, to \(\lim_{n\to\infty} a_n = 0\). <strong>Uwaga:</strong> to tylko warunek konieczny, nie wystarczający — z \(a_n\to0\) nie wynika zbieżność szeregu (klasyczny przykład: szereg harmoniczny, patrz niżej).</p>
+
+<h3>Szereg geometryczny</h3>
+<p>$$\sum_{n=0}^{\infty} a q^n = \frac{a}{1-q} \quad \text{gdy } |q|<1 \text{ (zbieżny)}, \qquad \text{rozbieżny dla } |q|\ge1$$</p>
+
+<h3>Szereg harmoniczny</h3>
+<p>$$\sum_{n=1}^{\infty} \frac{1}{n} = 1+\frac12+\frac13+\dots \quad \text{— rozbieżny}$$</p>
+<p>(mimo że \(a_n=1/n\to0\) — klasyczny przykład, że warunek konieczny nie jest wystarczający)</p>
+
+<h3>Kryteria zbieżności</h3>
+<table>
+<tr><th>Kryterium</th><th>Zasada</th></tr>
+<tr>
+<td>Porównawcze</td>
+<td>jeśli \(0\le a_n\le b_n\) i \(\sum b_n\) zbieżny → \(\sum a_n\) też zbieżny; jeśli \(\sum a_n\) rozbieżny i \(a_n\le b_n\) → \(\sum b_n\) też rozbieżny</td>
+</tr>
+<tr>
+<td>d'Alemberta (ilorazowe)</td>
+<td>\(\displaystyle\lim_{n\to\infty}\left|\frac{a_{n+1}}{a_n}\right|=g\): \(g<1\) → zbieżny, \(g>1\) → rozbieżny, \(g=1\) → nie rozstrzyga</td>
+</tr>
+<tr>
+<td>Cauchy'ego (pierwiastkowe)</td>
+<td>\(\displaystyle\lim_{n\to\infty}\sqrt[n]{|a_n|}=g\): analogicznie jak wyżej</td>
+</tr>
+<tr>
+<td>Szereg naprzemienny (Leibniza)</td>
+<td>jeśli \(a_n\) monotonicznie zbiega do 0, to \(\sum(-1)^n a_n\) jest zbieżny</td>
+</tr>
+</table>
+
+<h3>Zbieżność absolutna vs warunkowa</h3>
+<ul>
+<li><strong>absolutna</strong> — \(\sum|a_n|\) jest zbieżny (implikuje zbieżność samego \(\sum a_n\))</li>
+<li><strong>warunkowa</strong> — \(\sum a_n\) zbieżny, ale \(\sum|a_n|\) rozbieżny (np. szereg anharmoniczny \(\sum(-1)^{n+1}/n\))</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Szereg Taylora i Maclaurina</h2>
+
+<p>Sposób przybliżenia (rozwinięcia) funkcji \(f(x)\) w otoczeniu punktu \(x_0\) za pomocą nieskończonego szeregu potęgowego, zbudowanego z pochodnych funkcji w tym punkcie.</p>
+
+<h3>Wzór Taylora</h3>
+<p>$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(x_0)}{n!}(x-x_0)^n = f(x_0)+f'(x_0)(x-x_0)+\frac{f''(x_0)}{2!}(x-x_0)^2+\dots$$</p>
+
+<h3>Szereg Maclaurina</h3>
+<p>Szczególny przypadek szeregu Taylora dla \(x_0=0\):</p>
+<p>$$f(x) = \sum_{n=0}^{\infty} \frac{f^{(n)}(0)}{n!}x^n$$</p>
+
+<h3>Ważne rozwinięcia Maclaurina</h3>
+<table>
+<tr><th>Funkcja</th><th>Rozwinięcie</th></tr>
+<tr><td>\(e^x\)</td><td>\(\displaystyle 1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+\dots = \sum_{n=0}^{\infty}\frac{x^n}{n!}\)</td></tr>
+<tr><td>\(\sin x\)</td><td>\(\displaystyle x-\frac{x^3}{3!}+\frac{x^5}{5!}-\dots\)</td></tr>
+<tr><td>\(\cos x\)</td><td>\(\displaystyle 1-\frac{x^2}{2!}+\frac{x^4}{4!}-\dots\)</td></tr>
+<tr><td>\(\dfrac{1}{1-x}\)</td><td>\(\displaystyle 1+x+x^2+x^3+\dots\) (dla \(|x|<1\), to szereg geometryczny!)</td></tr>
+<tr>
+  <td>\(\ln(1+x)\)</td>
+  <td>\(\displaystyle x-\frac{x^2}{2}+\frac{x^3}{3}-\dots\) (dla \(|x|<1\), oraz zbieżny dla \(x=1\))</td>
+</tr>
+</table>
+
+<h3>Wielomian Taylora (przybliżenie skończone)</h3>
+<p>W praktyce (np. numerycznie) używa się skróconego, \(n\)-tego wielomianu Taylora — im więcej wyrazów, tym lepsze przybliżenie funkcji w otoczeniu \(x_0\), z resztą \(R_n(x)\) opisującą błąd przybliżenia.</p>
+
+<h3>Zastosowania</h3>
+<ul>
+<li>przybliżanie wartości funkcji "trudnych" (\(\sin\), \(e^x\), \(\ln\)) wielomianami — tak liczą to np. kalkulatory</li>
+<li>obliczanie granic (zamiast reguły de l'Hôpitala, czasem prościej rozwinąć funkcje w szereg i porównać wyrazy najniższego rzędu)</li>
+<li>analiza błędu przybliżeń numerycznych</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie: rozwiń \(f(x)=e^x\) w szereg Maclaurina do \(n\)-tego wyrazu, albo użyj znanego rozwinięcia \(\sin x\) do obliczenia \(\lim_{x\to0}\dfrac{\sin x - x}{x^3}\) (rozwijając licznik zamiast stosować l'Hôpitala trzykrotnie).</div>
+</div>
+
+</body>
+</html>

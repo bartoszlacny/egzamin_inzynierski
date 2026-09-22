@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Komputerowa grafika użytkowa – Egzamin Inżynierski</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+
+.swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #999;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Komputerowa grafika użytkowa</h1>
+
+<div class="zagadnienie">
+<h2>1. Podstawy grafiki komputerowej i komunikatu wizualnego</h2>
+
+<h3>Podstawowe pojęcia edycji grafiki</h3>
+<ul>
+<li><strong>piksel</strong> — najmniejszy element obrazu rastrowego (kolor+pozycja)</li>
+<li><strong>rozdzielczość</strong> — liczba pikseli w obrazie (szerokość × wysokość) lub gęstość (DPI/PPI — punkty/piksele na cal)</li>
+<li><strong>głębia kolorów (bit depth)</strong> — liczba bitów opisujących kolor piksela (np. 8-bit = 256 odcieni na kanał, 24-bit RGB = ~16.7 mln kolorów)</li>
+<li><strong>kanał alfa</strong> — dodatkowy kanał określający przezroczystość piksela (RGBA)</li>
+<li><strong>warstwy (layers)</strong> — niezależne "kartki" obrazu nakładane na siebie, ułatwiające edycję bez niszczenia oryginału</li>
+<li><strong>maski</strong> — sposób na ukrywanie/pokazywanie fragmentów warstwy bez trwałego usuwania danych</li>
+</ul>
+
+<h3>Teoria komunikatu wizualnego</h3>
+<p>Grafika użytkowa (w odróżnieniu od czysto artystycznej) ma cel <strong>komunikacyjny</strong> — przekazuje konkretną informację lub emocję do odbiorcy. Kluczowe zasady:</p>
+<ul>
+<li><strong>hierarchia wizualna</strong> — sterowanie kolejnością, w jakiej oko odbiorcy "czyta" kompozycję (rozmiar, kontrast, pozycja)</li>
+<li><strong>zasady Gestalt</strong> — mózg grupuje elementy wg bliskości, podobieństwa, kontynuacji, domknięcia — projektant świadomie to wykorzystuje do budowania czytelnych układów</li>
+<li><strong>kontrast</strong> (kolor, wielkość, kształt) jako narzędzie kierowania uwagą</li>
+<li><strong>spójność (konsystencja)</strong> — powtarzalne elementy (kolory, fonty, siatka) budują rozpoznawalność (branding)</li>
+</ul>
+
+<h3>Ergonomia w grafice użytkowej</h3>
+<p>Projektowanie z myślą o wygodzie i efektywności odbiorcy — czytelność tekstu (kontrast, wielkość czcionki), intuicyjność układu (np. interfejsu), dostępność dla osób z niepełnosprawnościami (np. wystarczający kontrast dla osób słabowidzących, dalton izm — kolory rozróżnialne nie tylko barwą).</p>
+
+<h3>Marketing i psychologia w grafice</h3>
+<ul>
+<li>psychologia koloru — kolory wywołują skojarzenia kulturowe (czerwony = pilność/pasja, niebieski = zaufanie/spokój, zielony = natura/ekologia) — mocno zależne od kontekstu kulturowego</li>
+<li>rola grafiki w budowaniu marki (branding) — logo, paleta kolorów, typografia jako spójny "język wizualny" firmy</li>
+<li>zasada AIDA (Attention, Interest, Desire, Action) — jak grafika reklamowa prowadzi odbiorcę do działania</li>
+</ul>
+
+<h3>Historyczne i współczesne aspekty projektowania</h3>
+<ul>
+<li>ruchy historyczne wpływające na dzisiejszy design: Bauhaus (funkcjonalizm, prostota formy), Szwajcarski Styl/International Typographic Style (siatki, typografia bezszeryfowa, obiektywizm), Art Deco, Pop Art</li>
+<li>współczesne trendy: flat design (płaskie kształty, minimalizm), material design (Google — symulacja "warstw papieru", cienie, głębia), skeuomorfizm (naśladowanie rzeczywistych tekstur/przedmiotów, np. wczesne iOS)</li>
+</ul>
+
+<h3>Elementy kolorymetrii</h3>
+<table>
+<tr><th>Model</th><th>Składowe</th><th>Zastosowanie</th></tr>
+<tr><td>RGB</td><td>Red, Green, Blue (addytywny)</td><td>ekrany, grafika cyfrowa (światło)</td></tr>
+<tr><td>CMYK</td><td>Cyan, Magenta, Yellow, Key/black (subtraktywny)</td><td>druk (mieszanie farb/tuszy)</td></tr>
+<tr><td>HSV/HSB</td><td>Hue (barwa), Saturation (nasycenie), Value/Brightness (jasność)</td><td>intuicyjny dobór koloru dla człowieka</td></tr>
+<tr><td>Lab (CIELAB)</td><td>jasność L + dwie osie chromatyczne a, b</td><td>niezależny od urządzenia, do precyzyjnego porównywania kolorów</td></tr>
+</table>
+
+<ul>
+<li><strong>addytywny</strong> model (RGB) — łączenie światła: sumowanie składowych daje biel (dodawanie barw światła)</li>
+<li><strong>subtraktywny</strong> model (CMYK) — mieszanie pigmentów/farb: sumowanie składowych daje czerń (pochłanianie światła)</li>
+<li><strong>koło barw</strong> — barwy podstawowe, pochodne, dopełniające (naprzeciw siebie na kole) i analogiczne (sąsiadujące)</li>
+<li><strong>gamut</strong> — zakres kolorów możliwych do odwzorowania przez dane urządzenie/model (np. gamut CMYK jest węższy niż RGB — nie każdy kolor z ekranu da się wiernie wydrukować)</li>
+</ul>
+
+<div class="uwaga">Klasyczne pytanie: dlaczego obraz zaprojektowany na ekranie (RGB) może wyglądać inaczej po wydrukowaniu (CMYK)? — bo modele mają różne gamuty i konwersja RGB→CMYK zawsze wiąże się z pewną utratą/zmianą odwzorowania kolorów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Grafika rastrowa</h2>
+
+<p>Obraz zapisany jako <strong>siatka pikseli</strong> — każdy piksel ma przypisany konkretny kolor. To format, w jakim działają zdjęcia i skany.</p>
+
+<h3>Cechy</h3>
+<ul>
+<li>dobrze odwzorowuje płynne przejścia tonalne, cienie, tekstury — stąd zdjęcia zawsze są rastrowe</li>
+<li><strong>skalowanie w górę pogarsza jakość</strong> — powiększenie obrazu rastrowego prowadzi do "pikselozy" (widoczne pojedyncze kwadraty pikseli), bo brakujące piksele trzeba interpolować</li>
+<li rozmiar pliku silnie zależy od rozdzielczości i głębi koloru (więcej pikseli/kolorów = większy plik, o ile brak kompresji)</li>
+</ul>
+
+<h3>Popularne formaty rastrowe</h3>
+<table>
+<tr><th>Format</th><th>Kompresja</th><th>Przezroczystość</th><th>Zastosowanie</th></tr>
+<tr><td>JPEG</td><td>stratna</td><td>nie</td><td>zdjęcia (mniejszy rozmiar pliku kosztem jakości)</td></tr>
+<tr><td>PNG</td><td>bezstratna</td><td>tak (kanał alfa)</td><td>grafiki z przezroczystością, screenshoty, grafika z ostrymi krawędziami</td></tr>
+<tr><td>GIF</td><td>bezstratna (ograniczona paleta 256 kolorów)</td><td>tak (binarna, bez półprzezroczystości)</td><td>proste animacje, ikony</td></tr>
+<tr><td>TIFF</td><td>zwykle bezstratna</td><td>tak</td><td>profesjonalny druk, archiwizacja, skany</td></tr>
+<tr><td>WebP</td><td>stratna/bezstratna</td><td>tak</td><td>nowoczesny format webowy, mniejsze pliki niż JPEG/PNG</td></tr>
+</table>
+
+<h3>Kompresja stratna vs bezstratna</h3>
+<ul>
+<li><strong>bezstratna</strong> — po dekompresji odzyskuje się dokładnie oryginalne dane (np. PNG, ZIP)</li>
+<li><strong>stratna</strong> — część informacji jest bezpowrotnie tracona dla mniejszego rozmiaru pliku (np. JPEG usuwa trudno zauważalne przez oko szczegóły) — powtórny zapis w formacie stratnym dodatkowo degraduje jakość</li>
+</ul>
+
+<h3>Podstawowe operacje edycyjne</h3>
+<ul>
+<li><strong>korekcja tonalna</strong> — jasność, kontrast, poziomy (levels), krzywe (curves)</li>
+<li><strong>retusz</strong> — narzędzia klonujące/naprawcze (usuwanie niedoskonałości)</li>
+<li><strong>selekcje i maski</strong> — precyzyjne wybieranie obszaru do edycji</li>
+<li><strong>filtry</strong> — rozmycie (blur), wyostrzanie (sharpen), efekty artystyczne</li>
+<li><strong>tryby mieszania warstw (blend modes)</strong> — np. mnożenie (multiply — przyciemnia), ekran (screen — rozjaśnia), nakładka (overlay)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Grafika wektorowa</h2>
+
+<p>Obraz opisany <strong>matematycznie</strong> — jako zbiór krzywych, linii i kształtów zdefiniowanych punktami, wektorami kierunkowymi i parametrami (kolor wypełnienia, grubość konturu), a nie jako siatka pikseli.</p>
+
+<h3>Cechy</h3>
+<ul>
+<li><strong>skalowalność bez utraty jakości</strong> — powiększenie to tylko przeliczenie tych samych wzorów matematycznych dla nowego rozmiaru; brak "pikselozy"</li>
+<li>zwykle mniejszy rozmiar pliku dla prostych kształtów (logo, ikony, ilustracje płaskie) niż odpowiednik rastrowy</li>
+<li>gorzej nadaje się do fotorealistycznych, złożonych tonalnie obrazów (zdjęć)</li>
+<li>łatwa edycja pojedynczych elementów (kształtów) bez wpływu na resztę kompozycji</li>
+</ul>
+
+<h3>Krzywe Béziera</h3>
+<p>Podstawowy sposób opisu krzywych w grafice wektorowej — krzywa zdefiniowana punktami kontrolnymi:</p>
+<ul>
+<li><strong>krzywa kwadratowa</strong> — 1 punkt kontrolny (3 punkty łącznie: start, kontrolny, koniec)</li>
+<li><strong>krzywa sześcienna (cubic)</strong> — 2 punkty kontrolne (najczęściej używana, np. w SVG, czcionkach)</li>
+</ul>
+<p>Punkty kontrolne "przyciągają" krzywą w swoim kierunku, nie leżąc dokładnie na niej (poza punktami krańcowymi).</p>
+
+<h3>Popularne formaty wektorowe</h3>
+<table>
+<tr><th>Format</th><th>Zastosowanie</th></tr>
+<tr><td>SVG</td><td>wektorowa grafika webowa (tekstowy XML, edytowalna w kodzie)</td></tr>
+<tr><td>AI (Adobe Illustrator)</td><td>natywny format profesjonalnej edycji wektorowej</td></tr>
+<tr><td>EPS</td><td>uniwersalny format wymiany między programami graficznymi/DTP</td></tr>
+<tr><td>PDF</td><td>może zawierać zarówno grafikę wektorową, jak i rastrową (np. dokumenty do druku)</td></tr>
+</table>
+
+<h3>Zastosowania</h3>
+<p>logotypy, ikony, infografiki, ilustracje płaskie, typografia (fonty są zapisane wektorowo — dlatego tekst skaluje się bez pikselozy), plany techniczne/CAD.</p>
+
+<div class="uwaga">Klasyczne pytanie: dlaczego logo firmy powinno być projektowane wektorowo, a nie rastrowo? — bo musi być skalowalne do dowolnego rozmiaru (od wizytówki po baner reklamowy) bez utraty jakości.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Przygotowanie grafiki do publikacji i druku</h2>
+
+<h3>Rozdzielczość do druku vs ekranu</h3>
+<ul>
+<li><strong>ekran</strong> — zwykle 72–96 PPI (piksele na cal) wystarczają, bo liczy się tylko rozdzielczość samego wyświetlacza</li>
+<li><strong>druk</strong> — zwykle wymagane min. 300 DPI (dots per inch), żeby wydruk był ostry z bliskiej odległości oglądania; dla dużych formatów oglądanych z daleka (banery, billboardy) wystarcza mniej (np. 100-150 DPI)</li>
+</ul>
+
+<h3>Konwersja przestrzeni barw</h3>
+<p>Przed drukiem obraz projektowany w RGB (na ekranie) trzeba przekonwertować do <strong>CMYK</strong> (farby drukarskie) — ze względu na węższy gamut CMYK niektóre jaskrawe kolory (zwłaszcza neonowe, bardzo nasycone) mogą wyglądać matowiej po konwersji.</p>
+
+<h3>Spady (bleed)</h3>
+<p>Dodatkowy margines grafiki (zwykle 2-5 mm) wychodzący poza właściwy format strony — kompensuje niedokładność cięcia maszynowego po druku, żeby nie powstały białe paski na krawędzi, gdy tło ma sięgać do samej krawędzi kartki.</p>
+
+<h3>Linia cięcia i bezpieczna strefa</h3>
+<ul>
+<li><strong>linia cięcia (trim line)</strong> — finalny format strony po przycięciu</li>
+<li><strong>margines bezpieczeństwa (safe zone)</strong> — obszar, w którym powinien się mieścić ważny tekst/elementy, żeby nie zostały przypadkowo obcięte przy niedokładnym cięciu</li>
+</ul>
+
+<h3>Tryb koloru i profile ICC</h3>
+<p>Profile ICC opisują dokładnie, jak dane urządzenie (monitor, drukarka) interpretuje kolory — używane do <strong>zarządzania barwą</strong> (color management), żeby kolor wyglądał możliwie spójnie na różnych etapach produkcji (projekt → korekta na ekranie → wydruk próbny → druk finalny).</p>
+
+<h3>Formaty plików do druku</h3>
+<p>Zwykle wymagany <strong>PDF</strong> (z osadzonymi fontami i grafiką w wysokiej rozdzielczości) lub natywny plik programu DTP (np. InDesign) — unika się formatów stratnych (JPEG) dla elementów z ostrym tekstem/liniami.</p>
+
+<h3>Czcionki</h3>
+<p>Przed wysłaniem do druku fonty powinny być <strong>zamienione na krzywe (outline)</strong> lub osadzone (embedded) w pliku — inaczej drukarnia bez zainstalowanej tej samej czcionki wyświetli/wydrukuje tekst inną, zastępczą czcionką.</p>
+
+<div class="uwaga">Typowa checklista przed wysłaniem do druku: odpowiednia rozdzielczość (300 DPI), tryb CMYK, dodane spady, ważne elementy w bezpiecznej strefie, czcionki zamienione na krzywe lub osadzone.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Typografia</h2>
+
+<h3>Klasyfikacja krojów pisma</h3>
+<table>
+<tr><th>Typ</th><th>Cecha</th><th>Zastosowanie</th></tr>
+<tr>
+<td>Szeryfowe (serif)</td>
+<td>małe "stopki" na końcach liter (np. Times New Roman, Georgia)</td>
+<td>długie teksty drukowane — stopki prowadzą wzrok wzdłuż linii tekstu</td>
+</tr>
+<tr>
+<td>Bezszeryfowe (sans-serif)</td>
+<td>proste, "czyste" kreski bez stopek (np. Helvetica, Arial)</td>
+<td>ekrany, interfejsy, nagłówki — lepsza czytelność w małych rozmiarach na wyświetlaczach</td>
+</tr>
+<tr>
+<td>Pismo odręczne/skryptowe (script)</td>
+<td>imitacja pisma ręcznego</td>
+<td>zaproszenia, elementy dekoracyjne, logotypy</td>
+</tr>
+<tr>
+<td>Ozdobne (display)</td>
+<td>mocno stylizowane, charakterystyczne</td>
+<td>nagłówki, plakaty — nie do długich tekstów</td>
+</tr>
+<tr>
+<td>Monospace</td>
+<td>wszystkie znaki tej samej szerokości</td>
+<td>kod źródłowy, tabele danych</td>
+</tr>
+</table>
+
+<h3>Podstawowe parametry typograficzne</h3>
+<ul>
+<li><strong>kerning</strong> — regulacja odstępu między <strong>konkretną parą</strong> liter (np. "AV" wymaga mniejszego odstępu niż "AB", bo litery inaczej "zazębiają się" wizualnie)</li>
+<li><strong>tracking (letter-spacing)</strong> — jednolita regulacja odstępu między <strong>wszystkimi</strong> literami w bloku tekstu</li>
+<li><strong>leading (interlinia, line-height)</strong> — odstęp pionowy między liniami tekstu</li>
+<li><strong>x-height</strong> — wysokość małych liter bez wznosów/zejść (np. wysokość litery "x")</li>
+<li><strong>wznosy i zejścia (ascenders/descenders)</strong> — części liter wychodzące powyżej x-height (np. "h", "l") lub poniżej linii bazowej (np. "g", "y")</li>
+</ul>
+
+<h3>Czytelność tekstu</h3>
+<ul>
+<li>zbyt długa linia tekstu (zbyt wiele znaków w wierszu) męczy wzrok — zalecane ok. 50-75 znaków w wierszu</li>
+<li>zbyt małe leading "duszą" tekst, zbyt duże rozrywa go wizualnie na osobne linie</li>
+<li>kontrast tekst/tło musi być wystarczający (patrz ergonomia w punkcie 1) — zbyt niski kontrast utrudnia czytanie, zwłaszcza osobom słabowidzącym</li>
+<li>zasada: max. 2-3 kroje pisma na jeden projekt — więcej wprowadza chaos wizualny</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: różnica między kerningiem a trackingiem — kerning dotyczy pojedynczych par liter (lokalna korekta), tracking całego bloku tekstu (globalna, jednolita regulacja).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Zasady kompozycji</h2>
+
+<h3>Złoty podział (golden ratio)</h3>
+<p>Proporcja \(\varphi \approx 1{,}618\), uznawana za estetycznie harmonijną — stosunek dłuższego odcinka do krótszego równy stosunkowi całości do dłuższego odcinka. Wykorzystywana do rozmieszczania kluczowych elementów kompozycji (np. spirala Fibonacciego jako prowadząca linia wzroku).</p>
+
+<h3>Zasada trzech (rule of thirds)</h3>
+<p>Podział kadru/kompozycji siatką 3×3 — kluczowe elementy umieszcza się na liniach podziału lub w ich punktach przecięcia, a nie dokładnie na środku, co daje bardziej dynamiczną, "naturalną" kompozycję niż wyśrodkowanie.</p>
+
+<h3>Siatki projektowe (grid systems)</h3>
+<p>Niewidoczna struktura kolumn i marginesów porządkująca rozmieszczenie elementów na stronie/layoutcie — zapewnia spójność między różnymi podstronami/slajdami, ułatwia wyrównanie tekstu, obrazów i odstępów.</p>
+<ul>
+<li><strong>siatka kolumnowa</strong> — podział szerokości na kolumny (np. 12-kolumnowa siatka typowa w web designie)</li>
+<li><strong>siatka modułowa</strong> — dodatkowy podział w pionie (moduły/komórki), typowa w gazetach, katalogach</li>
+</ul>
+
+<h3>Symetria i asymetria</h3>
+<ul>
+<li><strong>symetria</strong> — poczucie stabilności, formalności, spokoju (często w oficjalnych, klasycznych projektach)</li>
+<li><strong>asymetria</strong> (ale zrównoważona wizualnie, np. duży element blisko środka vs mały element daleko od środka) — poczucie dynamiki, nowoczesności</li>
+</ul>
+
+<h3>Przestrzeń negatywna (whitespace)</h3>
+<p>Pusta przestrzeń wokół elementów — nie jest "zmarnowanym miejscem", tylko świadomym narzędziem: poprawia czytelność, nadaje elementom "oddech", może sama w sobie tworzyć dodatkowy kształt/znaczenie (klasyczny przykład: logo FedEx ze strzałką ukrytą w białej przestrzeni między literami E i x).</p>
+
+<div class="uwaga">Wszystkie te zasady łączą się z hierarchią wizualną i zasadami Gestalt z punktu 1 — to konkretne, praktyczne narzędzia realizujące te same ogólne cele (czytelność, prowadzenie wzroku, spójność).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Antyaliasing i renderowanie</h2>
+
+<p>Antyaliasing (wygładzanie krawędzi) to technika zmniejszania widoczności "schodkowania" (aliasing) na ukośnych/zakrzywionych krawędziach, gdy grafika (często wektorowa) jest <strong>rasteryzowana</strong> — czyli zamieniana na siatkę pikseli do wyświetlenia na ekranie lub wydrukowania.</p>
+
+<h3>Dlaczego powstaje schodkowanie (aliasing)</h3>
+<p>Piksele tworzą sztywną, kwadratową siatkę — ukośna lub zakrzywiona linia nie mieści się idealnie w tej siatce, więc przy prostym "wypełnij piksel albo nie" powstają widoczne, poszarpane "schodki" na krawędzi.</p>
+
+<h3>Jak działa antyaliasing</h3>
+<p>Zamiast binarnej decyzji (piksel w pełni należy do kształtu albo w ogóle), pikselom na granicy kształtu przypisuje się <strong>pośredni kolor</strong> (mieszankę koloru kształtu i tła), proporcjonalny do tego, jaka część powierzchni piksela jest pokryta przez kształt — oko odbiorcy odbiera to jako gładszą krawędź.</p>
+
+<h3>Rasteryzacja grafiki wektorowej</h3>
+<p>Proces zamiany matematycznego opisu kształtu (patrz punkt 3 — krzywe Béziera) na konkretną siatkę pikseli o określonym kolorze — dzieje się to zawsze przy wyświetlaniu grafiki wektorowej na ekranie (rastrowym z natury) lub przy eksporcie do formatu rastrowego (np. PNG).</p>
+
+<h3>Zastosowania antyaliasingu</h3>
+<ul>
+<li>wygładzanie krawędzi kształtów w programach graficznych (np. zaznaczenia, kształty wektorowe)</li>
+<li>renderowanie tekstu na ekranie (hinting czcionek — dodatkowo dopasowuje kształt liter do siatki pikseli przy małych rozmiarach)</li>
+<li>renderowanie 3D w grach/animacjach (MSAA, FXAA i inne techniki antyaliasingu czasu rzeczywistego)</li>
+</ul>
+
+<div class="uwaga">Kompromis: antyaliasing poprawia estetykę, ale lekko "rozmywa" ostre krawędzie — przy grafice wymagającej perfekcyjnie ostrych linii (np. pixel art, niektóre ikony) czasem świadomie się go wyłącza.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie proceduralne – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie proceduralne (C)</h1>
+
+<p><em>Ten przedmiot rozwija tematy ze "Podstaw programowania" — jeśli coś jest niejasne, warto zerknąć też tam.</em></p>
+
+<div class="zagadnienie">
+<h2>1. Wskaźniki podwójne i tablice wskaźników</h2>
+
+<h3>Wskaźnik na wskaźnik (podwójny)</h3>
+<pre>int x = 10;
+int *p = &x;      // p przechowuje adres x
+int **pp = &p;    // pp przechowuje adres p (czyli "adres adresu x")
+
+printf("%d", **pp);  // dereferencja dwukrotna → 10
+*p = 20;             // zmienia x na 20
+**pp = 30;           // też zmienia x, tym razem przez podwójną dereferencję</pre>
+
+<h3>Zastosowanie — modyfikacja wskaźnika przez funkcję</h3>
+<p>Zwykły wskaźnik jako parametr pozwala zmienić wartość, na którą wskazuje, ale nie sam wskaźnik (bo przekazywany jest przez wartość — kopia adresu). Żeby funkcja mogła zmienić <strong>sam wskaźnik</strong> (np. przydzielić mu nową pamięć), potrzeba wskaźnika na wskaźnik:</p>
+<pre>void alokuj(int **wp, int rozmiar) {
+    *wp = malloc(rozmiar * sizeof(int));  // zmienia wskaźnik w main()
+}
+
+int main() {
+    int *tab = NULL;
+    alokuj(&tab, 10);   // przekazujemy adres wskaźnika
+    tab[0] = 5;          // tab wskazuje już na przydzieloną pamięć
+    free(tab);
+}</pre>
+
+<h3>Tablica wskaźników</h3>
+<p>Tablica, której każdy element jest wskaźnikiem (a nie zwykłą wartością):</p>
+<pre>int a=1, b=2, c=3;
+int *tab[3] = {&a, &b, &c};   // tablica 3 wskaźników na int
+
+printf("%d", *tab[1]);   // 2 (dereferencja drugiego elementu)</pre>
+
+<h3>Tablica stringów jako tablica wskaźników</h3>
+<pre>char *dni[] = {"Poniedzialek", "Wtorek", "Sroda"};
+printf("%s", dni[1]);   // "Wtorek"</pre>
+<p>Każdy element <code>dni[i]</code> to wskaźnik <code>char*</code> na osobny napis w pamięci — w odróżnieniu od dwuwymiarowej tablicy <code>char dni[3][20]</code>, gdzie wszystkie napisy mają tę samą, ustaloną z góry długość wiersza.</p>
+
+<h3>Wskaźnik na tablicę wskaźników</h3>
+<pre>int **ptab = tab;    // ptab wskazuje na pierwszy element tablicy wskaźników
+printf("%d", *ptab[0]);   // dereferencja przez ptab</pre>
+
+<div class="uwaga">Klasyczne zastosowanie podwójnych wskaźników: parametry <code>main(int argc, char **argv)</code> — <code>argv</code> to tablica wskaźników na stringi (argumenty wywołania programu), stąd typ <code>char**</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Dynamiczna alokacja pamięci. Wycieki pamięci</h2>
+
+<h3>Funkcje z <code>&lt;stdlib.h&gt;</code></h3>
+<pre>int *p = malloc(n * sizeof(int));    // n elementów, niezainicjalizowane
+int *q = calloc(n, sizeof(int));     // n elementów, wyzerowane
+p = realloc(p, 2*n * sizeof(int));   // zmiana rozmiaru (zachowuje dane)
+free(p);                             // zwolnienie pamięci</pre>
+
+<h3>Wyciek pamięci (memory leak)</h3>
+<p>Sytuacja, gdy pamięć przydzielona dynamicznie (<code>malloc</code>/<code>calloc</code>) <strong>nie zostaje nigdy zwolniona</strong> (<code>free</code>), mimo że program już do niej nie ma dostępu (utracił jedyny wskaźnik na ten blok). Pamięć pozostaje zajęta aż do zakończenia całego programu.</p>
+
+<h3>Typowe przyczyny wycieków</h3>
+<pre>int *p = malloc(100);
+p = malloc(200);   // BŁĄD: nadpisano wskaźnik, stary blok 100 bajtów "zgubiony" (wyciek)
+// ...
+free(p);           // zwalnia tylko drugi blok (200 bajtów)</pre>
+<ul>
+<li>utrata jedynego wskaźnika do bloku (nadpisanie, wyjście ze scope zmiennej bez wcześniejszego <code>free</code>)</li>
+<li>wcześniejszy <code>return</code>/<code>break</code>/wyjątek pomijający <code>free()</code> w dalszej części funkcji</li>
+<li>alokacja w pętli bez zwalniania poprzednich iteracji</li>
+</ul>
+
+<h3>Inne błędy związane z pamięcią dynamiczną</h3>
+<ul>
+<li><strong>dangling pointer</strong> — użycie wskaźnika po <code>free()</code> (pamięć mogła już zostać przydzielona czemuś innemu)</li>
+<li><strong>double free</strong> — dwukrotne wywołanie <code>free()</code> na tym samym wskaźniku — niezdefiniowane zachowanie, często crash</li>
+<li><strong>buffer overflow</strong> — zapis poza przydzielonym blokiem pamięci</li>
+</ul>
+
+<div class="uwaga">Dobra praktyka: po <code>free(p)</code> zawsze ustaw <code>p = NULL;</code> — próba dereferencji <code>NULL</code> daje natychmiastowy, łatwy do zdiagnozowania błąd, zamiast subtelnego błędu "dangling pointer".</div>
+
+<h3>Narzędzia do wykrywania wycieków</h3>
+<p>W praktyce programiści używają narzędzi jak <code>valgrind</code> (Linux) do automatycznego wykrywania wycieków pamięci i błędnych dostępów podczas testowania programu.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Łańcuchy znakowe w C</h2>
+
+<p>String w C to zwykła tablica <code>char</code>, zakończona bajtem <strong>NUL</strong> (<code>'\0'</code>, wartość 0) — nie ma osobnego typu string jak w innych językach.</p>
+
+<pre>char napis[] = "Ala";     // {'A','l','a','\0'} — 4 bajty, nie 3!
+char *wsk = "Ala";        // wskaźnik na literał (nie modyfikować!)</pre>
+
+<h3>Funkcje z <code>&lt;string.h&gt;</code></h3>
+<table>
+<tr><th>Funkcja</th><th>Działanie</th></tr>
+<tr><td><code>strlen(s)</code></td><td>długość napisu (bez liczenia <code>'\0'</code>)</td></tr>
+<tr><td><code>strcpy(dest, src)</code></td><td>kopiowanie napisu</td></tr>
+<tr><td><code>strncpy(dest, src, n)</code></td><td>kopiowanie max n znaków (bezpieczniejsze)</td></tr>
+<tr><td><code>strcat(dest, src)</code></td><td>doklejenie napisu na koniec</td></tr>
+<tr><td><code>strcmp(s1, s2)</code></td><td>porównanie leksykograficzne (0 = równe)</td></tr>
+<tr><td><code>strchr(s, c)</code></td><td>szukanie znaku w napisie</td></tr>
+<tr><td><code>strstr(s1, s2)</code></td><td>szukanie podnapisu</td></tr>
+<tr><td><code>sprintf(bufor, format, ...)</code></td><td>formatowanie danych do napisu</td></tr>
+<tr><td><code>atoi(s)</code>, <code>atof(s)</code></td><td>konwersja napisu na int/float</td></tr>
+</table>
+
+<div class="uwaga">Klasyczna pułapka: <code>strcpy</code>/<code>strcat</code> nie sprawdzają, czy docelowy bufor jest wystarczająco duży — łatwo o przepełnienie bufora (buffer overflow). Bezpieczniejsze są warianty z limitem długości (<code>strncpy</code>, <code>strncat</code>) — ale i tak trzeba pilnować, żeby wynik zawsze kończył się <code>'\0'</code>.</div>
+
+<h3>Iteracja po znakach napisu</h3>
+<pre>char *s = "Ala";
+for (int i = 0; s[i] != '\0'; i++) {
+    putchar(s[i]);
+}
+// albo równoważnie przez wskaźnik:
+for (char *p = s; *p != '\0'; p++) {
+    putchar(*p);
+}</pre>
+
+<h3>Tablica dwuwymiarowa znaków vs tablica wskaźników na stringi</h3>
+<pre>char a[3][10] = {"Ala", "Ola", "Ela"};  // każdy wiersz to 10 bajtów, stały rozmiar
+char *b[3] = {"Ala", "Ola", "Ela"};     // 3 wskaźniki na napisy o dowolnej długości</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Struktury w C</h2>
+
+<h3>Definicja i dostęp</h3>
+<pre>struct Osoba {
+    char imie[30];
+    int wiek;
+};
+
+struct Osoba o1 = {"Jan", 25};
+o1.wiek = 26;                   // dostęp przez kropkę
+
+struct Osoba *wo = &o1;
+wo->wiek = 27;                  // dostęp przez wskaźnik (skrót od (*wo).wiek)</pre>
+
+<h3>Struktury zagnieżdżone</h3>
+<pre>struct Adres { char miasto[30]; };
+struct Osoba {
+    char imie[30];
+    struct Adres adres;
+};
+
+struct Osoba o;
+strcpy(o.adres.miasto, "Warszawa");</pre>
+
+<h3>Struktury i dynamiczna alokacja</h3>
+<pre>struct Osoba *p = malloc(sizeof(struct Osoba));
+strcpy(p->imie, "Anna");
+p->wiek = 30;
+free(p);</pre>
+
+<h3>Tablice struktur</h3>
+<pre>struct Osoba grupa[5];
+grupa[0].wiek = 20;</pre>
+
+<h3>Struktury jako parametry funkcji</h3>
+<p>Domyślnie przekazywane <strong>przez wartość</strong> (kopiowana cała struktura — kosztowne dla dużych struktur!). Żeby modyfikować oryginał lub uniknąć kopiowania, przekazuje się wskaźnik:</p>
+<pre>void ustawWiek(struct Osoba *o, int w) {
+    o->wiek = w;   // modyfikuje oryginał
+}</pre>
+
+<h3><code>typedef</code></h3>
+<pre>typedef struct {
+    int x, y;
+} Punkt;
+
+Punkt p = {1, 2};   // bez konieczności pisania "struct Punkt"</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Obsługa plików w C</h2>
+
+<h3>Otwieranie i tryby</h3>
+<pre>FILE *f = fopen("dane.txt", "r");
+if (f == NULL) { /* obsługa błędu */ }
+...
+fclose(f);</pre>
+<table>
+<tr><th>Tryb</th><th>Znaczenie</th></tr>
+<tr><td><code>"r"</code></td><td>odczyt (plik musi istnieć)</td></tr>
+<tr><td><code>"w"</code></td><td>zapis (nadpisuje istniejący plik lub tworzy nowy)</td></tr>
+<tr><td><code>"a"</code></td><td>dopisywanie na końcu pliku</td></tr>
+<tr><td><code>"r+"/"w+"/"a+"</code></td><td>odczyt i zapis jednocześnie</td></tr>
+<tr><td>+ <code>b</code> (np. <code>"rb"</code>)</td><td>tryb binarny (bez konwersji końca linii)</td></tr>
+</table>
+
+<h3>Pliki tekstowe</h3>
+<pre>fprintf(f, "%d %s\n", liczba, napis);   // zapis sformatowany
+fscanf(f, "%d", &liczba);               // odczyt sformatowany
+fputs("linia\n", f);
+fgets(bufor, rozmiar, f);               // odczyt linii (z '\n' na końcu)</pre>
+
+<h3>Pliki binarne</h3>
+<pre>struct Osoba o = {"Jan", 25};
+fwrite(&o, sizeof(struct Osoba), 1, f);    // zapis surowych bajtów struktury
+fread(&o, sizeof(struct Osoba), 1, f);     // odczyt z powrotem</pre>
+<p>Pliki binarne zapisują dane dokładnie tak, jak są w pamięci (bez konwersji na tekst) — szybsze i bardziej zwarte niż tekstowe, ale nieczytelne "gołym okiem" i mniej przenośne między różnymi architekturami.</p>
+
+<h3>Dostęp sekwencyjny vs swobodny (random access)</h3>
+<ul>
+<li><strong>sekwencyjny</strong> — czytanie/pisanie od początku do końca, po kolei (domyślny sposób pracy z plikiem)</li>
+<li><strong>swobodny</strong> — przeskakiwanie do dowolnego miejsca w pliku za pomocą <code>fseek</code>:</li>
+</ul>
+<pre>fseek(f, 0, SEEK_END);      // przesuń wskaźnik na koniec pliku
+long rozmiar = ftell(f);    // pobierz aktualną pozycję (czyli rozmiar pliku)
+fseek(f, 0, SEEK_SET);      // wróć na początek
+fseek(f, 10, SEEK_CUR);     // przesuń się 10 bajtów od aktualnej pozycji
+rewind(f);                  // skrót: wróć na sam początek</pre>
+<p>Argumenty <code>SEEK_SET</code> (od początku), <code>SEEK_CUR</code> (od aktualnej pozycji), <code>SEEK_END</code> (od końca) określają punkt odniesienia przesunięcia.</p>
+
+<div class="uwaga">Dostęp swobodny ma sens głównie dla plików binarnych o rekordach stałego rozmiaru (można łatwo obliczyć offset n-tego rekordu jako <code>n * sizeof(rekord)</code>) — dla plików tekstowych o zmiennej długości linii jest to znacznie trudniejsze w praktyce.</div>
+
+<h3>Sprawdzanie końca pliku i błędów</h3>
+<p><code>feof(f)</code> — czy osiągnięto koniec pliku; <code>ferror(f)</code> — czy wystąpił błąd odczytu/zapisu.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Wskaźniki do funkcji</h2>
+
+<pre>int dodaj(int a, int b) { return a+b; }
+int odejmij(int a, int b) { return a-b; }
+
+int (*op)(int, int) = dodaj;   // wskaźnik na funkcję int f(int,int)
+printf("%d", op(2,3));         // 5
+
+op = odejmij;
+printf("%d", op(5,3));         // 2</pre>
+
+<h3>Funkcja jako parametr</h3>
+<pre>int wykonaj(int (*f)(int,int), int a, int b) {
+    return f(a,b);
+}
+wykonaj(dodaj, 3, 4);   // 7</pre>
+
+<h3>Tablica wskaźników do funkcji (dyspozytor)</h3>
+<pre>int (*operacje[2])(int,int) = {dodaj, odejmij};
+int wybor = 0;
+printf("%d", operacje[wybor](2,3));  // 5</pre>
+
+<h3>Typowe zastosowania</h3>
+<ul>
+<li>przekazanie funkcji porównującej do <code>qsort()</code>:
+<pre>int porownaj(const void *a, const void *b) {
+    return *(int*)a - *(int*)b;
+}
+qsort(tab, n, sizeof(int), porownaj);</pre></li>
+<li>implementacja callbacków (funkcja wywoływana "z zewnątrz" w odpowiedzi na zdarzenie)</li>
+<li>tablice funkcji jako alternatywa dla długich <code>switch</code> (dyspozytor operacji na podstawie indeksu)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Klasy zmiennych — czas trwania, zasięg, łączność</h2>
+
+<h3>Czas trwania (storage duration)</h3>
+<ul>
+<li><strong>automatyczny</strong> — zmienne lokalne (domyślnie); tworzone przy wejściu do bloku, niszczone przy wyjściu (żyją na stosie)</li>
+<li><strong>statyczny</strong> — zmienne <code>static</code> i globalne; istnieją przez cały czas działania programu</li>
+<li><strong>dynamiczny</strong> — pamięć z <code>malloc</code>/<code>calloc</code>; żyje, aż do jawnego <code>free()</code></li>
+</ul>
+
+<h3>Zasięg (scope)</h3>
+<ul>
+<li><strong>blokowy</strong> — zmienna widoczna tylko wewnątrz bloku <code>{ }</code>, w którym została zadeklarowana</li>
+<li><strong>funkcyjny</strong> — widoczna w całej funkcji (zwykłe zmienne lokalne)</li>
+<li><strong>plikowy (globalny)</strong> — zmienna zadeklarowana poza funkcjami, widoczna w całym pliku (i innych plikach, jeśli nie jest <code>static</code>)</li>
+</ul>
+
+<h3>Łączność (linkage)</h3>
+<ul>
+<li><strong>brak łączności</strong> — zmienne lokalne, każda funkcja/blok ma "swoją" niezależną kopię</li>
+<li><strong>łączność wewnętrzna (internal)</strong> — zmienna/funkcja <code>static</code> na poziomie pliku — widoczna tylko w tym jednym pliku <code>.c</code>, ukryta przed innymi plikami</li>
+<li><strong>łączność zewnętrzna (external)</strong> — zwykła zmienna/funkcja globalna (bez <code>static</code>) — widoczna też w innych plikach przez deklarację <code>extern</code></li>
+</ul>
+
+<h3>Słowa kluczowe klas pamięci</h3>
+<table>
+<tr><th>Słowo</th><th>Znaczenie</th></tr>
+<tr>
+<td><code>auto</code></td>
+<td>domyślna klasa zmiennych lokalnych (rzadko pisana jawnie — to i tak wartość domyślna)</td>
+</tr>
+<tr>
+<td><code>static</code> (lokalnie w funkcji)</td>
+<td>zmienna zachowuje wartość między wywołaniami funkcji, ale widoczna tylko w niej</td>
+</tr>
+<tr>
+<td><code>static</code> (globalnie w pliku)</td>
+<td>zmienna/funkcja widoczna tylko w tym pliku .c (łączność wewnętrzna)</td>
+</tr>
+<tr>
+<td><code>extern</code></td>
+<td>deklaruje, że zmienna/funkcja jest zdefiniowana w innym pliku — pozwala z niej korzystać bez ponownej definicji</td>
+</tr>
+<tr>
+<td><code>register</code></td>
+<td>sugestia dla kompilatora, żeby trzymać zmienną w rejestrze procesora (szybszy dostęp) — dziś w praktyce ignorowana, bo kompilatory same optymalizują to lepiej</td>
+</tr>
+</table>
+
+<h3>Przykład — <code>static</code> vs zwykła zmienna lokalna</h3>
+<pre>void f() {
+    int a = 0;          // zwykła: za każdym wywołaniem tworzona od nowa
+    static int b = 0;   // static: pamięta wartość między wywołaniami
+
+    a++; b++;
+    printf("a=%d b=%d\n", a, b);
+}
+// f(); f(); f();  →  wypisze: a=1 b=1 / a=1 b=2 / a=1 b=3</pre>
+
+<h3>Przykład — <code>extern</code> między plikami</h3>
+<pre>// plik1.c
+int licznik = 0;   // definicja (łączność zewnętrzna, bo bez static)
+
+// plik2.c
+extern int licznik;   // deklaracja: "ta zmienna istnieje gdzieś indziej"
+void f() { licznik++; }</pre>
+
+<div class="uwaga">Typowe pytanie egzaminacyjne: prześledź, jaka wartość zostanie wypisana po kilku wywołaniach funkcji ze zmienną <code>static</code> — trzeba pamiętać, że inicjalizacja (<code>=0</code>) wykonuje się tylko <strong>raz</strong>, przy pierwszym wywołaniu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Kompilacja wieloplikowa</h2>
+
+<p>Duże programy dzieli się na wiele plików <code>.c</code> (moduły) — łatwiej zarządzać kodem, można kompilować tylko zmieniony plik, a nie całość od nowa.</p>
+
+<h3>Deklaracja vs definicja</h3>
+<ul>
+<li><strong>deklaracja</strong> — zapowiada istnienie funkcji/zmiennej (jej typ i sygnaturę), bez rezerwowania pamięci: <code>int suma(int a, int b);</code></li>
+<li><strong>definicja</strong> — pełna implementacja (dla funkcji) lub rezerwacja pamięci (dla zmiennej): <code>int suma(int a, int b) { return a+b; }</code></li>
+</ul>
+
+<h3>Pliki nagłówkowe (.h)</h3>
+<p>Zawierają deklaracje (prototypy funkcji, definicje struktur, stałe) współdzielone między wieloma plikami <code>.c</code>:</p>
+<pre>// matematyka.h
+#ifndef MATEMATYKA_H
+#define MATEMATYKA_H
+
+int suma(int a, int b);
+int roznica(int a, int b);
+
+#endif</pre>
+<pre>// matematyka.c
+#include "matematyka.h"
+
+int suma(int a, int b) { return a+b; }
+int roznica(int a, int b) { return a-b; }</pre>
+<pre>// main.c
+#include &lt;stdio.h&gt;
+#include "matematyka.h"
+
+int main() {
+    printf("%d", suma(2,3));
+    return 0;
+}</pre>
+
+<h3>Proces budowania programu</h3>
+<ol>
+<li><strong>preprocessing</strong> — rozwinięcie <code>#include</code>, <code>#define</code> itd. (patrz Podstawy programowania, dyrektywy preprocesora)</li>
+<li><strong>kompilacja</strong> — każdy plik <code>.c</code> zamieniany osobno na plik obiektowy (<code>.o</code>/<code>.obj</code>) — zawiera skompilowany kod maszynowy, ale jeszcze bez rozwiązanych odwołań do symboli z innych plików</li>
+<li><strong>linkowanie (łączenie)</strong> — linker łączy wszystkie pliki obiektowe w jeden plik wykonywalny, rozwiązując odwołania między nimi (np. wywołanie <code>suma()</code> z <code>main.c</code> łączone jest z jego definicją w <code>matematyka.c</code>)</li>
+</ol>
+
+<pre>gcc -c matematyka.c -o matematyka.o    # tylko kompilacja
+gcc -c main.c -o main.o                # tylko kompilacja
+gcc matematyka.o main.o -o program     # linkowanie w plik wykonywalny</pre>
+
+<div class="uwaga">Strażnik nagłówka (<code>#ifndef</code>/<code>#define</code>/<code>#endif</code>) jest konieczny, bo ten sam plik <code>.h</code> może zostać dołączony pośrednio wielokrotnie (np. przez różne inne nagłówki) — bez strażnika powstałby błąd redefinicji.</div>
+
+<h3>Błędy linkera vs kompilatora</h3>
+<ul>
+<li><strong>błąd kompilacji</strong> — problem składniowy/typów w pojedynczym pliku (np. brak średnika, zły typ)</li>
+<li><strong>błąd linkowania</strong> — np. "undefined reference to `suma`" — funkcja zadeklarowana (w .h), ale nigdzie niezdefiniowana lub plik z definicją nie został dołączony do linkowania</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Obsługa błędów w C</h2>
+
+<p>C nie ma wyjątków (jak np. C++/Java) — błędy sygnalizuje się przez wartości zwracane, zmienną globalną <code>errno</code> i kody wyjścia programu.</p>
+
+<h3>Kod wyjścia programu</h3>
+<pre>int main() {
+    if (/* coś poszło źle */) {
+        return 1;    // niezerowy kod = błąd (konwencja)
+    }
+    return 0;        // 0 = sukces
+}</pre>
+<p>Funkcja <code>exit(kod)</code> z <code>&lt;stdlib.h&gt;</code> pozwala zakończyć program z dowolnego miejsca (nie tylko z <code>main</code>), z tym samym znaczeniem kodu.</p>
+
+<h3><code>errno</code></h3>
+<p>Globalna zmienna (z <code>&lt;errno.h&gt;</code>) ustawiana przez wiele funkcji bibliotecznych po napotkaniu błędu — zawiera kod konkretnego błędu:</p>
+<pre>#include &lt;errno.h&gt;
+#include &lt;string.h&gt;
+
+FILE *f = fopen("brak_pliku.txt", "r");
+if (f == NULL) {
+    printf("Blad: %s\n", strerror(errno));   // czytelny opis błędu
+    // albo:
+    perror("Nie udalo sie otworzyc pliku");  // wypisuje własny komunikat + opis errno
+}</pre>
+
+<div class="uwaga"><code>errno</code> nie jest automatycznie zerowane przez funkcje, które się powiodły — sprawdzaj je tylko <strong>zaraz po</strong> wywołaniu funkcji, która zgłosiła błąd (np. zwróciła <code>NULL</code> lub <code>-1</code>), nie w oderwaniu od kontekstu.</div>
+
+<h3>Konwencje sygnalizowania błędów przez wartość zwracaną</h3>
+<table>
+<tr><th>Wzorzec</th><th>Przykład</th></tr>
+<tr><td>specjalna wartość jako błąd</td><td><code>fopen()</code> zwraca <code>NULL</code>, <code>read()</code> zwraca <code>-1</code></td></tr>
+<tr><td>kod błędu jako wynik funkcji</td><td>0 = sukces, wartość różna od 0 = konkretny kod błędu</td></tr>
+<tr><td>parametr wyjściowy + status jako return</td><td><code>int wczytaj(int *wynik)</code> — <code>return</code> mówi czy się udało, a wynik trafia przez wskaźnik</td></tr>
+</table>
+
+<h3>Asercje</h3>
+<p><code>assert(warunek)</code> z <code>&lt;assert.h&gt;</code> — przerywa program (i wypisuje komunikat), jeśli warunek jest fałszywy; przydatne do wychwytywania błędów logicznych/programistycznych podczas debugowania (nie do obsługi normalnych błędów wejścia użytkownika, bo w wersji "release" asercje bywają wyłączane).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Funkcje o zmiennej liczbie argumentów</h2>
+
+<p>Mechanizm z <code>&lt;stdarg.h&gt;</code> pozwalający napisać funkcję przyjmującą <strong>dowolną</strong> liczbę argumentów — tak jak działa np. wbudowane <code>printf(format, ...)</code>.</p>
+
+<h3>Makra <code>stdarg.h</code></h3>
+<table>
+<tr><th>Makro</th><th>Działanie</th></tr>
+<tr><td><code>va_list</code></td><td>typ przechowujący "stan" listy argumentów</td></tr>
+<tr><td><code>va_start(lista, ostatni_staly)</code></td><td>inicjalizuje listę, zaczynając zaraz po ostatnim znanym (nazwanym) parametrze</td></tr>
+<tr><td><code>va_arg(lista, typ)</code></td><td>pobiera kolejny argument o podanym typie i przesuwa się dalej</td></tr>
+<tr><td><code>va_end(lista)</code></td><td>"sprząta" po użyciu listy — obowiązkowe na końcu</td></tr>
+</table>
+
+<h3>Przykład — własna funkcja sumująca dowolną liczbę liczb</h3>
+<pre>#include &lt;stdarg.h&gt;
+
+int suma(int liczbaArgumentow, ...) {
+    va_list lista;
+    va_start(lista, liczbaArgumentow);
+
+    int wynik = 0;
+    for (int i = 0; i &lt; liczbaArgumentow; i++) {
+        wynik += va_arg(lista, int);
+    }
+
+    va_end(lista);
+    return wynik;
+}
+
+int main() {
+    printf("%d", suma(3, 10, 20, 30));   // 60
+    printf("%d", suma(2, 5, 7));         // 12
+}</pre>
+
+<div class="uwaga">Funkcja musi jakoś <strong>wiedzieć</strong>, ile argumentów odebrać i jakiego są typu — sam mechanizm <code>va_arg</code> tego nie sprawdza (brak informacji o typach w czasie działania). Dlatego zwykle przekazuje się dodatkowy parametr z liczbą argumentów (jak wyżej) albo — jak w <code>printf</code> — parsuje się z tekstu formatującego (<code>%d</code>, <code>%s</code> itd.), żeby wiedzieć, ile i jakiego typu argumentów oczekiwać.</div>
+
+<h3>Typowe zastosowanie — funkcje logujące/formatujące</h3>
+<pre>void logInfo(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    vprintf(format, args);   // przekazanie listy dalej do vprintf
+    va_end(args);
+}</pre>
+</div>
+
+</body>
+</html>

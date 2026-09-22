@@ -1,0 +1,510 @@
+<!DOCTYPE HTML>
+<html lang="pl">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Egzamin Inżynierski</title>
+
+<style>
+:root {
+    --blue: #007bff;
+    --blue-dark: #0056b3;
+    --blue-light: #eaf2ff;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --border: #e2e6ec;
+    --text: #1f2430;
+    --muted: #6b7280;
+    --green: #16a34a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 0 0 60px 0;
+}
+
+/* ---------- HEADER ---------- */
+
+header {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+    color: white;
+    padding: 36px 20px 28px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0 0 6px 0;
+    font-size: 2rem;
+    letter-spacing: 0.3px;
+}
+
+header p.subtitle {
+    margin: 0 0 10px 0;
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+.wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ---------- PROGRESS ---------- */
+
+.progress-panel {
+    max-width: 1000px;
+    margin: -26px auto 30px auto;
+    padding: 18px 24px;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,60,140,0.12);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.progress-panel .stat {
+    font-weight: bold;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+.progress-panel .stat span {
+    color: var(--blue);
+}
+
+.progress-bar-track {
+    flex: 1;
+    min-width: 160px;
+    height: 10px;
+    background: #e9edf3;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+
+.reset-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 7px 12px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    cursor: pointer;
+}
+.reset-btn:hover { border-color: var(--blue); color: var(--blue); }
+
+/* ---------- SEARCH ---------- */
+
+.search-box {
+    max-width: 1000px;
+    margin: 0 auto 30px auto;
+    padding: 0 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 13px 18px;
+    font-size: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card);
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+
+.search-box input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px var(--blue-light);
+}
+
+/* ---------- YEAR SECTIONS ---------- */
+
+.rok {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 26px 26px;
+    margin-bottom: 22px;
+}
+
+.rok-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--blue-light);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+.rok-header h2 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: 1.3rem;
+}
+
+.rok-count {
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.semestr h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    margin: 18px 0 10px 0;
+}
+.semestr:first-of-type h3 { margin-top: 4px; }
+
+.karty {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 12px;
+}
+
+/* ---------- SUBJECT CARD ---------- */
+
+.karta {
+    position: relative;
+    display: block;
+    background: var(--blue-light);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 14px 16px 14px 42px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.92rem;
+    font-weight: 500;
+    line-height: 1.3;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.karta:hover {
+    background: white;
+    border-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,86,179,0.15);
+}
+
+.karta.zrobione {
+    background: #eefaf1;
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-thickness: 1.5px;
+    text-decoration-color: var(--green);
+}
+.karta.zrobione:hover { border-color: var(--green); }
+
+.checkbox {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 2px solid #a9c4ee;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.karta.zrobione .checkbox {
+    background: var(--green);
+    border-color: var(--green);
+}
+
+.checkbox svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0;
+}
+.karta.zrobione .checkbox svg { opacity: 1; }
+
+.karta.hidden { display: none; }
+
+.karta-zadania {
+    display: block;
+    background: #fff3cd;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: #92650a;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.3;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.karta-zadania:hover {
+    border-color: #e0a800;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(224,168,0,0.2);
+}
+
+.brak-wynikow {
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 10px 4px;
+}
+
+.praktyki-badge {
+    display: inline-block;
+    background: #fff3cd;
+    color: #92650a;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 500;
+}
+
+footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 Egzamin Inżynierski</h1>
+    <p class="subtitle">Notatki powtórkowe do wszystkich przedmiotów</p>
+</header>
+
+<div class="progress-panel">
+    <div class="stat"><span id="licznik">0/37</span> ukończone</div>
+    <div class="progress-bar-track"><div class="progress-bar-fill" id="pasek"></div></div>
+    <button class="reset-btn" id="resetBtn">Wyczyść zaznaczenia</button>
+</div>
+
+<div class="search-box">
+    <input type="text" id="szukaj" placeholder="🔍 Szukaj przedmiotu...">
+</div>
+
+<div class="wrap">
+
+    <div class="rok" style="border-color:#ffe58a; background:#fffdf5;">
+        <div class="rok-header" style="border-bottom-color:#ffe58a;"><h2 style="color:#92650a;">📝 Zadania egzaminacyjne</h2></div>
+        <div class="karty">
+            <a href="zadania_sem1.html" class="karta-zadania">Zadania otwarte — Semestr 1</a>
+            <a href="zadania_sem2.html" class="karta-zadania">Zadania otwarte — Semestr 2</a>
+            <a href="zadania_sem3.html" class="karta-zadania">Zadania otwarte — Semestr 3</a>
+            <a href="zadania_sem4.html" class="karta-zadania">Zadania otwarte — Semestr 4</a>
+            <a href="zadania_sem5.html" class="karta-zadania">Zadania otwarte — Semestr 5</a>
+            <a href="zadania_sem7.html" class="karta-zadania">Zadania otwarte — Semestr 7</a>
+            <a href="zadania_asi.html" class="karta-zadania">Zadania otwarte — ASI</a>
+            <a href="pytania_zamkniete.html" class="karta-zadania">Zadania zamknięte</a>
+        </div>
+    </div>
+
+    <div class="rok" data-rok="1">
+        <div class="rok-header"><h2>Rok 1</h2><span class="rok-count"></span></div>
+
+        <div class="semestr">
+            <h3>Semestr 1</h3>
+            <div class="karty">
+                <a class="karta" href="wdm.html" data-id="wdm"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Wstęp do matematyki</a>
+                <a class="karta" href="pp.html" data-id="pp"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Podstawy programowania</a>
+                <a class="karta" href="tpi.html" data-id="tpi"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Teoretyczne podstawy informatyki</a>
+            </div>
+        </div>
+
+        <div class="semestr">
+            <h3>Semestr 2</h3>
+            <div class="karty">
+                <a class="karta" href="kgu.html" data-id="kgu"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Komputerowa grafika użytkowa</a>
+                <a class="karta" href="aisd.html" data-id="aisd"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Algorytmy i struktury danych</a>
+                <a class="karta" href="m1.html" data-id="m1"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Matematyka 1</a>
+                <a class="karta" href="oiak.html" data-id="oiak"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Organizacja i architektura komputerów</a>
+                <a class="karta" href="www.html" data-id="www"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Języki hipertekstowe i tworzenie stron WWW</a>
+                <a class="karta" href="p_proc.html" data-id="p_proc"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie proceduralne</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="rok" data-rok="2">
+        <div class="rok-header"><h2>Rok 2</h2><span class="rok-count"></span></div>
+
+        <div class="semestr">
+            <h3>Semestr 1</h3>
+            <div class="karty">
+                <a class="karta" href="m2.html" data-id="m2"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Matematyka 2</a>
+                <a class="karta" href="po.html" data-id="po"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie obiektowe</a>
+                <a class="karta" href="wdso.html" data-id="wdso"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Wprowadzenie do systemów operacyjnych</a>
+                <a class="karta" href="sk.html" data-id="sk"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Sieci komputerowe</a>
+                <a class="karta" href="js.html" data-id="js"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Języki skryptowe</a>
+                <a class="karta" href="poc.html" data-id="poc"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Przetwarzanie obrazów cyfrowych</a>
+                <a class="karta" href="pai.html" data-id="pai"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Projektowanie aplikacji internetowych</a>
+                <a class="karta" href="psi.html" data-id="psi"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Podstawy sztucznej inteligencji</a>
+            </div>
+        </div>
+
+        <div class="semestr">
+            <h3>Semestr 2</h3>
+            <div class="karty">
+                <a class="karta" href="fie.html" data-id="fie"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Fizyka i elektronika</a>
+                <a class="karta" href="wsp_java.html" data-id="wsp_java"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Wstęp do programowania w języku Java</a>
+                <a class="karta" href="rbd.html" data-id="rbd"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Relacyjne bazy danych</a>
+                <a class="karta" href="kizp.html" data-id="kizp"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Komunikacja i zarządzanie projektami</a>
+                <a class="karta" href="aiiso.html" data-id="aiiso"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Administracja i integracja systemów operacyjnych</a>
+                <a class="karta" href="po2.html" data-id="po2"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie obiektowe 2</a>
+                <a class="karta" href="isiu.html" data-id="isiu"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Integracja sieci i usług</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="rok" data-rok="3">
+        <div class="rok-header"><h2>Rok 3</h2><span class="rok-count"></span></div>
+
+        <div class="semestr">
+            <h3>Semestr 1</h3>
+            <div class="karty">
+                <a class="karta" href="bdwai.html" data-id="bdwai"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Bazy danych w aplikacjach internetowych</a>
+                <a class="karta" href="scr.html" data-id="scr"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Systemy czasu rzeczywistego</a>
+                <a class="karta" href="si.html" data-id="si"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Sztuczna inteligencja</a>
+                <a class="karta" href="tdev.html" data-id="tdev"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Technologie DevOps</a>
+                <a class="karta" href="ps.html" data-id="ps"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie sieciowe</a>
+                <a class="karta" href="pw.html" data-id="pw"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie współbieżne</a>
+                <a class="karta" href="prog_ai.html" data-id="prog_ai"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Programowanie aplikacji internetowych</a>
+                <a class="karta" href="aswww.html" data-id="aswww"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Administracja serwerami WWW</a>
+            </div>
+        </div>
+
+        <div class="semestr">
+            <h3>Semestr 2</h3>
+            <span class="praktyki-badge">🧳 Praktyki</span>
+        </div>
+    </div>
+
+    <div class="rok" data-rok="4">
+        <div class="rok-header"><h2>Rok 4</h2><span class="rok-count"></span></div>
+
+        <div class="semestr">
+            <h3>Semestr 1</h3>
+            <div class="karty">
+                <a class="karta" href="kryp.html" data-id="kryp"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Kryptografia</a>
+                <a class="karta" href="to.html" data-id="to"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Testowanie oprogramowania</a>
+                <a class="karta" href="wp.html" data-id="wp"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Wzorce projektowe</a>
+                <a class="karta" href="iiad.html" data-id="iiad"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Inżynieria i analiza danych</a>
+                <a class="karta" href="pzsi.html" data-id="pzsi"><span class="checkbox"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>Praktyczne zastosowania sztucznej inteligencji</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+(function () {
+    var STORAGE_KEY = 'egzamin_postep';
+    var karty = document.querySelectorAll('.karta');
+    var total = karty.length;
+
+    function wczytajStan() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+        } catch (e) {
+            return {};
+        }
+    }
+
+    function zapiszStan(stan) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(stan)); } catch (e) {}
+    }
+
+    function odswiezLicznik() {
+        var stan = wczytajStan();
+        var zrobione = Object.keys(stan).filter(function (k) { return stan[k]; }).length;
+        document.getElementById('licznik').textContent = zrobione + '/' + total;
+        document.getElementById('pasek').style.width = (total ? (zrobione / total * 100) : 0) + '%';
+
+        document.querySelectorAll('.rok').forEach(function (rok) {
+            var kartyRoku = rok.querySelectorAll('.karta');
+            var zrobioneRoku = 0;
+            kartyRoku.forEach(function (k) {
+                if (stan[k.dataset.id]) zrobioneRoku++;
+            });
+            rok.querySelector('.rok-count').textContent = zrobioneRoku + '/' + kartyRoku.length;
+        });
+    }
+
+    function zastosujStan() {
+        var stan = wczytajStan();
+        karty.forEach(function (karta) {
+            if (stan[karta.dataset.id]) {
+                karta.classList.add('zrobione');
+            } else {
+                karta.classList.remove('zrobione');
+            }
+        });
+        odswiezLicznik();
+    }
+
+    karty.forEach(function (karta) {
+        var checkbox = karta.querySelector('.checkbox');
+        checkbox.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var stan = wczytajStan();
+            var id = karta.dataset.id;
+            stan[id] = !stan[id];
+            zapiszStan(stan);
+            zastosujStan();
+        });
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function () {
+        if (confirm('Wyczyścić wszystkie zaznaczenia postępu?')) {
+            zapiszStan({});
+            zastosujStan();
+        }
+    });
+
+    // wyszukiwarka
+    document.getElementById('szukaj').addEventListener('input', function (e) {
+        var q = e.target.value.trim().toLowerCase();
+        var widoczneRoku = {};
+
+        document.querySelectorAll('.semestr').forEach(function (sem) {
+            var kartyS = sem.querySelectorAll('.karta');
+            var jakiesWidoczne = false;
+            kartyS.forEach(function (karta) {
+                var pasuje = karta.textContent.toLowerCase().indexOf(q) !== -1;
+                karta.classList.toggle('hidden', !pasuje);
+                if (pasuje) jakiesWidoczne = true;
+            });
+            if (kartyS.length) {
+                sem.style.display = jakiesWidoczne ? '' : 'none';
+            }
+        });
+    });
+
+    zastosujStan();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Technologie DevOps – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Technologie DevOps</h1>
+
+<div class="zagadnienie">
+<h2>1. System kontroli wersji Git</h2>
+
+<h3>Rozproszony system kontroli wersji (DVCS)</h3>
+<p>W odróżnieniu od scentralizowanych systemów (np. starszy SVN), <strong>każdy</strong> klon repozytorium Git zawiera <strong>pełną historię</strong> projektu — praca lokalna (commity, przeglądanie historii) nie wymaga połączenia z serwerem centralnym, synchronizacja ze zdalnym repozytorium odbywa się jawnie i tylko wtedy, gdy potrzebna.</p>
+
+<h3>Commit</h3>
+<p>Zatwierdzony "zrzut" stanu projektu w danym momencie — zawiera zmiany względem poprzedniego commita, autora, datę, komunikat opisujący zmianę, i wskaźnik (hash) na commit rodzica (rodziców, przy scaleniu branchy).</p>
+<pre>git add plik.txt          # zaznacz zmiany do commita (staging area)
+git commit -m "Opis zmiany"
+git log                    # historia commitów</pre>
+
+<h3>Branch (rozgałęzienie)</h3>
+<p>Niezależna linia rozwoju kodu — pozwala pracować równolegle nad różnymi funkcjami/poprawkami bez wzajemnego zakłócania się, aż do momentu scalenia zmian.</p>
+<pre>git branch nowa-funkcja        # utwórz branch
+git checkout nowa-funkcja       # przełącz się na branch (albo: git switch nowa-funkcja)
+git checkout -b nowa-funkcja    # utwórz i przełącz jednocześnie
+
+git merge nowa-funkcja          # scal zmiany z branchem aktualnym</pre>
+
+<h3>Konflikty scalania (merge conflicts)</h3>
+<p>Gdy dwa branche zmieniły <strong>ten sam</strong> fragment pliku w różny sposób — Git nie jest w stanie automatycznie zdecydować, która wersja jest poprawna, i wymaga ręcznego rozstrzygnięcia przez programistę (zaznaczone w pliku znacznikami <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>).</p>
+
+<h3>Praca ze zdalnym repozytorium</h3>
+<pre>git clone https://github.com/user/projekt.git   # skopiowanie zdalnego repo lokalnie
+git remote -v                                     # lista zdalnych repozytoriów
+
+git pull                    # pobierz i scal zmiany ze zdalnego repo (fetch + merge)
+git push                    # wyślij lokalne commity do zdalnego repo
+git fetch                   # pobierz zmiany, ale bez automatycznego scalania</pre>
+
+<h3>Pull Request / Merge Request</h3>
+<p>Mechanizm (na platformach jak GitHub/GitLab, nie sam Git) do proponowania scalenia zmian z jednego brancha do innego, z możliwością code review (komentowania, dyskusji) przed faktycznym scaleniem — kluczowy element pracy zespołowej i podstawa procesów CI/CD (patrz punkt 4).</p>
+
+<h3>Rebase vs merge (skrótowo)</h3>
+<p><code>merge</code> — łączy historie branchy, zachowując oba "wątki" i tworząc commit scalający; <code>rebase</code> — "przenosi" commity jednego brancha na wierzchołek drugiego, tworząc liniową, "czystszą" historię (kosztem przepisania hashy commitów).</p>
+
+<div class="uwaga">Typowe pytanie: opisz typowy workflow pracy zespołowej z Gitem — nowy branch dla funkcji, commity, push do zdalnego repo, pull request, code review, merge do głównego brancha (main/master).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Docker — idea konteneryzacji</h2>
+
+<p><em>(pełne porównanie z maszynami wirtualnymi — patrz przedmiot Administracja i integracja systemów operacyjnych)</em></p>
+
+<h3>Idea konteneryzacji</h3>
+<p>Pakowanie aplikacji <strong>wraz z jej zależnościami</strong> (biblioteki, konfiguracja, runtime) w izolowaną jednostkę (kontener) — kontenery współdzielą jądro systemu-hosta, ale mają odizolowany od siebie system plików, procesy, sieć.</p>
+
+<h3>Obraz (image) vs kontener</h3>
+<pre>docker build -t mojaapp:1.0 .    # zbuduj obraz na podstawie Dockerfile w bieżącym katalogu
+docker run mojaapp:1.0            # uruchom kontener z obrazu</pre>
+<p>Obraz — statyczny, niemutowalny "szablon"; kontener — działająca instancja obrazu (można uruchomić wiele kontenerów z jednego obrazu).</p>
+
+<h3>Dockerfile — przykład</h3>
+<pre>FROM python:3.12-slim         # obraz bazowy
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY . .
+CMD ["python", "app.py"]      # domyślna komenda przy starcie kontenera</pre>
+<p>Każda instrukcja tworzy nową <strong>warstwę (layer)</strong> obrazu — warstwy są cache'owane, więc niezmienione warstwy nie muszą być przebudowywane przy kolejnych <code>docker build</code> (stąd zasada: instrukcje rzadziej zmieniające się, np. instalacja zależności, na początku Dockerfile).</p>
+
+<h3>Zalety konteneryzacji</h3>
+<ul>
+<li><strong>przenośność</strong> — "działa tam samo" niezależnie od hosta (dev/test/produkcja) — eliminuje klasyczny problem "u mnie działało"</li>
+<li><strong>lekkość</strong> — mniejsze zużycie zasobów i szybszy start niż maszyny wirtualne (brak własnego kernela)</li>
+<li><strong>izolacja zależności</strong> — różne aplikacje na tym samym hoście mogą używać różnych (nawet konfliktujących) wersji bibliotek/runtime</li>
+<li><strong>skalowalność</strong> — łatwe uruchamianie wielu identycznych instancji (np. pod load balancerem)</li>
+<li><strong>powtarzalność</strong> — środowisko zdefiniowane jako kod (Dockerfile), wersjonowane w Git</li>
+</ul>
+
+<h3>Wady konteneryzacji</h3>
+<ul>
+<li><strong>słabsza izolacja</strong> niż maszyny wirtualne (współdzielone jądro — potencjalnie większa powierzchnia ataku między kontenerami niż między VM)</li>
+<li>nie da się uruchomić kontenera <strong>innego</strong> systemu operacyjnego niż host (np. kontener Linux wymaga hosta z jądrem Linux)</li>
+<li>zarządzanie stanem/danymi trwałymi wymaga dodatkowego mechanizmu (wolumeny, patrz punkt 3) — kontenery z natury są efemeryczne</li>
+<li>dodatkowa złożoność narzędziowa (orkiestracja, sieci, rejestry obrazów) przy większej skali</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: dla opisanego scenariusza (np. "aplikacja webowa z bazą danych, do wdrożenia na wielu środowiskach") uzasadnij wybór konteneryzacji względem tradycyjnej instalacji na serwerze, wskazując konkretne zalety istotne dla tego przypadku.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Docker Compose i sieci Dockerowe</h2>
+
+<h3>Docker Compose — idea</h3>
+<p>Narzędzie do definiowania i zarządzania <strong>wieloma</strong> powiązanymi kontenerami jako jedną, spójną aplikacją — konfiguracja w jednym pliku YAML, zamiast wielu osobnych, długich komend <code>docker run</code>.</p>
+
+<h3>Przykładowy <code>docker-compose.yml</code></h3>
+<pre>version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+
+  db:
+    image: postgres:16
+    environment:
+      - POSTGRES_PASSWORD=tajne
+    volumes:
+      - dane_db:/var/lib/postgresql/data
+
+volumes:
+  dane_db:</pre>
+<pre>docker-compose up -d      # zbuduj/uruchom wszystkie usługi w tle
+docker-compose down       # zatrzymaj i usuń kontenery
+docker-compose logs web   # logi konkretnej usługi</pre>
+
+<h3>Kluczowe elementy konfiguracji</h3>
+<ul>
+<li><strong>services</strong> — definicja poszczególnych kontenerów (aplikacja, baza danych, cache itd.)</li>
+<li><strong>depends_on</strong> — kolejność startu kontenerów (uwaga: nie gwarantuje, że zależna usługa jest już w pełni <strong>gotowa</strong>, tylko że kontener wystartował)</li>
+<li><strong>volumes</strong> — trwałe przechowywanie danych poza cyklem życia kontenera (patrz niżej)</li>
+<li><strong>environment</strong> — zmienne środowiskowe konfigurujące zachowanie kontenera</li>
+</ul>
+
+<h3>Wolumeny (volumes)</h3>
+<p>Mechanizm trwałego przechowywania danych, niezależny od cyklu życia kontenera — bez wolumenu, usunięcie kontenera (np. bazy danych) usuwa też wszystkie dane wewnątrz niego.</p>
+
+<h3>Sieci Dockerowe</h3>
+<p>Docker automatycznie tworzy <strong>izolowaną sieć</strong> dla usług zdefiniowanych w jednym <code>docker-compose.yml</code> — kontenery mogą się komunikować między sobą <strong>po nazwie usługi</strong> (jak DNS wewnątrz tej sieci), np. <code>web</code> łączy się z bazą po adresie <code>db</code>, bez potrzeby znać jej faktyczny adres IP.</p>
+<table>
+<tr><th>Typ sieci</th><th>Zasada</th></tr>
+<tr><td>Bridge (domyślna)</td><td>izolowana sieć wirtualna na hoście — kontenery w tej samej sieci bridge widzą się nawzajem</td></tr>
+<tr><td>Host</td><td>kontener współdzieli sieć hosta bezpośrednio (brak izolacji sieciowej)</td></tr>
+<tr><td>Overlay</td><td>sieć rozciągnięta między <strong>wieloma</strong> hostami (np. w klastrze Docker Swarm/Kubernetes)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj <code>docker-compose.yml</code> dla aplikacji webowej z bazą danych i cache (np. Redis), z odpowiednim mapowaniem portów i wolumenem dla trwałości danych bazy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. CI/CD z GitHub Actions</h2>
+
+<h3>CI (Continuous Integration)</h3>
+<p>Praktyka <strong>częstego</strong> integrowania zmian kodu do głównego brancha, z <strong>automatycznym</strong> uruchamianiem testów przy każdej zmianie — pozwala wcześnie wykrywać konflikty/błędy, zamiast odkrywać je po tygodniach osobnej pracy wielu deweloperów.</p>
+
+<h3>CD (Continuous Delivery / Deployment)</h3>
+<p><strong>Delivery</strong> — kod po przejściu testów jest automatycznie przygotowany do wdrożenia (ale wdrożenie na produkcję wymaga jeszcze ręcznej akceptacji); <strong>Deployment</strong> — pełna automatyzacja, kod przechodzący testy trafia na produkcję <strong>bez</strong> ręcznej interwencji.</p>
+
+<h3>GitHub Actions — podstawy</h3>
+<p>Mechanizm automatyzacji wbudowany w GitHub — definiowany plikami YAML w katalogu <code>.github/workflows/</code>, reagujący na zdarzenia w repozytorium (push, pull request, itd.).</p>
+
+<pre># .github/workflows/ci.yml
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4          # pobranie kodu repozytorium
+      - name: Ustaw Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Zainstaluj zależności
+        run: pip install -r requirements.txt
+      - name: Uruchom testy
+        run: pytest</pre>
+
+<h3>Kluczowe pojęcia workflow</h3>
+<table>
+<tr><th>Element</th><th>Znaczenie</th></tr>
+<tr><td><code>on</code></td><td>zdarzenie wyzwalające workflow (push, pull_request, harmonogram cron, ręczne wywołanie)</td></tr>
+<tr><td><code>jobs</code></td><td>niezależne (domyślnie równoległe) zadania, każde na własnym, czystym środowisku (runner)</td></tr>
+<tr><td><code>steps</code></td><td>sekwencja kroków wewnątrz jednego joba, wykonywana po kolei</td></tr>
+<tr><td><code>uses</code></td><td>odwołanie do gotowej, współdzielonej akcji (np. checkout kodu, setup środowiska)</td></tr>
+<tr><td><code>run</code></td><td>bezpośrednie wykonanie komendy powłoki</td></tr>
+</table>
+
+<h3>Rozszerzenie o CD — automatyczny deployment</h3>
+<pre>  deploy:
+    needs: test              # deploy tylko jeśli job "test" się powiódł
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Zbuduj i wypchnij obraz Docker
+        run: |
+          docker build -t mojaapp:${{ github.sha }} .
+          docker push mojaapp:${{ github.sha }}
+      - name: Wdróż na serwer
+        run: ssh serwer "docker pull mojaapp:${{ github.sha }} && docker-compose up -d"</pre>
+
+<h3>Secrets</h3>
+<p>Wrażliwe dane (klucze API, hasła, tokeny SSH) przechowywane w bezpiecznym magazynie GitHub (Settings → Secrets), dostępne w workflow jako <code>${{ secrets.NAZWA }}</code> — nigdy nie wpisywane wprost w pliku YAML (byłyby widoczne w historii repozytorium).</p>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj pipeline CI/CD dla prostej aplikacji webowej — testy jednostkowe przy każdym pull request, automatyczny build i deployment obrazu Docker na serwer po scaleniu do brancha main.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Monitorowanie — Prometheus i Grafana</h2>
+
+<h3>Prometheus — zbieranie metryk</h3>
+<p>System monitoringu działający na zasadzie <strong>pull</strong> — Prometheus okresowo <strong>odpytuje</strong> (scrape) endpointy monitorowanych aplikacji o aktualne metryki (w odróżnieniu od modelu push, gdzie aplikacje same wysyłają dane do systemu monitorującego).</p>
+
+<h3>Model danych — szeregi czasowe</h3>
+<p>Metryki przechowywane jako szeregi czasowe (wartość + znacznik czasu + etykiety/labels), np.:</p>
+<pre>http_requests_total{method="GET", status="200"} 15230
+cpu_usage_percent{host="serwer1"} 45.2</pre>
+
+<h3>PromQL — język zapytań</h3>
+<pre>rate(http_requests_total[5m])              # tempo żądań na sekundę, w oknie 5 minut
+avg(cpu_usage_percent) by (host)             # średnie zużycie CPU per host</pre>
+
+<h3>Grafana — wizualizacja</h3>
+<p>Narzędzie do budowania <strong>dashboardów</strong> (paneli z wykresami/tabelami) na podstawie danych z różnych źródeł (Prometheus i wiele innych) — Prometheus zbiera i przechowuje dane, Grafana je <strong>prezentuje</strong> w czytelnej, konfigurowalnej formie.</p>
+
+<h3>Alerting</h3>
+<p>Zarówno Prometheus (Alertmanager) jak i Grafana pozwalają definiować <strong>reguły alarmowe</strong> — np. "powiadom, gdy CPU &gt; 90% przez ponad 5 minut" — z wysyłką powiadomień (e-mail, Slack, PagerDuty) do zespołu.</p>
+
+<h3>Zalety Prometheus + Grafana</h3>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>open-source, bardzo popularny standard w świecie DevOps/Kubernetes</td><td>Prometheus domyślnie przechowuje dane <strong>lokalnie</strong> — skalowanie do bardzo długiej retencji/wielu klastrów wymaga dodatkowych rozwiązań (np. Thanos, Cortex)</td></tr>
+<tr><td>elastyczny model etykiet (labels) — łatwe filtrowanie/agregacja wg wielu wymiarów</td><td>model pull wymaga, by monitorowane aplikacje były "dostępne" dla Prometheusa (utrudnione dla krótko żyjących zadań — wymaga Pushgateway)</td></tr>
+<tr><td>duża biblioteka gotowych "exporterów" (dla baz danych, serwerów WWW, systemów operacyjnych)</td><td>PromQL ma pewną krzywą uczenia, mniej intuicyjny niż prosty SQL dla początkujących</td></tr>
+<tr><td>Grafana wspiera wiele źródeł danych naraz, nie tylko Prometheus</td><td>pełne wdrożenie (alerting, długa retencja, HA) wymaga dodatkowej konfiguracji/komponentów</td></tr>
+</table>
+
+<h3>Typowy stack monitoringu</h3>
+<pre>Aplikacja (eksponuje metryki na /metrics) → Prometheus (scrape + przechowywanie) → Grafana (dashboard) 
+                                                     ↓
+                                              Alertmanager (powiadomienia)</pre>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij różnicę między rolą Prometheusa i Grafany w typowym stacku monitoringu — Prometheus zbiera i przechowuje metryki (i może alarmować), Grafana służy głównie do wizualizacji (może korzystać też z innych źródeł danych niż Prometheus).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Infrastructure as Code (Terraform, Ansible)</h2>
+
+<p>Idea zarządzania infrastrukturą (serwery, sieci, bazy danych w chmurze) przez <strong>kod</strong> (pliki konfiguracyjne wersjonowane w Git), a nie ręczne klikanie w panelach administracyjnych — infrastruktura staje się <strong>powtarzalna, wersjonowana i przeglądalna</strong> jak każdy inny kod.</p>
+
+<h3>Deklaratywne vs imperatywne podejście</h3>
+<table>
+<tr><th></th><th>Deklaratywne (np. Terraform)</th><th>Imperatywne (np. skrypty bash, częściowo Ansible)</th></tr>
+<tr><td>Opisuje</td><td>jaki powinien być <strong>stan końcowy</strong></td><td>jakie <strong>kroki</strong> wykonać, żeby go osiągnąć</td></tr>
+<tr><td>Idempotencja</td><td>naturalna — narzędzie sam wyznacza różnicę i potrzebne zmiany</td><td>trzeba samemu zapewnić (żeby ponowne uruchomienie nie zaszkodziło)</td></tr>
+</table>
+
+<h3>Terraform — provisioning infrastruktury</h3>
+<pre>resource "aws_instance" "serwer_web" {
+  ami           = "ami-0123456789"
+  instance_type = "t3.micro"
+
+  tags = {
+    Name = "serwer-produkcyjny"
+  }
+}</pre>
+<pre>terraform init      # inicjalizacja (pobranie dostawców/providers)
+terraform plan       # pokaż, co się zmieni (bez wykonywania zmian)
+terraform apply      # zastosuj zmiany — utwórz/zmodyfikuj rzeczywistą infrastrukturę</pre>
+<p>Terraform śledzi <strong>stan</strong> (state) rzeczywistej infrastruktury i porównuje go z opisem docelowym — <code>plan</code> pokazuje różnicę <strong>przed</strong> wprowadzeniem zmian, co minimalizuje ryzyko przypadkowych, nieprzewidzianych modyfikacji.</p>
+
+<h3>Ansible — konfiguracja i automatyzacja</h3>
+<p>Narzędzie do konfigurowania <strong>już istniejących</strong> serwerów (instalacja pakietów, konfiguracja usług, deployment aplikacji) — działa przez SSH, <strong>bez agenta</strong> instalowanego na zarządzanych maszynach (w odróżnieniu np. od Puppet/Chef).</p>
+<pre># playbook.yml
+- hosts: serwery_web
+  tasks:
+    - name: Zainstaluj nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Uruchom usługę nginx
+      service:
+        name: nginx
+        state: started</pre>
+<pre>ansible-playbook -i inventory.ini playbook.yml</pre>
+
+<h3>Terraform vs Ansible — uzupełniające się role</h3>
+<table>
+<tr><th></th><th>Terraform</th><th>Ansible</th></tr>
+<tr><td>Główne zastosowanie</td><td><strong>tworzenie</strong> infrastruktury (serwery, sieci, bazy danych w chmurze)</td><td><strong>konfiguracja</strong> tego, co już istnieje (pakiety, usługi, pliki konfiguracyjne)</td></tr>
+<tr><td>Typowy przepływ</td><td colspan="2">Terraform tworzy serwer → Ansible konfiguruje na nim oprogramowanie — często używane razem, nie zamiennie</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego "ręczne" konfigurowanie serwerów przez SSH ("click-ops") jest problematyczne w większych zespołach/projektach, i jak IaC (Terraform/Ansible) rozwiązuje te problemy (powtarzalność, wersjonowanie, code review dla zmian infrastruktury).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Kubernetes — orkiestracja kontenerów</h2>
+
+<p>Rozwinięcie problemu z punktu 3 (Docker Compose) na <strong>dużą skalę</strong> — Docker Compose dobrze zarządza kontenerami na <strong>jednej</strong> maszynie, Kubernetes orkiestruje kontenery rozproszone na <strong>wielu</strong> maszynach (klaster), z automatycznym skalowaniem i samonaprawą.</p>
+
+<h3>Podstawowe pojęcia</h3>
+<table>
+<tr><th>Pojęcie</th><th>Opis</th></tr>
+<tr><td>Pod</td><td>najmniejsza jednostka wdrożenia — jeden lub kilka ściśle powiązanych kontenerów, współdzielących sieć/wolumeny</td></tr>
+<tr><td>Node</td><td>fizyczna/wirtualna maszyna w klastrze, na której działają Pody</td></tr>
+<tr><td>Deployment</td><td>deklaratywny opis, ile replik danego Poda powinno działać i jak je aktualizować</td></tr>
+<tr><td>Service</td><td>stabilny punkt dostępu (adres/nazwa) do grupy Podów — Pody są efemeryczne (mogą być tworzone/usuwane), Service daje trwały "adres" niezależny od konkretnych instancji</td></tr>
+<tr><td>Namespace</td><td>logiczny podział klastra (np. na środowiska dev/test/prod, albo różne zespoły)</td></tr>
+</table>
+
+<h3>Przykładowy manifest Deployment</h3>
+<pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mojaapp
+spec:
+  replicas: 3                     # 3 identyczne kopie (repliki) aplikacji
+  selector:
+    matchLabels:
+      app: mojaapp
+  template:
+    metadata:
+      labels:
+        app: mojaapp
+    spec:
+      containers:
+        - name: mojaapp
+          image: mojaapp:1.0
+          ports:
+            - containerPort: 80</pre>
+<pre>kubectl apply -f deployment.yaml
+kubectl get pods
+kubectl scale deployment mojaapp --replicas=5</pre>
+
+<h3>Kluczowe funkcjonalności</h3>
+<ul>
+<li><strong>automatyczne skalowanie</strong> — zwiększanie/zmniejszanie liczby replik wg obciążenia (Horizontal Pod Autoscaler)</li>
+<li><strong>samonaprawa (self-healing)</strong> — jeśli Pod "padnie" albo przestanie odpowiadać, Kubernetes automatycznie tworzy nowy w jego miejsce</li>
+<li><strong>rolling update</strong> — aktualizacja aplikacji przez stopniowe zastępowanie starych Podów nowymi, bez przestoju (downtime) całej usługi</li>
+<li><strong>load balancing</strong> — Service automatycznie rozdziela ruch między wszystkie zdrowe repliki danego Poda</li>
+</ul>
+
+<h3>Docker Compose vs Kubernetes</h3>
+<table>
+<tr><th></th><th>Docker Compose</th><th>Kubernetes</th></tr>
+<tr><td>Skala</td><td>jedna maszyna</td><td>klaster wielu maszyn</td></tr>
+<tr><td>Złożoność</td><td>niska — jeden plik YAML</td><td>wysoka — wiele typów obiektów, własne API</td></tr>
+<tr><td>Samonaprawa/autoscaling</td><td>brak natywnie</td><td>wbudowane</td></tr>
+<tr><td>Typowe zastosowanie</td><td>lokalny development, małe wdrożenia</td><td>produkcyjne środowiska o dużej skali/wymaganej odporności</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego Kubernetes jest bardziej odpowiedni niż Docker Compose dla aplikacji produkcyjnej o dużym, zmiennym obciążeniu — automatyczne skalowanie, samonaprawa i rozłożenie na wiele maszyn to funkcjonalności, których Compose (ograniczone do jednego hosta) nie zapewnia.</div>
+</div>
+
+</body>
+</html>

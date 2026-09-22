@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Testowanie oprogramowania – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Testowanie oprogramowania</h1>
+
+<div class="zagadnienie">
+<h2>1. Siedem zasad testowania oprogramowania</h2>
+
+<ol>
+<li><strong>Testowanie wykazuje obecność defektów, nie ich brak</strong> — testy mogą pokazać, że błędy <strong>istnieją</strong>, ale nigdy nie dowodzą, że oprogramowanie jest całkowicie wolne od błędów (brak wykrytych defektów ≠ brak defektów).</li>
+<li><strong>Wyczerpujące testowanie jest niemożliwe</strong> — przetestowanie <strong>wszystkich</strong> możliwych kombinacji danych wejściowych i scenariuszy jest w praktyce nieosiągalne (poza trywialnie prostymi programami) — trzeba priorytetyzować (analiza ryzyka, techniki projektowania testów).</li>
+<li><strong>Wczesne testowanie oszczędza czas i pieniądze</strong> — defekty wykryte na wczesnym etapie (np. w fazie wymagań/projektu) są znacznie <strong>tańsze</strong> w naprawie niż te wykryte po wdrożeniu produkcyjnym.</li>
+<li><strong>Grupowanie defektów (defect clustering)</strong> — defekty <strong>nie</strong> rozkładają się równomiernie — zwykle niewielka liczba modułów/komponentów zawiera większość wykrytych błędów (zasada Pareto: ~80% błędów w ~20% modułów).</li>
+<li><strong>Paradoks pestycydu (pesticide paradox)</strong> — powtarzanie <strong>tych samych</strong> testów wielokrotnie z czasem przestaje wykrywać nowe błędy (jak insekty uodparniające się na pestycyd) — testy trzeba regularnie przeglądać i uzupełniać nowymi przypadkami.</li>
+<li><strong>Testowanie zależy od kontekstu</strong> — nie ma jednego uniwersalnego podejścia — testowanie systemu medycznego (krytyczne bezpieczeństwo) różni się od testowania prostej strony informacyjnej.</li>
+<li><strong>Błąd nieobecności defektów (absence-of-errors fallacy)</strong> — znalezienie i naprawienie wszystkich zgłoszonych defektów <strong>nie gwarantuje</strong> sukcesu systemu — oprogramowanie może być technicznie bezbłędne, ale nie spełniać rzeczywistych potrzeb/oczekiwań użytkownika.</li>
+</ol>
+
+<div class="uwaga">Te zasady (ISTQB) to fundament myślenia o testowaniu — częste pytanie egzaminacyjne to podanie konkretnego przykładu/scenariusza ilustrującego jedną z zasad (np. "paradoks pestycydu" przy zawsze tym samym zestawie testów regresyjnych — patrz punkt 4).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. TDD (Test-Driven Development)</h2>
+
+<p>Technika programowania, w której <strong>test pisze się przed</strong> kodem produkcyjnym — kod implementacji powstaje jako odpowiedź na wymagania zakodowane w teście, nie odwrotnie.</p>
+
+<h3>Cykl Red-Green-Refactor (3 etapy)</h3>
+<ol>
+<li><strong>RED — napisz test, który nie przechodzi</strong><br>
+Napisz test dla funkcjonalności, która jeszcze nie istnieje (albo nie jest jeszcze zaimplementowana poprawnie) — test <strong>musi</strong> się nie powieść (bo kodu jeszcze nie ma), co potwierdza, że test faktycznie sprawdza coś realnego.</li>
+<li><strong>GREEN — napisz minimalny kod, żeby test przeszedł</strong><br>
+Zaimplementuj <strong>tylko tyle</strong> kodu, żeby test przeszedł — bez przesadnej elegancji na tym etapie, celem jest szybkie osiągnięcie działającego (zielonego) stanu.</li>
+<li><strong>REFACTOR — uporządkuj kod, zachowując zielone testy</strong><br>
+Popraw jakość/czytelność kodu (usuń duplikację, poprawi nazwy, wydziel funkcje) — testy napisane wcześniej działają jako "siatka bezpieczeństwa": jeśli refaktoryzacja coś zepsuje, testy to natychmiast wykryją.</li>
+</ol>
+<pre>RED → GREEN → REFACTOR → (powrót do RED dla kolejnej funkcjonalności) → ...</pre>
+
+<h3>Korzyści TDD</h3>
+<ul>
+<li>kod od razu ma <strong>zestaw testów</strong> — nie trzeba dopisywać ich później "z pamięci"</li>
+<li><strong>projektowanie API</strong> "z perspektywy użycia" — pisząc test najpierw, naturalnie myślisz, jak wygodnie ma się z kodu korzystać</li>
+<li>wysoka <strong>pewność</strong> przy refaktoryzacji — testy szybko wykrywają regresję (patrz punkt 4)</li>
+<li>zapobiega pisaniu kodu "na wszelki wypadek" — implementujesz tylko to, co faktycznie wymagane przez test</li>
+</ul>
+
+<h3>Wady/wyzwania TDD</h3>
+<ul>
+<li>wymaga zmiany przyzwyczajeń — na początku wolniejsze niż "zwykłe" programowanie</li>
+<li>źle napisane testy mogą "zakotwiczyć" niewłaściwy design (test zbyt ściśle powiązany z implementacją, utrudniający późniejsze zmiany)</li>
+<li>nie zawsze łatwe do zastosowania przy złożonej logice UI/integracjach zewnętrznych</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: zademonstruj cykl TDD na prostym przykładzie (np. implementacja funkcji sumującej dwie liczby) — pokaż kod testu w fazie RED, minimalną implementację w GREEN, i przykładową poprawkę w REFACTOR.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Testy jednostkowe</h2>
+
+<h3>Definicja</h3>
+<p>Testy sprawdzające najmniejszą, <strong>izolowaną</strong> jednostkę kodu (zwykle jedną metodę/funkcję) — w oderwaniu od reszty systemu (baz danych, sieci, plików, innych klas — te zależności zwykle zastępuje się <strong>atrapami/mockami</strong>).</p>
+
+<h3>Struktura typowego testu jednostkowego — Arrange-Act-Assert (AAA)</h3>
+<pre>@Test
+public void sumaDwochLiczb_dajePoprawnyWynik() {
+    // Arrange — przygotowanie danych
+    Kalkulator kalk = new Kalkulator();
+
+    // Act — wykonanie testowanej operacji
+    int wynik = kalk.dodaj(2, 3);
+
+    // Assert — sprawdzenie wyniku
+    assertEquals(5, wynik);
+}</pre>
+
+<h3>Do czego służą testy jednostkowe</h3>
+<ul>
+<li><strong>wczesne wykrywanie błędów</strong> — na poziomie pojedynczej funkcji, zanim błąd "rozleje się" po całym systemie (patrz zasada 3, punkt 1)</li>
+<li><strong>dokumentacja "żywa"</strong> — test pokazuje, jak dana funkcja/metoda ma się zachowywać, w formie wykonywalnego przykładu</li>
+<li><strong>bezpieczna refaktoryzacja</strong> — testy jednostkowe jako "siatka bezpieczeństwa" przy zmianach kodu (patrz TDD, punkt 2)</li>
+<li><strong>szybka informacja zwrotna</strong> — testy jednostkowe są zwykle bardzo szybkie (milisekundy), można je uruchamiać setki razy dziennie</li>
+</ul>
+
+<h3>Cechy dobrego testu jednostkowego — zasada F.I.R.S.T.</h3>
+<table>
+<tr><th>Cecha</th><th>Znaczenie</th></tr>
+<tr><td><strong>F</strong>ast (szybki)</td><td>wykonuje się bardzo szybko — brak połączeń z bazą/siecią</td></tr>
+<tr><td><strong>I</strong>ndependent (niezależny)</td><td>nie zależy od innych testów, ani od kolejności wykonania</td></tr>
+<tr><td><strong>R</strong>epeatable (powtarzalny)</td><td>ten sam wynik przy każdym uruchomieniu, niezależnie od środowiska</td></tr>
+<tr><td><strong>S</strong>elf-validating (samosprawdzający)</td><td>test sam jednoznacznie stwierdza sukces/porażkę (bez ręcznej interpretacji wyniku)</td></tr>
+<tr><td><strong>T</strong>imely (na czas)</td><td>pisany w odpowiednim momencie — najlepiej przed/razem z kodem (patrz TDD)</td></tr>
+</table>
+
+<h3>Mocki, stuby, fake'i (test doubles)</h3>
+<p>Zastępniki prawdziwych zależności, umożliwiające izolację testowanej jednostki: <strong>stub</strong> — zwraca z góry ustalone dane; <strong>mock</strong> — dodatkowo weryfikuje, czy dana metoda została faktycznie wywołana (i z jakimi argumentami); <strong>fake</strong> — uproszczona, działająca implementacja (np. baza danych w pamięci zamiast rzeczywistej).</p>
+
+<div class="uwaga">Typowe pytanie: napisz test jednostkowy dla podanej metody/funkcji, z użyciem struktury AAA, i wskaż, jaką zależność (jeśli jakąś) należałoby zastąpić mockiem, żeby test był izolowany.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Testy regresyjne</h2>
+
+<h3>Definicja</h3>
+<p>Testy sprawdzające, czy <strong>wcześniej działająca</strong> funkcjonalność wciąż działa poprawnie <strong>po</strong> wprowadzeniu zmian w kodzie (nowa funkcja, poprawka błędu, refaktoryzacja) — celem jest wykrycie <strong>regresji</strong>: sytuacji, gdy zmiana w jednym miejscu przypadkowo "zepsuła" coś innego, co wcześniej działało.</p>
+
+<h3>Dlaczego regresja się zdarza</h3>
+<p>W złożonym systemie różne fragmenty kodu są ze sobą powiązane (współdzielone funkcje, zmienne, zależności między modułami) — zmiana w jednym miejscu może mieć nieoczekiwany, "efekt motyla" wpływ na zupełnie inną część systemu, o której programista mógł nawet nie myśleć podczas wprowadzania zmiany.</p>
+
+<h3>Przykłady zastosowania testów regresyjnych</h3>
+<ul>
+<li><strong>przed każdym wydaniem (release)</strong> — pełny zestaw testów regresyjnych uruchamiany, żeby upewnić się, że nowa wersja nie zepsuła istniejących funkcji</li>
+<li><strong>po naprawie błędu (bug fix)</strong> — test odtwarzający konkretny, wcześniej zgłoszony błąd, dodany do zestawu regresyjnego — zapobiega <strong>ponownemu</strong> wystąpieniu tego samego błędu w przyszłości ("bug nigdy nie powinien wrócić bez wykrycia")</li>
+<li><strong>w pipeline CI/CD</strong> (patrz przedmiot Technologie DevOps) — automatyczne uruchomienie testów regresyjnych przy każdym pull request/push do głównego brancha, zanim zmiana zostanie scalona</li>
+<li><strong>po aktualizacji zależności/biblioteki</strong> — sprawdzenie, czy nowa wersja zewnętrznej biblioteki nie wprowadziła niekompatybilnych zmian wpływających na istniejącą funkcjonalność</li>
+</ul>
+
+<h3>Automatyzacja testów regresyjnych</h3>
+<p>Ze względu na <strong>powtarzalność</strong> (te same testy uruchamiane wielokrotnie przy każdej zmianie), testy regresyjne są klasycznym kandydatem do <strong>automatyzacji</strong> — ręczne powtarzanie tysięcy przypadków testowych przy każdym wydaniu byłoby niepraktyczne czasowo.</p>
+
+<h3>Powiązanie z paradoksem pestycydu (punkt 1)</h3>
+<div class="uwaga">Sam zestaw testów regresyjnych <strong>musi być regularnie rozszerzany</strong> — jeśli zawsze uruchamia się identyczny, niezmieniany zestaw testów, z czasem przestaje on wykrywać nowe typy błędów (paradoks pestycydu) — nowe funkcjonalności i naprawione błędy powinny dodawać nowe przypadki do zestawu regresyjnego.</div>
+
+<h3>Testy regresyjne vs testy jednostkowe</h3>
+<table>
+<tr><th></th><th>Testy jednostkowe</th><th>Testy regresyjne</th></tr>
+<tr><td>Cel</td><td>weryfikacja poprawności <strong>nowej/aktualnej</strong> jednostki kodu</td><td>weryfikacja, że <strong>stara</strong> funkcjonalność wciąż działa po zmianach</td></tr>
+<tr><td>Zakres</td><td>zwykle mały (jedna metoda/klasa)</td><td>może obejmować cały system (testy jednostkowe, integracyjne, end-to-end razem)</td></tr>
+<tr><td>Relacja</td><td colspan="2">testy jednostkowe (i inne) <strong>składają się na</strong> zestaw regresyjny — "regresja" to sposób <em>użycia</em> testów, nie osobny typ testu z inną strukturą</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Automatyzacja testów aplikacji webowych (Selenium)</h2>
+
+<h3>Selenium — idea</h3>
+<p>Framework do automatyzacji interakcji z przeglądarką — symuluje działania użytkownika (kliknięcia, wpisywanie tekstu, nawigację) programowo, pozwalając automatycznie testować aplikacje webowe "tak, jak robiłby to człowiek".</p>
+
+<h3>WebDriver — komponent centralny</h3>
+<p>API pozwalające programowo kontrolować przeglądarkę (Chrome, Firefox, Edge) — każda przeglądarka wymaga odpowiedniego <strong>sterownika</strong> (np. ChromeDriver dla Chrome), tłumaczącego komendy Selenium na rzeczywiste akcje w przeglądarce.</p>
+
+<h3>Przykład — test w Java (JUnit + Selenium)</h3>
+<pre>WebDriver driver = new ChromeDriver();
+driver.get("https://example.com/logowanie");
+
+WebElement pole_login = driver.findElement(By.id("login"));
+WebElement pole_haslo = driver.findElement(By.id("haslo"));
+WebElement przycisk = driver.findElement(By.id("zaloguj"));
+
+pole_login.sendKeys("jan");
+pole_haslo.sendKeys("tajnehaslo");
+przycisk.click();
+
+WebElement komunikat = driver.findElement(By.className("witaj"));
+assertEquals("Witaj, jan!", komunikat.getText());
+
+driver.quit();</pre>
+
+<h3>Przykład — test w C# (NUnit + Selenium)</h3>
+<pre>IWebDriver driver = new ChromeDriver();
+driver.Navigate().GoToUrl("https://example.com/logowanie");
+
+driver.FindElement(By.Id("login")).SendKeys("jan");
+driver.FindElement(By.Id("haslo")).SendKeys("tajnehaslo");
+driver.FindElement(By.Id("zaloguj")).Click();
+
+var komunikat = driver.FindElement(By.ClassName("witaj"));
+Assert.AreEqual("Witaj, jan!", komunikat.Text);
+
+driver.Quit();</pre>
+
+<h3>Sposoby lokalizowania elementów (locators)</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr><td><code>By.Id</code></td><td>atrybut <code>id</code> elementu — najbardziej stabilne, jeśli dostępne</td></tr>
+<tr><td><code>By.ClassName</code></td><td>klasa CSS elementu</td></tr>
+<tr><td><code>By.CssSelector</code></td><td>pełny selektor CSS (patrz przedmiot Języki hipertekstowe)</td></tr>
+<tr><td><code>By.XPath</code></td><td>ścieżka w strukturze XML/HTML dokumentu — bardzo elastyczne, ale kruche przy zmianach struktury strony</td></tr>
+<tr><td><code>By.LinkText</code></td><td>dokładny tekst linku</td></tr>
+</table>
+
+<h3>Oczekiwanie na elementy (waits)</h3>
+<p>Strony webowe (zwłaszcza z JavaScriptem) renderują się <strong>asynchronicznie</strong> — element może jeszcze nie istnieć w DOM w momencie, gdy test próbuje go znaleźć:</p>
+<pre>WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("wynik")));</pre>
+<div class="uwaga">Klasyczny błąd: brak odpowiedniego oczekiwania prowadzi do "kruchych" (flaky) testów, które losowo się nie powodzą, zależnie od szybkości ładowania strony — jawne oczekiwanie (explicit wait) na konkretny warunek jest bardziej niezawodne niż stałe <code>sleep()</code>.</div>
+
+<h3>Wzorzec Page Object</h3>
+<p>Technika organizacji kodu testów — dla każdej strony/widoku aplikacji tworzy się osobną klasę ("Page Object") skupiającą lokalizatory elementów i akcje na tej stronie:</p>
+<pre>class StronaLogowania {
+    private WebDriver driver;
+    private By pole_login = By.id("login");
+    private By przycisk = By.id("zaloguj");
+
+    public void zaloguj(String login, String haslo) {
+        driver.findElement(pole_login).sendKeys(login);
+        driver.findElement(By.id("haslo")).sendKeys(haslo);
+        driver.findElement(przycisk).click();
+    }
+}</pre>
+<p>Zaleta: jeśli struktura strony się zmieni (np. zmiana <code>id</code> pola), poprawka jest potrzebna tylko w <strong>jednym</strong> miejscu (klasie Page Object), nie w każdym teście korzystającym z tej strony.</p>
+
+<h3>Typowy proces tworzenia testów automatycznych</h3>
+<ol>
+<li>zidentyfikuj kluczowe scenariusze użytkownika do automatyzacji (zwykle najpierw "happy path" — typowa, poprawna ścieżka)</li>
+<li>skonfiguruj środowisko (WebDriver, sterownik przeglądarki, framework testowy — JUnit/NUnit/TestNG)</li>
+<li>zaimplementuj Page Objects dla stron uczestniczących w scenariuszu</li>
+<li>napisz test korzystający z Page Objects, z jasną strukturą AAA (patrz punkt 3) i odpowiednimi asercjami</li>
+<li>dodaj jawne oczekiwania (waits) tam, gdzie strona ładuje się asynchronicznie</li>
+<li>zintegruj z pipeline CI/CD (patrz przedmiot Technologie DevOps), żeby testy uruchamiały się automatycznie przy każdej zmianie kodu</li>
+</ol>
+
+<div class="uwaga">Testy Selenium to typowo testy <strong>end-to-end</strong> (najwyższy poziom "piramidy testów") — wolniejsze i bardziej kosztowne w utrzymaniu niż testy jednostkowe, ale sprawdzają system "z perspektywy użytkownika", przez rzeczywistą przeglądarkę, wykrywając problemy niewidoczne na niższych poziomach (np. błędy w integracji frontend-backend, problemy z layoutem).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Piramida testów i rodzaje testowania</h2>
+
+<h3>Piramida testów — poziomy</h3>
+<pre>        /\
+       /  \      Testy E2E / akceptacyjne (mało, wolne, kosztowne)
+      /----\
+     /      \    Testy integracyjne
+    /--------\
+   /          \  Testy jednostkowe (dużo, szybkie, tanie)
+  /____________\</pre>
+<table>
+<tr><th>Poziom</th><th>Zakres</th><th>Szybkość</th><th>Przykład</th></tr>
+<tr><td>Jednostkowe (unit)</td><td>pojedyncza funkcja/metoda, izolowana (patrz punkt 3)</td><td>bardzo szybkie (ms)</td><td>test metody <code>dodaj(a,b)</code></td></tr>
+<tr><td>Integracyjne</td><td>współpraca kilku modułów/komponentów naraz (np. serwis + baza danych)</td><td>średnie (sekundy)</td><td>test zapisu obiektu przez repozytorium do rzeczywistej (testowej) bazy</td></tr>
+<tr><td>Systemowe</td><td>cały system jako całość, zbliżone do środowiska produkcyjnego</td><td>wolniejsze</td><td>test całego przepływu zamówienia w aplikacji</td></tr>
+<tr><td>Akceptacyjne / E2E</td><td>z perspektywy użytkownika końcowego, przez interfejs (patrz Selenium, punkt 5)</td><td>najwolniejsze (sekundy-minuty)</td><td>scenariusz "zaloguj się i złóż zamówienie" przez przeglądarkę</td></tr>
+</table>
+<p>Zasada piramidy: <strong>dużo</strong> szybkich, tanich testów jednostkowych u podstawy, <strong>mało</strong> wolnych, kosztownych testów E2E na szczycie — odwrotna proporcja ("piramida do góry nogami", zbyt wiele testów E2E) prowadzi do wolnych, kruchych (flaky) i drogich w utrzymaniu zestawów testów.</p>
+
+<h3>Czarna skrzynka (black-box) vs biała skrzynka (white-box)</h3>
+<table>
+<tr><th></th><th>Black-box</th><th>White-box</th></tr>
+<tr><td>Wiedza o implementacji</td><td>brak — testujący widzi tylko wejście/wyjście</td><td>pełna — testy projektowane ze znajomością kodu wewnętrznego</td></tr>
+<tr><td>Perspektywa</td><td>funkcjonalna — "co system robi"</td><td>strukturalna — "jak system to robi" (ścieżki wykonania, warunki)</td></tr>
+<tr><td>Przykład techniki</td><td>klasy równoważności, analiza wartości granicznych</td><td>pokrycie instrukcji/warunków/ścieżek (patrz punkt 7)</td></tr>
+</table>
+<p><strong>Gray-box (szara skrzynka)</strong> — podejście pośrednie, częściowa wiedza o wewnętrznej strukturze (np. znajomość schematu bazy danych, ale nie samego kodu logiki biznesowej).</p>
+
+<h3>Testy funkcjonalne vs niefunkcjonalne</h3>
+<table>
+<tr><th>Typ</th><th>Sprawdza</th><th>Przykład</th></tr>
+<tr><td>Funkcjonalne</td><td>czy system robi to, co powinien (zgodność z wymaganiami)</td><td>"czy logowanie z poprawnym hasłem się powiedzie"</td></tr>
+<tr><td>Wydajnościowe (performance)</td><td>czas odpowiedzi, przepustowość pod obciążeniem</td><td>testy obciążeniowe (load testing) — ile użytkowników naraz system obsłuży</td></tr>
+<tr><td>Bezpieczeństwa</td><td>odporność na ataki (SQL injection, XSS — patrz przedmiot Projektowanie aplikacji internetowych)</td><td>testy penetracyjne</td></tr>
+<tr><td>Użyteczności (usability)</td><td>łatwość i intuicyjność korzystania z systemu przez realnych użytkowników</td><td>testy z udziałem prawdziwych użytkowników, obserwacja ich zachowań</td></tr>
+<tr><td>Kompatybilności</td><td>działanie na różnych przeglądarkach/urządzeniach/systemach</td><td>test tej samej strony na Chrome, Firefox, Safari</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: sklasyfikuj opisany scenariusz testowy (np. "sprawdzenie, czy strona ładuje się poprawnie na telefonie z Androidem" albo "sprawdzenie, czy formularz odrzuca zbyt krótkie hasło") według poziomu piramidy i typu (funkcjonalny/niefunkcjonalny, black/white-box).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Pokrycie kodu (code coverage)</h2>
+
+<p>Metryka mówiąca, jaki <strong>procent</strong> kodu produkcyjnego jest wykonywany podczas przebiegu zestawu testów — narzędzie pomocnicze do oceny, jak dokładnie testy "sprawdzają" kod, ale <strong>nie</strong> jest samo w sobie miarą jakości testów.</p>
+
+<h3>Rodzaje pokrycia (od najsłabszego do najsilniejszego)</h3>
+<table>
+<tr><th>Typ</th><th>Co mierzy</th></tr>
+<tr>
+<td>Pokrycie instrukcji (statement coverage)</td>
+<td>jaki % linii/instrukcji kodu został wykonany przynajmniej raz</td>
+</tr>
+<tr>
+<td>Pokrycie decyzji/rozgałęzień (branch/decision coverage)</td>
+<td>czy każda możliwa gałąź warunku (<code>if</code>/<code>else</code>, każdy wynik pętli) została wykonana — silniejsze niż pokrycie instrukcji, bo <code>if (a &amp;&amp; b)</code> może mieć 100% pokrycia instrukcji, ale nie sprawdzić obu gałęzi warunku</td>
+</tr>
+<tr>
+<td>Pokrycie warunków (condition coverage)</td>
+<td>czy każdy pojedynczy warunek logiczny (w złożonym wyrażeniu z <code>&amp;&amp;</code>/<code>||</code>) przyjął zarówno wartość true, jak i false</td>
+</tr>
+<tr>
+<td>Pokrycie ścieżek (path coverage)</td>
+<td>czy wszystkie możliwe <strong>kombinacje</strong> ścieżek przez kod zostały przetestowane — najsilniejsze, ale liczba ścieżek rośnie wykładniczo z liczbą warunków (podobnie do problemu z wyczerpującym testowaniem, patrz zasada 2, punkt 1)</td>
+</tr>
+</table>
+
+<h3>Przykład — dlaczego 100% pokrycia instrukcji nie wystarcza</h3>
+<pre>if (a &gt; 0 &amp;&amp; b &gt; 0) {
+    wynik = a / b;   // instrukcja wykonana
+}</pre>
+<p>Jeden test z <code>a=5, b=2</code> daje 100% pokrycia <strong>instrukcji</strong> (linia się wykonała) — ale nie sprawdza żadnej z gałęzi, gdzie warunek jest fałszywy, ani zachowania przy <code>b=0</code> (mimo że warunek to wyklucza, błąd logiczny w samym warunku by przeszedł niezauważony).</p>
+
+<h3>Ograniczenia pokrycia kodu jako metryki</h3>
+<div class="uwaga">Wysokie pokrycie kodu <strong>nie gwarantuje</strong> braku błędów — test może "przejść przez" linię kodu bez sprawdzenia (asercji), czy wynik jest <strong>poprawny</strong>. Klasyczny przykład: test wywołujący funkcję, ale bez żadnego <code>assert</code> na wyniku, "pokrywa" kod (zwiększa metrykę), ale nie weryfikuje niczego — pokrycie mierzy <strong>wykonanie</strong> kodu, nie jego <strong>poprawność</strong>.</div>
+
+<h3>Praktyczne zastosowanie</h3>
+<p>Pokrycie kodu używa się głównie do <strong>identyfikacji obszarów bez testów</strong> (np. "ten moduł ma 20% pokrycia — prawdopodobnie warto dodać tam testy"), a nie jako sztywny cel liczbowy do "wyciskania" (100% pokrycia zwykle nie jest praktycznym/opłacalnym celem — pewne fragmenty kodu, np. proste gettery/settery, rzadko wymagają dedykowanych testów).</p>
+
+<div class="uwaga">Typowe pytanie: dla podanego fragmentu kodu z warunkiem złożonym, wskaż minimalny zestaw danych testowych potrzebny do osiągnięcia pełnego pokrycia decyzji (branch coverage), i wyjaśnij, czym różniłby się on od zestawu wystarczającego tylko do pokrycia instrukcji.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Relacyjne bazy danych – Egzamin Inżynierski</title>
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Relacyjne bazy danych</h1>
+
+<div class="zagadnienie">
+<h2>1. Normalizacja</h2>
+
+<p>Proces organizowania danych w tabelach tak, by zminimalizować <strong>redundancję</strong> (powtarzanie się danych) i uniknąć <strong>anomalii</strong> (problemów przy wstawianiu, aktualizacji, usuwaniu danych).</p>
+
+<h3>Anomalie (problem, który normalizacja rozwiązuje)</h3>
+<ul>
+<li><strong>anomalia wstawiania</strong> — nie można wprowadzić pewnych danych bez wprowadzenia innych, niepowiązanych logicznie</li>
+<li><strong>anomalia usuwania</strong> — usunięcie wiersza niechcący usuwa też inną, wciąż potrzebną informację</li>
+<li><strong>anomalia aktualizacji</strong> — ta sama informacja powtórzona w wielu wierszach — trzeba zmienić wszystkie kopie, inaczej dane staną się niekonsystentne</li>
+</ul>
+
+<h3>Pierwsza postać normalna (1NF)</h3>
+<ul>
+<li>każda kolumna zawiera wartości <strong>atomowe</strong> (niepodzielne) — nie listy, nie wielokrotne wartości w jednej komórce</li>
+<li>brak powtarzających się grup kolumn (np. <code>telefon1</code>, <code>telefon2</code>, <code>telefon3</code> — powinno być osobną tabelą)</li>
+</ul>
+
+<h3>Druga postać normalna (2NF)</h3>
+<p>Tabela jest w 1NF <strong>i</strong> każdy atrybut niekluczowy zależy od <strong>całego</strong> klucza głównego (nie tylko od jego części) — istotne przy kluczach złożonych (z wielu kolumn).</p>
+
+<h3>Trzecia postać normalna (3NF)</h3>
+<p>Tabela jest w 2NF <strong>i</strong> brak <strong>zależności przechodnich</strong> — atrybut niekluczowy nie może zależeć od innego atrybutu niekluczowego, tylko wyłącznie od klucza głównego.</p>
+
+<h3>Przykład — od tabeli niesznormalizowanej do 3NF</h3>
+<pre>-- Zła struktura (dane zamówień z powtórzoną nazwą klienta i miasta)
+Zamowienie(id_zam, produkt, klient, miasto_klienta, cena)
+
+-- 3NF: rozbicie na osobne tabele
+Klient(id_klient, nazwa, miasto)
+Zamowienie(id_zam, id_klient, produkt, cena)</pre>
+<p>W wersji 3NF zmiana miasta klienta wymaga edycji <strong>jednego</strong> wiersza w <code>Klient</code>, a nie każdego zamówienia tego klienta.</p>
+
+<h3>Wyższe postacie normalne (skrótowo)</h3>
+<p>BCNF (postać normalna Boyce'a-Codda) — mocniejsza wersja 3NF; 4NF, 5NF — dotyczą rzadszych, bardziej złożonych zależności — w praktyce projektowania baz danych zwykle wystarcza dojście do 3NF/BCNF.</p>
+
+<div class="uwaga">Kompromis: pełna normalizacja minimalizuje redundancję, ale zwiększa liczbę tabel i konieczność złączeń (JOIN) przy odczycie — czasem świadomie stosuje się <strong>denormalizację</strong> (częściowe scalenie danych) dla wydajności odczytu w systemach o bardzo dużym obciążeniu read-heavy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Diagramy ERD (Entity-Relationship Diagram)</h2>
+
+<p>Graficzny sposób modelowania struktury bazy danych <strong>przed</strong> jej implementacją — pokazuje encje (przyszłe tabele), ich atrybuty i relacje między nimi.</p>
+
+<h3>Podstawowe elementy</h3>
+<ul>
+<li><strong>encja (entity)</strong> — obiekt/koncept, o którym przechowujemy dane (np. Klient, Produkt) — w implementacji staje się tabelą</li>
+<li><strong>atrybut</strong> — właściwość encji (np. imię, cena) — staje się kolumną</li>
+<li><strong>klucz główny (primary key, PK)</strong> — atrybut(y) jednoznacznie identyfikujące wiersz encji</li>
+<li><strong>relacja (związek)</strong> — powiązanie między encjami (np. Klient <em>składa</em> Zamówienie)</li>
+</ul>
+
+<h3>Liczebność (kardynalność) relacji</h3>
+<table>
+<tr><th>Typ</th><th>Opis</th><th>Przykład</th></tr>
+<tr><td>1:1 (jeden do jednego)</td><td>jeden wiersz A odpowiada max. jednemu wierszowi B</td><td>Osoba — Paszport</td></tr>
+<tr><td>1:N (jeden do wielu)</td><td>jeden wiersz A może odpowiadać wielu wierszom B</td><td>Klient — Zamówienia</td></tr>
+<tr><td>N:M (wiele do wielu)</td><td>wiele wierszy A może odpowiadać wielu wierszom B</td><td>Studenci — Kursy</td></tr>
+</table>
+
+<h3>Notacja "kurzej łapki" (crow's foot)</h3>
+<p>Popularny sposób rysowania kardynalności na diagramie — symbole na końcach linii łączącej encje wskazują minimalną i maksymalną liczbę wystąpień (np. "rozdwojona łapka" = "wiele", pojedyncza kreska = "jeden", okrąg = "zero lub...").</p>
+
+<h3>Relacja N:M w implementacji</h3>
+<p>Relacja wiele-do-wielu <strong>nie może</strong> być bezpośrednio zapisana kluczem obcym w jednej z tabel — wymaga <strong>tabeli łączącej (pośredniej)</strong> z kluczami obcymi do obu tabel (patrz punkt 5).</p>
+
+<h3>Od ERD do schematu tabel</h3>
+<ol>
+<li>każda encja → tabela</li>
+<li>każdy atrybut → kolumna</li>
+<li>relacja 1:N → klucz obcy w tabeli po stronie "wiele"</li>
+<li>relacja N:M → dodatkowa tabela łącząca z dwoma kluczami obcymi</li>
+</ol>
+
+<div class="uwaga">Typowe zadanie: narysuj diagram ERD dla opisanego słownie systemu (np. "sklep internetowy: klienci składają zamówienia, zamówienie zawiera wiele produktów") i przetłumacz go na konkretny schemat tabel z kluczami głównymi/obcymi.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Zapytania SQL — DDL, DML, DQL</h2>
+
+<h3>DDL (Data Definition Language) — definicja struktury</h3>
+<pre>CREATE TABLE Klient (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nazwa VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE
+);
+
+ALTER TABLE Klient ADD COLUMN telefon VARCHAR(20);
+DROP TABLE Klient;</pre>
+<p>Polecenia: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>TRUNCATE</code> — tworzą/modyfikują/usuwają strukturę bazy (tabele, indeksy, ograniczenia), nie same dane.</p>
+
+<h3>DML (Data Manipulation Language) — manipulacja danymi</h3>
+<pre>INSERT INTO Klient (nazwa, email) VALUES ('Jan Kowalski', 'jan@example.com');
+
+UPDATE Klient SET email = 'nowy@example.com' WHERE id = 1;
+
+DELETE FROM Klient WHERE id = 1;</pre>
+<p>Polecenia: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code> — dodają, modyfikują, usuwają <strong>wiersze</strong> danych (struktura tabeli bez zmian).</p>
+
+<h3>DQL (Data Query Language) — odczyt danych</h3>
+<pre>SELECT nazwa, email FROM Klient WHERE id &gt; 5 ORDER BY nazwa;</pre>
+<p><code>SELECT</code> — jedyne polecenie DQL, ale z bardzo bogatą składnią (<code>WHERE</code>, <code>ORDER BY</code>, <code>GROUP BY</code>, <code>JOIN</code>, patrz punkty 4-5).</p>
+
+<h3>Inne kategorie (dla kompletności)</h3>
+<table>
+<tr><th>Kategoria</th><th>Polecenia</th><th>Cel</th></tr>
+<tr><td>DCL (Data Control Language)</td><td><code>GRANT</code>, <code>REVOKE</code></td><td>zarządzanie uprawnieniami użytkowników</td></tr>
+<tr><td>TCL (Transaction Control Language)</td><td><code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code></td><td>zarządzanie transakcjami</td></tr>
+</table>
+
+<h3>Klucze i ograniczenia (constraints)</h3>
+<pre>CREATE TABLE Zamowienie (
+    id INT PRIMARY KEY,
+    id_klient INT,
+    data DATE NOT NULL,
+    FOREIGN KEY (id_klient) REFERENCES Klient(id)
+);</pre>
+<ul>
+<li><code>PRIMARY KEY</code> — jednoznaczny identyfikator wiersza</li>
+<li><code>FOREIGN KEY</code> — odwołanie do klucza głównego innej tabeli, wymuszające integralność referencyjną</li>
+<li><code>NOT NULL</code>, <code>UNIQUE</code>, <code>CHECK</code> — dodatkowe ograniczenia wartości kolumny</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: rozróżnij, czy dane polecenie SQL to DDL, DML czy DQL — klasyczna, szybka pytanie sprawdzające, czy rozumiesz podział na definicję struktury vs manipulację danymi vs odczyt.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Funkcje agregujące</h2>
+
+<p>Funkcje operujące na <strong>zbiorze</strong> wierszy, zwracające <strong>jedną</strong> wartość podsumowującą — kluczowe przy analizie/raportowaniu danych.</p>
+
+<table>
+<tr><th>Funkcja</th><th>Działanie</th></tr>
+<tr><td><code>COUNT(*)</code></td><td>liczba wierszy</td></tr>
+<tr><td><code>COUNT(kolumna)</code></td><td>liczba wierszy z niepustą (<code>NOT NULL</code>) wartością w kolumnie</td></tr>
+<tr><td><code>SUM(kolumna)</code></td><td>suma wartości</td></tr>
+<tr><td><code>AVG(kolumna)</code></td><td>wartość średnia</td></tr>
+<tr><td><code>MIN(kolumna)</code> / <code>MAX(kolumna)</code></td><td>wartość minimalna/maksymalna</td></tr>
+</table>
+
+<h3><code>GROUP BY</code> — agregacja w grupach</h3>
+<pre>SELECT id_klient, COUNT(*) AS liczba_zamowien, SUM(cena) AS suma
+FROM Zamowienie
+GROUP BY id_klient;</pre>
+<p>Dzieli wiersze na grupy według wartości podanej kolumny, i liczy funkcję agregującą <strong>osobno dla każdej grupy</strong> (nie dla całej tabeli naraz).</p>
+
+<h3><code>HAVING</code> — filtrowanie grup (nie pojedynczych wierszy!)</h3>
+<pre>SELECT id_klient, SUM(cena) AS suma
+FROM Zamowienie
+GROUP BY id_klient
+HAVING SUM(cena) &gt; 1000;</pre>
+
+<h3>Różnica <code>WHERE</code> vs <code>HAVING</code></h3>
+<table>
+<tr><th></th><th><code>WHERE</code></th><th><code>HAVING</code></th></tr>
+<tr><td>Filtruje</td><td>pojedyncze wiersze, PRZED grupowaniem</td><td>grupy (wyniki agregacji), PO grupowaniu</td></tr>
+<tr><td>Może użyć funkcji agregującej?</td><td>nie</td><td>tak</td></tr>
+</table>
+
+<h3>Kolejność wykonania zapytania (koncepcyjnie)</h3>
+<p><code>FROM</code> → <code>WHERE</code> → <code>GROUP BY</code> → <code>HAVING</code> → <code>SELECT</code> → <code>ORDER BY</code> — istotne, żeby zrozumieć, dlaczego <code>WHERE</code> nie może odwołać się do wyniku agregacji (jeszcze nie istnieje w tym momencie wykonania).</p>
+
+<div class="uwaga">Klasyczny błąd: próba użycia funkcji agregującej w <code>WHERE</code> (<code>WHERE COUNT(*) &gt; 5</code>) — to zawsze błąd składniowy, poprawnie trzeba użyć <code>HAVING</code>.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Typy relacji, zapytania SELECT na wielu tabelach</h2>
+
+<h3>Relacja 1:N w implementacji</h3>
+<pre>CREATE TABLE Klient (id INT PRIMARY KEY, nazwa VARCHAR(50));
+CREATE TABLE Zamowienie (
+    id INT PRIMARY KEY,
+    id_klient INT,
+    FOREIGN KEY (id_klient) REFERENCES Klient(id)
+);</pre>
+<p>Klucz obcy (<code>id_klient</code>) umieszczony w tabeli po stronie "wiele" (Zamówienie) — jeden klient może mieć wiele zamówień.</p>
+
+<h3>Relacja N:M — tabela łącząca</h3>
+<pre>CREATE TABLE Student (id INT PRIMARY KEY, nazwa VARCHAR(50));
+CREATE TABLE Kurs (id INT PRIMARY KEY, tytul VARCHAR(50));
+CREATE TABLE Student_Kurs (
+    id_student INT,
+    id_kurs INT,
+    PRIMARY KEY (id_student, id_kurs),
+    FOREIGN KEY (id_student) REFERENCES Student(id),
+    FOREIGN KEY (id_kurs) REFERENCES Kurs(id)
+);</pre>
+
+<h3>Typy złączeń (JOIN)</h3>
+<table>
+<tr><th>JOIN</th><th>Zasada</th></tr>
+<tr>
+<td>INNER JOIN</td>
+<td>tylko wiersze mające dopasowanie w <strong>obu</strong> tabelach</td>
+</tr>
+<tr>
+<td>LEFT JOIN</td>
+<td>wszystkie wiersze z lewej tabeli + dopasowane z prawej (NULL, jeśli brak dopasowania)</td>
+</tr>
+<tr>
+<td>RIGHT JOIN</td>
+<td>wszystkie wiersze z prawej tabeli + dopasowane z lewej</td>
+</tr>
+<tr>
+<td>FULL OUTER JOIN</td>
+<td>wszystkie wiersze z obu tabel, dopasowane gdzie możliwe, NULL gdzie brak dopasowania</td>
+</tr>
+</table>
+
+<h3>Przykład — INNER JOIN</h3>
+<pre>SELECT k.nazwa, z.data, z.cena
+FROM Klient k
+INNER JOIN Zamowienie z ON k.id = z.id_klient;</pre>
+
+<h3>Przykład — złączenie przez tabelę łączącą (N:M)</h3>
+<pre>SELECT s.nazwa, k.tytul
+FROM Student s
+JOIN Student_Kurs sk ON s.id = sk.id_student
+JOIN Kurs k ON k.id = sk.id_kurs;</pre>
+
+<h3>Przykład — LEFT JOIN (klienci nawet bez zamówień)</h3>
+<pre>SELECT k.nazwa, COUNT(z.id) AS liczba_zamowien
+FROM Klient k
+LEFT JOIN Zamowienie z ON k.id = z.id_klient
+GROUP BY k.nazwa;</pre>
+<p>W odróżnieniu od <code>INNER JOIN</code>, klient bez żadnego zamówienia wciąż pojawi się w wyniku (z <code>liczba_zamowien = 0</code>).</p>
+
+<h3>Podzapytania (subqueries)</h3>
+<pre>SELECT nazwa FROM Klient
+WHERE id IN (SELECT id_klient FROM Zamowienie WHERE cena &gt; 1000);</pre>
+<p>Zapytanie zagnieżdżone w innym zapytaniu — alternatywa (czasem bardziej czytelna, czasem mniej efektywna) dla JOIN, w zależności od sytuacji.</p>
+
+<div class="uwaga">Typowe zadanie: napisz zapytanie SQL wymagające złączenia 2-3 tabel z funkcją agregującą i grupowaniem naraz (np. "znajdź klientów, którzy złożyli więcej niż 3 zamówienia, wraz z sumą wydanych pieniędzy") — łączy w sobie punkty 3, 4 i 5.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Transakcje i własności ACID</h2>
+
+<p>Transakcja — sekwencja operacji na bazie danych traktowana jako <strong>jedna, niepodzielna</strong> jednostka pracy — albo wykonuje się <strong>w całości</strong>, albo w ogóle (jeśli coś pójdzie źle, wszystkie zmiany są wycofywane).</p>
+
+<h3>Podstawowe polecenia</h3>
+<pre>BEGIN TRANSACTION;
+
+UPDATE Konto SET saldo = saldo - 100 WHERE id = 1;
+UPDATE Konto SET saldo = saldo + 100 WHERE id = 2;
+
+COMMIT;   -- zatwierdzenie wszystkich zmian na trwałe
+-- albo:
+ROLLBACK; -- wycofanie wszystkich zmian od BEGIN TRANSACTION</pre>
+
+<h3>Własności ACID</h3>
+<table>
+<tr><th>Właściwość</th><th>Znaczenie</th></tr>
+<tr>
+<td><strong>A</strong>tomicity (atomowość)</td>
+<td>transakcja wykonuje się w całości albo wcale — np. przy przelewie między kontami, nie może zajść sytuacja, że pieniądze zostały odjęte z jednego konta, a nie dodane do drugiego (awaria w połowie transakcji)</td>
+</tr>
+<tr>
+<td><strong>C</strong>onsistency (spójność)</td>
+<td>transakcja przenosi bazę z jednego poprawnego (zgodnego z ograniczeniami — kluczami, constraintami) stanu do innego poprawnego stanu</td>
+</tr>
+<tr>
+<td><strong>I</strong>solation (izolacja)</td>
+<td>równocześnie wykonywane transakcje nie "widzą" swoich niedokończonych, częściowych zmian — każda zachowuje się, jakby była jedyną transakcją w systemie (poziom izolacji określa, jak dokładnie to jest zagwarantowane, patrz niżej)</td>
+</tr>
+<tr>
+<td><strong>D</strong>urability (trwałość)</td>
+<td>po <code>COMMIT</code>, zmiany są <strong>trwałe</strong> — przetrwają nawet awarię zasilania/systemu bezpośrednio po zatwierdzeniu</td>
+</tr>
+</table>
+
+<h3>Poziomy izolacji transakcji</h3>
+<table>
+<tr><th>Poziom</th><th>Dopuszczalne anomalie</th></tr>
+<tr><td>Read Uncommitted</td><td>dirty read (odczyt niezatwierdzonych zmian innej transakcji)</td></tr>
+<tr><td>Read Committed</td><td>brak dirty read, ale możliwy non-repeatable read (ten sam odczyt w tej samej transakcji daje różne wyniki)</td></tr>
+<tr><td>Repeatable Read</td><td>brak non-repeatable read, ale możliwy phantom read (nowe wiersze pojawiające się między odczytami)</td></tr>
+<tr><td>Serializable</td><td>najwyższy poziom — transakcje zachowują się, jakby wykonywały się całkowicie po kolei (szeregowo), zero anomalii</td></tr>
+</table>
+<p>Wyższy poziom izolacji = mniej anomalii, ale mniejsza przepustowość (więcej blokad/oczekiwania między transakcjami) — kompromis do wyboru zależnie od wymagań aplikacji.</p>
+
+<div class="uwaga">Klasyczny przykład atomowości: przelew bankowy jako transakcja — <code>UPDATE</code> odejmujący z konta A i <code>UPDATE</code> dodający na konto B <strong>muszą</strong> być w jednej transakcji, inaczej awaria między nimi zniszczyłaby pieniądze albo je "zduplikowała".</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Indeksy</h2>
+
+<p>Dodatkowa struktura danych (najczęściej B-drzewo — patrz przedmiot Algorytmy i struktury danych) przyspieszająca <strong>wyszukiwanie</strong> wierszy po wartości danej kolumny, bez potrzeby przeglądania (full table scan) całej tabeli.</p>
+
+<h3>Bez indeksu vs z indeksem</h3>
+<table>
+<tr><th></th><th>Bez indeksu</th><th>Z indeksem</th></tr>
+<tr><td>Wyszukiwanie po kolumnie</td><td>\(O(n)\) — przegląd całej tabeli</td><td>\(O(\log n)\) — przeszukanie B-drzewa</td></tr>
+<tr><td>Koszt zapisu (INSERT/UPDATE/DELETE)</td><td>brak dodatkowego narzutu</td><td>trzeba dodatkowo aktualizować strukturę indeksu</td></tr>
+<tr><td>Zużycie pamięci/dysku</td><td>brak dodatkowego</td><td>indeks zajmuje dodatkową przestrzeń</td></tr>
+</table>
+
+<h3>Tworzenie indeksu</h3>
+<pre>CREATE INDEX idx_klient_email ON Klient(email);
+CREATE UNIQUE INDEX idx_klient_email ON Klient(email);  -- dodatkowo wymusza unikalność</pre>
+<p>Klucz główny (<code>PRIMARY KEY</code>) i zwykle też <code>FOREIGN KEY</code>/<code>UNIQUE</code> mają indeks tworzony <strong>automatycznie</strong> przez silnik bazy danych.</p>
+
+<h3>Kiedy stosować indeks</h3>
+<ul>
+<li>kolumny często używane w <code>WHERE</code>, <code>JOIN ... ON</code>, <code>ORDER BY</code></li>
+<li>kolumny z dużą <strong>selektywnością</strong> (wiele różnych wartości) — indeks na kolumnie z tylko dwiema możliwymi wartościami (np. <code>boolean</code>) rzadko pomaga</li>
+</ul>
+
+<h3>Kiedy indeks szkodzi / nie pomaga</h3>
+<ul>
+<li>tabele z <strong>bardzo częstymi zapisami</strong> (INSERT/UPDATE/DELETE) — każdy zapis musi też zaktualizować wszystkie indeksy na danej tabeli, co spowalnia operacje zapisu</li>
+<li>małe tabele — pełny przegląd małej tabeli i tak jest szybki, narzut indeksu się nie opłaca</li>
+<li>kolumny o niskiej selektywności (patrz wyżej)</li>
+</ul>
+
+<h3>Indeks złożony (na wielu kolumnach)</h3>
+<pre>CREATE INDEX idx_zam_klient_data ON Zamowienie(id_klient, data);</pre>
+<p>Przydatny dla zapytań filtrujących/sortujących po <strong>obu</strong> kolumnach naraz (lub tylko po pierwszej z nich) — kolejność kolumn w definicji indeksu ma znaczenie dla tego, jakie zapytania skorzystają z niego efektywnie.</p>
+
+<div class="uwaga">Typowe pytanie: dlaczego nie warto indeksować "wszystkiego" — bo każdy indeks kosztuje przy zapisie (aktualizacja struktury) i zajmuje dodatkową przestrzeń, więc trzeba wybierać kolumny, na których zapytania faktycznie filtrują/sortują/łączą najczęściej.</div>
+</div>
+
+</body>
+</html>

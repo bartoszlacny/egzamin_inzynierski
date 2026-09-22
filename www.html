@@ -1,0 +1,467 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Języki hipertekstowe i tworzenie stron WWW – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Języki hipertekstowe i tworzenie stron WWW</h1>
+
+<div class="zagadnienie">
+<h2>1. Kaskadowe arkusze stylów (CSS) — rodzaje, priorytety, zasięg</h2>
+
+<h3>Rodzaje (sposoby dołączenia) stylów</h3>
+<ol>
+<li><strong>styl inline</strong> — bezpośrednio w atrybucie <code>style</code> elementu:
+<pre>&lt;p style="color: red;"&gt;Tekst&lt;/p&gt;</pre></li>
+<li><strong>styl wewnętrzny</strong> — w sekcji <code>&lt;head&gt;</code> dokumentu:
+<pre>&lt;style&gt;
+  p { color: red; }
+&lt;/style&gt;</pre></li>
+<li><strong>styl zewnętrzny</strong> — osobny plik <code>.css</code> dołączony przez <code>&lt;link&gt;</code>:
+<pre>&lt;link rel="stylesheet" href="styl.css"&gt;</pre></li>
+</ol>
+<p>Styl zewnętrzny jest najbardziej praktyczny (jeden plik dla wielu podstron, cache przeglądarki, czytelność kodu).</p>
+
+<h3>Priorytety (specyficzność selektorów)</h3>
+<p>Gdy kilka reguł CSS dotyczy tego samego elementu, wygrywa reguła o <strong>wyższej specyficzności</strong>. Kolejność od najsłabszej do najsilniejszej:</p>
+<ol>
+<li>selektor znacznika (np. <code>p</code>)</li>
+<li>selektor klasy, atrybutu, pseudoklasy (np. <code>.klasa</code>, <code>[type]</code>, <code>:hover</code>)</li>
+<li>selektor identyfikatora (np. <code>#id</code>)</li>
+<li>styl inline (<code>style="..."</code>)</li>
+<li><code>!important</code> — nadpisuje wszystko powyższe (używać oszczędnie!)</li>
+</ol>
+<div class="uwaga">Przy równej specyficzności wygrywa reguła zdefiniowana <strong>później</strong> w kodzie ("kaskadowość" — stąd nazwa CSS: Cascading Style Sheets).</div>
+
+<h3>Zasięg (dziedziczenie)</h3>
+<ul>
+<li>niektóre właściwości <strong>dziedziczą się</strong> automatycznie z elementu nadrzędnego na potomków (np. <code>color</code>, <code>font-family</code>)</li>
+<li>inne <strong>nie dziedziczą się</strong> domyślnie (np. <code>margin</code>, <code>border</code>, <code>width</code>) — trzeba by wymusić słowem kluczowym <code>inherit</code></li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Znaczniki semantyczne HTML5</h2>
+
+<p>Znaczniki, które opisują <strong>znaczenie</strong> (rolę) fragmentu strony, a nie tylko jego wygląd — ułatwiają dostępność (screen readery), SEO i czytelność kodu, w przeciwieństwie do samego <code>&lt;div&gt;</code>, który nic nie mówi o roli elementu.</p>
+
+<table>
+<tr><th>Znacznik</th><th>Znaczenie</th></tr>
+<tr><td><code>&lt;header&gt;</code></td><td>nagłówek strony lub sekcji (logo, nawigacja, tytuł)</td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>blok nawigacyjny (menu, linki)</td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>główna, unikalna treść strony (tylko jeden na stronę)</td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>samodzielna treść, np. wpis na blogu, artykuł prasowy</td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>tematyczna sekcja treści (zwykle z nagłówkiem)</td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>treść poboczna, np. panel boczny, reklama, powiązane linki</td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>stopka strony/sekcji (dane kontaktowe, prawa autorskie)</td></tr>
+<tr><td><code>&lt;figure&gt; + &lt;figcaption&gt;</code></td><td>obraz/ilustracja z podpisem</td></tr>
+<tr><td><code>&lt;time&gt;</code></td><td>data/godzina, czytelna maszynowo (<code>datetime</code>)</td></tr>
+</table>
+
+<h3>Przykładowa struktura semantyczna</h3>
+<pre>&lt;body&gt;
+  &lt;header&gt;&lt;nav&gt;...&lt;/nav&gt;&lt;/header&gt;
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;section&gt;...&lt;/section&gt;
+    &lt;/article&gt;
+    &lt;aside&gt;...&lt;/aside&gt;
+  &lt;/main&gt;
+  &lt;footer&gt;...&lt;/footer&gt;
+&lt;/body&gt;</pre>
+
+<div class="uwaga">Przed HTML5 wszystko budowano na <code>&lt;div&gt;</code> z klasami typu <code>class="header"</code> — semantyczne znaczniki to standaryzacja tego podejścia wprost w języku.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Funkcjonalności realizowane przez języki backendowe (np. PHP)</h2>
+
+<p>Kod backendowy wykonuje się <strong>na serwerze</strong>, zanim wynik (gotowy HTML) trafi do przeglądarki użytkownika.</p>
+
+<h3>Typowe zastosowania</h3>
+<ul>
+<li><strong>obsługa formularzy</strong> — odbiór danych (<code>$_POST</code>, <code>$_GET</code>), walidacja, zapis do bazy</li>
+<li><strong>komunikacja z bazą danych</strong> — pobieranie/zapisywanie danych (np. lista produktów, logowanie użytkownika)</li>
+<li><strong>autoryzacja i sesje</strong> — logowanie, sprawdzanie uprawnień, przechowywanie stanu użytkownika (<code>$_SESSION</code>, ciasteczka)</li>
+<li><strong>generowanie dynamicznej treści</strong> — inna zawartość strony w zależności od danych (np. spersonalizowana strona po zalogowaniu)</li>
+<li><strong>przetwarzanie plików</strong> — upload zdjęć, generowanie PDF, eksport danych (CSV, Excel)</li>
+<li><strong>logika biznesowa</strong> — obliczenia, walidacja reguł, które nie powinny być widoczne/edytowalne po stronie klienta (np. ceny, rabaty)</li>
+<li><strong>API / komunikacja z innymi systemami</strong> — wywołania do zewnętrznych usług, zwracanie danych w JSON</li>
+</ul>
+
+<div class="uwaga">Kluczowa zasada: wszystko, co dotyczy <strong>bezpieczeństwa i poufnych danych</strong> (hasła, klucze API, logika biznesowa, walidacja krytyczna) musi być po stronie backendu — kod frontendowy (JS) jest zawsze widoczny i edytowalny przez użytkownika w przeglądarce.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Funkcjonalności realizowane przez języki frontendowe (np. JavaScript)</h2>
+
+<p>Kod frontendowy wykonuje się <strong>w przeglądarce użytkownika</strong>, już po dostarczeniu strony — pozwala na interakcję bez przeładowywania całej strony.</p>
+
+<h3>Typowe zastosowania</h3>
+<ul>
+<li><strong>manipulacja DOM</strong> — dynamiczna zmiana treści/wyglądu strony bez przeładowania (np. rozwijane menu, zakładki, modale)</li>
+<li><strong>walidacja formularzy po stronie klienta</strong> — natychmiastowy feedback dla użytkownika (np. czy pole email ma poprawny format), zanim dane w ogóle trafią na serwer</li>
+<li><strong>obsługa zdarzeń</strong> — reakcja na kliknięcia, ruch myszy, wpisywanie tekstu (<code>addEventListener</code>)</li>
+<li><strong>AJAX / fetch</strong> — pobieranie/wysyłanie danych do serwera w tle, bez przeładowania strony (np. czat, podpowiedzi wyszukiwania, "wczytaj więcej")</li>
+<li><strong>animacje i efekty wizualne</strong> — płynne przejścia, karuzele, efekty przy scrollowaniu</li>
+<li><strong>przechowywanie danych po stronie klienta</strong> — <code>localStorage</code>, <code>sessionStorage</code>, ciasteczka (np. zapamiętanie motywu ciemny/jasny)</li>
+<li><strong>walidacja i logika interfejsu</strong> — np. dynamiczne przeliczanie sumy koszyka bez odpytywania serwera</li>
+</ul>
+
+<div class="uwaga">Walidacja frontendowa poprawia komfort użytkownika (szybki feedback), ale <strong>nigdy nie zastępuje</strong> walidacji backendowej — użytkownik może wyłączyć JS albo wysłać żądanie z pominięciem przeglądarki (np. przez curl).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Typy selektorów CSS</h2>
+
+<table>
+<tr><th>Selektor</th><th>Składnia</th><th>Znaczenie</th></tr>
+<tr><td>znacznika (typu)</td><td><code>p { }</code></td><td>wszystkie elementy &lt;p&gt;</td></tr>
+<tr><td>klasy</td><td><code>.nazwa { }</code></td><td>elementy z <code>class="nazwa"</code></td></tr>
+<tr><td>identyfikatora</td><td><code>#nazwa { }</code></td><td>element z <code>id="nazwa"</code> (unikalny na stronie)</td></tr>
+<tr><td>uniwersalny</td><td><code>* { }</code></td><td>wszystkie elementy</td></tr>
+<tr><td>potomka (descendant)</td><td><code>div p { }</code></td><td>wszystkie &lt;p&gt; wewnątrz &lt;div&gt;, na dowolnej głębokości</td></tr>
+<tr><td>dziecka (child)</td><td><code>div &gt; p { }</code></td><td>tylko &lt;p&gt; będące <strong>bezpośrednim</strong> dzieckiem &lt;div&gt;</td></tr>
+<tr><td>sąsiada bezpośredniego</td><td><code>h1 + p { }</code></td><td>&lt;p&gt; zaraz po &lt;h1&gt; (ten sam rodzic)</td></tr>
+<tr><td>sąsiada ogólnego</td><td><code>h1 ~ p { }</code></td><td>wszystkie &lt;p&gt; będące rodzeństwem po &lt;h1&gt;</td></tr>
+<tr><td>atrybutu</td><td><code>[type="text"] { }</code></td><td>elementy z danym atrybutem/wartością</td></tr>
+<tr><td>pseudoklasy</td><td><code>a:hover { }</code></td><td>stan elementu (najechanie, focus, pierwsze dziecko itp.)</td></tr>
+<tr><td>pseudoelementu</td><td><code>p::before { }</code></td><td>wstawia treść przed/po zawartości elementu</td></tr>
+<tr><td>grupowy</td><td><code>h1, h2 { }</code></td><td>reguła stosowana do kilku selektorów naraz</td></tr>
+</table>
+
+<h3>Różnica potomek vs dziecko — przykład</h3>
+<pre>&lt;div&gt;
+  &lt;p&gt;A&lt;/p&gt;              &lt;!-- bezpośrednie dziecko div --&gt;
+  &lt;span&gt;&lt;p&gt;B&lt;/p&gt;&lt;/span&gt;  &lt;!-- p jest wnukiem div, nie dzieckiem --&gt;
+&lt;/div&gt;</pre>
+<ul>
+<li><code>div p</code> — zaznaczy <strong>oba</strong> paragrafy (A i B)</li>
+<li><code>div &gt; p</code> — zaznaczy <strong>tylko</strong> paragraf A</li>
+</ul>
+
+<h3>Przydatne pseudoklasy</h3>
+<p><code>:first-child</code>, <code>:last-child</code>, <code>:nth-child(n)</code>, <code>:not(selektor)</code>, <code>:focus</code>, <code>:checked</code>, <code>:disabled</code></p>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Strony responsywne</h2>
+
+<p>Strona responsywna dostosowuje układ i wygląd do różnych rozmiarów ekranu (telefon, tablet, desktop) bez tworzenia osobnych wersji strony.</p>
+
+<h3>Meta viewport</h3>
+<p>Konieczny tag, żeby responsywność działała poprawnie na urządzeniach mobilnych:</p>
+<pre>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</pre>
+
+<h3>Media queries</h3>
+<p>Reguły CSS stosowane tylko przy spełnieniu warunku dotyczącego ekranu (szerokość, orientacja itd.):</p>
+<pre>/* domyślnie: styl dla desktopu */
+.kontener { display: flex; }
+
+@media (max-width: 768px) {
+    /* styl stosowany tylko gdy szerokość ekranu &le; 768px */
+    .kontener { flex-direction: column; }
+}</pre>
+
+<h3>Jednostki względne</h3>
+<ul>
+<li><code>%</code> — względem rodzica</li>
+<li><code>em</code> — względem rozmiaru czcionki rodzica</li>
+<li><code>rem</code> — względem rozmiaru czcionki elementu głównego (<code>html</code>)</li>
+<li><code>vw</code>, <code>vh</code> — względem szerokości/wysokości okna przeglądarki (1vw = 1% szerokości ekranu)</li>
+</ul>
+
+<h3>Layout responsywny</h3>
+<ul>
+<li><strong>Flexbox</strong> — jednowymiarowe układy (rząd lub kolumna), elastyczne rozmieszczanie elementów</li>
+<li><strong>CSS Grid</strong> — dwuwymiarowe układy (wiersze i kolumny naraz), lepszy do całych layoutów strony</li>
+<li><strong>obrazy responsywne</strong> — <code>max-width: 100%;</code> żeby obraz nie wychodził poza kontener</li>
+</ul>
+
+<h3>Podejście mobile-first</h3>
+<p>Projektowanie stylów bazowych dla ekranu mobilnego, a media queries (<code>min-width</code>) dodają/rozszerzają układ dla większych ekranów — uznawane za lepszą praktykę niż odwrotne podejście (desktop-first z <code>max-width</code>).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Funkcje PHP do współpracy z bazami danych</h2>
+
+<h3>MySQLi (rozszerzenie proceduralne/obiektowe)</h3>
+<pre>$polaczenie = mysqli_connect("localhost", "user", "haslo", "baza");
+
+$wynik = mysqli_query($polaczenie, "SELECT * FROM produkty");
+while ($wiersz = mysqli_fetch_assoc($wynik)) {
+    echo $wiersz['nazwa'];
+}
+
+mysqli_close($polaczenie);</pre>
+
+<h3>PDO (PHP Data Objects) — nowocześniejsze, zalecane podejście</h3>
+<pre>$pdo = new PDO("mysql:host=localhost;dbname=baza", "user", "haslo");
+
+$stmt = $pdo->prepare("SELECT * FROM produkty WHERE cena &gt; ?");
+$stmt->execute([100]);
+
+foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $wiersz) {
+    echo $wiersz['nazwa'];
+}</pre>
+
+<h3>Zapytania przygotowane (prepared statements)</h3>
+<p>Kluczowe dla bezpieczeństwa — parametry (<code>?</code> lub <code>:nazwa</code>) są wiązane osobno, a nie wklejane bezpośrednio do zapytania SQL:</p>
+<pre>$stmt = $pdo->prepare("INSERT INTO uzytkownicy (login, haslo) VALUES (:login, :haslo)");
+$stmt->execute(['login' => $login, 'haslo' => password_hash($haslo, PASSWORD_DEFAULT)]);</pre>
+
+<div class="uwaga"><strong>SQL injection</strong> — jeśli dane od użytkownika wkleja się bezpośrednio do zapytania (np. <code>"SELECT * FROM users WHERE login='".$login."'"</code>), atakujący może wstrzyknąć własny kod SQL. Zapytania przygotowane (prepared statements) są podstawową ochroną przed tym atakiem.</div>
+
+<h3>Najważniejsze funkcje</h3>
+<table>
+<tr><th>Funkcja</th><th>Zastosowanie</th></tr>
+<tr><td><code>mysqli_connect()</code> / <code>new PDO()</code></td><td>nawiązanie połączenia z bazą</td></tr>
+<tr><td><code>mysqli_query()</code> / <code>->query()</code></td><td>wykonanie zapytania SQL</td></tr>
+<tr><td><code>prepare()</code> + <code>execute()</code></td><td>zapytanie przygotowane (bezpieczne, z parametrami)</td></tr>
+<tr><td><code>fetch_assoc()</code> / <code>fetchAll()</code></td><td>pobranie wyniku zapytania jako tablicy asocjacyjnej</td></tr>
+<tr><td><code>mysqli_close()</code></td><td>zamknięcie połączenia</td></tr>
+<tr><td><code>lastInsertId()</code></td><td>pobranie ID ostatnio wstawionego wiersza</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Protokół HTTP</h2>
+
+<p>Protokół komunikacji między przeglądarką (klientem) a serwerem — działa na zasadzie <strong>żądanie → odpowiedź</strong> (request/response), bezstanowo (każde żądanie jest niezależne, serwer sam z siebie nie pamięta poprzednich żądań — stąd potrzeba sesji/ciasteczek).</p>
+
+<h3>Struktura żądania (request)</h3>
+<pre>GET /produkty?kategoria=buty HTTP/1.1
+Host: sklep.pl
+User-Agent: Mozilla/5.0...
+Cookie: sesja=abc123</pre>
+
+<h3>Metody HTTP</h3>
+<table>
+<tr><th>Metoda</th><th>Zastosowanie</th></tr>
+<tr><td><code>GET</code></td><td>pobranie danych; parametry w URL; nie powinna zmieniać stanu serwera</td></tr>
+<tr><td><code>POST</code></td><td>wysłanie danych (np. formularz), zwykle tworzy nowy zasób; dane w ciele żądania, nie w URL</td></tr>
+<tr><td><code>PUT</code></td><td>aktualizacja/zastąpienie całego istniejącego zasobu</td></tr>
+<tr><td><code>PATCH</code></td><td>częściowa aktualizacja zasobu</td></tr>
+<tr><td><code>DELETE</code></td><td>usunięcie zasobu</td></tr>
+</table>
+
+<h3>Kody odpowiedzi (status)</h3>
+<table>
+<tr><th>Zakres</th><th>Znaczenie</th><th>Przykłady</th></tr>
+<tr><td>2xx</td><td>sukces</td><td>200 OK, 201 Created, 204 No Content</td></tr>
+<tr><td>3xx</td><td>przekierowanie</td><td>301 Moved Permanently, 302 Found</td></tr>
+<tr><td>4xx</td><td>błąd po stronie klienta</td><td>400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found</td></tr>
+<tr><td>5xx</td><td>błąd po stronie serwera</td><td>500 Internal Server Error, 503 Service Unavailable</td></tr>
+</table>
+
+<h3>Nagłówki (headers)</h3>
+<p>Dodatkowe metadane żądania/odpowiedzi, np. <code>Content-Type</code> (typ przesyłanych danych: <code>text/html</code>, <code>application/json</code>), <code>Set-Cookie</code>, <code>Authorization</code>.</p>
+
+<div class="uwaga"><strong>HTTPS</strong> to HTTP szyfrowane protokołem TLS/SSL — chroni przesyłane dane (np. hasła) przed podsłuchaniem po drodze między klientem a serwerem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Model pudełkowy CSS (box model)</h2>
+
+<p>Każdy element HTML jest traktowany jako prostokątne "pudełko" złożone z czterech warstw (od środka na zewnątrz):</p>
+
+<ol>
+<li><strong>content</strong> — właściwa treść elementu (tekst, obraz), jej rozmiar to <code>width</code>/<code>height</code></li>
+<li><strong>padding</strong> — wewnętrzny odstęp między treścią a krawędzią (border)</li>
+<li><strong>border</strong> — obramowanie elementu</li>
+<li><strong>margin</strong> — zewnętrzny odstęp między elementem a sąsiednimi elementami</li>
+</ol>
+
+<h3>Domyślne obliczanie szerokości (<code>box-sizing: content-box</code>)</h3>
+<p>$$\text{całkowita szerokość} = \text{width} + \text{padding-left} + \text{padding-right} + \text{border-left} + \text{border-right}$$</p>
+<p>(margin <strong>nie</strong> wlicza się do "szerokości elementu" — to odstęp na zewnątrz)</p>
+
+<h3><code>box-sizing: border-box</code></h3>
+<p>Popularna alternatywa — <code>width</code>/<code>height</code> obejmuje już padding i border, więc podana szerokość to <strong>całkowita</strong> szerokość widocznego pudełka (łatwiej liczyć layout):</p>
+<pre>* { box-sizing: border-box; }   /* częsty reset na początku arkusza CSS */</pre>
+
+<h3>Przykład</h3>
+<pre>div {
+    width: 200px;
+    padding: 10px;
+    border: 2px solid black;
+    margin: 5px;
+}
+/* content-box: całkowita szerokość = 200+10+10+2+2 = 224px */
+/* border-box:   całkowita szerokość = dokładnie 200px */</pre>
+
+<div class="uwaga">Klasyczny błąd początkujących: dodanie <code>padding</code> do elementu o ustalonej szerokości "rozsadza" layout — border-box rozwiązuje ten problem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Formularze HTML</h2>
+
+<h3>Podstawowa struktura</h3>
+<pre>&lt;form action="przetworz.php" method="POST"&gt;
+    &lt;label for="email"&gt;E-mail:&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required&gt;
+
+    &lt;input type="submit" value="Wyślij"&gt;
+&lt;/form&gt;</pre>
+<ul>
+<li><code>action</code> — adres, na który wysyłane są dane formularza</li>
+<li><code>method</code> — <code>GET</code> (dane w URL) lub <code>POST</code> (dane w ciele żądania, np. do logowania/przesyłania plików)</li>
+</ul>
+
+<h3>Typy pola <code>&lt;input&gt;</code></h3>
+<table>
+<tr><th>Typ</th><th>Zastosowanie</th></tr>
+<tr><td><code>text</code></td><td>zwykły tekst jednoliniowy</td></tr>
+<tr><td><code>password</code></td><td>tekst maskowany kropkami</td></tr>
+<tr><td><code>email</code></td><td>tekst z wbudowaną walidacją formatu e-mail</td></tr>
+<tr><td><code>number</code></td><td>wartość liczbowa (ze strzałkami do zmiany)</td></tr>
+<tr><td><code>checkbox</code></td><td>pole wyboru (wiele opcji naraz)</td></tr>
+<tr><td><code>radio</code></td><td>przycisk wyboru (jedna opcja z grupy o tej samej <code>name</code>)</td></tr>
+<tr><td><code>date</code></td><td>wybór daty (kalendarz w przeglądarce)</td></tr>
+<tr><td><code>file</code></td><td>wybór pliku do wysłania</td></tr>
+<tr><td><code>hidden</code></td><td>ukryte pole, np. token CSRF, przesyłane niewidocznie dla użytkownika</td></tr>
+</table>
+
+<h3>Atrybuty walidacyjne (HTML5)</h3>
+<ul>
+<li><code>required</code> — pole obowiązkowe</li>
+<li><code>pattern="regex"</code> — wartość musi pasować do wyrażenia regularnego</li>
+<li><code>min</code>, <code>max</code> — zakres dla liczb/dat</li>
+<li><code>minlength</code>, <code>maxlength</code> — długość tekstu</li>
+</ul>
+
+<div class="uwaga">Walidacja HTML5 działa tylko po stronie przeglądarki — jak w punkcie 4, to nie zwalnia z konieczności walidacji tych samych danych po stronie backendu (użytkownik może ją obejść).</div>
+
+<h3>Inne elementy formularza</h3>
+<p><code>&lt;textarea&gt;</code> (wieloliniowy tekst), <code>&lt;select&gt;</code> + <code>&lt;option&gt;</code> (lista rozwijana), <code>&lt;fieldset&gt;</code> + <code>&lt;legend&gt;</code> (grupowanie powiązanych pól).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>11. DOM (Document Object Model)</h2>
+
+<p>Reprezentacja dokumentu HTML jako <strong>drzewa obiektów</strong> w pamięci przeglądarki — JavaScript operuje właśnie na tym drzewie, a nie bezpośrednio na tekście HTML.</p>
+
+<h3>Struktura drzewa</h3>
+<pre>&lt;html&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Tytuł&lt;/h1&gt;
+    &lt;p&gt;Tekst&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>Każdy znacznik staje się węzłem (node) drzewa: <code>document → html → body → {h1, p}</code>. Węzły mogą być elementami, tekstem, atrybutami itd.</p>
+
+<h3>Podstawowe metody dostępu do elementów</h3>
+<pre>document.getElementById("id")
+document.getElementsByClassName("klasa")
+document.querySelector(".klasa")     // pierwszy pasujący element
+document.querySelectorAll("p")       // wszystkie pasujące elementy</pre>
+
+<h3>Manipulacja elementami</h3>
+<pre>let el = document.querySelector("#tytul");
+el.textContent = "Nowy tekst";     // zmiana treści
+el.style.color = "red";            // zmiana stylu
+el.classList.add("aktywny");       // dodanie klasy CSS
+el.remove();                       // usunięcie elementu z drzewa
+
+let nowy = document.createElement("p");
+document.body.appendChild(nowy);   // dodanie nowego elementu do drzewa</pre>
+
+<h3>Relacje między węzłami</h3>
+<p><code>parentNode</code> (rodzic), <code>childNodes</code> / <code>children</code> (dzieci), <code>nextElementSibling</code> / <code>previousElementSibling</code> (rodzeństwo).</p>
+
+<div class="uwaga">DOM to most między statycznym HTML a dynamicznym JavaScriptem — dzięki drzewiastej reprezentacji, JS może w locie odczytywać i zmieniać strukturę oraz treść strony bez przeładowania.</div>
+</div>
+
+</body>
+</html>

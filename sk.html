@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Sieci komputerowe – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Sieci komputerowe</h1>
+
+<div class="zagadnienie">
+<h2>1. Modele referencyjne OSI i TCP/IP</h2>
+
+<h3>Model OSI (7 warstw)</h3>
+<table>
+<tr><th>#</th><th>Warstwa</th><th>Funkcja</th><th>Przykłady</th></tr>
+<tr><td>7</td><td>Aplikacji</td><td>usługi dla programów użytkownika</td><td>HTTP, FTP, DNS</td></tr>
+<tr><td>6</td><td>Prezentacji</td><td>formatowanie, szyfrowanie, kompresja danych</td><td>SSL/TLS, kodowanie znaków</td></tr>
+<tr><td>5</td><td>Sesji</td><td>zarządzanie sesją komunikacyjną (nawiązanie, utrzymanie, zakończenie)</td><td>NetBIOS</td></tr>
+<tr><td>4</td><td>Transportowa</td><td>niezawodny/szybki transport danych między hostami, segmentacja</td><td>TCP, UDP</td></tr>
+<tr><td>3</td><td>Sieciowa</td><td>adresowanie logiczne, routing między sieciami</td><td>IP, ICMP</td></tr>
+<tr><td>2</td><td>Łącza danych (data link)</td><td>adresowanie fizyczne (MAC), dostęp do wspólnego medium, wykrywanie błędów</td><td>Ethernet, Wi-Fi (802.11)</td></tr>
+<tr><td>1</td><td>Fizyczna</td><td>przesył surowych bitów przez medium (kable, radio)</td><td>napięcia elektryczne, światło w światłowodzie</td></tr>
+</table>
+
+<h3>Model TCP/IP (4 warstwy) — praktyczny standard internetu</h3>
+<table>
+<tr><th>Warstwa TCP/IP</th><th>Odpowiada warstwom OSI</th></tr>
+<tr><td>Aplikacji</td><td>7, 6, 5 (Aplikacji, Prezentacji, Sesji)</td></tr>
+<tr><td>Transportowa</td><td>4 (Transportowa)</td></tr>
+<tr><td>Internetowa (Internet)</td><td>3 (Sieciowa)</td></tr>
+<tr><td>Dostępu do sieci (Link)</td><td>2, 1 (Łącza danych, Fizyczna)</td></tr>
+</table>
+
+<h3>Enkapsulacja danych</h3>
+<p>Przy przesyłaniu, każda warstwa dodaje swój nagłówek (a czasem stopkę) do danych z warstwy wyższej — tworząc kolejne "jednostki" nazewnictwa: dane → <strong>segment</strong> (transportowa) → <strong>pakiet/datagram</strong> (sieciowa) → <strong>ramka</strong> (łącza danych) → bity (fizyczna). Po stronie odbiorcy proces jest odwrotny (dekapsulacja) — każda warstwa zdejmuje "swój" nagłówek i przekazuje resztę wyżej.</p>
+
+<div class="uwaga">Model OSI to <strong>teoretyczny</strong> podział koncepcyjny (rzadko implementowany dosłownie w 7 warstwach) — model TCP/IP to <strong>praktyczny</strong> standard, na którym faktycznie działa internet. Klasyczne pytanie egzaminacyjne: podaj przykład protokołu dla każdej warstwy, albo zmapuj warstwy OSI na TCP/IP.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Warstwa transportowa — niezawodność i połączenie w TCP</h2>
+
+<h3>TCP vs UDP</h3>
+<table>
+<tr><th></th><th>TCP</th><th>UDP</th></tr>
+<tr><td>Połączeniowość</td><td>połączeniowy (nawiązanie sesji przed transmisją)</td><td>bezpołączeniowy</td></tr>
+<tr><td>Niezawodność</td><td>gwarantowane dostarczenie, retransmisje</td><td>brak gwarancji (fire and forget)</td></tr>
+<tr><td>Kolejność</td><td>zachowana kolejność segmentów</td><td>brak gwarancji kolejności</td></tr>
+<tr><td>Narzut</td><td>większy (nagłówki, potwierdzenia)</td><td>mniejszy, szybszy</td></tr>
+<tr><td>Zastosowanie</td><td>HTTP, przesył plików, e-mail</td><td>streaming, VoIP, gry online, DNS</td></tr>
+</table>
+
+<h3>Nawiązanie połączenia — three-way handshake</h3>
+<ol>
+<li>klient → serwer: <code>SYN</code> (chcę nawiązać połączenie, mój numer sekwencyjny x)</li>
+<li>serwer → klient: <code>SYN+ACK</code> (potwierdzam, mój numer sekwencyjny y)</li>
+<li>klient → serwer: <code>ACK</code> (potwierdzam) — połączenie ustanowione</li>
+</ol>
+
+<h3>Zamknięcie połączenia — four-way handshake</h3>
+<p>Każda strona osobno zamyka swój "kierunek" transmisji: <code>FIN</code> → <code>ACK</code> → <code>FIN</code> → <code>ACK</code> (połączenie TCP jest dwukierunkowe, można je zamykać niezależnie w każdą stronę).</p>
+
+<h3>Numery sekwencyjne i potwierdzenia (ACK)</h3>
+<p>Każdy bajt danych ma numer sekwencyjny — odbiorca potwierdza (<code>ACK</code>), które bajty dotarły poprawnie; brak potwierdzenia w określonym czasie → nadawca retransmituje.</p>
+
+<h3>Kontrola przepływu (flow control)</h3>
+<p>Mechanizm <strong>okna (window)</strong> — odbiorca informuje nadawcę, ile danych może jeszcze przyjąć (bufor), zapobiegając zalaniu odbiorcy danymi szybciej, niż jest w stanie je przetworzyć.</p>
+
+<h3>Kontrola przeciążenia (congestion control)</h3>
+<p>Nadawca dynamicznie dostosowuje tempo wysyłania do warunków w sieci (nie tylko możliwości odbiorcy) — np. algorytm <strong>slow start</strong> (stopniowe, wykładnicze zwiększanie okna wysyłania na początku), redukcja tempa po wykryciu utraty pakietów (sygnał przeciążenia sieci).</p>
+
+<div class="uwaga">Typowe pytanie: wymień różnice TCP vs UDP i podaj przykład sytuacji, gdzie UDP jest lepszym wyborem niż TCP (np. wideorozmowa — lepiej zgubić kilka ramek obrazu niż czekać na retransmisję i mieć duże opóźnienie).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Adresacja IP, podsieci, NAT, ARP</h2>
+
+<h3>IPv4 vs IPv6</h3>
+<table>
+<tr><th></th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td>Długość adresu</td><td>32 bity</td><td>128 bitów</td></tr>
+<tr><td>Liczba adresów</td><td>~4.3 miliarda</td><td>ogromna (~3.4×10^38) — praktycznie nieograniczona</td></tr>
+<tr><td>Zapis</td><td>4 liczby dziesiętne oddzielone kropkami, np. <code>192.168.1.1</code></td><td>8 grup liczb szesnastkowych oddzielonych dwukropkami, np. <code>2001:0db8::1</code></td></tr>
+<tr><td>NAT</td><td>powszechnie konieczny (za mało adresów)</td><td>zasadniczo niepotrzebny (dość adresów dla każdego urządzenia)</td></tr>
+</table>
+
+<h3>Maska podsieci i notacja CIDR</h3>
+<p>Maska podsieci wskazuje, która część adresu IP to część sieci, a która to część hosta. Notacja CIDR: <code>192.168.1.0/24</code> — <code>/24</code> oznacza 24 bity maski (część sieciowa), pozostałe 8 bitów to adresy hostów w tej podsieci (\(2^8=256\) adresów, z czego 254 użytkowe — pierwszy to adres sieci, ostatni to adres rozgłoszeniowy/broadcast).</p>
+
+<h3>Adresy specjalne</h3>
+<ul>
+<li><strong>adres sieci</strong> — wszystkie bity hosta = 0 (np. <code>192.168.1.0</code>)</li>
+<li><strong>adres rozgłoszeniowy (broadcast)</strong> — wszystkie bity hosta = 1 (np. <code>192.168.1.255</code>)</li>
+<li><strong>adresy prywatne</strong> — zarezerwowane do użytku wewnętrznego (nie routowane w internecie): <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code></li>
+<li><strong>localhost</strong> — <code>127.0.0.1</code> (adres wskazujący na "samego siebie")</li>
+</ul>
+
+<h3>NAT (Network Address Translation)</h3>
+<p>Mechanizm tłumaczący prywatne adresy IP (wewnątrz sieci lokalnej) na jeden publiczny adres IP (widoczny w internecie) i odwrotnie — pozwala wielu urządzeniom w sieci domowej/firmowej korzystać z internetu przez jeden publiczny adres, oszczędzając ograniczoną przestrzeń adresową IPv4.</p>
+
+<h3>ARP (Address Resolution Protocol)</h3>
+<p>Protokół tłumaczący adres IP (warstwa 3) na adres MAC (warstwa 2) w sieci lokalnej — niezbędny, bo faktyczne wysyłanie ramek w sieci lokalnej (Ethernet/Wi-Fi) odbywa się na podstawie adresów MAC, nie IP. Host wysyła rozgłoszenie ARP ("kto ma IP X.X.X.X?"), właściciel odpowiada swoim adresem MAC.</p>
+
+<div class="uwaga">Typowe zadanie: dla danej sieci <code>192.168.10.0/26</code> wyznacz adres sieci, adres broadcast, liczbę użytkowych hostów oraz zakres adresów hostów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Routing — statyczny vs dynamiczny, RIP i OSPF</h2>
+
+<h3>Routing (trasowanie)</h3>
+<p>Proces wybierania ścieżki, po której pakiet powinien podróżować od nadawcy do odbiorcy przez sieć złożoną z wielu routerów. Router podejmuje decyzję na podstawie <strong>tabeli routingu</strong> — dla adresu docelowego wybiera odpowiedni interfejs wyjściowy / następny router (next hop).</p>
+
+<h3>Routing statyczny</h3>
+<p>Trasy skonfigurowane <strong>ręcznie</strong> przez administratora — proste, przewidywalne, ale nie reagują automatycznie na zmiany w sieci (awaria łącza wymaga ręcznej korekty). Dobre dla małych, stabilnych sieci.</p>
+
+<h3>Routing dynamiczny</h3>
+<p>Routery <strong>automatycznie</strong> wymieniają się informacjami o dostępnych trasach za pomocą protokołów routingu i same aktualizują swoje tabele w razie zmian (awarie, nowe łącza) — konieczny w większych, zmiennych sieciach.</p>
+
+<h3>RIP (Routing Information Protocol)</h3>
+<ul>
+<li>protokół <strong>wektora odległości (distance-vector)</strong> — router zna tylko odległość (liczbę "skoków", hop count) do celu, nie całą topologię sieci</li>
+<li>metryka: liczba przeskoków (hop count), maksymalnie 15 (16 = nieosiągalne) — ograniczenie do małych sieci</li>
+<li>okresowo wysyła <strong>całą</strong> tabelę routingu do sąsiadów — mniej efektywne przy większych sieciach</li>
+<li>wolniejsza konwergencja (dostosowanie do zmian) niż nowsze protokoły</li>
+</ul>
+
+<h3>OSPF (Open Shortest Path First)</h3>
+<ul>
+<li>protokół <strong>stanu łącza (link-state)</strong> — każdy router buduje <strong>pełną mapę</strong> topologii sieci na podstawie informacji od wszystkich routerów</li>
+<li>metryka: koszt łącza (np. na podstawie przepustowości), a nie tylko liczba skoków — lepiej odzwierciedla rzeczywistą "jakość" trasy</li>
+<li>używa algorytmu <strong>Dijkstry</strong> (patrz przedmiot Algorytmy i struktury danych) do wyznaczenia najkrótszych ścieżek na podstawie zbudowanej mapy sieci</li>
+<li>szybsza konwergencja, skaluje się do dużych sieci — powszechny w sieciach korporacyjnych</li>
+</ul>
+
+<table>
+<tr><th></th><th>RIP</th><th>OSPF</th></tr>
+<tr><td>Typ</td><td>wektor odległości</td><td>stan łącza</td></tr>
+<tr><td>Metryka</td><td>liczba skoków</td><td>koszt łącza (przepustowość)</td></tr>
+<tr><td>Skalowalność</td><td>małe sieci</td><td>duże, złożone sieci</td></tr>
+<tr><td>Konwergencja</td><td>wolna</td><td>szybka</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dlaczego protokoły stanu łącza (OSPF) skalują się lepiej niż wektora odległości (RIP) — bo mając pełną mapę topologii, router lokalnie liczy optymalną trasę (Dijkstra), bez konieczności ciągłej wymiany całych tabel routingu między sąsiadami.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Usługi sieciowe i protokoły warstwy aplikacji</h2>
+
+<table>
+<tr><th>Protokół</th><th>Port domyślny</th><th>Zastosowanie</th></tr>
+<tr><td>HTTP</td><td>80</td><td>przesyłanie stron WWW (bez szyfrowania)</td></tr>
+<tr><td>HTTPS</td><td>443</td><td>HTTP szyfrowane przez TLS/SSL</td></tr>
+<tr><td>FTP</td><td>21 (+20 dane)</td><td>transfer plików</td></tr>
+<tr><td>SSH</td><td>22</td><td>bezpieczny zdalny dostęp do terminala (szyfrowany)</td></tr>
+<tr><td>SMTP</td><td>25 (587 z TLS)</td><td>wysyłanie e-maili</td></tr>
+<tr><td>POP3 / IMAP</td><td>110 / 143</td><td>odbieranie e-maili (POP3 — ściąga i zwykle usuwa z serwera; IMAP — synchronizuje, pozostaje na serwerze)</td></tr>
+<tr><td>DNS</td><td>53</td><td>tłumaczenie nazw domenowych na adresy IP</td></tr>
+<tr><td>DHCP</td><td>67/68</td><td>automatyczne przydzielanie adresów IP urządzeniom w sieci</td></tr>
+</table>
+
+<h3>DNS (Domain Name System)</h3>
+<p>Rozproszona, hierarchiczna baza danych tłumacząca czytelne dla człowieka nazwy domenowe (np. <code>example.com</code>) na adresy IP. Zapytanie DNS przechodzi zwykle przez kilka poziomów (serwer domowy/dostawcy → serwery główne (root) → serwery TLD (.com, .pl) → serwer autorytatywny dla konkretnej domeny), często z buforowaniem wyników po drodze dla szybszych kolejnych zapytań.</p>
+
+<h3>DHCP (Dynamic Host Configuration Protocol)</h3>
+<p>Automatyczne przydzielanie konfiguracji sieciowej (adres IP, maska, brama domyślna, serwery DNS) nowym urządzeniom w sieci — proces DORA: <strong>D</strong>iscover (klient szuka serwera DHCP) → <strong>O</strong>ffer (serwer proponuje adres) → <strong>R</strong>equest (klient prosi o ten adres) → <strong>A</strong>cknowledge (serwer potwierdza przydział).</p>
+
+<h3>HTTP/HTTPS (przypomnienie z Języków hipertekstowych)</h3>
+<p>Protokół żądanie-odpowiedź (request/response) do przesyłania treści WWW — metody GET/POST/PUT/DELETE, kody statusu (2xx/4xx/5xx). HTTPS dodaje warstwę szyfrowania TLS, chroniącą dane przed podsłuchaniem/modyfikacją po drodze.</p>
+
+<div class="uwaga">Typowe pytanie: opisz pełną sekwencję zdarzeń przy wpisaniu adresu strony w przeglądarce — DHCP (jeśli urządzenie nie ma jeszcze adresu) → DNS (tłumaczenie domeny na IP) → ARP (znalezienie adresu MAC bramy/hosta w sieci lokalnej) → nawiązanie połączenia TCP (handshake) → żądanie HTTP/HTTPS → odpowiedź serwera.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Urządzenia sieciowe</h2>
+
+<table>
+<tr><th>Urządzenie</th><th>Warstwa OSI</th><th>Zasada działania</th></tr>
+<tr>
+<td>Hub (koncentrator)</td>
+<td>1 (fizyczna)</td>
+<td>powtarza (retransmituje) sygnał na <strong>wszystkie</strong> porty naraz — nie "rozumie" ramek, tylko wzmacnia/powiela sygnał elektryczny; dziś praktycznie nieużywany</td>
+</tr>
+<tr>
+<td>Switch (przełącznik)</td>
+<td>2 (łącza danych)</td>
+<td>przesyła ramki <strong>tylko</strong> do właściwego portu, na podstawie tabeli adresów MAC — znacznie efektywniejszy niż hub (mniej kolizji, dedykowane pasmo per port)</td>
+</tr>
+<tr>
+<td>Router</td>
+<td>3 (sieciowa)</td>
+<td>przekazuje pakiety <strong>między różnymi sieciami</strong> na podstawie adresów IP i tabeli routingu (patrz punkt 4)</td>
+</tr>
+<tr>
+<td>Access Point (AP)</td>
+<td>1-2</td>
+<td>most między siecią bezprzewodową (Wi-Fi) a przewodową — działa podobnie do switcha, ale dla urządzeń łączących się radiowo</td>
+</tr>
+<tr>
+<td>Mostek (bridge)</td>
+<td>2</td>
+<td>łączy dwa segmenty sieci na poziomie ramek — koncepcyjny prekursor switcha (switch to w praktyce "wieloportowy mostek")</td>
+</tr>
+<tr>
+<td>Brama (gateway)</td>
+<td>zwykle 3-7</td>
+<td>ogólne określenie punktu łączącego sieci o różnych protokołach/architekturach (np. brama domyślna — router prowadzący "poza" sieć lokalną)</td>
+</tr>
+</table>
+
+<h3>Tabela adresów MAC w switchu</h3>
+<p>Switch uczy się, za którym portem znajduje się dane urządzenie, obserwując adresy MAC nadawców przychodzących ramek — dzięki temu ramka do konkretnego adresu MAC jest przesyłana tylko na jeden, właściwy port (a nie rozgłaszana wszędzie, jak w hubie).</p>
+
+<div class="uwaga">Typowe pytanie: dlaczego switch jest lepszy niż hub w sieci lokalnej? — bo dzieli sieć na osobne domeny kolizji per port (patrz CSMA/CD w punkcie 7) i nie przesyła niepotrzebnie ramek do urządzeń, których nie dotyczą — mniej ruchu, więcej efektywnego pasma.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Metody dostępu do łącza — CSMA/CD i CSMA/CA</h2>
+
+<p>Metody koordynujące dostęp wielu urządzeń do <strong>współdzielonego</strong> medium transmisyjnego (żeby nie nadawały wszystkie naraz, "zagłuszając" się wzajemnie).</p>
+
+<h3>CSMA/CD (Carrier Sense Multiple Access with Collision Detection)</h3>
+<p>Używane historycznie w klasycznym Ethernet (współdzielone medium, np. przy hubach):</p>
+<ol>
+<li><strong>Carrier Sense</strong> — urządzenie "słucha" medium przed nadawaniem; jeśli zajęte, czeka</li>
+<li><strong>Multiple Access</strong> — wiele urządzeń może próbować nadawać na tym samym medium</li>
+<li><strong>Collision Detection</strong> — jeśli mimo to dojdzie do kolizji (dwa urządzenia nadały naraz), obie strony wykrywają to, przerywają transmisję i czekają losowy czas przed ponowną próbą (algorytm wykładniczego odczekania — exponential backoff)</li>
+</ol>
+<div class="uwaga">We współczesnych sieciach ze switchami (każde urządzenie ma "swój" dedykowany link do switcha, full-duplex) kolizje w praktyce nie występują — CSMA/CD ma dziś głównie znaczenie historyczne/koncepcyjne.</div>
+
+<h3>CSMA/CA (Carrier Sense Multiple Access with Collision Avoidance)</h3>
+<p>Używane w Wi-Fi (802.11) — w radiu trudniej <strong>wykryć</strong> kolizję w trakcie nadawania (urządzenie nadające nie "słyszy" dobrze podczas własnej transmisji), więc podejście skupia się na <strong>unikaniu</strong> kolizji z góry:</p>
+<ul>
+<li>urządzenie nasłuchuje medium; jeśli wolne, czeka jeszcze losowy dodatkowy czas (żeby zmniejszyć szansę, że dwa urządzenia zaczną nadawać w tym samym momencie, gdy medium właśnie się zwolniło)</li>
+<li>opcjonalny mechanizm RTS/CTS (Request to Send / Clear to Send) — urządzenie "rezerwuje" medium z wyprzedzeniem, informując inne, żeby nie nadawały w danym oknie czasowym</li>
+<li>odbiorca potwierdza (ACK) otrzymanie ramki — brak potwierdzenia = nadawca zakłada kolizję/utratę i retransmituje</li>
+</ul>
+
+<table>
+<tr><th></th><th>CSMA/CD</th><th>CSMA/CA</th></tr>
+<tr><td>Medium</td><td>przewodowe (Ethernet)</td><td>bezprzewodowe (Wi-Fi)</td></tr>
+<tr><td>Podejście do kolizji</td><td>wykrywanie (po fakcie)</td><td>unikanie (z wyprzedzeniem)</td></tr>
+<tr><td>Dlaczego różnica</td><td colspan="2">w radiu nadawca nie może efektywnie "słuchać" własnej transmisji, żeby wykryć kolizję w trakcie — łatwiej zapobiegać niż wykrywać</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Podstawy bezpieczeństwa sieci</h2>
+
+<h3>Firewall (zapora sieciowa)</h3>
+<p>System filtrujący ruch sieciowy według zdefiniowanych reguł (np. adres źródłowy/docelowy, port, protokół) — blokuje niechciany/podejrzany ruch, przepuszcza dozwolony.</p>
+<ul>
+<li><strong>filtrowanie pakietów (packet filtering)</strong> — proste reguły na podstawie nagłówków (adresy, porty) bez analizy zawartości</li>
+<li><strong>stanowy (stateful)</strong> — śledzi stan połączeń (np. przepuszcza odpowiedź na wcześniej zainicjowane przez nas połączenie, nawet jeśli reguła statyczna by jej nie przepuściła)</li>
+<li>może działać na routerze (dla całej sieci) albo lokalnie na pojedynczym urządzeniu (host-based firewall)</li>
+</ul>
+
+<h3>VPN (Virtual Private Network)</h3>
+<p>Tworzy zaszyfrowany "tunel" między urządzeniem a zdalną siecią przez publiczny internet — ruch wewnątrz tunelu jest niewidoczny/niezrozumiały dla obserwujących po drodze, a zdalne urządzenie "wydaje się" być częścią docelowej sieci prywatnej (dostaje np. adres IP z tamtej sieci).</p>
+<p>Zastosowania: bezpieczny zdalny dostęp do sieci firmowej, ochrona ruchu w publicznych sieciach Wi-Fi, obchodzenie ograniczeń geograficznych.</p>
+
+<h3>TLS/SSL — uproszczony handshake</h3>
+<p>Protokół zapewniający szyfrowanie (HTTPS = HTTP + TLS) — uproszczony przebieg nawiązania połączenia:</p>
+<ol>
+<li>klient wysyła <code>ClientHello</code> — proponowane wersje TLS, obsługiwane szyfry</li>
+<li>serwer odpowiada <code>ServerHello</code> + swój certyfikat (zawierający klucz publiczny, podpisany przez zaufaną instytucję certyfikującą — CA)</li>
+<li>klient weryfikuje certyfikat (czy jest zaufany, czy nazwa domeny się zgadza), następnie uzgadniany jest wspólny <strong>klucz sesyjny</strong> (przy użyciu kryptografii asymetrycznej do bezpiecznej wymiany)</li>
+<li>dalsza komunikacja jest szyfrowana <strong>symetrycznie</strong> tym uzgodnionym kluczem sesyjnym (szybsze niż szyfrowanie asymetryczne dla dużych ilości danych)</li>
+</ol>
+
+<h3>Kryptografia symetryczna vs asymetryczna (przypomnienie)</h3>
+<ul>
+<li><strong>symetryczna</strong> — ten sam klucz do szyfrowania i deszczyfrowania (szybka, ale wymaga bezpiecznego przekazania klucza z wyprzedzeniem)</li>
+<li><strong>asymetryczna</strong> — para kluczy (publiczny/prywatny); to co zaszyfrowane publicznym, odszyfrowuje tylko prywatny (i odwrotnie do podpisów) — wolniejsza, ale rozwiązuje problem bezpiecznej wymiany klucza</li>
+</ul>
+
+<div class="uwaga">TLS łączy zalety obu: asymetryczną kryptografię wykorzystuje tylko na starcie (do bezpiecznego uzgodnienia klucza sesyjnego), a resztę komunikacji szyfruje szybszą metodą symetryczną — kompromis między bezpieczeństwem a wydajnością.</div>
+</div>
+
+</body>
+</html>

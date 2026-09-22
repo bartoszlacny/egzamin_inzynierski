@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Integracja sieci i usług – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Integracja sieci i usług</h1>
+
+<p><em>Ten przedmiot pokrywa się częściowo z "Sieciami komputerowymi" (adresacja IP, routing, urządzenia) — tu skrócone jako przypomnienie, plus nowe tematy: topologie i podział sieci wg zasięgu.</em></p>
+
+<div class="zagadnienie">
+<h2>1. Adresacja IP: IPv4, IPv6, klasy adresów, CIDR</h2>
+
+<h3>IPv4 vs IPv6 (przypomnienie)</h3>
+<table>
+<tr><th></th><th>IPv4</th><th>IPv6</th></tr>
+<tr><td>Długość</td><td>32 bity</td><td>128 bitów</td></tr>
+<tr><td>Zapis</td><td><code>192.168.1.1</code></td><td><code>2001:0db8::1</code></td></tr>
+<tr><td>Liczba adresów</td><td>~4.3 mld</td><td>praktycznie nieograniczona</td></tr>
+</table>
+
+<h3>Klasy adresów IPv4 (klasyczny podział, historyczny)</h3>
+<table>
+<tr><th>Klasa</th><th>Pierwszy bit/oktet</th><th>Zakres pierwszego oktetu</th><th>Domyślna maska</th><th>Zastosowanie</th></tr>
+<tr><td>A</td><td>0</td><td>1-126</td><td>/8</td><td>bardzo duże sieci</td></tr>
+<tr><td>B</td><td>10</td><td>128-191</td><td>/16</td><td>średnie sieci</td></tr>
+<tr><td>C</td><td>110</td><td>192-223</td><td>/24</td><td>małe sieci</td></tr>
+<tr><td>D</td><td>1110</td><td>224-239</td><td>—</td><td>multicast</td></tr>
+<tr><td>E</td><td>1111</td><td>240-255</td><td>—</td><td>zarezerwowane</td></tr>
+</table>
+<div class="uwaga">Podział na klasy jest dziś <strong>historyczny</strong> — od lat 90. praktycznie wszędzie stosuje się notację CIDR (bezklasową), bo klasowy podział był bardzo nieefektywny (np. firma potrzebująca 300 adresów musiała dostać całą klasę B z 65 tysiącami).</div>
+
+<h3>CIDR (Classless Inter-Domain Routing)</h3>
+<p>Notacja <code>adres/n</code> — <code>n</code> to liczba bitów maski (część sieciowa), reszta to bity hosta. Np. <code>192.168.1.0/26</code>:</p>
+<ul>
+<li>26 bitów maski → \(32-26=6\) bitów na hosty → \(2^6=64\) adresów w podsieci</li>
+<li>adres sieci: <code>192.168.1.0</code>, broadcast: <code>192.168.1.63</code>, użytkowe hosty: <code>192.168.1.1</code> - <code>192.168.1.62</code> (62 adresy)</li>
+</ul>
+
+<h3>Adresy prywatne (RFC 1918)</h3>
+<p><code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code> — niepublikowane w internecie, wymagają NAT do komunikacji ze światem zewnętrznym.</p>
+
+<div class="uwaga">Typowe zadanie: dla adresu <code>172.16.50.10/20</code> wyznacz adres sieci, adres broadcast i zakres dostępnych hostów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Topologie sieci komputerowych</h2>
+
+<table>
+<tr><th>Topologia</th><th>Struktura</th><th>Zalety</th><th>Wady</th></tr>
+<tr>
+<td>Magistrali (bus)</td>
+<td>wszystkie urządzenia podłączone do jednego wspólnego kabla</td>
+<td>prosta, mało kabla</td>
+<td>awaria magistrali unieruchamia całą sieć, słaba skalowalność, kolizje (patrz CSMA/CD)</td>
+</tr>
+<tr>
+<td>Gwiazdy (star)</td>
+<td>wszystkie urządzenia podłączone do centralnego switcha/huba</td>
+<td>awaria jednego urządzenia nie wpływa na resztę; łatwa diagnostyka</td>
+<td>awaria centralnego urządzenia unieruchamia całą sieć (single point of failure)</td>
+</tr>
+<tr>
+<td>Pierścienia (ring)</td>
+<td>każde urządzenie połączone z dwoma sąsiadami, tworząc zamknięty krąg</td>
+<td>przewidywalny czas dostępu do medium (token passing)</td>
+<td>awaria jednego łącza może zerwać całą sieć (o ile brak redundancji, tzn. podwójnego pierścienia)</td>
+</tr>
+<tr>
+<td>Siatki (mesh)</td>
+<td>każde urządzenie połączone z wieloma (lub wszystkimi) innymi</td>
+<td>bardzo duża odporność na awarie (wiele alternatywnych ścieżek)</td>
+<td>bardzo dużo kabli/połączeń — kosztowna i złożona (pełna siatka: \(n(n-1)/2\) połączeń)</td>
+</tr>
+<tr>
+<td>Drzewa (tree)</td>
+<td>hierarchiczna struktura gwiazd połączonych w drzewo</td>
+<td>skalowalna, typowa dla większych sieci korporacyjnych</td>
+<td>awaria "wyższego" węzła wpływa na całą podsieć pod nim</td>
+</tr>
+<tr>
+<td>Hybrydowa</td>
+<td>kombinacja kilku topologii naraz</td>
+<td>elastyczność, dopasowanie do realnych potrzeb</td>
+<td>większa złożoność projektowa</td>
+</tr>
+</table>
+
+<h3>Topologia logiczna vs fizyczna</h3>
+<p><strong>Fizyczna</strong> — jak faktycznie biegną kable/połączenia; <strong>logiczna</strong> — jak dane faktycznie "płyną" między urządzeniami (może różnić się od fizycznej — np. sieć fizycznie w gwieździe, ale logicznie działająca jak magistrala, jeśli centralne urządzenie to hub).</p>
+
+<h3>Zastosowania</h3>
+<p>Gwiazda — dominująca w dzisiejszych sieciach LAN (switch jako centrum); mesh — sieci bezprzewodowe wymagające wysokiej odporności na awarie (np. sieci mesh Wi-Fi w domach, sieci wojskowe/przemysłowe); drzewo — struktura wielu połączonych switchy w większej organizacji.</p>
+
+<div class="uwaga">Typowe pytanie: porównaj odporność na awarię topologii gwiazdy i pierścienia, albo policz liczbę potrzebnych połączeń w pełnej topologii siatki dla \(n\) urządzeń.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Rodzaje sieci wg zasięgu: PAN, LAN, MAN, WAN</h2>
+
+<table>
+<tr><th>Typ</th><th>Zasięg</th><th>Przykład</th></tr>
+<tr>
+<td>PAN (Personal Area Network)</td>
+<td>bardzo mały — kilka metrów, urządzenia osobiste</td>
+<td>Bluetooth między telefonem a słuchawkami, smartwatch połączony z telefonem</td>
+</tr>
+<tr>
+<td>LAN (Local Area Network)</td>
+<td>pojedynczy budynek/kampus</td>
+<td>sieć domowa, sieć biurowa</td>
+</tr>
+<tr>
+<td>MAN (Metropolitan Area Network)</td>
+<td>miasto/aglomeracja</td>
+<td>sieć miejska łącząca kilka oddziałów firmy w różnych częściach miasta, sieć telewizji kablowej</td>
+</tr>
+<tr>
+<td>WAN (Wide Area Network)</td>
+<td>duży obszar geograficzny — kraj, kontynent, cały świat</td>
+<td>Internet, sieć korporacyjna łącząca oddziały w różnych krajach</td>
+</tr>
+</table>
+
+<h3>Cechy różniące te sieci</h3>
+<ul>
+<li><strong>własność infrastruktury</strong> — LAN/PAN zwykle własność jednej organizacji/osoby; WAN zwykle korzysta z infrastruktury operatorów telekomunikacyjnych (łącza dzierżawione, internet)</li>
+<li><strong>prędkość i opóźnienia</strong> — LAN zwykle bardzo szybki, niskie opóźnienia; WAN — wolniejszy, wyższe opóźnienia (większe odległości fizyczne, więcej urządzeń pośredniczących)</li>
+<li><strong>koszt</strong> — WAN zwykle znacznie droższy w budowie/utrzymaniu na jednostkę przepustowości</li>
+</ul>
+
+<h3>Warianty i pojęcia pokrewne</h3>
+<ul>
+<li><strong>WLAN</strong> — LAN bezprzewodowy (Wi-Fi)</li>
+<li><strong>CAN (Campus Area Network)</strong> — czasem wyróżniany między LAN i MAN, dla sieci kampusu uniwersyteckiego/kompleksu budynków</li>
+<li><strong>VPN</strong> (patrz przedmiot Sieci komputerowe) — tworzy "wirtualną" sieć prywatną rozciągniętą przez WAN (internet), symulując bezpieczne LAN dla zdalnych użytkowników</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: sklasyfikuj opisany scenariusz sieciowy (np. "firma z 3 biurami w różnych miastach połączonymi VPN") do odpowiedniej kategorii i uzasadnij, dlaczego to nie jest po prostu LAN.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Urządzenia sieciowe (przypomnienie i rozwinięcie)</h2>
+
+<p><em>(pełny opis w przedmiocie Sieci komputerowe — tu skrócone zestawienie z kontekstem "integracji")</em></p>
+
+<table>
+<tr><th>Urządzenie</th><th>Warstwa OSI</th><th>Funkcja</th></tr>
+<tr><td>Hub</td><td>1</td><td>powiela sygnał na wszystkie porty — praktycznie wycofany z użycia</td></tr>
+<tr><td>Switch</td><td>2</td><td>przesyła ramki na podstawie adresów MAC, jeden port = jedna domena kolizji</td></tr>
+<tr><td>Router</td><td>3</td><td>łączy różne sieci, kierując pakiety na podstawie adresów IP (routing, patrz punkt 5)</td></tr>
+<tr><td>Access Point</td><td>1-2</td><td>most między siecią przewodową i bezprzewodową (Wi-Fi)</td></tr>
+<tr><td>Firewall</td><td>3-4 (czasem wyżej)</td><td>filtruje ruch sieciowy wg reguł bezpieczeństwa</td></tr>
+<tr><td>Load Balancer</td><td>4-7</td><td>rozdziela ruch między wiele serwerów, dla wydajności i odporności na awarie</td></tr>
+<tr><td>Modem</td><td>1</td><td>zamienia sygnał cyfrowy na analogowy (i odwrotnie) do transmisji przez łącze operatora (np. DSL, kabel)</td></tr>
+</table>
+
+<h3>Integracja urządzeń w praktyce</h3>
+<p>W realnych sieciach funkcje bywają łączone w jednym urządzeniu — typowy "router domowy" to w rzeczywistości router + switch + access point + (czasem) prosty firewall w jednym pudełku; w środowiskach korporacyjnych funkcje te zwykle są rozdzielone na dedykowane, wyspecjalizowane urządzenia dla lepszej wydajności/kontroli.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanej infrastruktury (np. "biuro z 50 komputerami, dostępem do internetu i strefą Wi-Fi dla gości odizolowaną od sieci wewnętrznej") zaproponuj, jakie urządzenia sieciowe są potrzebne i jak je połączyć.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Routing, protokoły routingu, VLAN</h2>
+
+<h3>Routing statyczny vs dynamiczny (przypomnienie)</h3>
+<p>Statyczny — trasy konfigurowane ręcznie; dynamiczny — routery automatycznie wymieniają informacje o trasach (protokoły RIP, OSPF — pełny opis w przedmiocie Sieci komputerowe).</p>
+
+<h3>VLAN (Virtual LAN)</h3>
+<p>Logiczny podział <strong>jednej</strong> fizycznej sieci (switcha/infrastruktury) na wiele niezależnych sieci logicznych — urządzenia w różnych VLAN-ach zachowują się, jakby były w zupełnie osobnych sieciach LAN, mimo współdzielenia tego samego fizycznego switcha/kabli.</p>
+
+<h3>Dlaczego VLAN</h3>
+<ul>
+<li><strong>segmentacja bezpieczeństwa</strong> — oddzielenie np. sieci dla gości od sieci wewnętrznej firmy, mimo korzystania z tej samej fizycznej infrastruktury</li>
+<li><strong>ograniczenie ruchu rozgłoszeniowego (broadcast)</strong> — każdy VLAN to osobna domena rozgłoszeniowa, zmniejszając niepotrzebny ruch broadcast w dużych sieciach</li>
+<li><strong>elastyczna organizacja logiczna</strong> — podział wg działów firmy (księgowość, IT, produkcja) niezależnie od fizycznego rozmieszczenia komputerów w budynku</li>
+</ul>
+
+<h3>Tagowanie VLAN — 802.1Q</h3>
+<p>Standard dodający do ramki Ethernet <strong>znacznik (tag)</strong> identyfikujący, do którego VLAN-u należy dana ramka — pozwala przesyłać ruch wielu VLAN-ów przez jedno łącze między switchami (<strong>trunk</strong>), zamiast wymagać osobnego kabla dla każdego VLAN-u.</p>
+
+<h3>Porty access vs trunk</h3>
+<table>
+<tr><th>Typ portu</th><th>Zasada</th></tr>
+<tr><td>Access</td><td>przypisany do <strong>jednego</strong> konkretnego VLAN-u — typowo port, do którego podłączony jest komputer użytkownika (nie "wie" o tagowaniu, otrzymuje ruch bez tagów)</td></tr>
+<tr><td>Trunk</td><td>przenosi ruch <strong>wielu</strong> VLAN-ów naraz (z tagami 802.1Q) — typowo połączenie między switchami albo do routera</td></tr>
+</table>
+
+<h3>Komunikacja między VLAN-ami — routing inter-VLAN</h3>
+<p>Urządzenia w <strong>różnych</strong> VLAN-ach nie mogą się komunikować bezpośrednio na poziomie switcha (warstwa 2) — potrzebny jest router (albo switch warstwy 3 — z funkcją routingu), który przekazuje ruch <strong>między</strong> VLAN-ami na podstawie adresów IP, tak jak między dwiema osobnymi, fizycznymi sieciami.</p>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj podział sieci firmowej na VLAN-y wg działów, opisz, które porty switcha powinny być access, a które trunk, i wyjaśnij, jak umożliwić komunikację między VLAN-ami tam, gdzie jest to potrzebne (np. dostęp wszystkich do serwera plików).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. QoS (Quality of Service)</h2>
+
+<p>Mechanizmy zarządzania ruchem sieciowym, gdy przez jedną, współdzieloną infrastrukturę przechodzi <strong>wiele różnych typów usług</strong> naraz (dane, głos, wideo) — pozwala nadać priorytet ruchowi, który jest bardziej czasowo krytyczny.</p>
+
+<h3>Dlaczego QoS jest potrzebny</h3>
+<p>Bez QoS wszystkie pakiety są traktowane "po równo" (best-effort) — w razie przeciążenia sieci, ruch krytyczny czasowo (np. rozmowa VoIP) może zostać opóźniony/utracony tak samo jak np. pobieranie dużego pliku, mimo że skutki dla użytkownika są zupełnie inne (zerwana rozmowa vs. chwilowo wolniejsze pobieranie).</p>
+
+<h3>Parametry jakości połączenia</h3>
+<table>
+<tr><th>Parametr</th><th>Znaczenie</th><th>Krytyczne dla</th></tr>
+<tr><td>Opóźnienie (latency)</td><td>czas potrzebny na dostarczenie pakietu</td><td>VoIP, gry online, wideokonferencje</td></tr>
+<tr><td>Jitter</td><td>zmienność opóźnienia między kolejnymi pakietami</td><td>strumieniowanie audio/wideo w czasie rzeczywistym</td></tr>
+<tr><td>Utrata pakietów (packet loss)</td><td>procent pakietów, które nie dotarły</td><td>wszystkie usługi real-time (retransmisja zbyt wolna)</td></tr>
+<tr><td>Przepustowość (throughput)</td><td>ilość danych przesłana w jednostce czasu</td><td>transfer plików, streaming wideo HD</td></tr>
+</table>
+
+<h3>Mechanizmy QoS</h3>
+<ul>
+<li><strong>klasyfikacja i znakowanie ruchu</strong> — oznaczanie pakietów (np. pole DSCP w nagłówku IP) wg priorytetu/typu usługi</li>
+<li><strong>kolejkowanie priorytetowe</strong> — router/switch obsługuje pierwsza pakiety o wyższym priorytecie (np. VoIP) przed pakietami o niższym (np. pobieranie plików)</li>
+<li><strong>ograniczanie przepustowości (traffic shaping/policing)</strong> — narzucenie limitu pasma dla danej klasy ruchu, żeby nie "zalała" innych usług</li>
+<li><strong>rezerwacja pasma</strong> — gwarantowanie minimalnej przepustowości dla krytycznych usług niezależnie od obciążenia resztą ruchu</li>
+</ul>
+
+<div class="uwaga">Typowe zastosowanie: w sieci firmowej łączącej dane, VoIP i wideokonferencje na jednym łączu WAN, QoS zapewnia, że rozmowa telefoniczna nie "zająka się" nawet gdy ktoś w tym samym czasie kopiuje duże pliki przez sieć.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Konwergencja sieci i VoIP</h2>
+
+<h3>Konwergencja sieci</h3>
+<p>Historyczny trend łączenia <strong>odrębnych</strong> infrastruktur (telefoniczna, telewizyjna, komputerowa) w <strong>jedną</strong>, wspólną sieć oparta na protokole IP — zamiast osobnych kabli/sieci dla telefonu, telewizji i internetu, wszystko przesyłane jako pakiety IP przez tę samą infrastrukturę.</p>
+
+<h3>VoIP (Voice over IP)</h3>
+<p>Technologia przesyłania rozmów głosowych jako pakietów danych przez sieć IP (internet/sieć lokalną), zamiast przez tradycyjną, dedykowaną sieć telefoniczną (PSTN — Public Switched Telephone Network, z komutacją łączy).</p>
+
+<h3>Komutacja łączy vs komutacja pakietów</h3>
+<table>
+<tr><th></th><th>Komutacja łączy (tradycyjna telefonia)</th><th>Komutacja pakietów (VoIP)</th></tr>
+<tr><td>Zasada</td><td>dedykowane, fizyczne połączenie na czas całej rozmowy</td><td>głos dzielony na pakiety, wysyłane przez współdzieloną sieć IP</td></tr>
+<tr><td>Wykorzystanie łącza</td><td>zarezerwowane, nawet w ciszy (nieefektywne)</td><td>współdzielone z innym ruchem — potrzebne QoS (patrz punkt 6)</td></tr>
+<tr><td>Koszt</td><td>zwykle wyższy (dedykowana infrastruktura)</td><td>niższy — wykorzystuje już istniejącą sieć IP/internet</td></tr>
+</table>
+
+<h3>Podstawowe protokoły VoIP</h3>
+<ul>
+<li><strong>SIP (Session Initiation Protocol)</strong> — nawiązywanie, modyfikacja i zakańczanie sesji głosowych/wideo (odpowiednik "wybierania numeru" i "odkładania słuchawki" w świecie IP)</li>
+<li><strong>RTP (Real-time Transport Protocol)</strong> — przesyłanie samych danych audio/wideo w czasie rzeczywistym, zwykle na bazie UDP (patrz przedmiot Sieci komputerowe — UDP dla streamingu, gdzie liczy się szybkość, nie 100% gwarancja dostawy)</li>
+</ul>
+
+<h3>Zalety i wyzwania VoIP</h3>
+<table>
+<tr><th>Zalety</th><th>Wyzwania</th></tr>
+<tr><td>niższe koszty (zwłaszcza rozmowy międzynarodowe)</td><td>zależność od jakości połączenia internetowego (opóźnienie, jitter, utrata pakietów — patrz QoS)</td></tr>
+<tr><td>integracja z innymi usługami cyfrowymi (np. czat, wideokonferencje w jednej aplikacji)</td><td>brak zasilania niezależnego od sieci (tradycyjny telefon analogowy działał nawet przy braku prądu w domu, zasilany z centrali)</td></tr>
+<tr><td>elastyczność — działa z każdego miejsca z dostępem do internetu</td><td>bezpieczeństwo (podsłuch, spoofing numerów) wymaga dodatkowych zabezpieczeń (szyfrowanie SRTP, TLS dla SIP)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego VoIP wymaga mechanizmów QoS, a tradycyjna telefonia (komutacja łączy) nie miała tego problemu — bo dedykowane łącze telefoniczne gwarantowało zasób "z definicji", a współdzielona sieć IP wymaga świadomego zarządzania priorytetami ruchu.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Praktyczne zastosowania sztucznej inteligencji – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Praktyczne zastosowania sztucznej inteligencji</h1>
+
+<div class="zagadnienie">
+<h2>1. Podstawowe pojęcia — AI, ML, Deep Learning</h2>
+
+<h3>Hierarchia pojęć (zbiory zawierające się)</h3>
+<pre>Sztuczna inteligencja (AI)
+  └── Uczenie maszynowe (Machine Learning)
+        └── Uczenie głębokie (Deep Learning)</pre>
+
+<h3>Sztuczna inteligencja (AI)</h3>
+<p>Najszersze pojęcie — dowolne systemy/programy wykazujące zachowania kojarzone z ludzką inteligencją: wnioskowanie, planowanie, rozumienie języka, percepcję. Obejmuje zarówno systemy oparte na regułach/logice (patrz przedmiot Podstawy sztucznej inteligencji — Prolog/Pytholog, przeszukiwanie grafów), jak i uczenie maszynowe.</p>
+
+<h3>Uczenie maszynowe (Machine Learning)</h3>
+<p>Podzbiór AI — systemy, które <strong>uczą się z danych</strong>, zamiast być jawnie zaprogramowane regułami przez człowieka (pełny opis — patrz przedmiot Sztuczna Inteligencja: drzewa decyzyjne, ensemble, regresja, sieci neuronowe).</p>
+
+<h3>Uczenie głębokie (Deep Learning)</h3>
+<p>Podzbiór uczenia maszynowego — modele oparte na <strong>wielowarstwowych</strong> sieciach neuronowych ("głębokich", czyli z wieloma warstwami ukrytymi), zdolne do automatycznego uczenia się hierarchicznych reprezentacji cech bezpośrednio z surowych danych (obrazy, tekst, dźwięk) — bez ręcznego projektowania cech, w odróżnieniu od klasycznego ML (patrz CNN — przedmiot Sztuczna Inteligencja).</p>
+
+<table>
+<tr><th></th><th>Klasyczne ML</th><th>Deep Learning</th></tr>
+<tr><td>Cechy (features)</td><td>ręcznie projektowane przez człowieka</td><td>uczone automatycznie przez sieć z danych surowych</td></tr>
+<tr><td>Ilość danych potrzebna</td><td>zwykle mniejsza</td><td>zwykle duża (setki tysięcy/miliony przykładów)</td></tr>
+<tr><td>Moc obliczeniowa</td><td>umiarkowana</td><td>duża (GPU/TPU)</td></tr>
+<tr><td>Interpretowalność</td><td>zwykle wyższa (np. drzewo decyzyjne)</td><td>zwykle niższa ("czarna skrzynka" — patrz punkt 7)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: umiejscowić konkretny przykład (np. "drzewo decyzyjne przewidujące cenę mieszkania" vs "sieć konwolucyjna klasyfikująca zdjęcia kotów") we właściwym miejscu hierarchii AI → ML → Deep Learning.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Prompt engineering — zero-shot, few-shot, chain-of-thought</h2>
+
+<h3>Prompt engineering — definicja</h3>
+<p>Sztuka formułowania poleceń (promptów) do dużych modeli językowych (patrz punkt 6) tak, by uzyskać jak najlepszej jakości, trafną odpowiedź — bez zmiany samego modelu, wyłącznie przez sposób sformułowania zapytania.</p>
+
+<h3>Zasady tworzenia skutecznych poleceń</h3>
+<ul>
+<li><strong>jasność i konkretność</strong> — precyzyjne określenie zadania, formatu odpowiedzi, ograniczeń (długość, styl)</li>
+<li><strong>kontekst</strong> — dostarczenie modelowi potrzebnych informacji tła, których "nie mógłby wiedzieć" (np. fragment dokumentu, dane specyficzne dla zadania)</li>
+<li><strong>przykłady</strong> (few-shot, patrz niżej) — pokazanie pożądanego formatu/stylu odpowiedzi na konkretnych przykładach</li>
+<li><strong>podział złożonych zadań na kroki</strong> — łatwiej modelowi (i łatwiej zweryfikować wynik) przy rozbiciu dużego problemu na mniejsze podzadania</li>
+<li><strong>określenie roli/persony</strong> ("jesteś ekspertem od...") — może ukierunkować styl/perspektywę odpowiedzi</li>
+<li><strong>iteracyjne dopracowywanie</strong> — prompt engineering to zwykle proces prób i poprawek, nie jednorazowe "trafienie" idealnego polecenia</li>
+</ul>
+
+<h3>Zero-shot prompting</h3>
+<p>Zadanie opisane <strong>bez żadnych przykładów</strong> — model musi wykonać zadanie wyłącznie na podstawie opisu instrukcji i swojej ogólnej wiedzy nabytej podczas treningu.</p>
+<pre>Przetłumacz poniższe zdanie na angielski:
+"Kot siedzi na macie."</pre>
+
+<h3>Few-shot prompting</h3>
+<p>Prompt zawiera <strong>kilka przykładów</strong> (par wejście-wyjście) demonstrujących pożądany format/zadanie, zanim model dostanie właściwe pytanie — model "uczy się w locie" (in-context learning) z tych przykładów, bez faktycznej zmiany swoich wag.</p>
+<pre>Przykład 1: "szczęśliwy" → pozytywny
+Przykład 2: "okropny" → negatywny
+Przykład 3: "w porządku" → neutralny
+
+Zadanie: "fantastyczny" → ?</pre>
+<p>Zwykle poprawia jakość/spójność odpowiedzi względem zero-shot, zwłaszcza dla zadań o niejasnym/niestandardowym formacie wyjścia.</p>
+
+<h3>Chain-of-thought (CoT) — łańcuch myślenia</h3>
+<p>Technika zachęcająca model do <strong>pokazania kroków rozumowania</strong> przed podaniem finalnej odpowiedzi (np. przez dodanie do promptu frazy "myśl krok po kroku") — szczególnie skuteczna dla zadań wymagających wieloetapowego rozumowania (matematyka, logika, złożone wnioskowanie), gdzie bezpośrednie "zgadnięcie" odpowiedzi bez pośrednich kroków częściej zawodzi.</p>
+<pre>Pytanie: Jan miał 5 jabłek, dał 2 Annie, a potem kupił jeszcze 3.
+Ile jabłek ma teraz Jan? Myśl krok po kroku.
+
+Odpowiedź modelu:
+1. Jan zaczął z 5 jabłkami.
+2. Oddał 2, więc zostało 5-2=3.
+3. Kupił jeszcze 3, więc ma 3+3=6.
+Odpowiedź: 6 jabłek.</pre>
+
+<h3>Porównanie technik</h3>
+<table>
+<tr><th>Technika</th><th>Kiedy stosować</th></tr>
+<tr><td>Zero-shot</td><td>proste, dobrze znane zadania, oszczędność długości promptu</td></tr>
+<tr><td>Few-shot</td><td>niestandardowy format wyjścia, potrzeba precyzyjnego "wzorca" odpowiedzi</td></tr>
+<tr><td>Chain-of-thought</td><td>zadania wymagające wieloetapowego rozumowania (matematyka, logika, złożona analiza)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zadania (np. klasyfikacja niestandardowych kategorii, złożony problem matematyczny) zaproponuj odpowiednią technikę promptowania i uzasadnij wybór.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Modele sekwencyjne — LSTM i GRU</h2>
+
+<p><em>(podstawy RNN — patrz przedmiot Podstawy sztucznej inteligencji, punkt o sieciach rekurencyjnych)</em></p>
+
+<h3>Problem zwykłych RNN — zanikający gradient</h3>
+<p>Zwykłe sieci rekurencyjne (RNN) przetwarzają sekwencje krok po kroku, przekazując "pamięć" (stan ukryty) między krokami czasowymi — przy <strong>długich</strong> sekwencjach gradient propagowany wstecz (backpropagation through time) ma tendencję do zanikania (lub eksplodowania), przez co model "zapomina" informacje z odległej przeszłości sekwencji.</p>
+
+<h3>LSTM (Long Short-Term Memory)</h3>
+<p>Architektura zaprojektowana specjalnie, by rozwiązać problem zanikającego gradientu — wprowadza <strong>komórkę pamięci (cell state)</strong> i system <strong>bramek (gates)</strong> kontrolujących przepływ informacji:</p>
+<table>
+<tr><th>Bramka</th><th>Rola</th></tr>
+<tr><td>Bramka zapominania (forget gate)</td><td>decyduje, którą część poprzedniego stanu komórki "wyrzucić"</td></tr>
+<tr><td>Bramka wejściowa (input gate)</td><td>decyduje, jaką nową informację dodać do stanu komórki</td></tr>
+<tr><td>Bramka wyjściowa (output gate)</td><td>decyduje, jaka część stanu komórki trafia na wyjście danego kroku</td></tr>
+</table>
+<p>Komórka pamięci działa jak "taśma przenośnika" — informacja może przepływać przez wiele kroków czasowych praktycznie bez zmian, jeśli bramki tak zdecydują, co pozwala zachować zależności długodystansowe w sekwencji.</p>
+
+<h3>GRU (Gated Recurrent Unit)</h3>
+<p>Uproszczona wersja LSTM — <strong>dwie</strong> bramki zamiast trzech (bramka aktualizacji i bramka resetu), brak osobnej komórki pamięci (połączona ze stanem ukrytym):</p>
+<table>
+<tr><th>Bramka</th><th>Rola</th></tr>
+<tr><td>Bramka aktualizacji (update gate)</td><td>łączy rolę bramek zapominania i wejściowej LSTM — decyduje, ile "starego" stanu zachować, a ile zastąpić nowym</td></tr>
+<tr><td>Bramka resetu (reset gate)</td><td>decyduje, jak bardzo zignorować poprzedni stan przy obliczaniu nowego kandydata na stan</td></tr>
+</table>
+
+<h3>LSTM vs GRU — porównanie</h3>
+<table>
+<tr><th></th><th>LSTM</th><th>GRU</th></tr>
+<tr><td>Liczba bramek</td><td>3</td><td>2</td></tr>
+<tr><td>Liczba parametrów</td><td>więcej</td><td>mniej — szybszy trening</td></tr>
+<tr><td>Zdolność modelowania</td><td>teoretycznie nieco większa (osobna komórka pamięci)</td><td>zwykle porównywalna jakość przy prostszej strukturze</td></tr>
+<tr><td>Kiedy wybrać</td><td>duże zbiory danych, gdy dodatkowa pojemność modelu się opłaca</td><td>mniejsze zbiory danych, gdy liczy się szybkość treningu</td></tr>
+</table>
+
+<h3>Zastosowania i miejsce w historii</h3>
+<p>Przez wiele lat (przed erą transformerów, patrz punkt 5-6) LSTM/GRU były standardem w zadaniach sekwencyjnych: tłumaczenie maszynowe, rozpoznawanie mowy, generowanie tekstu, prognozowanie szeregów czasowych (patrz przedmiot Inżynieria i analiza danych). Dziś w wielu zastosowaniach NLP zostały wyparte przez architekturę transformer (mechanizm uwagi, patrz punkt 5), która lepiej się skaluje i łatwiej równoleglegli trening — LSTM/GRU wciąż używane tam, gdzie sekwencja jest krótsza lub zasoby obliczeniowe ograniczone.</p>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego zwykły RNN ma problem z długimi sekwencjami (zanikający gradient) i jak mechanizm bramek w LSTM/GRU temu zaradza, przez umożliwienie "swobodnego przepływu" informacji przez komórkę pamięci.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Etyka, bezpieczeństwo i przyszłość AI</h2>
+
+<h3>Halucynacje</h3>
+<p>Sytuacja, gdy model generatywny (patrz punkt 6) produkuje treść <strong>brzmiącą</strong> wiarygodnie i pewnie, ale <strong>faktycznie nieprawdziwą</strong> lub niepopartą rzeczywistymi danymi — model "wymyśla" fakty, cytaty, źródła, które nie istnieją.</p>
+<ul>
+<li><strong>przyczyna</strong> — model uczy się przewidywać "prawdopodobny" następny fragment tekstu na podstawie wzorców statystycznych z danych treningowych, nie posiada wbudowanego mechanizmu weryfikacji faktów w czasie rzeczywistym</li>
+<li><strong>łagodzenie</strong> — techniki jak RAG (Retrieval-Augmented Generation — dostarczanie modelowi rzeczywistych źródeł do "sprawdzenia się"), lepsze dane treningowe, jawne oznaczanie niepewności, dostęp do narzędzi (np. wyszukiwarki) do weryfikacji</li>
+</ul>
+
+<h3>Interpretowalność (przypomnienie, patrz też punkt 7 — XAI)</h3>
+<p>Duże modele (zwłaszcza głębokie sieci neuronowe/LLM) działają jak "czarna skrzynka" — trudno jednoznacznie wyjaśnić, <strong>dlaczego</strong> model podjął konkretną decyzję/wygenerował konkretną odpowiedź — istotny problem w zastosowaniach wysokiego ryzyka (diagnostyka medyczna, decyzje kredytowe, wymiar sprawiedliwości).</p>
+
+<h3>Zarządzanie kontekstem</h3>
+<p>Modele językowe mają <strong>ograniczone</strong> "okno kontekstu" (maksymalna liczba tokenów, które model może naraz "widzieć") — zarządzanie kontekstem obejmuje: efektywne wykorzystanie dostępnego okna, techniki podsumowywania/kompresji długiej historii rozmowy, wybór, które informacje są rzeczywiście istotne do zachowania.</p>
+
+<h3>Inne kluczowe zagadnienia etyczne/bezpieczeństwa</h3>
+<table>
+<tr><th>Zagadnienie</th><th>Opis</th></tr>
+<tr><td>Bias (uprzedzenia)</td><td>modele mogą powielać/wzmacniać uprzedzenia obecne w danych treningowych (np. stereotypy związane z płcią, rasą) — nieświadomie generując dyskryminujące wyniki</td></tr>
+<tr><td>Prywatność danych</td><td>ryzyko "zapamiętania" i ujawnienia fragmentów danych treningowych (w tym potencjalnie wrażliwych) przez duży model</td></tr>
+<tr><td>Nadużycia (misuse)</td><td>generowanie dezinformacji, deepfake'ów, złośliwego kodu, treści szkodliwych — konieczność mechanizmów zabezpieczających (guardrails)</td></tr>
+<tr><td>Wpływ na rynek pracy</td><td>automatyzacja zadań wcześniej wykonywanych przez ludzi — dyskusja o transformacji, nie tylko "zastępowaniu", zawodów</td></tr>
+<tr><td>Zużycie energii</td><td>trening dużych modeli wymaga znacznych zasobów obliczeniowych i energetycznych — rosnący aspekt środowiskowy AI</td></tr>
+</table>
+
+<h3>Kierunki rozwoju / przyszłość AI (obszary aktywnych badań)</h3>
+<p>Multimodalność (modele łączące tekst, obraz, dźwięk), efektywność (mniejsze modele osiągające podobną jakość, tańszy trening/inferencja), lepsza faktyczna dokładność i redukcja halucynacji, agentowe systemy AI (modele wykonujące wieloetapowe zadania z użyciem narzędzi), regulacje prawne (np. AI Act w UE) dotyczące odpowiedzialnego wdrażania AI.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zastosowania AI (np. system rekomendujący decyzje kredytowe) wskaż konkretne ryzyka etyczne (bias, interpretowalność) i zaproponuj środki zaradcze (np. audyt modelu, wymóg wyjaśnialności — patrz XAI, punkt 7).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. BERT, GPT, T5</h2>
+
+<p>Wszystkie trzy oparte są na architekturze <strong>transformer</strong> (mechanizm uwagi/attention) — różnią się tym, którą część oryginalnej architektury transformer wykorzystują i do jakich zadań są zoptymalizowane.</p>
+
+<h3>Architektura transformer (przypomnienie/kontekst)</h3>
+<p>Model oparty na mechanizmie <strong>self-attention</strong> — pozwala każdemu tokenowi w sekwencji "spojrzeć" na wszystkie inne tokeny naraz (nie sekwencyjnie, jak RNN/LSTM z punktu 3), ważąc ich znaczenie dla aktualnie przetwarzanego fragmentu — znacznie lepsza skalowalność i możliwość równoległego treningu niż architektury rekurencyjne.</p>
+
+<h3>BERT (Bidirectional Encoder Representations from Transformers)</h3>
+<ul>
+<li>wykorzystuje <strong>tylko enkoder</strong> transformera</li>
+<li><strong>dwukierunkowy</strong> — przy przetwarzaniu danego słowa "widzi" kontekst zarówno <strong>przed</strong>, jak i <strong>po</strong> nim w zdaniu (w odróżnieniu od modeli jednokierunkowych, patrząc tylko "wstecz")</li>
+<li trenowany zadaniem <strong>maskowanego modelowania języka</strong> (Masked Language Modeling) — losowe słowa w zdaniu są "zamaskowane", model uczy się je odgadywać na podstawie otaczającego kontekstu z obu stron</li>
+<li><strong>zastosowanie:</strong> zadania <strong>rozumienia</strong> tekstu — klasyfikacja, analiza sentymentu, wyszukiwanie odpowiedzi w tekście, ekstrakcja informacji — nie jest zaprojektowany do <strong>generowania</strong> nowego, dłuższego tekstu</li>
+</ul>
+
+<h3>GPT (Generative Pre-trained Transformer)</h3>
+<ul>
+<li>wykorzystuje <strong>tylko dekoder</strong> transformera</li>
+<li><strong>jednokierunkowy (autoregresywny)</strong> — generuje tekst token po tokenie, każdy kolejny token przewidywany na podstawie <strong>wyłącznie</strong> tokenów poprzedzających (nigdy nie "widzi" przyszłości sekwencji, bo ona jeszcze nie istnieje w momencie generowania)</li>
+<li>trenowany zadaniem przewidywania <strong>następnego</strong> tokenu (next-token prediction) na ogromnych zbiorach tekstu</li>
+<li><strong>zastosowanie:</strong> zadania <strong>generowania</strong> tekstu — pisanie, kontynuacja tekstu, konwersacja, generowanie kodu (patrz też punkt 6, LLM)</li>
+</ul>
+
+<h3>T5 (Text-To-Text Transfer Transformer)</h3>
+<ul>
+<li>wykorzystuje <strong>pełną</strong> architekturę transformer — zarówno enkoder, jak i dekoder</li>
+<li>kluczowa idea: <strong>wszystkie</strong> zadania NLP (tłumaczenie, streszczanie, klasyfikacja, odpowiadanie na pytania) sformułowane jako jedno, uniwersalne zadanie: <strong>tekst na wejściu → tekst na wyjściu</strong>, z prefiksem instrukcji wskazującym rodzaj zadania (np. <code>"translate English to German: ..."</code>)</li>
+<li><strong>zastosowanie:</strong> uniwersalny model do wielu zadań NLP naraz w ramach jednej, spójnej architektury/interfejsu</li>
+</ul>
+
+<h3>Porównanie zbiorcze</h3>
+<table>
+<tr><th></th><th>BERT</th><th>GPT</th><th>T5</th></tr>
+<tr><td>Część transformera</td><td>enkoder</td><td>dekoder</td><td>enkoder + dekoder</td></tr>
+<tr><td>Kierunek kontekstu</td><td>dwukierunkowy</td><td>jednokierunkowy (autoregresywny)</td><td>zależnie od komponentu</td></tr>
+<tr><td>Główne zastosowanie</td><td>rozumienie/klasyfikacja tekstu</td><td>generowanie tekstu</td><td>uniwersalne zadania text-to-text</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zadania (np. "klasyfikacja recenzji jako pozytywna/negatywna" vs "napisz kontynuację opowiadania") wskaż, która architektura (BERT/GPT) jest naturalniej dopasowana, i uzasadnij różnicą w kierunkowości kontekstu.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. LLM — duże modele językowe</h2>
+
+<p>Modele językowe (zwykle oparte na architekturze GPT-podobnej, patrz punkt 5) o <strong>bardzo dużej</strong> liczbie parametrów (miliardy do bilionów), trenowane na ogromnych zbiorach tekstu z internetu i innych źródeł.</p>
+
+<h3>Generowanie tekstu</h3>
+<p>Podstawowa zdolność LLM — model generuje tekst <strong>autoregresywnie</strong> (token po tokenie, patrz GPT w punkcie 5), przewidując najbardziej prawdopodobny (lub próbkowany wg pewnego rozkładu) kolejny token na podstawie całego dotychczasowego kontekstu.</p>
+
+<h3>Uogólnianie wiedzy (generalization / emergent abilities)</h3>
+<p>Duże modele wykazują zdolność do <strong>uogólniania</strong> wzorców poznanych podczas treningu na zupełnie nowe, niewidziane wcześniej sytuacje/zadania — przy dostatecznie dużej skali (parametrów i danych) obserwuje się tzw. <strong>zdolności emergentne</strong> — umiejętności, które pojawiają się "nagle" po przekroczeniu pewnego progu skali modelu, a nie są widoczne w mniejszych wersjach tego samego modelu.</p>
+
+<h3>Zastosowania praktyczne LLM</h3>
+<table>
+<tr><th>Zastosowanie</th><th>Opis</th></tr>
+<tr><td>Kodowanie</td><td>generowanie, wyjaśnianie, debugowanie i refaktoryzacja kodu w wielu językach programowania</td></tr>
+<tr><td>Rozumienie tekstu (NLU)</td><td>analiza sentymentu, ekstrakcja informacji, klasyfikacja intencji</td></tr>
+<tr><td>Tłumaczenie</td><td>przekład między językami, często bez dedykowanego treningu na parach językowych — dzięki wielojęzycznym danym treningowym</td></tr>
+<tr><td>Tworzenie podsumowań (summarization)</td><td>kompresja długiego dokumentu do zwięzłej wersji zachowującej kluczowe informacje</td></tr>
+<tr><td>Odpowiadanie na pytania (Q&amp;A)</td><td>odpowiedzi na podstawie ogólnej wiedzy modelu lub dostarczonego kontekstu (patrz RAG, punkt 4)</td></tr>
+<tr><td>Generowanie obrazów</td><td>modele multimodalne (np. łączące transformer z modelami dyfuzyjnymi) generujące obraz na podstawie opisu tekstowego (text-to-image)</td></tr>
+</table>
+
+<h3>Fine-tuning vs prompt engineering</h3>
+<table>
+<tr><th></th><th>Fine-tuning</th><th>Prompt engineering (patrz punkt 2)</th></tr>
+<tr><td>Co się zmienia</td><td>wagi modelu — dodatkowy trening na specjalistycznych danych</td><td>nic w modelu — tylko sposób sformułowania zapytania</td></tr>
+<tr><td>Koszt</td><td>wysoki (zasoby obliczeniowe, dane treningowe)</td><td>niski — natychmiastowy efekt bez treningu</td></tr>
+<tr><td>Kiedy stosować</td><td>wysoko wyspecjalizowane zadania, duża ilość dedykowanych danych</td><td>szybkie dostosowanie do zadania, ograniczone zasoby</td></tr>
+</table>
+
+<h3>RAG (Retrieval-Augmented Generation)</h3>
+<p>Technika łącząca LLM z zewnętrznym źródłem wiedzy (bazą dokumentów, wyszukiwarką) — zamiast polegać wyłącznie na wiedzy "zapamiętanej" podczas treningu, model najpierw <strong>wyszukuje</strong> relewantne fragmenty z bazy wiedzy, a następnie generuje odpowiedź <strong>na ich podstawie</strong> — redukuje halucynacje (patrz punkt 4) i pozwala na dostęp do aktualnej/specjalistycznej wiedzy, spoza danych treningowych.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zastosowania biznesowego (np. chatbot obsługi klienta wymagający aktualnej wiedzy o produktach firmy) uzasadnij wybór między fine-tuningiem a podejściem RAG.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Wytłumaczalność sztucznej inteligencji (XAI)</h2>
+
+<h3>Czym jest XAI</h3>
+<p>Explainable AI — zbiór metod i technik mających na celu uczynienie decyzji/predykcji modeli AI (zwłaszcza złożonych, "czarnoskrzynkowych" jak głębokie sieci neuronowe) <strong>zrozumiałymi dla człowieka</strong> — odpowiedź na pytanie "dlaczego model podjął taką decyzję?", nie tylko "jaka to decyzja".</p>
+
+<h3>Cel zastosowania XAI</h3>
+<ul>
+<li><strong>zaufanie</strong> — użytkownicy/decydenci chętniej ufają i korzystają z systemów, których działanie rozumieją, przynajmniej częściowo</li>
+<li><strong>debugowanie i poprawa modelu</strong> — zrozumienie, na czym model "opiera" swoje decyzje, pomaga wykryć błędy (np. model klasyfikujący na podstawie przypadkowego artefaktu w danych, nie rzeczywistej cechy)</li>
+<li><strong>zgodność regulacyjna</strong> — niektóre branże (finanse, medycyna) prawnie wymagają możliwości wyjaśnienia zautomatyzowanej decyzji (np. odmowy kredytu)</li>
+<li><strong>wykrywanie bias/dyskryminacji</strong> — wyjaśnialność pomaga zidentyfikować, czy model nieświadomie opiera decyzje na cechach wrażliwych (płeć, rasa) — patrz punkt 4</li>
+<li><strong>bezpieczeństwo</strong> — w zastosowaniach wysokiego ryzyka (autonomiczne pojazdy, diagnostyka medyczna) zrozumienie przyczyn błędu jest kluczowe do jego naprawy</li>
+</ul>
+
+<h3>Metody XAI dla danych tekstowych</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Mapy uwagi (attention visualization)</td>
+<td>wizualizacja wag mechanizmu attention w transformerach (patrz punkt 5) — pokazuje, które słowa wejściowe model "uznał" za najważniejsze przy generowaniu danego fragmentu wyjścia</td>
+</tr>
+<tr>
+<td>LIME (Local Interpretable Model-agnostic Explanations)</td>
+<td>lokalnie przybliża zachowanie złożonego modelu prostszym, interpretowalnym modelem (np. regresją liniową) w otoczeniu konkretnego przykładu — dla tekstu pokazuje, które słowa najbardziej wpłynęły na klasyfikację</td>
+</tr>
+<tr>
+<td>SHAP (SHapley Additive exPlanations)</td>
+<td>oparte na teorii gier (wartości Shapleya) — przypisuje każdej cesze/słowu "wkład" w finalną predykcję, z solidnymi podstawami teoretycznymi co do sprawiedliwości podziału "zasługi" między cechy</td>
+</tr>
+</table>
+
+<h3>Metody XAI dla obrazów</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Grad-CAM (Gradient-weighted Class Activation Mapping)</td>
+<td>generuje "mapę cieplną" (heatmap) nałożoną na obraz, pokazującą, które <strong>obszary</strong> obrazu były najbardziej istotne dla decyzji sieci konwolucyjnej (patrz CNN — przedmiot Sztuczna Inteligencja) — wykorzystuje gradienty płynące z warstwy wyjściowej wstecz do ostatniej warstwy konwolucyjnej</td>
+</tr>
+<tr>
+<td>Saliency maps (mapy istotności)</td>
+<td>pokazują wpływ każdego <strong>piksela</strong> obrazu wejściowego na predykcję, na podstawie gradientu wyjścia względem wejścia — bardziej "surowa"/szczegółowa niż Grad-CAM (poziom pikseli, nie regionów)</td>
+</tr>
+<tr>
+<td>LIME (dla obrazów)</td>
+<td>dzieli obraz na segmenty (superpiksele), losowo "wyłącza" niektóre z nich i obserwuje wpływ na predykcję, żeby ustalić, które segmenty są kluczowe</td>
+</tr>
+</table>
+
+<h3>Interpretowalność wbudowana vs post-hoc</h3>
+<table>
+<tr><th></th><th>Wbudowana (intrinsic)</th><th>Post-hoc</th></tr>
+<tr><td>Zasada</td><td>model z natury interpretowalny (np. drzewo decyzyjne, regresja liniowa — patrz przedmiot Sztuczna Inteligencja)</td><td>złożony model "czarnoskrzynkowy" + osobna metoda wyjaśniająca (LIME, SHAP, Grad-CAM) zastosowana po fakcie</td></tr>
+<tr><td>Kompromis</td><td>zwykle prostszy model = niższa dokładność na złożonych danych</td><td>zachowuje wysoką dokładność złożonego modelu, ale wyjaśnienie jest przybliżeniem, nie dokładnym opisem wewnętrznego działania</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zastosowania (np. system diagnostyki obrazów medycznych oparty na CNN) zaproponuj konkretną metodę XAI (np. Grad-CAM) i wyjaśnij, jak jej wynik (mapa cieplna) pomógłby lekarzowi zweryfikować, czy model "patrzy" na klinicznie sensowny obszar obrazu, a nie na przypadkowy artefakt.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Tokenizacja</h2>
+
+<p>Modele językowe nie przetwarzają tekstu jako pojedynczych znaków ani całych słów — dzielą go na <strong>tokeny</strong>, podstawowe jednostki, którymi operuje model (na wejściu i wyjściu).</p>
+
+<h3>Dlaczego nie pojedyncze znaki ani całe słowa</h3>
+<table>
+<tr><th>Podejście</th><th>Problem</th></tr>
+<tr><td>Pojedyncze znaki</td><td>bardzo długie sekwencje dla danego tekstu — droższe obliczeniowo, trudniej modelować znaczenie na tak niskim poziomie</td></tr>
+<tr><td>Całe słowa</td><td>ogromny słownik (setki tysięcy unikalnych słów), problem słów spoza słownika (out-of-vocabulary) — nowe/rzadkie słowa, literówki, słowa złożone nie mają reprezentacji</td></tr>
+</table>
+
+<h3>Tokenizacja podsłowowa (subword tokenization)</h3>
+<p>Kompromis — dzieli tekst na fragmenty <strong>mniejsze niż słowo, ale większe niż pojedynczy znak</strong> — częste słowa pozostają jednym tokenem, rzadkie/złożone słowa dzielone są na kilka mniejszych, znanych "kawałków".</p>
+<pre>"nieprawdopodobieństwo" → ["nie", "prawdo", "podobie", "ństwo"]   (przykład ilustracyjny)
+"cat" → ["cat"]              (częste słowo — jeden token)
+"unhappiness" → ["un", "happi", "ness"]   (rzadsze — podzielone)</pre>
+
+<h3>Popularne algorytmy tokenizacji podsłowowej</h3>
+<table>
+<tr><th>Algorytm</th><th>Zasada</th></tr>
+<tr>
+<td>BPE (Byte Pair Encoding)</td>
+<td>zaczyna od pojedynczych znaków, iteracyjnie łączy <strong>najczęściej</strong> występujące razem pary symboli w nowy, pojedynczy token — powtarzane, aż osiągnięty zostanie docelowy rozmiar słownika; używane m.in. w modelach GPT</td>
+</tr>
+<tr>
+<td>WordPiece</td>
+<td>podobne do BPE, ale łączenie par symboli oparte na maksymalizacji prawdopodobieństwa danych treningowych (nie tylko surowej częstości) — używane w BERT</td>
+</tr>
+<tr>
+<td>SentencePiece</td>
+<td>traktuje tekst jako surowy strumień znaków (włącznie ze spacjami jako specjalnym symbolem), niezależny od wcześniejszej segmentacji na słowa — dobre dla języków bez naturalnych spacji między słowami (np. japoński, chiński)</td>
+</tr>
+</table>
+
+<h3>Konsekwencje praktyczne tokenizacji</h3>
+<ul>
+<li><strong>okno kontekstu</strong> (patrz punkt 4, zarządzanie kontekstem) mierzone jest w <strong>tokenach</strong>, nie słowach ani znakach — ta sama liczba słów może dać różną liczbę tokenów zależnie od języka/słownictwa</li>
+<li><strong>koszt użycia API</strong> LLM zwykle liczony jest per token (wejściowy i wyjściowy)</li>
+<li>modele mają trudności z zadaniami operującymi na <strong>pojedynczych znakach</strong> wewnątrz tokenów (np. liczenie liter w słowie) — bo "widzą" słowo jako jeden/kilka tokenów, nie sekwencję liter</li>
+<li>różne języki mogą być tokenizowane z różną "efektywnością" — języki słabo reprezentowane w danych treningowych bywają dzielone na więcej, drobniejszych tokenów niż język dominujący w treningu (zwykle angielski)</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego LLM czasem błędnie liczy litery w słowie albo ma problem z prostymi zadaniami na poziomie znaków — bezpośrednia konsekwencja tego, że model "widzi" tekst jako tokeny (często całe fragmenty słów), nie jako sekwencję pojedynczych liter.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. RLHF (Reinforcement Learning from Human Feedback)</h2>
+
+<p>Technika dostrajania dużych modeli językowych tak, by ich odpowiedzi były <strong>pomocne, bezpieczne i zgodne z ludzkimi preferencjami</strong> — sam model wytrenowany "tylko" na przewidywaniu następnego tokenu (patrz punkt 5-6) potrafi generować płynny tekst, ale niekoniecznie odpowiedzi, jakich oczekiwałby użytkownik (może być np. niepomocny, szkodliwy, czy po prostu kontynuować tekst w nieoczekiwany sposób).</p>
+
+<h3>Typowy proces trenowania nowoczesnego LLM (3 etapy)</h3>
+<ol>
+<li><strong>Pre-training</strong> — trening na ogromnym korpusie tekstu (internet, książki), zadanie: przewidywanie następnego tokenu — model uczy się języka, faktów, wzorców rozumowania, ale jeszcze nie "wie", jak być pomocnym asystentem</li>
+<li><strong>Supervised Fine-Tuning (SFT)</strong> — dostrajanie na starannie przygotowanych przykładach par pytanie-dobra odpowiedź (napisanych przez ludzi) — model uczy się <strong>formatu</strong> bycia pomocnym asystentem, nie tylko kontynuowania tekstu</li>
+<li><strong>RLHF</strong> — dalsze dostrajanie z użyciem informacji zwrotnej od ludzi, żeby jeszcze lepiej dopasować zachowanie modelu do preferencji (pomocność, unikanie szkodliwych treści, zgodność z wartościami)</li>
+</ol>
+
+<h3>Przebieg RLHF — krok po kroku</h3>
+<ol>
+<li><strong>zbieranie porównań</strong> — model generuje kilka różnych odpowiedzi na to samo pytanie, ludzie-oceniający porządkują je od najlepszej do najgorszej (łatwiej porównać dwie odpowiedzi niż ocenić jedną w oderwaniu w skali liczbowej)</li>
+<li><strong>trening modelu nagrody (reward model)</strong> — osobny model uczony na tych porównaniach, przewidujący, jak "dobra" (zgodna z ludzkimi preferencjami) jest dana odpowiedź — zamienia subiektywne oceny ludzi w liczbową funkcję nagrody</li>
+<li><strong>optymalizacja przez uczenie ze wzmocnieniem</strong> — główny model LLM jest dalej trenowany (typowo algorytmem PPO — Proximal Policy Optimization) tak, by maksymalizować przewidywaną nagrodę z modelu nagrody, generując odpowiedzi coraz bardziej zgodne z ludzkimi preferencjami</li>
+</ol>
+
+<h3>Dlaczego nie trenować bezpośrednio na ocenach ludzi</h3>
+<p>Bezpośrednie ocenianie <strong>każdej</strong> generowanej odpowiedzi przez człowieka w czasie treningu byłoby zbyt wolne/kosztowne — model nagrody, wytrenowany <strong>raz</strong> na relatywnie niewielkiej liczbie ludzkich porównań, może następnie oceniać nieograniczoną liczbę odpowiedzi automatycznie podczas dalszego treningu głównego modelu.</p>
+
+<h3>Cele RLHF (tzw. triada "HHH")</h3>
+<table>
+<tr><th>Cel</th><th>Znaczenie</th></tr>
+<tr><td>Helpful (pomocny)</td><td>odpowiedzi faktycznie odpowiadają na potrzebę użytkownika, są konkretne i użyteczne</td></tr>
+<tr><td>Honest (uczciwy)</td><td>model nie wprowadza świadomie w błąd, sygnalizuje niepewność — powiązanie z halucynacjami (patrz punkt 4)</td></tr>
+<tr><td>Harmless (nieszkodliwy)</td><td>unikanie generowania treści niebezpiecznych, obraźliwych, dyskryminujących</td></tr>
+</table>
+
+<h3>Ograniczenia i wyzwania RLHF</h3>
+<ul>
+<li><strong>koszt</strong> — wymaga dużej liczby wysokiej jakości ludzkich ocen/porównań</li>
+<li><strong>subiektywność</strong> — "dobra" odpowiedź bywa kwestią gustu/kontekstu kulturowego, oceniający mogą się nie zgadzać</li>
+<li><strong>reward hacking</strong> — model może nauczyć się "oszukiwać" model nagrody (generować odpowiedzi, które <strong>wyglądają</strong> dobrze wg nauczonego modelu nagrody, ale nie są faktycznie najlepsze) zamiast rzeczywiście poprawiać jakość</li>
+<li><strong>alternatywy</strong> — nowsze techniki jak DPO (Direct Preference Optimization) próbują osiągnąć podobny efekt bez osobnego modelu nagrody i pełnego uczenia ze wzmocnieniem, upraszczając proces</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego model wytrenowany <strong>wyłącznie</strong> na przewidywaniu następnego tokenu (etap pre-training) nie jest jeszcze "gotowym asystentem", i jakie kolejne etapy (SFT, RLHF) są potrzebne, żeby uzyskać model faktycznie pomocny i bezpieczny w interakcji z użytkownikiem.</div>
+</div>
+
+</body>
+</html>

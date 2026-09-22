@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Projektowanie aplikacji internetowych – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Projektowanie aplikacji internetowych</h1>
+
+<div class="zagadnienie">
+<h2>1. Rodzaje i zastosowanie technologii webowych</h2>
+
+<h3>Podział aplikacji webowych wg architektury renderowania</h3>
+<table>
+<tr><th>Typ</th><th>Zasada</th><th>Zalety/wady</th></tr>
+<tr>
+<td>SSR (Server-Side Rendering)</td>
+<td>serwer generuje gotowy HTML dla każdego żądania</td>
+<td>szybsze pierwsze wyświetlenie, lepsze SEO; więcej obciążenia serwera, przeładowanie przy każdej akcji</td>
+</tr>
+<tr>
+<td>SPA (Single Page Application)</td>
+<td>jedna strona HTML wczytywana raz, dalsza treść generowana dynamicznie w przeglądarce przez JS (np. React, Vue, Angular)</td>
+<td>płynne UX (bez przeładowań), ale wolniejsze pierwsze wczytanie, trudniejsze SEO bez dodatkowych technik</td>
+</tr>
+<tr>
+<td>SSG (Static Site Generation)</td>
+<td>strony wygenerowane <strong>z wyprzedzeniem</strong> (w czasie budowania), serwowane jako statyczne pliki</td>
+<td>bardzo szybkie, tanie w hostowaniu; nie nadaje się do często zmieniającej się/personalizowanej treści</td>
+</tr>
+<tr>
+<td>PWA (Progressive Web App)</td>
+<td>aplikacja webowa z cechami natywnej apki — działanie offline (service workers), instalacja na urządzeniu, powiadomienia push</td>
+<td>łączy zasięg strony WWW z doświadczeniem zbliżonym do aplikacji mobilnej</td>
+</tr>
+</table>
+
+<h3>Architektura klient-serwer i API</h3>
+<p>Nowoczesne aplikacje webowe zwykle rozdzielają <strong>frontend</strong> (interfejs w przeglądarce) od <strong>backendu</strong> (logika, baza danych), komunikujące się przez <strong>API</strong> (najczęściej REST lub GraphQL) — pozwala to na współdzielenie tego samego backendu np. przez aplikację webową i mobilną.</p>
+
+<h3>REST vs GraphQL</h3>
+<table>
+<tr><th></th><th>REST</th><th>GraphQL</th></tr>
+<tr><td>Struktura żądań</td><td>wiele endpointów (np. <code>/users</code>, <code>/posts</code>), metody HTTP (GET/POST/...)</td><td>jeden endpoint, klient opisuje w zapytaniu, jakie dane chce dostać</td></tr>
+<tr><td>Nadmiarowość danych</td><td>często zwraca więcej pól niż potrzeba (over-fetching) lub trzeba wiele żądań (under-fetching)</td><td>klient dostaje dokładnie te pola, o które poprosił</td></tr>
+<tr><td>Prostota</td><td>prostszy koncepcyjnie, powszechnie znany</td><td>bardziej elastyczny, ale bardziej złożony do wdrożenia</td></tr>
+</table>
+
+<h3>Technologie frontendowe/backendowe (przegląd)</h3>
+<p>Frontend: HTML/CSS/JS + frameworki (React, Vue, Angular). Backend: różne języki/frameworki (PHP, Node.js/Express, Python/Django/Flask, Java/Spring, .NET) — komunikacja z bazą danych, logika biznesowa (patrz przedmiot Języki hipertekstowe i tworzenie stron WWW dla podstaw PHP/JS).</p>
+
+<h3>Architektura mikroserwisów vs monolityczna</h3>
+<ul>
+<li><strong>monolit</strong> — cała aplikacja jako jeden, spójny program/proces — prostszy na start, ale trudniej skalować/wdrażać fragmentarycznie</li>
+<li><strong>mikroserwisy</strong> — aplikacja podzielona na małe, niezależne usługi komunikujące się przez API — łatwiejsze skalowanie i niezależny rozwój zespołów, ale większa złożoność operacyjna (komunikacja sieciowa, monitoring wielu usług)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Standardy wymiany danych — XML i JSON</h2>
+
+<h3>JSON (JavaScript Object Notation)</h3>
+<pre>{
+    "imie": "Jan",
+    "wiek": 25,
+    "aktywny": true,
+    "hobby": ["sport", "muzyka"],
+    "adres": {
+        "miasto": "Warszawa",
+        "kod": "00-001"
+    }
+}</pre>
+<ul>
+<li>typy danych: string, number, boolean, null, obiekt (<code>{}</code>), tablica (<code>[]</code>)</li>
+<li lekki, zwięzły format — mniej "narzutu" znaków niż XML</li>
+<li natywnie zgodny ze strukturami danych JavaScript (obiekty/tablice) — stąd dominacja w API webowych (REST)</li>
+</ul>
+
+<h3>XML (Extensible Markup Language)</h3>
+<pre>&lt;osoba&gt;
+    &lt;imie&gt;Jan&lt;/imie&gt;
+    &lt;wiek&gt;25&lt;/wiek&gt;
+    &lt;aktywny&gt;true&lt;/aktywny&gt;
+    &lt;hobby&gt;sport&lt;/hobby&gt;
+    &lt;hobby&gt;muzyka&lt;/hobby&gt;
+    &lt;adres&gt;
+        &lt;miasto&gt;Warszawa&lt;/miasto&gt;
+        &lt;kod&gt;00-001&lt;/kod&gt;
+    &lt;/adres&gt;
+&lt;/osoba&gt;</pre>
+<ul>
+<li>oparty na znacznikach (tagach), podobnie jak HTML — hierarchiczna struktura drzewa</li>
+<li>wspiera <strong>atrybuty</strong> znaczników (<code>&lt;osoba id="1"&gt;</code>), <strong>przestrzenie nazw (namespaces)</strong>, oraz walidację struktury przez schematy (<strong>DTD</strong>, <strong>XSD</strong>)</li>
+<li bardziej "rozgadany" (verbose) niż JSON — więcej znaków dla tej samej informacji</li>
+</ul>
+
+<h3>Porównanie</h3>
+<table>
+<tr><th></th><th>JSON</th><th>XML</th></tr>
+<tr><td>Rozmiar/zwięzłość</td><td>bardziej kompaktowy</td><td>bardziej "rozgadany"</td></tr>
+<tr><td>Czytelność dla człowieka</td><td>bardzo dobra</td><td>dobra, ale więcej "szumu" składniowego</td></tr>
+<tr><td>Walidacja struktury</td><td>JSON Schema (mniej ugruntowany standard)</td><td>DTD, XSD (dobrze ugruntowane, formalne)</td></tr>
+<tr><td>Metadane (atrybuty, namespaces)</td><td>brak wprost — trzeba modelować jako pola</td><td>natywne wsparcie (atrybuty tagów)</td></tr>
+<tr><td>Typowe zastosowanie dziś</td><td>REST API, konfiguracje, komunikacja web</td><td>dokumenty biznesowe/prawne, SOAP, starsze systemy korporacyjne, RSS/Atom</td></tr>
+</table>
+
+<h3>Parsowanie i walidacja</h3>
+<p>JSON — parsowane natywnie w JS (<code>JSON.parse()</code>/<code>JSON.stringify()</code>), w innych językach przez biblioteki (np. w Pythonie moduł <code>json</code>). XML — parsowane przez DOM (całe drzewo w pamięci) albo SAX (strumieniowo, zdarzeniowo, mniej pamięci dla dużych plików).</p>
+
+<div class="uwaga">Typowe pytanie: przekonwertuj dany fragment danych między formatem JSON i XML, albo wskaż, kiedy XML wciąż ma przewagę nad JSON (np. gdy potrzebna jest formalna walidacja struktury przez schemat, albo integracja z systemami korporacyjnymi używającymi SOAP).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Bezpieczeństwo i ochrona danych osobowych</h2>
+
+<h3>Typowe zagrożenia aplikacji webowych</h3>
+<table>
+<tr><th>Zagrożenie</th><th>Zasada ataku</th><th>Ochrona</th></tr>
+<tr>
+<td>SQL Injection</td>
+<td>wstrzyknięcie złośliwego kodu SQL przez niesprawdzone dane wejściowe (patrz przedmiot Języki hipertekstowe)</td>
+<td>zapytania przygotowane (prepared statements), walidacja danych wejściowych</td>
+</tr>
+<tr>
+<td>XSS (Cross-Site Scripting)</td>
+<td>wstrzyknięcie złośliwego skryptu JS wykonywanego w przeglądarce innego użytkownika (np. przez niesprawdzony komentarz na stronie)</td>
+<td>escapowanie/sanityzacja danych wyświetlanych na stronie, polityka CSP (Content Security Policy)</td>
+</tr>
+<tr>
+<td>CSRF (Cross-Site Request Forgery)</td>
+<td>oszukanie zalogowanego użytkownika, by nieświadomie wykonał żądanie do innej strony (np. kliknięcie złośliwego linku wykonuje akcję na koncie bankowym ofiary)</td>
+<td>tokeny CSRF (jednorazowe, dowiązane do sesji), sprawdzanie nagłówka <code>Referer</code>/<code>Origin</code></td>
+</tr>
+<tr>
+<td>Atak brute-force na logowanie</td>
+<td>automatyczne próbowanie wielu kombinacji hasła</td>
+<td>limitowanie liczby prób, CAPTCHA, blokada konta po wielu nieudanych próbach</td>
+</tr>
+</table>
+
+<h3>Uwierzytelnianie i autoryzacja</h3>
+<ul>
+<li><strong>uwierzytelnianie (authentication)</strong> — potwierdzenie tożsamości ("kim jesteś") — login/hasło, dwuczynnikowe (2FA)</li>
+<li><strong>autoryzacja (authorization)</strong> — sprawdzenie uprawnień ("co możesz robić") — role, listy dostępu</li>
+<li><strong>hashowanie haseł</strong> — hasła nigdy nie powinny być przechowywane w bazie w postaci czystego tekstu, tylko jako hash (np. bcrypt, Argon2) — nawet wyciek bazy nie odkrywa bezpośrednio hasła</li>
+<li><strong>sesje i tokeny (JWT)</strong> — po zalogowaniu serwer wydaje token/identyfikator sesji, potwierdzający tożsamość przy kolejnych żądaniach bez ponownego logowania</li>
+</ul>
+
+<h3>RODO / GDPR — podstawy ochrony danych osobowych</h3>
+<p>Ogólne rozporządzenie o ochronie danych (RODO/GDPR) — regulacja UE dotycząca przetwarzania danych osobowych. Kluczowe zasady:</p>
+<ul>
+<li><strong>minimalizacja danych</strong> — zbieranie tylko danych faktycznie potrzebnych do celu przetwarzania</li>
+<li><strong>zgoda</strong> — wyraźna, świadoma zgoda użytkownika na przetwarzanie danych (np. konkretne, niezaznaczone domyślnie checkboxy)</li>
+<li><strong>prawo do bycia zapomnianym</strong> — użytkownik może zażądać usunięcia swoich danych</li>
+<li><strong>prawo dostępu i przenoszenia danych</strong> — użytkownik może zażądać kopii swoich danych w ustrukturyzowanym formacie</li>
+<li><strong>privacy by design</strong> — ochrona prywatności uwzględniana od samego początku projektowania systemu, nie dodawana "na końcu"</li>
+<li><strong>obowiązek zgłaszania wycieków danych</strong> — w określonym czasie od wykrycia naruszenia</li>
+</ul>
+
+<h3>Szyfrowanie danych</h3>
+<p>Dane osobowe (zwłaszcza wrażliwe) powinny być szyfrowane <strong>"w tranzycie"</strong> (przesyłanie — HTTPS/TLS, patrz przedmiot Sieci komputerowe) i <strong>"w spoczynku"</strong> (przechowywanie — szyfrowanie bazy danych/dysku), minimalizując ryzyko odczytu danych przy przechwyceniu transmisji lub wycieku bazy.</p>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj bezpieczny mechanizm logowania — hashowanie hasła (nie szyfrowanie odwracalne!), transmisja przez HTTPS, ochrona przed CSRF przy formularzu logowania, limitowanie prób (ochrona przed brute-force), i zgodność z RODO co do przechowywanych danych użytkownika.</div>
+</div>
+
+</body>
+</html>

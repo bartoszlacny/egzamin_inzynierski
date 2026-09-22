@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Teoretyczne podstawy informatyki – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Teoretyczne podstawy informatyki</h1>
+
+<div class="zagadnienie">
+<h2>1. Systemy pozycyjne, U1, U2, IEEE 754</h2>
+
+<h3>Klasyczne systemy pozycyjne</h3>
+<p>W systemie pozycyjnym o podstawie \(p\) wartość liczby to:</p>
+<p>$$W = \sum_{i} c_i \cdot p^i$$</p>
+<p>gdzie \(c_i\) to cyfry (0 do \(p-1\)), a \(i\) to pozycja (waga) cyfry.</p>
+<ul>
+<li>system dziesiętny (\(p=10\)), binarny (\(p=2\)), ósemkowy (\(p=8\)), szesnastkowy (\(p=16\))</li>
+<li>konwersja dziesiętny → binarny: dzielenie przez 2 i spisywanie reszt od dołu</li>
+<li>konwersja binarny → dziesiętny: sumowanie \(c_i \cdot 2^i\)</li>
+</ul>
+
+<h3>Reprezentacja liczb ujemnych</h3>
+<table>
+<tr><th>System</th><th>Zasada</th><th>Cechy</th></tr>
+<tr>
+<td>Znak-moduł (ZM)</td>
+<td>najstarszy bit = znak, reszta = wartość bezwzględna</td>
+<td>dwie reprezentacje zera (+0 i −0)</td>
+</tr>
+<tr>
+<td>U1 (ones' complement)</td>
+<td>liczbę ujemną tworzy się przez zanegowanie wszystkich bitów</td>
+<td>też dwie reprezentacje zera; zakres dla n bitów: \(-(2^{n-1}-1)\) do \(2^{n-1}-1\)</td>
+</tr>
+<tr>
+<td>U2 (two's complement)</td>
+<td>zanegować bity i dodać 1</td>
+<td>jedna reprezentacja zera; zakres: \(-2^{n-1}\) do \(2^{n-1}-1\); <strong>używane praktycznie wszędzie we współczesnych procesorach</strong></td>
+</tr>
+</table>
+
+<div class="uwaga">Klasyczne pytanie: dlaczego U2 wygrało z U1? Bo w U2 dodawanie i odejmowanie liczb ze znakiem wykonuje się dokładnie tym samym układem sprzętowym co dla liczb bez znaku (nie trzeba korygować wyniku o przeniesienie na końcu, jak w U1).</div>
+
+<h3>Przykład (4 bity, liczba −5)</h3>
+<ul>
+<li>5 w binarnie: 0101</li>
+<li>U1(−5): neguj bity → 1010</li>
+<li>U2(−5): neguj bity i dodaj 1 → 1010 + 1 = 1011</li>
+</ul>
+
+<h3>Format zmiennoprzecinkowy IEEE 754</h3>
+<p>Liczba zapisana jako: \((-1)^s \times 1.m \times 2^{e - \text{bias}}\)</p>
+
+<table>
+<tr><th>Format</th><th>Bit znaku</th><th>Wykładnik</th><th>Mantysa</th><th>Bias</th></tr>
+<tr><td>float (32-bit, single)</td><td>1</td><td>8 bitów</td><td>23 bity</td><td>127</td></tr>
+<tr><td>double (64-bit)</td><td>1</td><td>11 bitów</td><td>52 bity</td><td>1023</td></tr>
+</table>
+
+<ul>
+<li>bit znaku (s): 0 = liczba dodatnia, 1 = ujemna</li>
+<li>wykładnik jest przesunięty (biased) — przechowywana wartość to \(e_{rzeczywisty} + \text{bias}\), żeby uniknąć osobnej reprezentacji znaku wykładnika</li>
+<li>mantysa reprezentuje część ułamkową, przy założeniu "ukrytej jedynki" (1.m) dla liczb znormalizowanych</li>
+<li>specjalne wartości: wszystkie bity wykładnika = 1 → \(\pm\infty\) (mantysa=0) lub NaN (mantysa≠0); wszystkie bity wykładnika = 0 → liczby zdenormalizowane / zero</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie: zamiana konkretnej liczby (np. 6.5) na zapis IEEE 754 single precision — zamieniasz na binarnie, normalizujesz do postaci \(1.xxx \times 2^k\), liczysz wykładnik z biasem, spisujesz s | e | m.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Gramatyki bezkontekstowe</h2>
+
+<p>Gramatyka formalna: czwórka \(G = (N, T, P, S)\), gdzie:</p>
+<ul>
+<li>\(N\) — zbiór symboli nieterminalnych</li>
+<li>\(T\) — zbiór symboli terminalnych (alfabet)</li>
+<li>\(P\) — zbiór produkcji (reguł przepisywania)</li>
+<li>\(S\) — symbol startowy (\(S \in N\))</li>
+</ul>
+
+<h3>Gramatyka bezkontekstowa (kontekstowo-niezależna, typ 2 w hierarchii Chomsky'ego)</h3>
+<p>Każda produkcja ma postać:</p>
+<p>$$A \rightarrow \alpha$$</p>
+<p>gdzie \(A \in N\) (pojedynczy nieterminal po lewej stronie), a \(\alpha\) to dowolny ciąg symboli terminalnych i nieterminalnych.</p>
+
+<div class="uwaga">"Bezkontekstowa" oznacza, że regułę można zastosować niezależnie od tego, co otacza dany symbol A w wyprowadzanym ciągu — liczy się tylko sam symbol A po lewej stronie.</div>
+
+<h3>Przykład — gramatyka nawiasów poprawnie domkniętych</h3>
+<pre>S → ( S ) S
+S → ε</pre>
+<p>Generuje np. <code>()</code>, <code>(())</code>, <code>()()</code>, <code>(()())</code>...</p>
+
+<h3>Wyprowadzenie (derywacja)</h3>
+<p>Ciąg kroków zastępowania nieterminali zgodnie z produkcjami, np. \(S \Rightarrow (S)S \Rightarrow ()S \Rightarrow ()\)</p>
+
+<h3>Drzewo wyprowadzenia</h3>
+<p>Graficzna reprezentacja derywacji — korzeń to S, liście to symbole terminalne, węzły wewnętrzne to zastosowane produkcje. Gramatyka jest <strong>niejednoznaczna</strong>, jeśli istnieje ciąg terminalny mający więcej niż jedno drzewo wyprowadzenia.</p>
+
+<h3>Postać normalna Chomsky'ego (CNF)</h3>
+<p>Każda produkcja ma postać \(A \rightarrow BC\) lub \(A \rightarrow a\) (dwa nieterminale albo jeden terminal) — każdą gramatykę bezkontekstową da się sprowadzić do tej postaci.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Automaty skończone. Maszyna Turinga</h2>
+
+<h3>Automat skończony (deterministyczny, DFA)</h3>
+<p>Piątka \(M = (Q, \Sigma, \delta, q_0, F)\):</p>
+<ul>
+<li>\(Q\) — skończony zbiór stanów</li>
+<li>\(\Sigma\) — alfabet wejściowy</li>
+<li>\(\delta: Q \times \Sigma \to Q\) — funkcja przejścia</li>
+<li>\(q_0\) — stan początkowy</li>
+<li>\(F \subseteq Q\) — zbiór stanów akceptujących</li>
+</ul>
+
+<p>Automat czyta ciąg symboli, przechodząc między stanami; ciąg jest akceptowany, jeśli po przeczytaniu całości automat znajduje się w stanie z \(F\).</p>
+
+<h3>NFA (automat niedeterministyczny)</h3>
+<p>\(\delta\) może prowadzić do wielu stanów naraz (albo zera). <strong>Twierdzenie:</strong> każdy NFA można przekształcić na równoważny DFA (metoda konstrukcji podzbiorów) — mają tę samą moc wyrażania (języki regularne).</p>
+
+<h3>Automat ze stosem (PDA)</h3>
+<p>DFA/NFA rozszerzony o stos pamięci — rozpoznaje języki bezkontekstowe (o jeden poziom "mocniejszy" niż automaty skończone).</p>
+
+<h3>Maszyna Turinga</h3>
+<p>Model obliczeń: nieskończona taśma + głowica czytająco-pisząca + zbiór stanów + funkcja przejścia \(\delta: Q \times \Gamma \to Q \times \Gamma \times \{L, R\}\) (stan, symbol na taśmie → nowy stan, nowy symbol, ruch głowicy w lewo/prawo).</p>
+
+<ul>
+<li>rozpoznaje/oblicza dowolną funkcję obliczalną (teza Churcha-Turinga)</li>
+<li>najsilniejszy model obliczeniowy w hierarchii Chomsky'ego (języki typu 0, rekurencyjnie przeliczalne)</li>
+<li>problem stopu (halting problem) — nierozstrzygalny: nie istnieje algorytm, który dla dowolnego programu i danych zawsze poprawnie stwierdzi, czy program się zatrzyma</li>
+</ul>
+
+<div class="uwaga">Kolejność mocy (od najsłabszego): DFA/NFA (języki regularne) &lt; PDA (bezkontekstowe) &lt; Maszyna Turinga (rekurencyjnie przeliczalne).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Hierarchia Chomsky'ego</h2>
+
+<table>
+<tr><th>Typ</th><th>Nazwa</th><th>Postać produkcji</th><th>Automat rozpoznający</th></tr>
+<tr>
+<td>0</td>
+<td>Języki rekurencyjnie przeliczalne (nieograniczone)</td>
+<td>\(\alpha \rightarrow \beta\) (dowolna)</td>
+<td>Maszyna Turinga</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Języki kontekstowe</td>
+<td>\(\alpha A \beta \rightarrow \alpha \gamma \beta\), \(|\gamma|\ge1\)</td>
+<td>Liniowo ograniczony automat (LBA)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Języki bezkontekstowe</td>
+<td>\(A \rightarrow \alpha\)</td>
+<td>Automat ze stosem (PDA)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Języki regularne</td>
+<td>\(A \rightarrow aB\) lub \(A \rightarrow a\) (prawostronnie liniowa)</td>
+<td>Automat skończony (DFA/NFA)</td>
+</tr>
+</table>
+
+<p>Hierarchia jest zawierająca się (inkluzja właściwa):</p>
+<p>$$\text{Typ 3} \subsetneq \text{Typ 2} \subsetneq \text{Typ 1} \subsetneq \text{Typ 0}$$</p>
+
+<div class="uwaga">Im niższy numer typu, tym mniej ograniczona (bardziej ogólna) gramatyka i tym większa klasa języków, ale też trudniejsze/wolniejsze rozpoznawanie. Typ 3 (regularne) rozpoznaje się najszybciej, typ 0 wymaga pełnej mocy Maszyny Turinga.</div>
+
+<h3>Przykłady języków</h3>
+<ul>
+<li>regularny: \(a^*b^*\) (dowolna liczba a, potem dowolna liczba b)</li>
+<li>bezkontekstowy, ale nie regularny: \(a^n b^n\) (potrzeba "zliczać" — automat skończony nie ma pamięci do tego, stos w PDA sobie radzi)</li>
+<li>kontekstowy, ale nie bezkontekstowy: \(a^n b^n c^n\)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Złożoność czasowa algorytmu</h2>
+
+<p>Złożoność czasowa opisuje, jak czas działania algorytmu rośnie wraz z rozmiarem danych wejściowych \(n\). Zwykle podaje się ją w notacji \(O\) (duże O) — górne ograniczenie tempa wzrostu.</p>
+
+<table>
+<tr><th>Notacja</th><th>Nazwa</th><th>Przykład problemu</th></tr>
+<tr><td>\(O(1)\)</td><td>stała</td><td>dostęp do elementu tablicy po indeksie</td></tr>
+<tr><td>\(O(\log n)\)</td><td>logarytmiczna</td><td>wyszukiwanie binarne w posortowanej tablicy</td></tr>
+<tr><td>\(O(n)\)</td><td>liniowa</td><td>przejście przez wszystkie elementy tablicy (szukanie max)</td></tr>
+<tr><td>\(O(n \log n)\)</td><td>liniowo-logarytmiczna</td><td>efektywne sortowanie (merge sort, heap sort)</td></tr>
+<tr><td>\(O(n^2)\)</td><td>kwadratowa</td><td>proste sortowanie (bąbelkowe, przez wstawianie)</td></tr>
+<tr><td>\(O(2^n)\)</td><td>wykładnicza</td><td>przegląd wszystkich podzbiorów zbioru n-elementowego</td></tr>
+<tr><td>\(O(n!)\)</td><td>silniowa</td><td>przegląd wszystkich permutacji (problem komiwojażera brute-force)</td></tr>
+</table>
+
+<h3>Inne oznaczenia asymptotyczne</h3>
+<ul>
+<li>\(O(f(n))\) — górne ograniczenie (nie gorzej niż)</li>
+<li>\(\Omega(f(n))\) — dolne ograniczenie (nie lepiej niż)</li>
+<li>\(\Theta(f(n))\) — ograniczenie dokładne (i górne, i dolne)</li>
+</ul>
+
+<h3>Złożoność pesymistyczna, średnia, optymistyczna</h3>
+<p>ten sam algorytm może mieć różną złożoność w zależności od danych wejściowych, np. quicksort: średnio \(O(n\log n)\), pesymistycznie (dane już posortowane, zły wybór pivota) \(O(n^2)\).</p>
+
+<h3>Klasy problemów</h3>
+<ul>
+<li><strong>P</strong> — problemy rozwiązywalne w czasie wielomianowym</li>
+<li><strong>NP</strong> — problemy, dla których rozwiązanie da się zweryfikować w czasie wielomianowym (np. problem komiwojażera, SAT, problem plecakowy)</li>
+<li><strong>NP-zupełne</strong> — najtrudniejsze problemy w NP; jeśli którykolwiek z nich rozwiąże się wielomianowo, to \(P = NP\) (otwarty problem)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Ilość informacji i entropia</h2>
+
+<h3>Ilość informacji (self-information)</h3>
+<p>Ile "zaskoczenia"/informacji niesie zajście zdarzenia o prawdopodobieństwie \(p\):</p>
+<p>$$I(x) = -\log_2 p(x) \quad \text{[bity]}$$</p>
+<ul>
+<li>zdarzenie pewne (\(p=1\)) niesie 0 bitów informacji (nic nowego)</li>
+<li>im mniej prawdopodobne zdarzenie, tym więcej informacji niesie jego zajście</li>
+</ul>
+
+<h3>Entropia źródła</h3>
+<p>Średnia ilość informacji przypadająca na symbol źródła (miara "nieprzewidywalności" źródła):</p>
+<p>$$H(X) = -\sum_{i} p(x_i) \log_2 p(x_i) \quad \text{[bity/symbol]}$$</p>
+<ul>
+<li>entropia jest maksymalna, gdy wszystkie symbole są równie prawdopodobne (rozkład jednostajny) — \(H_{max} = \log_2 n\) dla n symboli</li>
+<li>entropia = 0, gdy jeden symbol ma prawdopodobieństwo 1 (źródło deterministyczne, brak niepewności)</li>
+<li>entropia wyznacza teoretyczną dolną granicę średniej długości kodu bezstratnego dla danego źródła (twierdzenie Shannona o kodowaniu źródłowym)</li>
+</ul>
+
+<h3>Przykład</h3>
+<p>Źródło binarne z prawdopodobieństwami \(p(0)=0.5,\ p(1)=0.5\):</p>
+<p>$$H = -(0.5\log_2 0.5 + 0.5\log_2 0.5) = -(0.5\cdot(-1) + 0.5\cdot(-1)) = 1 \text{ bit/symbol}$$</p>
+<p>(maksymalna możliwa entropia dla źródła binarnego — pełna niepewność)</p>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Źródła bezpamięciowe vs źródła Markowa</h2>
+
+<h3>Źródło bezpamięciowe (memoryless source)</h3>
+<p>Każdy kolejny symbol jest generowany niezależnie od poprzednich — prawdopodobieństwo symbolu nie zależy od historii:</p>
+<p>$$p(x_n | x_{n-1}, x_{n-2}, \dots) = p(x_n)$$</p>
+<ul>
+<li>entropia liczona wprost ze wzoru \(H(X) = -\sum p(x_i)\log_2 p(x_i)\)</li>
+<li>przykład: rzuty uczciwą monetą/kostką — wynik kolejnego rzutu nie zależy od poprzednich</li>
+</ul>
+
+<h3>Źródło Markowa (z pamięcią)</h3>
+<p>Prawdopodobieństwo kolejnego symbolu zależy od pewnej liczby poprzednich symboli (rzędu łańcucha):</p>
+<p>$$p(x_n | x_{n-1}, x_{n-2}, \dots) = p(x_n | x_{n-1}, \dots, x_{n-k})$$</p>
+<ul>
+<li>źródło Markowa rzędu 1 (najczęstszy przypadek): kolejny symbol zależy tylko od poprzedniego</li>
+<li>opisywane macierzą prawdopodobieństw przejścia między stanami</li>
+<li>entropia źródła Markowa (entropia warunkowa) jest zwykle <strong>mniejsza lub równa</strong> entropii źródła bezpamięciowego o tym samym rozkładzie symboli — bo znajomość poprzedniego symbolu zmniejsza niepewność co do następnego</li>
+</ul>
+
+<h3>Porównanie</h3>
+<table>
+<tr><th>Cecha</th><th>Bezpamięciowe</th><th>Markowa</th></tr>
+<tr><td>zależność od historii</td><td>brak</td><td>zależy od k poprzednich symboli</td></tr>
+<tr><td>opis matematyczny</td><td>rozkład prawdopodobieństwa symboli</td><td>macierz przejść + rozkład stanów</td></tr>
+<tr><td>entropia</td><td>\(H(X) = -\sum p(x_i)\log_2 p(x_i)\)</td><td>entropia warunkowa \(H(X_n|X_{n-1})\), zwykle niższa</td></tr>
+<tr><td>przykład</td><td>rzuty kostką</td><td>tekst naturalny (litera zależy od poprzednich liter)</td></tr>
+</table>
+
+<div class="uwaga">Modele Markowa lepiej oddają rzeczywiste źródła (np. język naturalny, gdzie po "q" prawie zawsze idzie "u") i pozwalają na skuteczniejszą kompresję niż założenie bezpamięciowości, bo wykorzystują korelacje między kolejnymi symbolami.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Wyrażenia regularne</h2>
+
+<p>Wyrażenie regularne to zwięzły zapis opisujący język regularny (typ 3 w hierarchii Chomsky'ego) — dokładnie te same języki, które rozpoznają automaty skończone.</p>
+
+<h3>Podstawowe operacje</h3>
+<ul>
+<li><strong>konkatenacja</strong>: <code>ab</code> — najpierw a, potem b</li>
+<li><strong>suma (alternatywa)</strong>: <code>a|b</code> — a albo b</li>
+<li><strong>domknięcie Kleene'ego</strong>: <code>a*</code> — zero lub więcej powtórzeń a</li>
+<li><code>a+</code> — jedno lub więcej powtórzeń (skrót od <code>aa*</code>)</li>
+<li><code>a?</code> — zero lub jedno wystąpienie (skrót od <code>a|ε</code>)</li>
+</ul>
+
+<h3>Przykłady</h3>
+<table>
+<tr><th>Wyrażenie</th><th>Opis</th></tr>
+<tr><td><code>a*b*</code></td><td>dowolna liczba a, potem dowolna liczba b</td></tr>
+<tr><td><code>(ab)*</code></td><td>dowolna liczba powtórzeń pary "ab"</td></tr>
+<tr><td><code>a(a|b)*b</code></td><td>zaczyna się od a, kończy na b, w środku dowolnie a/b</td></tr>
+</table>
+
+<h3>Równoważność z automatami</h3>
+<p><strong>Twierdzenie Kleene'ego:</strong> klasa języków opisywanych wyrażeniami regularnymi = klasa języków akceptowanych przez automaty skończone (DFA/NFA). Każde wyrażenie regularne da się przekształcić na NFA (konstrukcja Thompsona) i odwrotnie — z automatu da się odtworzyć wyrażenie regularne.</p>
+
+<div class="uwaga">Klasyczne pytanie: napisz wyrażenie regularne dla danego opisu słownego LUB narysuj automat rozpoznający dany język zapisany wyrażeniem regularnym.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Lemat o pompowaniu</h2>
+
+<p>Narzędzie do <strong>dowodzenia, że dany język NIE jest regularny</strong> (lub nie jest bezkontekstowy — istnieje analogiczna wersja dla CFG).</p>
+
+<h3>Lemat o pompowaniu dla języków regularnych</h3>
+<p>Jeśli \(L\) jest językiem regularnym, to istnieje liczba \(p \ge 1\) (długość pompowania) taka, że każde słowo \(w \in L\) o długości \(|w| \ge p\) można podzielić na trzy części \(w = xyz\), gdzie:</p>
+<ul>
+<li>\(|y| \ge 1\) (środkowa część niepusta)</li>
+<li>\(|xy| \le p\)</li>
+<li>dla każdego \(i \ge 0\): \(xy^iz \in L\) (czyli można "napompować" część y dowolną liczbę razy i słowo dalej należy do L)</li>
+</ul>
+
+<h3>Jak używać w dowodzie "nie regularności" (dowód nie wprost)</h3>
+<ol>
+<li>zakładamy, że \(L\) jest regularny → istnieje \(p\) z lematu</li>
+<li>wybieramy konkretne słowo \(w \in L\), \(|w|\ge p\), np. \(w = a^pb^p\)</li>
+<li>pokazujemy, że dla <strong>każdego</strong> możliwego podziału \(w=xyz\) spełniającego warunki lematu, istnieje \(i\), dla którego \(xy^iz \notin L\)</li>
+<li>sprzeczność → \(L\) nie jest regularny</li>
+</ol>
+
+<h3>Przykład klasyczny</h3>
+<p>Język \(L = \{a^nb^n : n \ge 0\}\) nie jest regularny: przy podziale \(xyz\) z \(|xy|\le p\), część \(y\) składa się wyłącznie z samych "a" (bo \(xy\) mieści się w pierwszych \(p\) znakach, czyli w bloku samych a). Pompowanie (\(i=2\), czyli powtórzenie y) zwiększa liczbę "a", nie zmieniając liczby "b" → \(xy^2z \notin L\). Sprzeczność.</p>
+
+<div class="uwaga">Uwaga: lemat o pompowaniu daje warunek <strong>konieczny</strong> (jeśli L regularny, to lemat zachodzi), ale nie wystarczający — spełnienie lematu nie dowodzi, że język jest regularny.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Kodowanie Huffmana</h2>
+
+<p>Algorytm budowy optymalnego <strong>bezprefiksowego</strong> kodu o zmiennej długości, minimalizującego średnią długość kodu dla danego rozkładu prawdopodobieństw symboli — praktyczna realizacja granicy wyznaczonej przez entropię (patrz punkt 6).</p>
+
+<h3>Kod bezprefiksowy (prefix-free)</h3>
+<p>Żaden kod symbolu nie jest przedrostkiem kodu innego symbolu — dzięki temu dekodowanie jest jednoznaczne bez potrzeby separatorów.</p>
+
+<h3>Algorytm</h3>
+<ol>
+<li>każdy symbol to osobny węzeł (liść) z wagą = jego prawdopodobieństwo/częstość</li>
+<li>wybierz dwa węzły o <strong>najmniejszych</strong> wagach, połącz je w nowy węzeł (wewnętrzny) o wadze = suma wag dzieci</li>
+<li>powtarzaj, aż zostanie jeden węzeł (korzeń drzewa)</li>
+<li>etykietuj krawędzie: lewa = 0, prawa = 1 (albo odwrotnie — ważna jest konsekwencja); kod symbolu to ścieżka od korzenia do liścia</li>
+</ol>
+
+<h3>Przykład</h3>
+<p>Symbole: A(0.4), B(0.2), C(0.2), D(0.1), E(0.1)</p>
+<ul>
+<li>łączymy D+E (0.1+0.1=0.2) → węzeł DE</li>
+<li>łączymy B+C lub B+DE (najmniejsze: B=0.2, C=0.2, DE=0.2 — dowolna para) — np. C+DE (0.2+0.2=0.4) → węzeł CDE</li>
+<li>łączymy B+CDE (0.2+0.4=0.6) → węzeł BCDE</li>
+<li>łączymy A+BCDE (0.4+0.6=1.0) → korzeń</li>
+</ul>
+<p>Wynikowe długości kodów zależą od głębokości w drzewie — symbole częstsze (A) dostają krótsze kody, rzadsze (D, E) dłuższe.</p>
+
+<h3>Średnia długość kodu</h3>
+<p>$$L_{śr} = \sum_i p(x_i) \cdot l_i$$</p>
+<p>gdzie \(l_i\) to długość kodu symbolu \(i\). Zachodzi: \(H(X) \le L_{śr} < H(X)+1\) (twierdzenie Shannona — Huffman jest bliski optymalności, ale nie zawsze osiąga dokładnie entropię, chyba że prawdopodobieństwa są potęgami 1/2).</p>
+
+<div class="uwaga">Typowe zadanie: dla podanego rozkładu prawdopodobieństw zbuduj drzewo Huffmana, odczytaj kody i policz średnią długość kodu, porównaj z entropią źródła.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Minimalizacja automatu i konstrukcja podzbiorów (NFA→DFA)</h2>
+
+<h3>Konstrukcja podzbiorów (determinizacja NFA)</h3>
+<p>Sposób na zamianę automatu niedeterministycznego (NFA) na równoważny automat deterministyczny (DFA), bez zmiany rozpoznawanego języka.</p>
+<ol>
+<li>stany nowego DFA to <strong>podzbiory</strong> zbioru stanów NFA (stan startowy DFA = zbiór {stan startowy NFA} plus domknięcie ε, jeśli występują przejścia puste)</li>
+<li>dla każdego podzbioru stanów i każdego symbolu alfabetu oblicz zbiór wszystkich stanów osiągalnych z dowolnego stanu w podzbiorze</li>
+<li>powtarzaj, aż wszystkie osiągalne podzbiory zostaną utworzone</li>
+<li>podzbiór jest stanem akceptującym w DFA, jeśli zawiera <strong>choć jeden</strong> stan akceptujący z NFA</li>
+</ol>
+<div class="uwaga">Liczba stanów DFA może w najgorszym przypadku być wykładnicza względem liczby stanów NFA (\(2^n\) podzbiorów), choć w praktyce zwykle powstaje ich dużo mniej.</div>
+
+<h3>Minimalizacja DFA</h3>
+<p>Cel: znaleźć równoważny DFA o <strong>minimalnej</strong> liczbie stanów, rozpoznający ten sam język.</p>
+<ol>
+<li>usuń stany nieosiągalne z\(q_0\)</li>
+<li>podziel stany na dwie klasy: akceptujące i nieakceptujące (wstępny podział)</li>
+<li>iteracyjnie rozdrabniaj klasy: dwa stany zostają w tej samej klasie tylko jeśli dla każdego symbolu alfabetu przechodzą do stanów należących do tej samej klasy (algorytm Hopcrofta lub prostsza metoda tablicy par nierozróżnialnych stanów)</li>
+<li>powtarzaj, aż podział się ustabilizuje — każda finalna klasa staje się jednym stanem zminimalizowanego automatu</li>
+</ol>
+
+<div class="uwaga">Typowe zadanie: dany konkretny automat (tabela przejść) — wykonaj determinizację NFA→DFA krok po kroku, albo zminimalizuj podany DFA metodą podziału na klasy równoważności.</div>
+</div>
+
+</body>
+</html>

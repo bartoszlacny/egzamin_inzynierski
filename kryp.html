@@ -1,0 +1,473 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Kryptografia – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Kryptografia</h1>
+
+<div class="zagadnienie">
+<h2>1. Podstawowe elementy kryptografii</h2>
+
+<h3>Podstawowe pojęcia</h3>
+<table>
+<tr><th>Pojęcie</th><th>Definicja</th></tr>
+<tr><td>Tekst jawny (plaintext)</td><td>oryginalna, czytelna wiadomość przed zaszyfrowaniem</td></tr>
+<tr><td>Szyfrogram (ciphertext)</td><td>wiadomość po zaszyfrowaniu, nieczytelna bez klucza</td></tr>
+<tr><td>Szyfrowanie (encryption)</td><td>przekształcenie tekstu jawnego w szyfrogram</td></tr>
+<tr><td>Deszyfrowanie (decryption)</td><td>odwrotne przekształcenie — odzyskanie tekstu jawnego</td></tr>
+<tr><td>Klucz</td><td>parametr sterujący przekształceniem — bez niego (poprawnego) deszyfrowanie jest niewykonalne (lub bardzo trudne)</td></tr>
+<tr><td>Algorytm kryptograficzny (szyfr)</td><td>matematyczna funkcja realizująca szyfrowanie/deszyfrowanie</td></tr>
+<tr><td>Kryptologia</td><td>nauka obejmująca kryptografię (tworzenie szyfrów) i kryptoanalizę (łamanie szyfrów, patrz punkt 5)</td></tr>
+</table>
+
+<h3>Zasada Kerckhoffsa</h3>
+<p>Bezpieczeństwo systemu kryptograficznego powinno opierać się <strong>wyłącznie na tajności klucza</strong>, nie na tajności samego algorytmu — algorytm może być publicznie znany (i powinien być, żeby mógł być zweryfikowany przez społeczność kryptografów) bez utraty bezpieczeństwa, o ile klucz pozostaje tajny.</p>
+
+<h3>Cele kryptografii (usługi bezpieczeństwa)</h3>
+<table>
+<tr><th>Cel</th><th>Znaczenie</th></tr>
+<tr><td>Poufność (confidentiality)</td><td>tylko uprawniony odbiorca może odczytać wiadomość</td></tr>
+<tr><td>Integralność (integrity)</td><td>wykrycie, czy wiadomość została zmodyfikowana</td></tr>
+<tr><td>Uwierzytelnienie (authentication)</td><td>potwierdzenie tożsamości nadawcy</td></tr>
+<tr><td>Niezaprzeczalność (non-repudiation)</td><td>nadawca nie może później wyprzeć się wysłania wiadomości (patrz podpis cyfrowy, punkt 4)</td></tr>
+</table>
+
+<h3>Proste szyfry (klasyczne, historyczne)</h3>
+<table>
+<tr><th>Szyfr</th><th>Zasada</th></tr>
+<tr>
+<td>Szyfr Cezara</td>
+<td>przesunięcie każdej litery alfabetu o stałą liczbę pozycji: \(C = (P+k) \mod n\), gdzie \(P\) to numer litery, \(k\) to przesunięcie (klucz), \(n\) to liczba liter alfabetu — bardzo słaby, tylko \(n-1\) możliwych kluczy do sprawdzenia</td>
+</tr>
+<tr>
+<td>Szyfr podstawieniowy (monoalfabetyczny)</td>
+<td>każda litera alfabetu zastępowana inną, wg ustalonej permutacji — więcej możliwych kluczy (\(26!\) dla alfabetu łacińskiego), ale podatny na analizę częstości występowania liter (patrz punkt 5)</td>
+</tr>
+<tr>
+<td>Szyfr Vigenère'a</td>
+<td>polialfabetyczny — powtarzające się słowo-klucz określa <strong>różne</strong> przesunięcie dla kolejnych liter tekstu, utrudniając prostą analizę częstości</td>
+</tr>
+<tr>
+<td>Szyfr przestawieniowy (transpozycyjny)</td>
+<td>litery pozostają te same, ale zmienia się ich <strong>kolejność</strong> (np. zapis w tabeli i odczyt kolumnami) — inny mechanizm niż podstawienie</td>
+</tr>
+</table>
+
+<h3>Szyfrowanie z kluczem — ogólny schemat</h3>
+<p>$$C = E_k(P), \qquad P = D_k(C)$$</p>
+<p>gdzie \(E\) to funkcja szyfrująca, \(D\) — deszyfrująca, \(k\) — klucz (lub para kluczy). Bezpieczeństwo współczesnych szyfrów opiera się na obliczeniowej trudności odwrócenia \(E_k\) bez znajomości poprawnego klucza.</p>
+
+<h3>Szyfrowanie symetryczne vs asymetryczne</h3>
+<table>
+<tr><th></th><th>Symetryczne</th><th>Asymetryczne</th></tr>
+<tr><td>Klucz</td><td>ten sam klucz do szyfrowania i deszyfrowania</td><td>para kluczy: publiczny (do szyfrowania/weryfikacji) i prywatny (do deszyfrowania/podpisywania)</td></tr>
+<tr><td>Szybkość</td><td>szybkie</td><td>znacznie wolniejsze (operacje na dużych liczbach)</td></tr>
+<tr><td>Problem dystrybucji klucza</td><td>trudny — obie strony muszą bezpiecznie uzgodnić ten sam tajny klucz z wyprzedzeniem</td><td>rozwiązany — klucz publiczny można swobodnie rozpowszechniać, tylko klucz prywatny pozostaje tajny</td></tr>
+<tr><td>Przykłady algorytmów</td><td>DES, 3DES, AES (patrz punkt 3)</td><td>RSA, ElGamal (patrz punkty 3-4)</td></tr>
+<tr><td>Typowe zastosowanie</td><td>szyfrowanie właściwych, dużych ilości danych</td><td>bezpieczna wymiana klucza symetrycznego, podpisy cyfrowe</td></tr>
+</table>
+
+<div class="uwaga">W praktyce (np. TLS — patrz przedmiot Administracja serwerami WWW) łączy się oba podejścia: asymetryczna kryptografia do bezpiecznego uzgodnienia jednorazowego klucza sesyjnego, potem szybkie szyfrowanie symetryczne właściwych danych tym kluczem.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Tryby działania algorytmów symetrycznych</h2>
+
+<p>Algorytmy blokowe (jak DES, AES) szyfrują dane w <strong>stałej wielkości blokach</strong> (np. 64 lub 128 bitów) — tryb działania określa, jak szyfrować wiadomość <strong>dłuższą</strong> niż jeden blok.</p>
+
+<h3>ECB (Electronic Codebook)</h3>
+<p>Każdy blok szyfrowany <strong>niezależnie</strong>, tym samym kluczem: $$C_i = E_k(P_i)$$</p>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>proste, umożliwia równoległe szyfrowanie/deszyfrowanie bloków</td><td><strong>identyczne bloki tekstu jawnego dają identyczne szyfrogramy</strong> — ujawnia wzorce/strukturę danych (klasyczny przykład: zaszyfrowany obraz w ECB wciąż pokazuje zarys oryginalnego obrazu)</td></tr>
+</table>
+
+<h3>CBC (Cipher Block Chaining)</h3>
+<p>Każdy blok tekstu jawnego jest XOR-owany z <strong>poprzednim szyfrogramem</strong> przed zaszyfrowaniem — pierwszy blok korzysta z losowego wektora inicjującego (IV):</p>
+<p>$$C_i = E_k(P_i \oplus C_{i-1}), \qquad C_0 = IV$$</p>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>ten sam blok tekstu jawnego daje różne szyfrogramy (dzięki zależności od poprzednich bloków) — ukrywa wzorce</td><td>szyfrowanie musi być <strong>sekwencyjne</strong> (każdy blok zależy od poprzedniego), choć deszyfrowanie może być zrównoleglone; błąd w jednym szyfrogramie wpływa na deszyfrowanie dwóch kolejnych bloków</td></tr>
+</table>
+
+<h3>CFB (Cipher Feedback)</h3>
+<p>Zamienia szyfr blokowy w strumieniowy — szyfrogram poprzedniego bloku jest szyfrowany, a wynik XOR-owany z aktualnym tekstem jawnym:</p>
+<p>$$C_i = P_i \oplus E_k(C_{i-1})$$</p>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>nie wymaga dopełniania danych do pełnego bloku (jak przy szyfrowaniu strumieniowym), samosynchronizujący</td><td>szyfrowanie sekwencyjne; błąd propaguje na kilka kolejnych bloków</td></tr>
+</table>
+
+<h3>OFB (Output Feedback)</h3>
+<p>Generuje niezależny od tekstu jawnego strumień "klucza" przez wielokrotne szyfrowanie IV, XOR-owany z tekstem jawnym:</p>
+<p>$$O_i = E_k(O_{i-1}), \qquad C_i = P_i \oplus O_i, \qquad O_0 = IV$$</p>
+<table>
+<tr><th>Zalety</th><th>Wady</th></tr>
+<tr><td>błąd transmisji w jednym bloku szyfrogramu wpływa <strong>tylko</strong> na odpowiadający blok tekstu jawnego (nie propaguje dalej) — dobre dla kanałów zaszumionych</td><td>strumień klucza można wygenerować <strong>z góry</strong> (niezależnie od danych), ale to też wada: powtórzenie tego samego IV z tym samym kluczem katastrofalnie łamie bezpieczeństwo (ten sam strumień XOR ujawnia relację między dwoma tekstami jawnymi)</td></tr>
+</table>
+
+<h3>Porównanie zbiorcze</h3>
+<table>
+<tr><th>Tryb</th><th>Ukrywa wzorce?</th><th>Równoległość szyfrowania</th><th>Propagacja błędu</th></tr>
+<tr><td>ECB</td><td>nie</td><td>pełna</td><td>tylko dany blok</td></tr>
+<tr><td>CBC</td><td>tak</td><td>brak (przy szyfrowaniu)</td><td>2 bloki</td></tr>
+<tr><td>CFB</td><td>tak</td><td>brak (przy szyfrowaniu)</td><td>kilka bloków</td></tr>
+<tr><td>OFB</td><td>tak</td><td>strumień generowalny z góry</td><td>tylko dany blok</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij, dlaczego ECB jest niebezpieczny dla danych o powtarzalnej strukturze (np. obrazów) i jak CBC/OFB rozwiązuje ten problem przez wprowadzenie zależności między blokami/losowości IV.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. DES, Triple DES, RSA</h2>
+
+<h3>DES (Data Encryption Standard)</h3>
+<ul>
+<li>algorytm <strong>symetryczny</strong>, blokowy — blok 64 bity, klucz efektywnie 56 bitów (mimo formalnych 64 bitów — 8 bitów to bity parzystości)</li>
+<li>struktura <strong>sieci Feistela</strong> — 16 rund, w każdej rundzie blok dzielony na dwie połowy, jedna przekształcana funkcją rundy zależną od podklucza, wyniki zamieniane miejscami</li>
+<li>ten sam algorytm (te same przekształcenia) używany do szyfrowania <strong>i</strong> deszyfrowania — różnica tylko w kolejności użycia podkluczy rundowych (odwrotna dla deszyfrowania)</li>
+</ul>
+<div class="uwaga">DES uznawany dziś za <strong>niebezpieczny</strong> — klucz 56-bitowy jest zbyt krótki wobec współczesnej mocy obliczeniowej (możliwy atak brute-force, patrz punkt 5) — wycofany na rzecz AES w większości zastosowań.</div>
+
+<h3>Triple DES (3DES)</h3>
+<p>Wielokrotne zastosowanie DES z (zwykle) dwoma lub trzema różnymi kluczami, w schemacie <strong>szyfruj-deszyfruj-szyfruj (EDE)</strong>:</p>
+<p>$$C = E_{k_3}(D_{k_2}(E_{k_1}(P)))$$</p>
+<ul>
+<li>efektywnie zwiększa długość klucza (112 lub 168 bitów w zależności od wariantu), znacznie utrudniając brute-force</li>
+<li>schemat EDE (a nie po prostu potrójne szyfrowanie) zapewnia <strong>wsteczną kompatybilność</strong> z DES — użycie \(k_1=k_2=k_3\) daje wynik identyczny ze zwykłym pojedynczym DES</li>
+<li>znacznie <strong>wolniejszy</strong> niż pojedynczy DES (trzykrotne przejście algorytmu) — dziś w większości zastosowań zastąpiony przez AES</li>
+</ul>
+
+<h3>RSA — algorytm asymetryczny</h3>
+<p>Bezpieczeństwo oparte na trudności <strong>faktoryzacji</strong> dużych liczb złożonych (rozłożenia na czynniki pierwsze).</p>
+
+<h3>Generowanie kluczy RSA</h3>
+<ol>
+<li>wybierz dwie duże, losowe liczby pierwsze \(p\), \(q\)</li>
+<li>oblicz \(n = p \cdot q\) (moduł, część klucza publicznego i prywatnego)</li>
+<li>oblicz funkcję Eulera: \(\varphi(n) = (p-1)(q-1)\)</li>
+<li>wybierz \(e\) — wykładnik publiczny, taki że \(1 &lt; e &lt; \varphi(n)\) i \(\gcd(e,\varphi(n))=1\) (najczęściej \(e=65537\) w praktyce)</li>
+<li>wyznacz \(d\) — wykładnik prywatny, taki że \(e\cdot d \equiv 1 \pmod{\varphi(n)}\) (odwrotność modularna, przez rozszerzony algorytm Euklidesa)</li>
+</ol>
+<p>Klucz publiczny: \((n, e)\). Klucz prywatny: \((n, d)\). Liczby \(p\), \(q\), \(\varphi(n)\) muszą pozostać <strong>tajne</strong> (i najlepiej usunięte po wygenerowaniu kluczy).</p>
+
+<h3>Szyfrowanie i deszyfrowanie RSA</h3>
+<p>Szyfrowanie (kluczem publicznym odbiorcy): $$C = P^e \bmod n$$</p>
+<p>Deszyfrowanie (kluczem prywatnym): $$P = C^d \bmod n$$</p>
+<p>Poprawność wynika z twierdzenia Eulera — \(e\) i \(d\) są tak dobrane, że \((P^e)^d \equiv P \pmod n\).</p>
+
+<h3>Prosty przykład liczbowy (małe liczby, tylko ilustracyjnie)</h3>
+<p>\(p=3, q=11 \Rightarrow n=33, \varphi(n)=20\). Wybieramy \(e=3\) (\(\gcd(3,20)=1\)). Szukamy \(d\): \(3d \equiv 1 \pmod{20} \Rightarrow d=7\).</p>
+<p>Szyfrowanie \(P=5\): \(C = 5^3 \bmod 33 = 125 \bmod 33 = 26\). Deszyfrowanie: \(P = 26^7 \bmod 33 = 5\) ✓</p>
+
+<h3>Stosowanie RSA w praktyce</h3>
+<ul>
+<li>bezpośrednie szyfrowanie RSA jest <strong>wolne</strong> i ma ograniczenia rozmiaru danych (nie więcej niż rozmiar \(n\)) — w praktyce RSA używa się głównie do <strong>bezpiecznej wymiany klucza symetrycznego</strong>, nie do szyfrowania dużych wiadomości bezpośrednio</li>
+<li>podpisy cyfrowe (patrz punkt 4) — działanie "odwrotne": podpisywanie kluczem prywatnym, weryfikacja kluczem publicznym</li>
+<li>bezpieczeństwo zależy od rozmiaru \(n\) — dziś zaleca się min. 2048 bitów (dawne 512/1024-bitowe klucze są już łamane przy obecnej mocy obliczeniowej)</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie: dla podanych małych liczb pierwszych \(p, q\) i wykładnika \(e\), wygeneruj klucze RSA (oblicz \(n, \varphi(n), d\)) i zaszyfruj/odszyfruj podaną wiadomość liczbową.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Podpis cyfrowy</h2>
+
+<h3>Uogólniony schemat podpisu cyfrowego</h3>
+<p>Wykorzystuje kryptografię asymetryczną w sposób "odwrotny" do szyfrowania — nadawca podpisuje <strong>kluczem prywatnym</strong> (który tylko on zna), a każdy może zweryfikować podpis <strong>kluczem publicznym</strong> nadawcy.</p>
+<ol>
+<li>nadawca oblicza skrót (hash) wiadomości: \(h = H(M)\)</li>
+<li>nadawca "szyfruje" skrót swoim kluczem prywatnym: \(S = D_{k_{priv}}(h)\) — to jest podpis</li>
+<li>odbiorca oblicza skrót otrzymanej wiadomości \(h' = H(M)\) i "odszyfrowuje" podpis kluczem publicznym nadawcy: \(h'' = E_{k_{pub}}(S)\)</li>
+<li>jeśli \(h' = h''\), podpis jest ważny — wiadomość pochodzi od posiadacza klucza prywatnego i nie została zmodyfikowana</li>
+</ol>
+<p>Podpisuje się <strong>skrót</strong> wiadomości (nie całą wiadomość) — znacznie szybsze niż operacje asymetryczne na dużych danych, a skrót jednoznacznie identyfikuje treść (dowolna zmiana wiadomości zmienia skrót).</p>
+
+<h3>Usługi zapewniane przez podpis cyfrowy</h3>
+<ul>
+<li><strong>uwierzytelnienie</strong> — potwierdza tożsamość nadawcy (tylko on ma odpowiadający klucz prywatny)</li>
+<li><strong>integralność</strong> — każda zmiana wiadomości unieważnia podpis</li>
+<li><strong>niezaprzeczalność</strong> — nadawca nie może wyprzeć się podpisania (o ile klucz prywatny nie wyciekł)</li>
+</ul>
+
+<h3>Podpis ElGamala</h3>
+<p>Oparty na trudności <strong>problemu logarytmu dyskretnego</strong> (a nie faktoryzacji, jak RSA) — wykorzystuje losowość przy każdym podpisie (w odróżnieniu od "deterministycznego" RSA), co oznacza, że ten sam komunikat podpisany dwukrotnie daje <strong>różne</strong> (ale oba ważne) podpisy.</p>
+<p>Parametry publiczne: liczba pierwsza \(p\), generator \(g\) grupy multiplikatywnej mod \(p\). Klucz prywatny \(x\), klucz publiczny \(y=g^x \bmod p\). Podpis wiadomości \(M\) to para \((r,s)\), wyznaczana z użyciem losowej wartości \(k\) (musi być unikalna dla każdego podpisu — ponowne użycie tego samego \(k\) katastrofalnie ujawnia klucz prywatny).</p>
+
+<h3>Ślepe podpisy cyfrowe (blind signatures)</h3>
+<p>Pozwalają uzyskać ważny podpis na wiadomości, <strong>bez ujawnienia</strong> podpisującemu jej treści — nadawca "zaślepia" (blinds) wiadomość losowym czynnikiem przed wysłaniem do podpisania, podpisujący podpisuje "ślepą" wersję, nadawca następnie "odślepia" wynik, otrzymując ważny podpis <strong>oryginalnej</strong> wiadomości.</p>
+<p><strong>Zastosowanie:</strong> anonimowe systemy głosowania elektronicznego (urzędnik potwierdza uprawnienie do głosu, nie widząc samej treści głosu), anonimowa gotówka cyfrowa (bank podpisuje "banknot" bez wiedzy, komu i na co zostanie wydany).</p>
+
+<h3>Niezaprzeczalne podpisy cyfrowe (undeniable signatures)</h3>
+<p>W odróżnieniu od zwykłych podpisów cyfrowych (weryfikowalnych przez <strong>każdego</strong> posiadającego klucz publiczny), niezaprzeczalny podpis wymaga <strong>aktywnego udziału</strong> podpisującego w procesie weryfikacji — podpisujący nie może zaprzeczyć ważnemu podpisowi (stąd nazwa), ale też nie może być on weryfikowany/rozpowszechniany bez jego zgody/współpracy (chroni przed niepożądanym rozpowszechnianiem podpisanych dokumentów bez kontroli podpisującego).</p>
+
+<div class="uwaga">Typowe pytanie: opisz różnicę między zwykłym podpisem cyfrowym (RSA/ElGamal) a ślepym podpisem, i podaj konkretny scenariusz (np. e-głosowanie), gdzie własność "ślepoty" jest kluczowa dla zachowania prywatności.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Techniki kryptoanalityczne</h2>
+
+<h3>Kryptoanaliza — definicja</h3>
+<p>Nauka o łamaniu systemów kryptograficznych — próba odzyskania tekstu jawnego lub klucza <strong>bez</strong> legalnego dostępu do klucza deszyfrującego, wykorzystując słabości algorytmu, implementacji lub sposobu użycia.</p>
+
+<h3>Klasyfikacja ataków wg dostępnych danych</h3>
+<table>
+<tr><th>Typ ataku</th><th>Dostępne dane atakującemu</th></tr>
+<tr><td>Tylko szyfrogram (ciphertext-only)</td><td>wyłącznie przechwycone szyfrogramy — najtrudniejszy scenariusz dla atakującego</td></tr>
+<tr><td>Znany tekst jawny (known-plaintext)</td><td>pary (tekst jawny, odpowiadający szyfrogram) dla pewnej liczby wiadomości</td></tr>
+<tr><td>Wybrany tekst jawny (chosen-plaintext)</td><td>atakujący może wybrać dowolny tekst jawny i zdobyć jego szyfrogram (np. mając dostęp do "czarnej skrzynki" szyfrującej)</td></tr>
+<tr><td>Wybrany szyfrogram (chosen-ciphertext)</td><td>atakujący może wybrać szyfrogram i uzyskać odpowiadający mu tekst jawny (dostęp do "czarnej skrzynki" deszyfrującej)</td></tr>
+</table>
+
+<h3>Analiza częstości (frequency analysis)</h3>
+<p>Klasyczna technika łamania prostych szyfrów podstawieniowych (patrz punkt 1) — wykorzystuje fakt, że w danym języku litery/n-gramy występują z charakterystyczną, znaną częstością (np. w języku polskim "a", "i", "o" są bardzo częste) — porównanie częstości liter w szyfrogramie z typowym rozkładem języka pozwala odgadnąć podstawienie.</p>
+
+<h3>Atak brute-force (siłowy, wyczerpujące przeszukiwanie)</h3>
+<p>Wypróbowanie <strong>wszystkich</strong> możliwych kluczy, aż któryś zadziała — zawsze teoretycznie skuteczny, ale czas rośnie wykładniczo z długością klucza:</p>
+<p>$$\text{liczba możliwych kluczy} = 2^{\text{długość klucza w bitach}}$$</p>
+<p>Klucz 56-bitowy (DES) jest dziś łamalny brute-force przy odpowiednich zasobach; klucz 128+ bitowy (AES) pozostaje praktycznie niełamalny tą metodą przy obecnej i przewidywalnej mocy obliczeniowej.</p>
+
+<h3>Kryptoanaliza różnicowa (differential cryptanalysis)</h3>
+<p>Bada, jak <strong>różnice</strong> (np. XOR) między parami tekstów jawnych wpływają na różnice między odpowiadającymi im szyfrogramami — statystyczna analiza tych zależności może ujawnić informacje o kluczu, szczególnie skuteczna przeciw niektórym szyfrom blokowym o określonej strukturze rund.</p>
+
+<h3>Kryptoanaliza liniowa (linear cryptanalysis)</h3>
+<p>Szuka <strong>liniowych</strong> (w sensie algebry XOR/mod 2) przybliżeń nieliniowych elementów szyfru (np. S-boxów w DES) — zebranie dostatecznie dużej liczby par tekst jawny/szyfrogram pozwala statystycznie wywnioskować bity klucza.</p>
+
+<h3>Atak na tryb działania (nie sam algorytm)</h3>
+<p>Czasem słabość leży nie w samym algorytmie blokowym, a w <strong>trybie jego użycia</strong> (patrz punkt 2) — np. atak wykorzystujący powtarzające się wzorce w ECB, albo ponowne użycie tego samego IV/nonce w trybach strumieniowych (katastrofalne dla OFB, CFB — ujawnia relację XOR między dwoma tekstami jawnymi).</p>
+
+<h3>Ataki boczne (side-channel)</h3>
+<p>Nie atakują matematyki algorytmu, tylko <strong>fizyczną implementację</strong> — pomiar czasu wykonania operacji (timing attack), zużycia energii, promieniowania elektromagnetycznego, może ujawnić informacje o kluczu, mimo że sam algorytm jest matematycznie bezpieczny.</p>
+
+<h3>Inżynieria społeczna i błędy implementacji</h3>
+<p>W praktyce najsłabszym ogniwem bywa nie sam algorytm kryptograficzny (poprawnie zaprojektowane, powszechnie stosowane algorytmy jak AES/RSA są matematycznie bardzo trudne do złamania), a <strong>błędy implementacyjne</strong> (słabe generatory liczb losowych, źle dobrane parametry, ponowne użycie kluczy/IV) lub czynnik ludzki (słabe hasła, phishing).</p>
+
+<div class="uwaga">Typowe pytanie: wyjaśnij różnicę między atakiem known-plaintext a chosen-plaintext, i podaj przykład sytuacji (np. znany nagłówek pliku, standardowy format wiadomości), gdzie atakujący naturalnie dysponuje parami tekst jawny-szyfrogram, ułatwiając kryptoanalizę.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Funkcje skrótu (hash)</h2>
+
+<p>Funkcja przekształcająca dane <strong>dowolnej</strong> długości w skrót o <strong>ustalonej, stałej</strong> długości (np. 256 bitów) — używana wewnątrz podpisów cyfrowych (patrz punkt 4), do weryfikacji integralności plików, przechowywania haseł.</p>
+
+<h3>Wymagane własności kryptograficznej funkcji skrótu</h3>
+<table>
+<tr><th>Własność</th><th>Znaczenie</th></tr>
+<tr>
+<td>Jednokierunkowość (preimage resistance)</td>
+<td>mając skrót \(h\), obliczeniowo niewykonalne jest znalezienie <strong>jakiejkolwiek</strong> wiadomości \(M\) takiej, że \(H(M)=h\)</td>
+</tr>
+<tr>
+<td>Odporność na drugi przeciwobraz (second preimage resistance)</td>
+<td>mając \(M_1\), obliczeniowo niewykonalne jest znalezienie <strong>innej</strong> wiadomości \(M_2 \ne M_1\) takiej, że \(H(M_1)=H(M_2)\)</td>
+</tr>
+<tr>
+<td>Odporność na kolizje (collision resistance)</td>
+<td>obliczeniowo niewykonalne jest znalezienie <strong>jakiejkolwiek</strong> pary \(M_1 \ne M_2\) o tym samym skrócie — mocniejszy warunek niż odporność na drugi przeciwobraz</td>
+</tr>
+<tr>
+<td>Efekt lawinowy (avalanche effect)</td>
+<td>minimalna zmiana wejścia (nawet 1 bit) powinna radykalnie i nieprzewidywalnie zmienić cały skrót wyjściowy</td>
+</tr>
+</table>
+
+<h3>Popularne funkcje skrótu</h3>
+<table>
+<tr><th>Funkcja</th><th>Długość skrótu</th><th>Status bezpieczeństwa</th></tr>
+<tr><td>MD5</td><td>128 bitów</td><td><strong>złamana</strong> — praktyczne ataki kolizyjne, nie powinna być używana do celów bezpieczeństwa</td></tr>
+<tr><td>SHA-1</td><td>160 bitów</td><td><strong>złamana</strong> — udowodnione praktyczne kolizje (2017), wycofywana</td></tr>
+<tr><td>SHA-256 / SHA-3</td><td>256 bitów</td><td>obecny standard, uznawany za bezpieczny</td></tr>
+</table>
+
+<h3>Paradoks urodzin — dlaczego kolizje "łatwiej" znaleźć niż się wydaje</h3>
+<p>Ze względu na paradoks urodzin, znalezienie <strong>jakiejkolwiek</strong> kolizji (nie konkretnej, wybranej pary) wymaga w przybliżeniu tylko \(2^{n/2}\) prób dla skrótu o długości \(n\) bitów, a nie \(2^n\) — stąd długość skrótu musi być dwukrotnie większa niż nominalny "poziom bezpieczeństwa" (np. SHA-256 daje efektywnie 128-bitowy poziom odporności na kolizje).</p>
+
+<h3>Zastosowania</h3>
+<ul>
+<li><strong>weryfikacja integralności</strong> — porównanie skrótu pobranego pliku z opublikowanym, oczekiwanym skrótem</li>
+<li><strong>przechowywanie haseł</strong> — nigdy w postaci jawnej, tylko jako skrót (najlepiej z dodatkową "solą" i specjalnie zaprojektowanymi, wolnymi funkcjami jak bcrypt/Argon2 — patrz przedmiot Projektowanie aplikacji internetowych)</li>
+<li><strong>podpisy cyfrowe</strong> — podpisuje się skrót wiadomości, nie całą wiadomość (patrz punkt 4)</li>
+<li><strong>struktury danych</strong> — tablice haszujące (patrz przedmiot Algorytmy i struktury danych — inny kontekst użycia haszowania, bez wymogów kryptograficznych)</li>
+</ul>
+
+<div class="uwaga">Funkcja skrótu <strong>nie jest szyfrowaniem</strong> — jest nieodwracalna z założenia (brak "klucza deszyfrującego"), podczas gdy szyfrowanie zawsze zakłada możliwość odzyskania oryginalnych danych przez uprawnioną stronę.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. AES (Advanced Encryption Standard)</h2>
+
+<p>Obecny standard szyfrowania symetrycznego (od 2001, następca DES) — wybrany w otwartym konkursie NIST spośród wielu zgłoszonych algorytmów (zwycięski algorytm nosił oryginalnie nazwę Rijndael).</p>
+
+<h3>Podstawowe parametry</h3>
+<table>
+<tr><th>Cecha</th><th>Wartość</th></tr>
+<tr><td>Rozmiar bloku</td><td>128 bitów (stały, niezależnie od długości klucza)</td></tr>
+<tr><td>Długość klucza</td><td>128, 192 lub 256 bitów (warianty AES-128/192/256)</td></tr>
+<tr><td>Liczba rund</td><td>10 (dla 128-bit), 12 (192-bit), 14 (256-bit) — dłuższy klucz = więcej rund</td></tr>
+</table>
+
+<h3>Struktura — sieć podstawieniowo-permutacyjna (SPN)</h3>
+<p>W odróżnieniu od DES (sieć Feistela), AES operuje na <strong>całym</strong> bloku danych w każdej rundzie (reprezentowanym jako macierz bajtów 4×4), przez cztery transformacje:</p>
+<ol>
+<li><strong>SubBytes</strong> — nieliniowe podstawienie każdego bajtu wg ustalonej tablicy (S-box) — wprowadza nieliniowość, kluczową dla odporności na kryptoanalizę liniową/różnicową (patrz punkt 5)</li>
+<li><strong>ShiftRows</strong> — cykliczne przesunięcie bajtów w wierszach macierzy — wprowadza dyfuzję między kolumnami</li>
+<li><strong>MixColumns</strong> — mieszanie bajtów w obrębie każdej kolumny (operacja w ciele Galois) — dodatkowa dyfuzja (pomijana w ostatniej rundzie)</li>
+<li><strong>AddRoundKey</strong> — XOR bloku z podkluczem danej rundy (wyprowadzonym z głównego klucza przez harmonogram kluczy — key schedule)</li>
+</ol>
+<p>Deszyfrowanie wykonuje te same transformacje w <strong>odwrotnej</strong> kolejności, używając ich odwrotności (InvSubBytes, InvShiftRows, InvMixColumns) — w odróżnieniu od sieci Feistela (DES), gdzie ten sam algorytm służy do obu kierunków.</p>
+
+<h3>AES vs DES — porównanie</h3>
+<table>
+<tr><th></th><th>DES</th><th>AES</th></tr>
+<tr><td>Rozmiar bloku</td><td>64 bity</td><td>128 bitów</td></tr>
+<tr><td>Długość klucza</td><td>56 bitów (efektywnie)</td><td>128/192/256 bitów</td></tr>
+<tr><td>Struktura</td><td>sieć Feistela</td><td>sieć podstawieniowo-permutacyjna (SPN)</td></tr>
+<tr><td>Status bezpieczeństwa</td><td>złamany (brute-force praktyczny)</td><td>uznawany za bezpieczny przy obecnej mocy obliczeniowej</td></tr>
+<tr><td>Wydajność w sprzęcie</td><td>gorsza</td><td>bardzo dobra, wsparcie sprzętowe (instrukcje AES-NI w procesorach)</td></tr>
+</table>
+
+<h3>Zastosowanie</h3>
+<p>AES używany jest praktycznie wszędzie, gdzie potrzebne jest szybkie szyfrowanie symetryczne dużych ilości danych — szyfrowanie dysków (BitLocker, FileVault), komunikacja TLS/HTTPS (patrz przedmiot Administracja serwerami WWW — jako część "właściwego" szyfrowania danych po handshake'u), VPN, Wi-Fi (WPA2/WPA3).</p>
+
+<div class="uwaga">AES działa w tych samych trybach co inne szyfry blokowe (ECB, CBC, CFB, OFB — patrz punkt 2), plus nowocześniejszy tryb GCM (Galois/Counter Mode), zapewniający jednocześnie poufność <strong>i</strong> integralność danych (authenticated encryption) — dziś zalecany zamiast starszych trybów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Protokół Diffiego-Hellmana</h2>
+
+<p>Pierwszy (1976) publicznie opisany protokół kryptografii asymetrycznej — pozwala dwóm stronom uzgodnić <strong>wspólny, tajny</strong> klucz symetryczny przez <strong>niezabezpieczony</strong> kanał komunikacyjny, bez wcześniejszego dzielenia się żadnym sekretem.</p>
+
+<h3>Bezpieczeństwo — problem logarytmu dyskretnego</h3>
+<p>Opiera się na trudności obliczenia \(x\) ze znanego \(g^x \bmod p\) (podczas gdy samo obliczenie \(g^x \bmod p\) ze znanego \(x\) jest łatwe/szybkie) — asymetria trudności obliczeniowej w obie strony jest źródłem bezpieczeństwa.</p>
+
+<h3>Przebieg protokołu</h3>
+<ol>
+<li>strony <strong>publicznie</strong> uzgadniają dwie liczby: dużą liczbę pierwszą \(p\) i generator \(g\) (te wartości mogą być znane atakującemu, nie są tajne)</li>
+<li>Alicja losuje tajną liczbę \(a\), oblicza \(A = g^a \bmod p\) i wysyła \(A\) do Boba (publicznie, przez niezabezpieczony kanał)</li>
+<li>Bob losuje tajną liczbę \(b\), oblicza \(B = g^b \bmod p\) i wysyła \(B\) do Alicji</li>
+<li>Alicja oblicza \(K = B^a \bmod p\); Bob oblicza \(K = A^b \bmod p\) — obie strony otrzymują <strong>ten sam</strong> wynik: $$K = g^{ab} \bmod p$$</li>
+</ol>
+<p>Atakujący widzący \(p, g, A, B\) (wszystko przesłane jawnie) <strong>nie może</strong> (przy obecnej mocy obliczeniowej, dla dostatecznie dużych liczb) efektywnie obliczyć \(K\) bez znajomości \(a\) lub \(b\) — musiałby rozwiązać problem logarytmu dyskretnego.</p>
+
+<h3>Prosty przykład liczbowy (małe liczby, tylko ilustracyjnie)</h3>
+<p>\(p=23, g=5\). Alicja: \(a=6 \Rightarrow A=5^6 \bmod 23 = 8\). Bob: \(b=15 \Rightarrow B=5^{15}\bmod 23=19\).</p>
+<p>Alicja liczy: \(K=19^6 \bmod 23 = 2\). Bob liczy: \(K=8^{15}\bmod 23=2\) — zgadza się ✓</p>
+
+<h3>Diffie-Hellman vs RSA</h3>
+<table>
+<tr><th></th><th>Diffie-Hellman</th><th>RSA</th></tr>
+<tr><td>Cel</td><td>uzgodnienie <strong>wspólnego</strong> tajnego klucza przez obie strony</td><td>szyfrowanie/podpisywanie z użyciem pary klucz publiczny/prywatny jednej strony</td></tr>
+<tr><td>Problem matematyczny</td><td>logarytm dyskretny</td><td>faktoryzacja dużych liczb</td></tr>
+<tr><td>Bezpośrednie szyfrowanie danych?</td><td>nie — służy tylko do uzgodnienia klucza</td><td>tak (choć w praktyce głównie do wymiany klucza, jak DH)</td></tr>
+</table>
+
+<h3>Podatność na atak man-in-the-middle</h3>
+<div class="uwaga">"Goły" Diffie-Hellman <strong>nie uwierzytelnia</strong> stron — atakujący pośredniczący w komunikacji może przeprowadzić osobne uzgodnienia kluczy z każdą ze stron, podszywając się pod drugą stronę wobec obu (klasyczny atak man-in-the-middle) — dlatego w praktyce (np. w TLS, patrz przedmiot Administracja serwerami WWW) DH łączy się z certyfikatami/podpisami cyfrowymi (patrz punkt 4), które potwierdzają tożsamość strony przesyłającej wartości \(A\)/\(B\).</div>
+
+<h3>ECDH — wariant na krzywych eliptycznych</h3>
+<p>Współczesny wariant (Elliptic Curve Diffie-Hellman) wykorzystujący problem logarytmu dyskretnego na krzywych eliptycznych zamiast klasycznej arytmetyki modularnej — pozwala osiągnąć ten sam poziom bezpieczeństwa przy znacznie <strong>krótszych</strong> kluczach (np. 256-bitowy klucz ECDH ≈ poziom bezpieczeństwa 3072-bitowego DH) — powszechnie stosowany dziś w TLS ze względu na wydajność.</p>
+
+<div class="uwaga">Typowe pytanie: dla podanych małych wartości \(p, g, a, b\) przeprowadź protokół Diffiego-Hellmana krok po kroku i pokaż, że obie strony uzyskują ten sam klucz \(K\), oraz wyjaśnij, dlaczego "goły" DH wymaga dodatkowego uwierzytelnienia w praktycznych zastosowaniach.</div>
+</div>
+
+</body>
+</html>

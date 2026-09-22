@@ -1,0 +1,464 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Wprowadzenie do systemów operacyjnych – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Wprowadzenie do systemów operacyjnych</h1>
+
+<div class="zagadnienie">
+<h2>1. Zarządzanie pamięcią i jej rodzaje</h2>
+
+<h3>Zadania systemu operacyjnego względem pamięci</h3>
+<ul>
+<li>przydzielanie i zwalnianie pamięci procesom</li>
+<li>izolacja pamięci między procesami (jeden proces nie może "podglądać"/nadpisać pamięci innego)</li>
+<li>umożliwienie działania programów większych niż fizyczna pamięć RAM (pamięć wirtualna)</li>
+</ul>
+
+<h3>Podział pamięci — techniki</h3>
+<table>
+<tr><th>Technika</th><th>Zasada</th></tr>
+<tr>
+<td>Partycjonowanie stałe</td>
+<td>pamięć dzielona z góry na partycje o ustalonych rozmiarach — prosto, ale nieefektywnie (fragmentacja wewnętrzna, gdy proces jest mniejszy niż partycja)</td>
+</tr>
+<tr>
+<td>Partycjonowanie dynamiczne</td>
+<td>partycje o rozmiarze dopasowanym do potrzeb procesu — eliminuje fragmentację wewnętrzną, ale powoduje fragmentację zewnętrzną (rozrzucone małe wolne obszary)</td>
+</tr>
+<tr>
+<td>Stronicowanie (paging)</td>
+<td>pamięć dzielona na małe, równe strony (np. 4KB) — eliminuje fragmentację zewnętrzną, umożliwia pamięć wirtualną</td>
+</tr>
+<tr>
+<td>Segmentacja</td>
+<td>pamięć dzielona logicznie na segmenty odpowiadające strukturze programu (kod, dane, stos) — o różnych rozmiarach</td>
+</tr>
+</table>
+
+<h3>Stronicowanie — szczegóły</h3>
+<p>Adresy używane przez program (adresy <strong>wirtualne</strong>) są tłumaczone na adresy <strong>fizyczne</strong> RAM za pomocą tabeli stron — każdej stronie wirtualnej odpowiada ramka fizyczna. Tłumaczenie wspiera sprzętowo jednostka MMU (Memory Management Unit), często z pamięcią podręczną tłumaczeń (TLB).</p>
+
+<h3>Pamięć wirtualna i wymiana (swap)</h3>
+<p>Strony rzadziej używane mogą być tymczasowo przenoszone na dysk (obszar wymiany), zwalniając RAM dla aktywniejszych procesów — gdy strona jest ponownie potrzebna, zachodzi <strong>błąd stron (page fault)</strong> i system operacyjny wczytuje ją z powrotem z dysku.</p>
+
+<h3>Algorytmy zastępowania stron</h3>
+<p>Gdy trzeba zrobić miejsce w RAM (brak wolnych ramek): FIFO (usuń najdawniej wczytaną), LRU (usuń najdawniej nieużywaną), optymalny (teoretyczny, wymaga znajomości przyszłości — punkt odniesienia do porównań).</p>
+
+<div class="uwaga">Nadmierna wymiana stron (gdy system bez przerwy ładuje/wypycha strony z/do dysku, bo za mało RAM) nazywa się <strong>thrashing</strong> — drastycznie spowalnia system, bo dysk jest dużo wolniejszy niż RAM.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Urządzenia I/O — interakcja i zarządzanie</h2>
+
+<h3>Sposoby komunikacji CPU z urządzeniami (przypomnienie/rozwinięcie)</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr><td>Odpytywanie (polling)</td><td>procesor cyklicznie sprawdza status urządzenia — proste, ale marnuje czas CPU</td></tr>
+<tr><td>Przerwania (interrupts)</td><td>urządzenie sygnalizuje zdarzenie, procesor przerywa aktualną pracę i obsługuje je</td></tr>
+<tr><td>DMA (Direct Memory Access)</td><td>dedykowany układ przesyła dane między urządzeniem a RAM bez udziału CPU w samym transferze</td></tr>
+</table>
+
+<h3>Warstwa sterowników (drivers)</h3>
+<p>System operacyjny komunikuje się z konkretnym, fizycznym urządzeniem przez <strong>sterownik</strong> — moduł tłumaczący ogólne żądania systemu (np. "zapisz blok danych") na specyficzne komendy zrozumiałe dla danego modelu urządzenia. Dzięki temu resztę systemu (i aplikacje) nie interesuje, jaki konkretnie model dysku/karty jest podłączony.</p>
+
+<h3>Kolejkowanie żądań I/O</h3>
+<p>System operacyjny buforuje i porządkuje żądania do urządzeń (zwłaszcza dysków) — np. algorytmy szeregowania dysku (FCFS, SSTF — najkrótszy czas szukania najpierw, SCAN — "skanowanie" dysku w jedną stronę jak winda) minimalizują czas przesuwania głowicy dysku.</p>
+
+<h3>Bufory i spooling</h3>
+<ul>
+<li><strong>buforowanie</strong> — tymczasowe przechowywanie danych między urządzeniem a procesem, wyrównujące różnice w tempie pracy (np. szybki CPU vs wolna drukarka)</li>
+<li><strong>spooling</strong> — kolejkowanie zadań do urządzenia, które obsługuje tylko jedno zadanie naraz (klasyczny przykład: kolejka wydruku — kolejne dokumenty czekają w kolejce, a drukarka przetwarza je po kolei)</li>
+</ul>
+
+<h3>Warstwy abstrakcji I/O w systemie</h3>
+<p>Aplikacja → wywołania systemowe (np. <code>read()</code>/<code>write()</code>) → jądro systemu (podsystem I/O, bufory, szeregowanie) → sterownik urządzenia → fizyczny sprzęt.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. System plików — organizacja logiczna i fizyczna</h2>
+
+<h3>Organizacja logiczna (widziana przez użytkownika)</h3>
+<ul>
+<li><strong>plik</strong> — nazwany zbiór danych, z metadanymi (rozmiar, daty, uprawnienia, typ)</li>
+<li><strong>katalog (folder)</strong> — struktura grupująca pliki i inne katalogi, zwykle w hierarchii drzewiastej</li>
+<li><strong>ścieżka</strong> — sposób adresowania pliku w hierarchii (absolutna od korzenia, względna od aktualnego katalogu)</li>
+<li><strong>dowiązania (linki)</strong> — symboliczne (wskazują na ścieżkę, "przezroczysty" alias) i twarde (wskazują na ten sam i-węzeł/wpis danych, kilka nazw na te same dane)</li>
+</ul>
+
+<h3>Organizacja fizyczna (na dysku)</h3>
+<table>
+<tr><th>Metoda alokacji</th><th>Zasada</th><th>Wada</th></tr>
+<tr>
+<td>Ciągła (contiguous)</td>
+<td>plik zajmuje ciąg kolejnych bloków dysku</td>
+<td>szybki odczyt sekwencyjny, ale fragmentacja, trudność w rozroście pliku</td>
+</tr>
+<tr>
+<td>Listowa (linked)</td>
+<td>każdy blok wskazuje na następny blok pliku</td>
+<td>łatwy rozrost, ale wolny dostęp swobodny (trzeba przejść całą listę)</td>
+</tr>
+<tr>
+<td>Indeksowa (indexed / i-node)</td>
+<td>specjalny blok (i-węzeł) przechowuje listę wskaźników do wszystkich bloków pliku</td>
+<td>szybki dostęp swobodny i sekwencyjny — stosowana w większości nowoczesnych systemów plików (np. ext4)</td>
+</tr>
+</table>
+
+<h3>Struktury metadanych</h3>
+<ul>
+<li><strong>FAT (File Allocation Table)</strong> — tablica mapująca łańcuchy bloków dla każdego pliku (starszy system, m.in. FAT32)</li>
+<li><strong>i-węzeł (inode)</strong> — struktura przechowująca metadane pliku i wskaźniki do jego bloków danych (systemy uniksowe, np. ext4)</li>
+<li><strong>MFT (Master File Table)</strong> — centralna struktura metadanych w NTFS (Windows)</li>
+</ul>
+
+<h3>Popularne systemy plików</h3>
+<table>
+<tr><th>System</th><th>Platforma</th></tr>
+<tr><td>NTFS</td><td>Windows</td></tr>
+<tr><td>ext4</td><td>Linux</td></tr>
+<tr><td>FAT32/exFAT</td><td>przenośne nośniki (pendrive'y) — kompatybilność między systemami</td></tr>
+<tr><td>APFS</td><td>macOS</td></tr>
+</table>
+
+<div class="uwaga">Fragmentacja pliku (rozrzucenie jego bloków po całym dysku, zamiast ciągłym blokiem) spowalnia odczyt na dyskach mechanicznych (HDD, ze względu na czas przesuwania głowicy) — mniejszy problem na SSD, gdzie czas dostępu do dowolnego bloku jest podobny.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Synchronizacja procesów</h2>
+
+<h3>Problem sekcji krytycznej</h3>
+<p>Fragment kodu, w którym proces/wątek odwołuje się do zasobu współdzielonego (np. zmiennej globalnej) — jeśli dwa procesy wykonują sekcję krytyczną <strong>równocześnie</strong>, może dojść do niepoprawnego wyniku (race condition, wyścig).</p>
+
+<h3>Wymagania rozwiązania</h3>
+<ul>
+<li><strong>wzajemne wykluczanie</strong> — tylko jeden proces w sekcji krytycznej naraz</li>
+<li><strong>postęp</strong> — jeśli sekcja jest wolna i ktoś chce wejść, powinien móc, bez nieskończonego czekania</li>
+<li><strong>ograniczone czekanie</strong> — proces nie czeka w nieskończoność, podczas gdy inne procesy wchodzą przed nim wielokrotnie</li>
+</ul>
+
+<h3>Poziom sprzętowy</h3>
+<p>Instrukcje atomowe procesora, których nie da się przerwać w połowie: <strong>Test-and-Set</strong>, <strong>Compare-and-Swap (CAS)</strong> — sprawdzają i modyfikują wartość w pamięci jako jedna, niepodzielna operacja, stanowiąc podstawę do budowy wyższych mechanizmów synchronizacji.</p>
+
+<h3>Poziom systemu operacyjnego</h3>
+<table>
+<tr><th>Mechanizm</th><th>Zasada</th></tr>
+<tr>
+<td>Semafor</td>
+<td>licznik z operacjami atomowymi <code>wait/P</code> (dekrementacja, blokuje jeśli &lt;0) i <code>signal/V</code> (inkrementacja) — semafor binarny (0/1) działa jak blokada (mutex), semafor zliczający ogranicza liczbę procesów mających dostęp naraz</td>
+</tr>
+<tr>
+<td>Mutex (blokada wzajemnego wykluczania)</td>
+<td>zapewnia, że tylko jeden wątek naraz posiada "zamek" na zasób — inne czekają, aż zostanie zwolniony</td>
+</tr>
+<tr>
+<td>Monitor</td>
+<td>konstrukcja wyższego poziomu (np. w Javie) — automatycznie synchronizuje dostęp do metod obiektu, z wbudowanymi zmiennymi warunkowymi do oczekiwania na konkretny warunek</td>
+</tr>
+</table>
+
+<h3>Klasyczne problemy synchronizacji</h3>
+<p>Producent-konsument (bufor współdzielony), pięciu filozofów (zakleszczenie przy współdzieleniu zasobów — patrz punkt 5), czytelnicy-pisarze (wielu czytelników może czytać naraz, ale pisarz wymaga wyłączności).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Zakleszczenia (deadlock)</h2>
+
+<p>Sytuacja, w której grupa procesów <strong>wzajemnie</strong> czeka na zasoby przetrzymywane przez inne procesy z tej samej grupy — żaden z nich nie może kontynuować, blokada trwa "na zawsze" bez zewnętrznej interwencji.</p>
+
+<h3>Cztery warunki Coffmana (muszą zajść wszystkie naraz)</h3>
+<ol>
+<li><strong>wzajemne wykluczanie</strong> — zasób może być przydzielony tylko jednemu procesowi naraz</li>
+<li><strong>przetrzymywanie i czekanie</strong> — proces przetrzymuje już przydzielone zasoby, czekając jednocześnie na kolejne</li>
+<li><strong>brak wywłaszczania</strong> — zasobu nie można odebrać procesowi siłą, musi go zwolnić dobrowolnie</li>
+<li><strong>cykliczne czekanie</strong> — istnieje cykl procesów, gdzie każdy czeka na zasób przetrzymywany przez następny w cyklu</li>
+</ol>
+
+<h3>Strategie postępowania</h3>
+<table>
+<tr><th>Strategia</th><th>Zasada</th></tr>
+<tr>
+<td>Zapobieganie (prevention)</td>
+<td>projektowanie systemu tak, by co najmniej jeden z warunków Coffmana nigdy nie mógł zajść (np. wymóg przydzielania wszystkich potrzebnych zasobów na raz, albo ustalona globalna kolejność zajmowania zasobów eliminująca cykle)</td>
+</tr>
+<tr>
+<td>Unikanie (avoidance)</td>
+<td>system dynamicznie sprawdza przed przydziałem zasobu, czy to nie doprowadzi do potencjalnego zakleszczenia (np. algorytm bankiera)</td>
+</tr>
+<tr>
+<td>Wykrywanie i naprawa (detection & recovery)</td>
+<td>system pozwala zakleszczeniom czasem zajść, ale okresowo sprawdza ich obecność (np. przez grafy przydziału zasobów) i "naprawia" sytuację (np. wywłaszczając zasób, zabijając jeden z procesów)</td>
+</tr>
+<tr>
+<td>Ignorowanie (ostrich algorithm)</td>
+<td>zakleszczenia zdarzają się tak rzadko, że system w ogóle się nimi nie zajmuje (np. podejście stosowane historycznie w niektórych systemach ogólnego przeznaczenia)</td>
+</tr>
+</table>
+
+<h3>Algorytm bankiera</h3>
+<p>Klasyczny algorytm unikania zakleszczeń — przed przydzieleniem zasobu, system symuluje, czy w wyniku tego przydziału istnieje jeszcze "bezpieczna sekwencja" pozwalająca wszystkim procesom w końcu zakończyć — jeśli nie, żądanie zasobu jest wstrzymywane.</p>
+
+<div class="uwaga">Klasyczny przykład zakleszczenia: problem pięciu filozofów przy okrągłym stole, gdzie każdy potrzebuje dwóch widelców (współdzielonych z sąsiadami) do jedzenia — jeśli wszyscy naraz podniosą lewy widelec i czekają na prawy, dochodzi do zakleszczenia.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Strumienie standardowe i praca z konsolą</h2>
+
+<h3>Trzy standardowe strumienie</h3>
+<table>
+<tr><th>Strumień</th><th>Numer deskryptora (Unix)</th><th>Domyślnie</th></tr>
+<tr><td><code>stdin</code> (standardowe wejście)</td><td>0</td><td>klawiatura</td></tr>
+<tr><td><code>stdout</code> (standardowe wyjście)</td><td>1</td><td>ekran/terminal</td></tr>
+<tr><td><code>stderr</code> (standardowe wyjście błędów)</td><td>2</td><td>ekran/terminal</td></tr>
+</table>
+
+<h3>Przekierowania (redirection) — shell uniksowy/Windows</h3>
+<pre>program &gt; wyjscie.txt      # przekieruj stdout do pliku (nadpisz)
+program &gt;&gt; wyjscie.txt     # przekieruj stdout do pliku (dopisz na koniec)
+program &lt; wejscie.txt      # przekieruj stdin z pliku
+program 2&gt; bledy.txt       # przekieruj stderr do pliku
+program &gt; wszystko.txt 2&gt;&amp;1  # przekieruj i stdout, i stderr do tego samego pliku</pre>
+
+<h3>Potoki (pipes)</h3>
+<pre>polecenie1 | polecenie2    # stdout polecenia1 staje się stdin polecenia2</pre>
+<p>Umożliwia łączenie prostych narzędzi w łańcuch przetwarzania danych, np. <code>cat plik.txt | grep "blad" | sort</code> — wypisz plik, znajdź linie z "blad", posortuj wynik.</p>
+
+<h3>Podstawowe komendy konsolowe</h3>
+<table>
+<tr><th>Linux</th><th>Windows (cmd/PowerShell)</th><th>Działanie</th></tr>
+<tr><td><code>ls</code></td><td><code>dir</code></td><td>lista plików w katalogu</td></tr>
+<tr><td><code>cd</code></td><td><code>cd</code></td><td>zmiana katalogu</td></tr>
+<tr><td><code>cat</code></td><td><code>type</code></td><td>wypisanie zawartości pliku</td></tr>
+<tr><td><code>cp</code></td><td><code>copy</code></td><td>kopiowanie plików</td></tr>
+<tr><td><code>rm</code></td><td><code>del</code></td><td>usuwanie plików</td></tr>
+<tr><td><code>ps</code></td><td><code>tasklist</code></td><td>lista działających procesów</td></tr>
+<tr><td><code>grep</code></td><td><code>findstr</code> / <code>Select-String</code></td><td>wyszukiwanie wzorca w tekście</td></tr>
+<tr><td><code>chmod</code></td><td>—</td><td>zmiana uprawnień do pliku (Linux)</td></tr>
+</table>
+
+<div class="uwaga">Rozróżnienie <code>stdout</code> vs <code>stderr</code> jest ważne, bo pozwala oddzielić normalny wynik programu od komunikatów błędów, nawet jeśli oba domyślnie trafiają na ten sam ekran — np. przy przekierowaniu <code>program &gt; wynik.txt</code>, błędy (stderr) i tak pojawią się na ekranie, a nie w pliku.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Diagnostyka usterek systemowych i sprzętowych</h2>
+
+<h3>Windows — narzędzia diagnostyczne</h3>
+<table>
+<tr><th>Narzędzie</th><th>Zastosowanie</th></tr>
+<tr><td>Menedżer zadań (Task Manager)</td><td>monitorowanie procesów, zużycia CPU/RAM/dysku, kończenie zawieszonych procesów</td></tr>
+<tr><td>Podgląd zdarzeń (Event Viewer)</td><td>logi systemowe — błędy, ostrzeżenia, informacje o awariach aplikacji/sterowników</td></tr>
+<tr><td>Monitor zasobów / wydajności</td><td>szczegółowa analiza obciążenia poszczególnych podsystemów</td></tr>
+<tr><td><code>chkdsk</code></td><td>sprawdzanie i naprawa błędów systemu plików na dysku</td></tr>
+<tr><td><code>sfc /scannow</code></td><td>weryfikacja i naprawa uszkodzonych plików systemowych Windows</td></tr>
+<tr><td>Tryb bezpieczny (Safe Mode)</td><td>uruchomienie systemu z minimalnym zestawem sterowników — pomaga zdiagnozować, czy problem powoduje konkretny sterownik/oprogramowanie</td></tr>
+<tr><td>Niebieski ekran (BSOD) — kod błędu</td><td>krytyczny błąd jądra systemu — kod błędu (np. <code>0x0000007B</code>) wskazuje konkretną przyczynę do dalszej diagnozy</td></tr>
+</table>
+
+<h3>Linux — narzędzia diagnostyczne</h3>
+<table>
+<tr><th>Narzędzie</th><th>Zastosowanie</th></tr>
+<tr><td><code>top</code> / <code>htop</code></td><td>monitorowanie procesów i zużycia zasobów w czasie rzeczywistym</td></tr>
+<tr><td><code>dmesg</code></td><td>komunikaty jądra systemu (np. błędy sprzętowe, wykrywanie urządzeń)</td></tr>
+<tr><td><code>journalctl</code></td><td>przeglądanie logów systemowych (systemd)</td></tr>
+<tr><td><code>/var/log/</code></td><td>katalog z tradycyjnymi plikami logów systemowych</td></tr>
+<tr><td><code>fsck</code></td><td>sprawdzanie i naprawa błędów systemu plików</td></tr>
+<tr><td><code>smartctl</code></td><td>odczyt danych S.M.A.R.T. dysku — wczesne wykrywanie awarii sprzętowej dysku</td></tr>
+<tr><td><code>lsof</code></td><td>lista otwartych plików/uchwytów — pomaga zdiagnozować, który proces blokuje dany plik/zasób</td></tr>
+</table>
+
+<h3>Ogólne podejście do diagnostyki</h3>
+<ol>
+<li>zebranie logów/komunikatów błędów (Event Viewer, <code>dmesg</code>, <code>journalctl</code>)</li>
+<li>sprawdzenie zużycia zasobów (czy problem to przeciążenie CPU/RAM/dysku, czy coś innego)</li>
+<li>izolacja przyczyny — np. tryb bezpieczny/minimalna konfiguracja, żeby wykluczyć konkretny sterownik/usługę</li>
+<li>weryfikacja sprzętu (testy pamięci — np. Memtest, kondycja dysku — S.M.A.R.T., temperatura komponentów)</li>
+</ol>
+
+<div class="uwaga">Typowe pytanie: rozróżnij symptomy wskazujące na problem <strong>sprzętowy</strong> (np. losowe zawieszenia, błędy S.M.A.R.T., przegrzewanie) od <strong>programowego</strong> (konkretny błąd aplikacji/sterownika, powtarzalny w tych samych okolicznościach) — od tego zależy dalsza strategia diagnozy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Procesy i wątki</h2>
+
+<h3>Proces</h3>
+<p>Działający program wraz z jego pełnym kontekstem — przestrzenią adresową (pamięcią), stanem rejestrów, otwartymi plikami, licznikiem rozkazów. Każdy proces jest <strong>izolowany</strong> od innych (własna, niezależna przestrzeń pamięci).</p>
+
+<h3>Blok kontrolny procesu (PCB — Process Control Block)</h3>
+<p>Struktura danych w jądrze systemu, przechowująca wszystkie informacje o procesie: identyfikator (PID), stan, wartości rejestrów, priorytet, wskaźniki do przydzielonej pamięci, lista otwartych plików. Umożliwia systemowi "zapamiętanie" procesu przy przełączaniu kontekstu.</p>
+
+<h3>Stany procesu</h3>
+<table>
+<tr><th>Stan</th><th>Opis</th></tr>
+<tr><td>Nowy (new)</td><td>proces został utworzony, jeszcze nie dopuszczony do rywalizacji o CPU</td></tr>
+<tr><td>Gotowy (ready)</td><td>czeka w kolejce na przydział CPU, ma wszystko czego potrzebuje oprócz procesora</td></tr>
+<tr><td>Wykonywany (running)</td><td>aktualnie zajmuje CPU</td></tr>
+<tr><td>Zablokowany/czekający (waiting/blocked)</td><td>czeka na zdarzenie (np. zakończenie operacji I/O) — nie może być wykonywany, nawet gdyby CPU był wolny</td></tr>
+<tr><td>Zakończony (terminated)</td><td>proces zakończył działanie, czeka na "sprzątnięcie" (zwolnienie zasobów przez system)</td></tr>
+</table>
+<p>Typowe przejścia: nowy→gotowy→wykonywany→(zablokowany→gotowy)*→wykonywany→zakończony.</p>
+
+<h3>Przełączanie kontekstu (context switch)</h3>
+<p>Zapisanie stanu (rejestrów, PC) aktualnie wykonywanego procesu do jego PCB i wczytanie stanu innego procesu, który ma teraz otrzymać CPU — pozwala na wielozadaniowość na pojedynczym rdzeniu, kosztem pewnego narzutu czasowego samego przełączania.</p>
+
+<h3>Wątki (threads)</h3>
+<p>"Lekkie" jednostki wykonania <strong>wewnątrz</strong> procesu — wątki tego samego procesu <strong>współdzielą</strong> tę samą przestrzeń pamięci (dane globalne, kod), ale każdy ma własny stos i licznik rozkazów.</p>
+
+<table>
+<tr><th></th><th>Proces</th><th>Wątek</th></tr>
+<tr><td>Pamięć</td><td>własna, izolowana</td><td>współdzielona z innymi wątkami tego procesu</td></tr>
+<tr><td>Koszt tworzenia/przełączania</td><td>wysoki</td><td>niski ("lekki")</td></tr>
+<tr><td>Komunikacja między jednostkami</td><td>wymaga mechanizmów IPC (potoki, gniazda, pamięć współdzielona)</td><td>bezpośrednia — po prostu wspólne zmienne (ale wymaga synchronizacji! patrz punkt 4)</td></tr>
+<tr><td>Awaria</td><td>izolowana do jednego procesu</td><td>błąd jednego wątku może zepsuć cały proces (współdzielona pamięć)</td></tr>
+</table>
+
+<div class="uwaga">Wielowątkowość w ramach jednego procesu jest tańsza niż wiele procesów, ale wymaga uważnej synchronizacji dostępu do współdzielonych danych (patrz punkt 4) — stąd bezpośredni związek tego tematu z synchronizacją i zakleszczeniami.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Szeregowanie procesów (CPU scheduling)</h2>
+
+<p>Moduł systemu operacyjnego (planista/scheduler) decydujący, <strong>który</strong> proces z kolejki gotowych otrzyma CPU i <strong>na jak długo</strong>.</p>
+
+<h3>Kryteria oceny algorytmu szeregowania</h3>
+<ul>
+<li><strong>przepustowość</strong> — liczba zakończonych procesów na jednostkę czasu</li>
+<li><strong>czas obrotu (turnaround time)</strong> — całkowity czas od zgłoszenia do zakończenia procesu</li>
+<li><strong>czas oczekiwania</strong> — suma czasu spędzonego w kolejce "gotowy"</li>
+<li><strong>czas odpowiedzi</strong> — czas od zgłoszenia do pierwszej reakcji systemu (ważne w systemach interaktywnych)</li>
+<li><strong>sprawiedliwość</strong> — czy każdy proces ma "uczciwą" szansę na CPU</li>
+</ul>
+
+<h3>Algorytmy szeregowania</h3>
+<table>
+<tr><th>Algorytm</th><th>Zasada</th><th>Cecha</th></tr>
+<tr>
+<td>FCFS (First Come, First Served)</td>
+<td>procesy obsługiwane w kolejności zgłoszenia</td>
+<td>proste, ale krótki proces może długo czekać za długim (tzw. efekt konwoju)</td>
+</tr>
+<tr>
+<td>SJF (Shortest Job First)</td>
+<td>najpierw proces o najkrótszym przewidywanym czasie wykonania</td>
+<td>minimalizuje średni czas oczekiwania, ale wymaga znać czas z góry (w praktyce szacowany) i może "zagłodzić" długie procesy</td>
+</tr>
+<tr>
+<td>Round Robin (RR)</td>
+<td>każdy proces dostaje CPU na ustalony kwant czasu, potem wraca na koniec kolejki</td>
+<td>sprawiedliwy, dobry czas odpowiedzi, typowy dla systemów interaktywnych; wybór długości kwantu jest kluczowy (za krótki = duży narzut przełączania, za długi = zbliża się do FCFS)</td>
+</tr>
+<tr>
+<td>Priorytetowe</td>
+<td>proces o najwyższym priorytecie wykonywany pierwszy</td>
+<td>ryzyko zagłodzenia procesów o niskim priorytecie — łagodzone przez "starzenie" (aging), czyli stopniowe zwiększanie priorytetu procesów czekających długo</td>
+</tr>
+<tr>
+<td>Wielopoziomowe kolejki (multilevel feedback queue)</td>
+<td>procesy przenoszone między kolejkami o różnych priorytetach/kwantach na podstawie ich zachowania (np. procesy dużo czekające na I/O trafiają do kolejek "premiowanych")</td>
+<td>stosowane w praktyce w nowoczesnych systemach (np. Linux CFS to bardziej zaawansowana odmiana tej idei)</td>
+</tr>
+</table>
+
+<h3>Szeregowanie z wywłaszczaniem vs bez</h3>
+<ul>
+<li><strong>bez wywłaszczania (non-preemptive)</strong> — raz przydzielony CPU proces oddaje go dobrowolnie (zakończenie lub przejście do stanu czekania) — np. FCFS, klasyczny SJF</li>
+<li><strong>z wywłaszczaniem (preemptive)</strong> — system może odebrać CPU procesowi w trakcie (np. gdy pojawi się proces o wyższym priorytecie, albo skończy się kwant czasu) — np. Round Robin, priorytetowe z wywłaszczaniem</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie egzaminacyjne: dla podanej listy procesów (czas zgłoszenia, czas wykonania) narysuj wykres Gantta pokazujący kolejność wykonania dla danego algorytmu (np. SJF albo Round Robin z kwantem = 2) i policz średni czas oczekiwania.</div>
+</div>
+
+</body>
+</html>

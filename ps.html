@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie sieciowe (Java) – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie sieciowe (Java)</h1>
+
+<div class="zagadnienie">
+<h2>1. Programowanie wielowątkowe w Javie</h2>
+
+<h3>Tworzenie wątków</h3>
+<pre>// przez dziedziczenie po Thread
+class MojWatek extends Thread {
+    public void run() {
+        System.out.println("Działam w wątku!");
+    }
+}
+new MojWatek().start();
+
+// przez implementację Runnable (preferowane — nie "blokuje" jedynego dziedziczenia)
+Runnable zadanie = () -> System.out.println("Działam w wątku!");
+new Thread(zadanie).start();</pre>
+<div class="uwaga">Wywołanie <code>run()</code> bezpośrednio (bez <code>start()</code>) wykonuje kod w <strong>tym samym</strong>, aktualnym wątku — nie tworzy nowego! Klasyczna pułapka egzaminacyjna.</div>
+
+<h3>Synchronizacja — <code>synchronized</code></h3>
+<pre>class Licznik {
+    private int wartosc = 0;
+    public synchronized void zwieksz() {   // tylko jeden wątek naraz może wykonać tę metodę
+        wartosc++;
+    }
+}</pre>
+<p>Zapobiega race condition (wyścigowi) przy dostępie wielu wątków do współdzielonego stanu — analogicznie do mutexów/semaforów (patrz przedmiot Wprowadzenie do systemów operacyjnych).</p>
+
+<h3>Executor Framework (nowocześniejsze podejście)</h3>
+<pre>ExecutorService pool = Executors.newFixedThreadPool(4);   // pula 4 wątków
+
+for (int i = 0; i &lt; 10; i++) {
+    int zadanieId = i;
+    pool.submit(() -&gt; System.out.println("Zadanie " + zadanieId));
+}
+pool.shutdown();</pre>
+<p>Zarządzanie pulą wątków przez <code>ExecutorService</code> jest wydajniejsze i bezpieczniejsze niż ręczne tworzenie <code>new Thread()</code> dla każdego zadania — unika narzutu tworzenia/niszczenia wątków przy dużej liczbie krótkich zadań.</p>
+
+<h3>Future i CompletableFuture — wynik asynchroniczny</h3>
+<pre>CompletableFuture&lt;Integer&gt; wynik = CompletableFuture.supplyAsync(() -&gt; {
+    // długo trwające obliczenie
+    return 42;
+});
+
+wynik.thenAccept(v -&gt; System.out.println("Wynik: " + v));</pre>
+
+<h3>Klasyczne problemy współbieżności</h3>
+<p>Race condition, deadlock (patrz przedmiot Wprowadzenie do systemów operacyjnych — te same koncepcje, teraz w kontekście wątków Javy), starvation (zagłodzenie — wątek nigdy nie dostaje szansy na wykonanie).</p>
+
+<div class="uwaga">Wielowątkowość jest kluczowa w programowaniu sieciowym — serwer obsługujący wielu klientów jednocześnie (patrz punkt 3) typowo przydziela osobny wątek (lub zadanie w puli wątków) na każde połączenie klienta, żeby jeden wolny/zawieszony klient nie blokował obsługi innych.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Połączenie z bazą danych (JDBC)</h2>
+
+<h3>JDBC (Java Database Connectivity) — podstawy</h3>
+<pre>String url = "jdbc:mysql://localhost:3306/mojabaza";
+Connection conn = DriverManager.getConnection(url, "user", "haslo");
+
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT id, nazwa FROM Produkty");
+
+while (rs.next()) {
+    System.out.println(rs.getInt("id") + ": " + rs.getString("nazwa"));
+}
+
+conn.close();</pre>
+
+<h3>PreparedStatement — zapytania przygotowane (bezpieczne!)</h3>
+<pre>String sql = "SELECT * FROM Uzytkownicy WHERE login = ? AND haslo = ?";
+PreparedStatement pstmt = conn.prepareStatement(sql);
+pstmt.setString(1, login);
+pstmt.setString(2, hashHasla);
+ResultSet rs = pstmt.executeQuery();</pre>
+<div class="uwaga">Jak w każdym innym języku (patrz przedmioty Języki hipertekstowe, Relacyjne bazy danych) — <code>PreparedStatement</code> chroni przed SQL injection; nigdy nie wklejać danych użytkownika bezpośrednio do stringa zapytania.</div>
+
+<h3>Try-with-resources — automatyczne zamykanie połączeń</h3>
+<pre>try (Connection conn = DriverManager.getConnection(url, user, pass);
+     PreparedStatement pstmt = conn.prepareStatement(sql)) {
+    // ...
+} catch (SQLException e) {
+    e.printStackTrace();
+}
+// conn i pstmt automatycznie zamknięte, nawet przy wyjątku</pre>
+
+<h3>Connection pooling</h3>
+<p>Tworzenie nowego połączenia z bazą jest kosztowne (czasowo) — w aplikacjach sieciowych obsługujących wielu klientów jednocześnie używa się <strong>puli połączeń</strong> (np. HikariCP) — połączenia są tworzone raz i wielokrotnie "wypożyczane"/"oddawane", zamiast tworzone od zera dla każdego żądania.</p>
+
+<h3>Transakcje w JDBC</h3>
+<pre>conn.setAutoCommit(false);
+try {
+    // kilka operacji...
+    conn.commit();
+} catch (SQLException e) {
+    conn.rollback();
+}</pre>
+<p>(pełne omówienie transakcji i ACID — patrz przedmiot Relacyjne bazy danych)</p>
+
+<h3>ORM w Javie (dla kontekstu)</h3>
+<p>Hibernate/JPA — mapowanie obiektowo-relacyjne analogiczne do ORM w innych językach (patrz przedmiot Bazy danych w aplikacjach internetowych) — pozwala operować na obiektach Java, bez pisania SQL "ręcznie" dla każdej operacji.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Aplikacje klient-serwer (TCP/UDP)</h2>
+
+<h3>Gniazda (sockets) — podstawy</h3>
+<p>Java udostępnia klasy <code>Socket</code> (klient) i <code>ServerSocket</code> (serwer) dla TCP, oraz <code>DatagramSocket</code> dla UDP.</p>
+
+<h3>Serwer TCP</h3>
+<pre>ServerSocket serwer = new ServerSocket(8080);
+while (true) {
+    Socket klient = serwer.accept();          // blokuje, aż połączy się klient
+    new Thread(() -&gt; obsluzKlienta(klient)).start();  // osobny wątek na klienta (patrz punkt 1)
+}
+
+void obsluzKlienta(Socket klient) {
+    try (BufferedReader in = new BufferedReader(new InputStreamReader(klient.getInputStream()));
+         PrintWriter out = new PrintWriter(klient.getOutputStream(), true)) {
+        String linia = in.readLine();
+        out.println("Echo: " + linia);
+    } catch (IOException e) { e.printStackTrace(); }
+}</pre>
+
+<h3>Klient TCP</h3>
+<pre>Socket socket = new Socket("localhost", 8080);
+PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+out.println("Witaj serwerze!");
+String odpowiedz = in.readLine();
+System.out.println(odpowiedz);</pre>
+
+<h3>UDP — bez połączenia</h3>
+<pre>// serwer UDP
+DatagramSocket serwerSocket = new DatagramSocket(9090);
+byte[] bufor = new byte[1024];
+DatagramPacket pakiet = new DatagramPacket(bufor, bufor.length);
+serwerSocket.receive(pakiet);   // odbierz jeden pakiet
+
+// klient UDP
+DatagramSocket clientSocket = new DatagramSocket();
+byte[] dane = "Witaj".getBytes();
+DatagramPacket wyslany = new DatagramPacket(dane, dane.length, InetAddress.getByName("localhost"), 9090);
+clientSocket.send(wyslany);</pre>
+
+<h3>TCP vs UDP w Javie (przypomnienie, patrz przedmiot Sieci komputerowe)</h3>
+<table>
+<tr><th></th><th>TCP (<code>Socket</code>/<code>ServerSocket</code>)</th><th>UDP (<code>DatagramSocket</code>)</th></tr>
+<tr><td>Połączenie</td><td>trwałe, nawiązywane (<code>accept</code>/<code>connect</code>)</td><td>brak — pojedyncze pakiety (datagramy)</td></tr>
+<tr><td>Gwarancja dostarczenia</td><td>tak</td><td>nie</td></tr>
+<tr><td>Zastosowanie</td><td>HTTP, przesył plików, czat</td><td>streaming, gry, DNS</td></tr>
+</table>
+
+<h3>Obsługa wielu klientów jednocześnie</h3>
+<p>Serwer w pętli <code>accept()</code> obsługuje kolejnych klientów — dla współbieżnej obsługi wielu klientów naraz każde połączenie zwykle delegowane do osobnego wątku lub zadania w puli wątków (<code>ExecutorService</code>, patrz punkt 1) — inaczej serwer obsłużyłby tylko jednego klienta na raz.</p>
+
+<div class="uwaga">Typowe zadanie projektowe: prosty serwer echo/czat TCP obsługujący wielu klientów jednocześnie, każdy w osobnym wątku, plus prosty protokół tekstowy (np. linia = jedna komenda).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Operacje na plikach w Javie</h2>
+
+<h3>Podstawowe API — <code>java.io</code></h3>
+<pre>try (BufferedReader reader = new BufferedReader(new FileReader("dane.txt"))) {
+    String linia;
+    while ((linia = reader.readLine()) != null) {
+        System.out.println(linia);
+    }
+}
+
+try (BufferedWriter writer = new BufferedWriter(new FileWriter("wynik.txt"))) {
+    writer.write("Nowa linia");
+    writer.newLine();
+}</pre>
+
+<h3>Nowsze API — <code>java.nio.file</code> (Path, Files)</h3>
+<pre>Path plik = Path.of("dane.txt");
+
+List&lt;String&gt; linie = Files.readAllLines(plik);        // wczytanie całego pliku od razu
+Files.writeString(plik, "nowa treść");                  // proste zapisanie
+Files.exists(plik);
+Files.copy(plik, Path.of("kopia.txt"));
+Files.delete(plik);
+
+try (Stream&lt;String&gt; stream = Files.lines(plik)) {       // strumieniowe (efektywne pamięciowo) przetwarzanie
+    stream.filter(l -&gt; l.contains("błąd")).forEach(System.out::println);
+}</pre>
+
+<h3>Operacje binarne</h3>
+<pre>byte[] dane = Files.readAllBytes(Path.of("obraz.png"));
+Files.write(Path.of("kopia.png"), dane);</pre>
+
+<h3>Serializacja obiektów</h3>
+<pre>// zapis obiektu do pliku
+try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("obiekt.dat"))) {
+    out.writeObject(mojObiekt);   // klasa musi implementować Serializable
+}
+
+// odczyt
+try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("obiekt.dat"))) {
+    MojaKlasa obiekt = (MojaKlasa) in.readObject();
+}</pre>
+
+<h3>Zastosowanie w kontekście sieciowym</h3>
+<p>Operacje na plikach są istotne w programowaniu sieciowym przy: logowaniu zdarzeń serwera do plików, wczytywaniu konfiguracji (adresy, porty, dane logowania do bazy), zapisie/odczycie danych przesyłanych przez protokoły plikowe (np. FTP — patrz punkt 5).</p>
+
+<div class="uwaga">W nowym kodzie zaleca się <code>java.nio.file</code> (Path/Files) nad starszym <code>java.io.File</code> — czytelniejsze API, lepsza obsługa błędów, wsparcie dla strumieniowego przetwarzania dużych plików.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Protokoły aplikacyjne i mikrousługi</h2>
+
+<h3>Protokoły aplikacyjne (do projektu na ocenę 3.0)</h3>
+<table>
+<tr><th>Protokół</th><th>Warstwa/port</th><th>Zastosowanie</th></tr>
+<tr><td>TCP</td><td>transportowa</td><td>bazowy protokół dla większości połączeń wymagających niezawodności (patrz punkt 3)</td></tr>
+<tr><td>UDP</td><td>transportowa</td><td>bazowy protokół dla szybkiej, "bezpołączeniowej" komunikacji</td></tr>
+<tr><td>SMTP</td><td>aplikacji, port 25/587</td><td>wysyłanie e-maili — Java: <code>javax.mail</code>/Jakarta Mail</td></tr>
+<tr><td>POP3</td><td>aplikacji, port 110</td><td>odbieranie e-maili (ściąga wiadomości z serwera)</td></tr>
+<tr><td>FTP</td><td>aplikacji, port 21</td><td>przesyłanie plików między klientem i serwerem</td></tr>
+</table>
+
+<h3>Przykład — wysyłka e-maila (Jakarta Mail)</h3>
+<pre>Properties props = new Properties();
+props.put("mail.smtp.host", "smtp.example.com");
+props.put("mail.smtp.port", "587");
+props.put("mail.smtp.auth", "true");
+
+Session session = Session.getInstance(props, new Authenticator() {
+    protected PasswordAuthentication getPasswordAuthentication() {
+        return new PasswordAuthentication("user", "haslo");
+    }
+});
+
+Message wiadomosc = new MimeMessage(session);
+wiadomosc.setFrom(new InternetAddress("nadawca@example.com"));
+wiadomosc.setRecipient(Message.RecipientType.TO, new InternetAddress("odbiorca@example.com"));
+wiadomosc.setSubject("Temat");
+wiadomosc.setText("Treść wiadomości");
+Transport.send(wiadomosc);</pre>
+
+<h3>REST API z CRUD (do projektu na ocenę 4.0)</h3>
+<p>W Javie zwykle realizowane przez framework Spring Boot — mapowanie metod HTTP na operacje CRUD (Create, Read, Update, Delete):</p>
+<pre>@RestController
+@RequestMapping("/produkty")
+public class ProduktController {
+
+    @GetMapping                       // READ (wszystkie)
+    public List&lt;Produkt&gt; wszystkie() { ... }
+
+    @GetMapping("/{id}")               // READ (jeden)
+    public Produkt jeden(@PathVariable Long id) { ... }
+
+    @PostMapping                       // CREATE
+    public Produkt dodaj(@RequestBody Produkt p) { ... }
+
+    @PutMapping("/{id}")               // UPDATE
+    public Produkt aktualizuj(@PathVariable Long id, @RequestBody Produkt p) { ... }
+
+    @DeleteMapping("/{id}")            // DELETE
+    public void usun(@PathVariable Long id) { ... }
+}</pre>
+<p>Połączenie z bazą danych (punkt 2) zwykle realizowane przez Spring Data JPA (ORM), integracja z zewnętrznym API — przez <code>RestTemplate</code>/<code>WebClient</code> wołające inne serwisy REST.</p>
+
+<h3>Mikrousługi (do projektu na ocenę 5.0)</h3>
+<p>Architektura, w której aplikacja jest podzielona na kilka <strong>niezależnych</strong> serwisów (patrz przedmiot Projektowanie aplikacji internetowych), komunikujących się przez sieć — każdy serwis może być rozwijany, wdrażany i skalowany niezależnie.</p>
+
+<h3>Komunikacja asynchroniczna — RabbitMQ</h3>
+<p><strong>Broker komunikatów</strong> — serwisy nie komunikują się bezpośrednio (jak w REST, gdzie klient czeka na odpowiedź), a wysyłają wiadomości do <strong>kolejki</strong>; inny serwis odbiera je, kiedy jest gotowy — nadawca nie musi czekać na przetworzenie.</p>
+<pre>// producent (Java, biblioteka amqp-client)
+ConnectionFactory factory = new ConnectionFactory();
+factory.setHost("localhost");
+try (Connection conn = factory.newConnection(); Channel channel = conn.createChannel()) {
+    channel.queueDeclare("zamowienia", false, false, false, null);
+    channel.basicPublish("", "zamowienia", null, "Nowe zamówienie #123".getBytes());
+}</pre>
+<p>Zalety: <strong>odsprzęglenie (decoupling)</strong> serwisów — nadawca nie musi znać/czekać na odbiorcę; naturalna odporność na chwilowe przeciążenie/awarię odbiorcy (wiadomości czekają w kolejce).</p>
+
+<h3>MQTT — protokół dla IoT/lekkiej komunikacji</h3>
+<p>Lekki protokół publish-subscribe, zaprojektowany dla urządzeń o ograniczonych zasobach (IoT) i niestabilnych połączeniach sieciowych — mniejszy narzut niż RabbitMQ/AMQP, popularny w systemach czujników/urządzeń wbudowanych.</p>
+<table>
+<tr><th></th><th>RabbitMQ (AMQP)</th><th>MQTT</th></tr>
+<tr><td>Typowe zastosowanie</td><td>komunikacja między mikroserwisami backendu</td><td>komunikacja z urządzeniami IoT, telemetria</td></tr>
+<tr><td>Narzut protokołu</td><td>większy, bardziej "rozgadany"</td><td>bardzo mały — zoptymalizowany pod słabe sieci/urządzenia</td></tr>
+<tr><td>Model</td><td>kolejki, routing (exchanges)</td><td>publish/subscribe na "topicach"</td></tr>
+</table>
+
+<h3>Wzorzec publish-subscribe (pub/sub)</h3>
+<p>Nadawca (publisher) wysyła wiadomość do <strong>tematu (topic)</strong>, nie do konkretnego odbiorcy — wszyscy zainteresowani odbiorcy (subscribers), którzy "zapisali się" na ten temat, otrzymują wiadomość — pełne odsprzęglenie liczby i identyfikacji odbiorców od nadawcy.</p>
+
+<div class="uwaga">Typowe pytanie projektowe: zaprojektuj architekturę 2-3 mikroserwisów (np. serwis zamówień, serwis powiadomień, serwis magazynu) komunikujących się asynchronicznie przez RabbitMQ — serwis zamówień publikuje zdarzenie "nowe zamówienie", serwisy powiadomień i magazynu subskrybują je niezależnie, bez wzajemnej bezpośredniej zależności.</div>
+</div>
+
+</body>
+</html>

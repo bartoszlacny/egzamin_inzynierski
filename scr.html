@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Systemy czasu rzeczywistego – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Systemy czasu rzeczywistego</h1>
+
+<div class="zagadnienie">
+<h2>1. Rodzaje, klasy i przykłady systemów czasu rzeczywistego</h2>
+
+<h3>Czym jest system czasu rzeczywistego (RTS)</h3>
+<p>System, w którym <strong>poprawność</strong> działania zależy nie tylko od poprawnego wyniku, ale też od dostarczenia go w określonym, przewidywalnym czasie (deadline) — "za późno" jest tak samo błędne, jak "źle policzone", niezależnie od tego, jak szybki jest przeciętnie system.</p>
+
+<h3>Klasy systemów czasu rzeczywistego</h3>
+<table>
+<tr><th>Klasa</th><th>Konsekwencja przekroczenia deadline</th><th>Przykład</th></tr>
+<tr>
+<td>Hard real-time (twardy)</td>
+<td>katastrofalna — przekroczenie deadline'u to całkowita awaria systemu, możliwe zagrożenie życia/sprzętu</td>
+<td>systemy sterowania lotem (fly-by-wire), poduszki powietrzne w samochodzie, sterowanie elektrownią jądrową</td>
+</tr>
+<tr>
+<td>Firm real-time</td>
+<td>wynik po deadline jest <strong>bezużyteczny</strong>, ale nie katastrofalny — system "przetrwa", tracąc tylko tę jedną operację</td>
+<td>przesył pojedynczej ramki wideo w transmisji na żywo (spóźniona ramka jest po prostu odrzucana)</td>
+</tr>
+<tr>
+<td>Soft real-time (miękki)</td>
+<td>przekroczenie deadline'u degraduje jakość działania, ale nie jest krytyczne</td>
+<td>systemy multimedialne, gry online, systemy rezerwacji</td>
+</tr>
+</table>
+
+<h3>Cechy odróżniające RTOS od zwykłego systemu operacyjnego</h3>
+<ul>
+<li><strong>determinizm czasowy</strong> — czas wykonania operacji systemowych (przełączanie kontekstu, obsługa przerwań) jest <strong>przewidywalny i ograniczony</strong> (bounded), nie tylko "przeciętnie szybki"</li>
+<li><strong>priorytetowe, wywłaszczające szeregowanie</strong> (patrz punkt 2) — zadanie o wyższym priorytecie zawsze dostaje CPU, gdy jest gotowe</li>
+<li><strong>minimalne, kontrolowane opóźnienia przerwań (interrupt latency)</strong></li>
+<li zwykle <strong>mniejsza</strong> przepustowość ogólna niż system ogólnego przeznaczenia — RTOS optymalizuje pod przewidywalność, nie pod maksymalną średnią wydajność</li>
+</ul>
+
+<h3>Przykłady RTOS</h3>
+<p>FreeRTOS, VxWorks, QNX, RTLinux/Xenomai (rozszerzenia Linuksa o twarde gwarancje czasowe), Zephyr — używane w systemach wbudowanych, automotive, awionice, przemyśle.</p>
+
+<div class="uwaga">Częste błędne przekonanie: RTOS to "bardzo szybki system" — w rzeczywistości kluczowa jest <strong>przewidywalność</strong> (worst-case czas odpowiedzi), nie sama szybkość przeciętna. System ogólnego przeznaczenia może mieć wyższą przepustowość średnią, ale sporadyczne, nieprzewidywalne "zacięcia" (np. przy garbage collection, page fault) dyskwalifikują go z zastosowań hard real-time.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Priorytety i algorytmy szeregowania z wywłaszczeniem</h2>
+
+<h3>Priorytety statyczne vs dynamiczne</h3>
+<table>
+<tr><th></th><th>Statyczne</th><th>Dynamiczne</th></tr>
+<tr><td>Ustalenie priorytetu</td><td>z góry, przed uruchomieniem, nie zmienia się w czasie działania</td><td>przeliczany w czasie działania, w zależności od aktualnej sytuacji (np. bliskości deadline'u)</td></tr>
+<tr><td>Przewidywalność</td><td>bardzo wysoka — łatwa analiza teoretyczna (patrz niżej)</td><td>trudniejsza analiza, ale często lepsze wykorzystanie CPU</td></tr>
+<tr><td>Przykład algorytmu</td><td>Rate Monotonic Scheduling (RMS)</td><td>Earliest Deadline First (EDF)</td></tr>
+</table>
+
+<h3>Rate Monotonic Scheduling (RMS) — priorytety statyczne</h3>
+<p>Zadania okresowe (powtarzające się co ustalony okres \(T_i\)) — priorytet przypisywany <strong>odwrotnie proporcjonalnie do okresu</strong>: zadanie z krótszym okresem (częściej wykonywane) dostaje <strong>wyższy</strong> priorytet.</p>
+<p>Warunek schedulowalności (wystarczający, dla \(n\) zadań z wykorzystaniem CPU \(U_i = C_i/T_i\), gdzie \(C_i\) to czas wykonania):</p>
+<p>$$\sum_{i=1}^n \frac{C_i}{T_i} \le n(2^{1/n}-1)$$</p>
+<p>Dla \(n\to\infty\), granica wynosi \(\ln 2 \approx 0{,}693\) — jeśli suma wykorzystania CPU nie przekracza tej granicy, RMS <strong>gwarantuje</strong> spełnienie wszystkich deadline'ów.</p>
+
+<h3>Earliest Deadline First (EDF) — priorytety dynamiczne</h3>
+<p>W każdym momencie wykonywane jest zadanie z <strong>najbliższym</strong> nadchodzącym deadline'em — priorytety zmieniają się dynamicznie w miarę zbliżania się poszczególnych terminów.</p>
+<p>Warunek schedulowalności (dokładny, nie tylko wystarczający!):</p>
+<p>$$\sum_{i=1}^n \frac{C_i}{T_i} \le 1$$</p>
+<p>EDF jest <strong>optymalny</strong> — jeśli jakikolwiek algorytm szeregowania na jednym procesorze potrafi spełnić wszystkie deadline'y dla danego zestawu zadań, to EDF też to potrafi.</p>
+
+<h3>Szeregowanie z wywłaszczeniem (preemptive)</h3>
+<p>Zadanie o wyższym priorytecie może <strong>przerwać</strong> (wywłaszczyć) aktualnie wykonywane zadanie o niższym priorytecie — kluczowe dla RTOS, bo gwarantuje, że krytyczne zadanie nigdy nie czeka "w kolejce" za mniej ważnym, dłużej trwającym zadaniem.</p>
+
+<h3>Inwersja priorytetów (priority inversion)</h3>
+<p>Problem, gdy zadanie o <strong>wysokim</strong> priorytecie musi czekać na zasób (np. blokadę/mutex) przetrzymywany przez zadanie o <strong>niskim</strong> priorytecie — efektywnie "odwracając" zamierzoną hierarchię priorytetów.</p>
+<p><strong>Rozwiązanie — dziedziczenie priorytetów (priority inheritance)</strong>: zadanie o niskim priorytecie, przetrzymujące zasób potrzebny zadaniu o wysokim priorytecie, tymczasowo "pożycza" wysoki priorytet, żeby jak najszybciej zwolnić zasób i nie blokować ważniejszego zadania.</p>
+
+<div class="uwaga">Typowe zadanie: dla podanego zestawu zadań okresowych (okres, czas wykonania) sprawdź warunek schedulowalności RMS albo EDF i wyznacz priorytety metodą RMS.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Pomiar czasu w RTOS</h2>
+
+<h3>Rodzaje "zegarów" systemowych</h3>
+<table>
+<tr><th>Typ</th><th>Charakterystyka</th><th>Zastosowanie</th></tr>
+<tr>
+<td>Czas rzeczywisty (wall-clock / real time)</td>
+<td>odpowiada faktycznemu czasowi kalendarzowemu (data, godzina) — może być <strong>korygowany</strong> (np. przez synchronizację NTP, zmianę strefy czasowej), może "skakać" w obie strony</td>
+<td>logowanie zdarzeń z datą, harmonogramy zadań wg zegara ściennego</td>
+</tr>
+<tr>
+<td>Czas monotoniczny (monotonic time)</td>
+<td>zawsze <strong>rośnie</strong>, nigdy się nie zmniejsza i nie "skacze" (niezależny od korekt zegara systemowego) — liczy czas od pewnego, niesprecyzowanego punktu startowego (np. rozruchu systemu)</td>
+<td>mierzenie odstępów czasu, timeouty, benchmarking — wszędzie, gdzie korekta zegara ściennego mogłaby zepsuć pomiar</td>
+</tr>
+<tr>
+<td>Czas procesu/wątku (process/thread CPU time)</td>
+<td>mierzy czas <strong>faktycznie zużyty przez CPU</strong> na wykonanie danego procesu/wątku — nie licząc czasu, gdy proces czekał (np. na I/O) lub inny proces zajmował CPU</td>
+<td>profilowanie wydajności, dokładna analiza zużycia CPU przez konkretne zadanie</td>
+</tr>
+</table>
+
+<div class="uwaga">Klasyczny błąd: użycie czasu rzeczywistego (wall-clock) do mierzenia <strong>odstępu</strong> czasu (np. "ile trwała operacja") — jeśli w tym czasie zegar systemowy zostanie skorygowany (np. przez NTP, przejście czasu letni/zimowy), pomiar odstępu będzie błędny. Do tego celu należy używać czasu monotonicznego.</div>
+
+<h3>Czas absolutny vs względny</h3>
+<ul>
+<li><strong>absolutny</strong> — konkretny punkt w czasie (np. "16:45:30, 9 sierpnia 2026") — używany np. przy planowaniu zadania na konkretny moment</li>
+<li><strong>względny</strong> — odstęp/różnica czasu (np. "za 500 milisekund od teraz") — używany np. przy timeoutach, opóźnieniach względem aktualnego momentu</li>
+</ul>
+
+<h3>Przykłady API (POSIX/Linux)</h3>
+<pre>clock_gettime(CLOCK_REALTIME, &ts);    // czas rzeczywisty (może "skakać")
+clock_gettime(CLOCK_MONOTONIC, &ts);   // czas monotoniczny — do pomiaru odstępów
+clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &ts);  // czas CPU zużyty przez proces</pre>
+
+<h3>Rozdzielczość i ziarnistość zegara (clock resolution/tick)</h3>
+<p>Najmniejszy odstęp czasu, jaki system jest w stanie zmierzyć/wygenerować (np. przerwanie zegarowe co 1ms) — w RTOS istotne, żeby ziarnistość zegara była dostatecznie mała względem wymaganej precyzji deadline'ów zadań (zbyt "gruby" tick zegara może uniemożliwić spełnienie bardzo krótkich terminów).</p>
+
+<h3>Drift i synchronizacja zegara</h3>
+<p>Zegary sprzętowe (kwarcowe) mają niewielkie, nieuniknione odchylenia od "prawdziwego" czasu (drift) — narastające w czasie, wymagające okresowej synchronizacji (np. protokołem NTP dla czasu rzeczywistego); czas monotoniczny nie jest korygowany tą synchronizacją (stąd jego stabilność do mierzenia odstępów, ale niedokładność jako "zegara ściennego" w dłuższej perspektywie).</p>
+
+<div class="uwaga">Typowe pytanie: wskaż, który rodzaj zegara (rzeczywisty, monotoniczny, czasu procesu) należy użyć w danym scenariuszu (np. "zmierz czas wykonania algorytmu", "zaplanuj zadanie na konkretną godzinę", "sprawdź, ile CPU zużył wątek roboczy") i uzasadnij wybór.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Praktyczne narzędzia Linux do pracy z priorytetami i szeregowaniem</h2>
+
+<p>Zestaw komend przydatnych przy praktycznym badaniu szeregowania zadań i priorytetów w Linuksie — typowy zakres ćwiczeń/projektów porównujących zwykły Linux z konfiguracją zbliżoną do RTOS (np. kernel <code>PREEMPT_RT</code>).</p>
+
+<h3>Procesy i sygnały</h3>
+<table>
+<tr><th>Program</th><th>Zastosowanie</th></tr>
+<tr><td><code>ps</code></td><td>statyczna lista procesów w danym momencie</td></tr>
+<tr><td><code>top</code> / <code>htop</code></td><td>dynamiczny (odświeżający się) podgląd procesów i zużycia zasobów — <code>htop</code> to bardziej czytelna, interaktywna wersja <code>top</code></td></tr>
+<tr><td><code>kill</code></td><td>wysłanie sygnału do procesu (np. <code>kill -9 PID</code> — sygnał <code>SIGKILL</code>, natychmiastowe, nieprzechwytywalne zakończenie; <code>kill -15</code> / domyślny — <code>SIGTERM</code>, "uprzejma" prośba o zakończenie)</td></tr>
+</table>
+
+<h3>Priorytety — parametry NI, PRI, RTPRIO</h3>
+<pre>ps -o pid,ppid,comm,user,ni,pri,rtprio</pre>
+<table>
+<tr><th>Parametr</th><th>Znaczenie</th><th>Zakres</th></tr>
+<tr>
+<td><code>NI</code> (nice)</td>
+<td>priorytet "uprzejmości" dla zwykłych procesów (SCHED_OTHER) — <strong>niższa</strong> wartość NI = <strong>wyższy</strong> priorytet (proces "mniej uprzejmy", chce więcej CPU)</td>
+<td>-20 (najwyższy priorytet) do +19 (najniższy)</td>
+</tr>
+<tr>
+<td><code>PRI</code></td>
+<td>rzeczywisty priorytet używany przez jądro do szeregowania — dla procesów zwykłych wynika z <code>NI</code>, dla procesów czasu rzeczywistego jest wyższy i niezależny od NI</td>
+<td>zależny od jądra (np. 60 to "domyślny" punkt odniesienia dla NI=0 w niektórych systemach, RT ma wyższe wartości)</td>
+</tr>
+<tr>
+<td><code>RTPRIO</code></td>
+<td>priorytet <strong>czasu rzeczywistego</strong> — dotyczy tylko procesów w klasach SCHED_FIFO/SCHED_RR (patrz niżej); 0 dla procesów niebędących RT</td>
+<td>1 (najniższy RT) do 99 (najwyższy RT) — RT zawsze "wygrywa" z każdym procesem SCHED_OTHER, niezależnie od NI tego drugiego</td>
+</tr>
+</table>
+
+<h3>Zmiana priorytetu — <code>nice</code> / <code>renice</code></h3>
+<pre>nice -n 10 ./program           # uruchom program z priorytetem NI=10 (niższy priorytet)
+renice -n -5 -p 1234            # zmień NI działającego procesu (PID 1234) — wymaga uprawnień dla wartości ujemnych</pre>
+
+<h3>Klasy szeregowania — <code>chrt</code></h3>
+<pre>chrt -m                          # wyświetl dostępne klasy szeregowania i ich zakresy priorytetów
+chrt -f -p 50 1234                # ustaw SCHED_FIFO, priorytet 50, dla działającego procesu (PID 1234)
+chrt -r -p 30 1234                # ustaw SCHED_RR, priorytet 30
+chrt -f 80 ./program              # uruchom program bezpośrednio z SCHED_FIFO, priorytet 80</pre>
+<table>
+<tr><th>Klasa</th><th>Zasada</th></tr>
+<tr><td><code>SCHED_OTHER</code></td><td>domyślna klasa "zwykła" (round-robin z priorytetem sterowanym przez NI, bez gwarancji czasu rzeczywistego) — patrz Round Robin, przedmiot Wprowadzenie do systemów operacyjnych</td></tr>
+<tr><td><code>SCHED_FIFO</code></td><td>czasu rzeczywistego, priorytety statyczne (RTPRIO) — zadanie działa, aż samo odda CPU (zablokuje się lub zakończy) albo pojawi się zadanie o wyższym priorytecie; <strong>brak</strong> podziału czasu (time-slicing) między zadaniami o tym samym priorytecie</td></tr>
+<tr><td><code>SCHED_RR</code></td><td>jak SCHED_FIFO, ale zadania o <strong>tym samym</strong> priorytecie dzielą czas w trybie round-robin (kwant czasu, po którym CPU przechodzi do następnego zadania o tym priorytecie)</td></tr>
+</table>
+
+<h3>Pomiar czasu wykonania — <code>time</code></h3>
+<pre>time ./program</pre>
+<pre>real    0m5.234s     # rzeczywisty ("ścienny") czas trwania — od startu do zakończenia
+user    0m4.812s     # czas spędzony w kodzie programu (w trybie użytkownika) na WSZYSTKICH rdzeniach
+sys     0m0.310s     # czas spędzony w jądrze systemu (wywołania systemowe wykonane dla programu)</pre>
+<p>Powiązanie z rodzajami czasu z punktu 3: <code>real</code> odpowiada czasowi rzeczywistemu/zegara, <code>user</code>+<code>sys</code> odpowiadają czasowi CPU procesu. Różnica <code>real</code> vs (<code>user</code>+<code>sys</code>) pokazuje, jak dużo czasu proces spędził <strong>czekając</strong> (np. na I/O, na przydział CPU przez planistę), a nie faktycznie licząc.</p>
+
+<div class="uwaga">Typowy błąd interpretacji: jeśli <code>user</code> jest <strong>większe</strong> niż <code>real</code>, to znak, że program wykorzystał wiele rdzeni równolegle (np. wielowątkowo) — czas <code>user</code> sumuje się po wszystkich rdzeniach, a <code>real</code> to jeden, wspólny odcinek zegara.</div>
+
+<h3>Pakiet RT-Tests</h3>
+<p>Zestaw narzędzi do testowania i pomiaru rzeczywistych opóźnień systemu w konfiguracjach czasu rzeczywistego (zwłaszcza jądra <code>PREEMPT_RT</code>):</p>
+<table>
+<tr><th>Program</th><th>Mierzy</th></tr>
+<tr><td><code>cyclictest</code></td><td>opóźnienie (latency) między zaplanowanym momentem wznowienia zadania a rzeczywistym momentem wznowienia — kluczowa metryka "jak bardzo real-time" jest dany system</td></tr>
+<tr><td><code>signaltest</code></td><td>opóźnienie dostarczenia sygnału (od wysłania do odebrania przez proces docelowy)</td></tr>
+<tr><td><code>queuelat</code> (hwlatdetect/inne warianty)</td><td>opóźnienia związane z kolejkowaniem/przekazywaniem zadań między komponentami systemu</td></tr>
+</table>
+<pre>cyclictest -p 80 -m -n -f -l 10000    # priorytet 80, SCHED_FIFO, 10000 pomiarów
+signaltest -p 90 -m -l 5000</pre>
+<p>Typowe parametry: <code>-p</code> (priorytet RT), <code>-m</code> (zablokowanie stron pamięci — mlockall, unika opóźnień od page fault), liczba iteracji/czas trwania testu.</p>
+
+<h3>Metodyka porównawcza (typowa struktura eksperymentu)</h3>
+<ul>
+<li>seria pomiarów (np. 10 powtórzeń) dla każdej konfiguracji — priorytet × klasa szeregowania — żeby uzyskać <strong>średnią</strong> i <strong>odchylenie standardowe</strong>, nie tylko pojedynczy, przypadkowy wynik</li>
+<li>porównanie <strong>przynajmniej dwóch</strong> klas szeregowania (SCHED_OTHER jako punkt odniesienia "zwykłego" systemu vs SCHED_FIFO/SCHED_RR jako klasy czasu rzeczywistego)</li>
+<li>oczekiwany wynik: klasy RT powinny dawać <strong>mniejsze i bardziej stabilne</strong> (mniejsze odchylenie standardowe) opóźnienia/czasy wykonania niż SCHED_OTHER, zwłaszcza pod obciążeniem systemu innymi zadaniami — to właśnie "przewidywalność", o której mówi punkt 1</li>
+</ul>
+
+<div class="uwaga">Kluczowy wniosek, który zwykle wychodzi z takich eksperymentów: różnica między SCHED_OTHER i SCHED_FIFO/RR jest największa/najbardziej widoczna, gdy system jest <strong>obciążony</strong> innymi procesami — na "spokojnym", nieobciążonym systemie różnice bywają minimalne, bo wtedy nawet SCHED_OTHER ma dość CPU dla każdego procesu.</div>
+</div>
+
+</body>
+</html>

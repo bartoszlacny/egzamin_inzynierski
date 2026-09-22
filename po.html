@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Programowanie obiektowe – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Programowanie obiektowe (C++)</h1>
+
+<div class="zagadnienie">
+<h2>1. Klasa i obiekt</h2>
+
+<p><strong>Klasa</strong> to szablon (definicja) opisujący dane (pola/atrybuty) i zachowanie (metody) — <strong>obiekt</strong> to konkretna instancja tej klasy, istniejąca w pamięci.</p>
+
+<pre>class Osoba {
+public:
+    std::string imie;
+    int wiek;
+
+    void przywitaj() {
+        std::cout &lt;&lt; "Czesc, jestem " &lt;&lt; imie &lt;&lt; std::endl;
+    }
+};
+
+int main() {
+    Osoba o1;              // obiekt (instancja klasy Osoba)
+    o1.imie = "Jan";
+    o1.wiek = 25;
+    o1.przywitaj();
+
+    Osoba o2;               // inny, niezależny obiekt tej samej klasy
+    o2.imie = "Anna";
+}</pre>
+
+<h3>Pola i metody</h3>
+<ul>
+<li><strong>pola (atrybuty)</strong> — dane przechowywane przez obiekt, każdy obiekt ma własną kopię</li>
+<li><strong>metody</strong> — funkcje należące do klasy, operujące na danych obiektu (mają domyślny dostęp do jego pól)</li>
+</ul>
+
+<h3>Wskaźnik <code>this</code></h3>
+<p>W każdej metodzie niestatycznej dostępny jest wskaźnik <code>this</code>, wskazujący na obiekt, na którym metoda została wywołana — przydatny np. gdy nazwa parametru jest taka sama jak nazwa pola:</p>
+<pre>void ustawWiek(int wiek) {
+    this-&gt;wiek = wiek;   // this->wiek to pole, wiek (bez this) to parametr
+}</pre>
+
+<div class="uwaga">Różnica klasa vs obiekt to jak przepis (klasa) i konkretnie upieczony tort (obiekt) — z jednego przepisu można "wypiec" wiele niezależnych tortów (obiektów), każdy ze swoimi wartościami pól.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Dziedziczenie, polimorfizm, enkapsulacja</h2>
+
+<h3>Dziedziczenie</h3>
+<p>Klasa (pochodna/derived) może przejąć pola i metody innej klasy (bazowej/base), rozszerzając lub nadpisując jej zachowanie — realizuje relację "jest rodzajem" (is-a).</p>
+<pre>class Zwierze {
+public:
+    std::string imie;
+    void jedz() { std::cout &lt;&lt; imie &lt;&lt; " jadlo\n"; }
+    virtual void wydajDzwiek() { std::cout &lt;&lt; "..." &lt;&lt; std::endl; }
+};
+
+class Pies : public Zwierze {
+public:
+    void wydajDzwiek() override { std::cout &lt;&lt; "Hau!" &lt;&lt; std::endl; }
+};</pre>
+
+<h3>Polimorfizm</h3>
+<p>Możliwość traktowania obiektów różnych klas pochodnych <strong>jednolicie</strong> (przez wskaźnik/referencję do klasy bazowej), przy czym wywołana zostaje właściwa (nadpisana) wersja metody dla konkretnego obiektu:</p>
+<pre>Zwierze *z = new Pies();
+z-&gt;wydajDzwiek();   // wypisze "Hau!", nie "..." — dzięki polimorfizmowi</pre>
+<p>Wymaga słowa <code>virtual</code> przy metodzie w klasie bazowej — bez tego wywołanie "przywiązałoby się" statycznie do wersji z klasy bazowej (tzw. early binding), a nie do rzeczywistego typu obiektu (late binding / dynamic dispatch).</p>
+
+<h3>Enkapsulacja (hermetyzacja)</h3>
+<p>Ukrywanie wewnętrznej implementacji/danych klasy i udostępnianie tylko kontrolowanego interfejsu (metod publicznych) — pola prywatne (<code>private</code>) są dostępne tylko przez metody klasy (np. gettery/settery), co chroni przed niekontrolowaną, niepoprawną zmianą stanu obiektu z zewnątrz.</p>
+<pre>class KontoBankowe {
+private:
+    double saldo;
+public:
+    void wplac(double kwota) {
+        if (kwota &gt; 0) saldo += kwota;   // kontrola poprawności
+    }
+    double getSaldo() { return saldo; }
+};</pre>
+
+<div class="uwaga">Enkapsulacja, dziedziczenie i polimorfizm to trzy fundamentalne "filary" programowania obiektowego (razem z abstrakcją) — pytania o ich definicje i wzajemne relacje są bardzo częste na egzaminach.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Klasy abstrakcyjne</h2>
+
+<p>Klasa, której <strong>nie można</strong> utworzyć instancji — służy jako "szablon" dla klas pochodnych, definiując interfejs, który muszą zaimplementować.</p>
+
+<h3>Metoda czysto wirtualna (pure virtual)</h3>
+<pre>class Figura {
+public:
+    virtual double pole() = 0;   // "= 0" — metoda czysto wirtualna, brak implementacji
+};
+
+class Kwadrat : public Figura {
+    double bok;
+public:
+    Kwadrat(double b) : bok(b) {}
+    double pole() override { return bok * bok; }  // musi zaimplementować
+};
+
+// Figura f;         // BŁĄD KOMPILACJI — nie można stworzyć obiektu klasy abstrakcyjnej
+Kwadrat k(5);        // OK, klasa pochodna implementuje metodę
+Figura *f = &k;       // OK — wskaźnik/referencja do klasy abstrakcyjnej jest dozwolona</pre>
+
+<h3>Zasada</h3>
+<p>Klasa jest abstrakcyjna, jeśli ma <strong>przynajmniej jedną</strong> metodę czysto wirtualną. Klasa pochodna musi zaimplementować <strong>wszystkie</strong> metody czysto wirtualne, żeby móc utworzyć jej instancje — w innym wypadku sama również pozostaje abstrakcyjna.</p>
+
+<h3>Interfejs</h3>
+<p>Klasa abstrakcyjna, w której <strong>wszystkie</strong> metody są czysto wirtualne (brak żadnej implementacji, brak pól z danymi) — czysty "kontrakt" określający, jakie metody musi mieć klasa implementująca, bez żadnej wspólnej logiki.</p>
+
+<div class="uwaga">Zastosowanie: klasy abstrakcyjne wymuszają wspólny interfejs dla rodziny podobnych klas (np. różne rodzaje figur, wszystkie muszące mieć metodę <code>pole()</code>), umożliwiając polimorficzne operowanie na nich przez wskaźnik/referencję do klasy bazowej.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Wskaźniki, referencje, dynamiczna pamięć w C++</h2>
+
+<h3>Wskaźniki (jak w C)</h3>
+<pre>int x = 5;
+int *p = &x;
+*p = 10;   // x = 10</pre>
+
+<h3>Referencje — "alias" na istniejącą zmienną</h3>
+<pre>int x = 5;
+int &r = x;   // r to alias dla x, NIE nowa zmienna
+r = 10;       // x = 10 też!
+// referencja musi być zainicjalizowana przy deklaracji i nie może zostać "przestawiona" na inny obiekt</pre>
+
+<table>
+<tr><th></th><th>Wskaźnik</th><th>Referencja</th></tr>
+<tr><td>może być NULL/nullptr</td><td>tak</td><td>nie (musi wskazywać na istniejący obiekt)</td></tr>
+<tr><td>można zmienić cel</td><td>tak (przestawić na inny adres)</td><td>nie (raz ustalona, zawsze ten sam obiekt)</td></tr>
+<tr><td>składnia dostępu</td><td>przez <code>*</code>, <code>-&gt;</code></td><td>bezpośrednio, jak zwykła zmienna</td></tr>
+<tr><td>typowe użycie</td><td>dynamiczna alokacja, struktury danych</td><td>parametry funkcji (unikanie kopiowania)</td></tr>
+</table>
+
+<h3>Przekazywanie parametrów przez referencję</h3>
+<pre>void zwieksz(int &x) { x++; }   // modyfikuje oryginał, bez narzutu wskaźnika w kodzie
+void wypisz(const std::string &s) { std::cout &lt;&lt; s; }  // unika kopiowania dużego obiektu</pre>
+
+<h3>Dynamiczna alokacja w C++: <code>new</code> / <code>delete</code></h3>
+<pre>int *p = new int(5);         // alokacja pojedynczej wartości
+int *tab = new int[10];      // alokacja tablicy
+
+delete p;                    // zwolnienie pojedynczej wartości
+delete[] tab;                // zwolnienie tablicy — inny operator!
+
+Osoba *o = new Osoba();      // wywołuje też konstruktor
+delete o;                    // wywołuje destruktor, potem zwalnia pamięć</pre>
+
+<div class="uwaga"><code>new</code>/<code>delete</code> (C++) różnią się od <code>malloc</code>/<code>free</code> (C) tym, że automatycznie wywołują konstruktor/destruktor obiektu — <code>malloc</code> tylko rezerwuje pamięć, nie inicjalizuje obiektu w sensie C++.</div>
+
+<h3>Smart pointery (nowoczesny C++)</h3>
+<p><code>std::unique_ptr</code>, <code>std::shared_ptr</code> — automatycznie zarządzają czasem życia obiektu i wywołują <code>delete</code> w odpowiednim momencie, znacznie redukując ryzyko wycieków pamięci względem ręcznego <code>new</code>/<code>delete</code>.</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Przeciążanie operatorów, funkcji, funkcje zaprzyjaźnione</h2>
+
+<h3>Przeciążanie funkcji (function overloading)</h3>
+<p>Kilka funkcji o tej samej nazwie, różniących się <strong>listą parametrów</strong> (liczbą lub typami) — kompilator wybiera odpowiednią wersję na podstawie argumentów wywołania:</p>
+<pre>int dodaj(int a, int b) { return a+b; }
+double dodaj(double a, double b) { return a+b; }
+int dodaj(int a, int b, int c) { return a+b+c; }</pre>
+
+<h3>Przeciążanie operatorów (operator overloading)</h3>
+<p>Definiowanie własnego znaczenia operatorów (<code>+</code>, <code>==</code>, <code>&lt;&lt;</code> itd.) dla własnych klas:</p>
+<pre>class Wektor2D {
+public:
+    double x, y;
+    Wektor2D operator+(const Wektor2D &inny) const {
+        return Wektor2D{x+inny.x, y+inny.y};
+    }
+    bool operator==(const Wektor2D &inny) const {
+        return x==inny.x && y==inny.y;
+    }
+};
+
+Wektor2D a{1,2}, b{3,4};
+Wektor2D c = a + b;   // wywołuje operator+ → c = {4,6}</pre>
+
+<h3>Funkcje zaprzyjaźnione (friend)</h3>
+<p>Funkcja (lub inna klasa) zadeklarowana jako <code>friend</code> ma dostęp do <strong>prywatnych i chronionych</strong> składników klasy, mimo że sama nie jest jej metodą — łamie zasadę pełnej enkapsulacji w kontrolowany, jawnie zadeklarowany sposób.</p>
+<pre>class Wektor2D {
+private:
+    double x, y;
+public:
+    Wektor2D(double x, double y) : x(x), y(y) {}
+    friend void wypisz(const Wektor2D &w);   // zaprzyjaźniona funkcja
+};
+
+void wypisz(const Wektor2D &w) {
+    std::cout &lt;&lt; w.x &lt;&lt; ", " &lt;&lt; w.y;   // dostęp do prywatnych x, y!
+}</pre>
+
+<div class="uwaga">Typowe zastosowanie <code>friend</code>: przeciążenie operatora <code>&lt;&lt;</code> do wypisywania obiektu na <code>std::cout</code> — musi być funkcją niebędącą metodą klasy (bo lewy argument to <code>ostream</code>, nie obiekt klasy), a jednocześnie potrzebuje dostępu do prywatnych pól.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Poziomy dostępu i składniki statyczne</h2>
+
+<h3>Poziomy dostępu</h3>
+<table>
+<tr><th>Modyfikator</th><th>Dostęp</th></tr>
+<tr><td><code>public</code></td><td>dostępny z każdego miejsca w programie</td></tr>
+<tr><td><code>protected</code></td><td>dostępny w danej klasie i klasach z niej dziedziczących, ale nie "z zewnątrz"</td></tr>
+<tr><td><code>private</code></td><td>dostępny tylko w danej klasie (nie nawet w klasach dziedziczących)</td></tr>
+</table>
+<p>W C++ domyślny dostęp w <code>class</code> to <code>private</code>, w <code>struct</code> to <code>public</code>.</p>
+
+<h3>Dziedziczenie i poziomy dostępu</h3>
+<pre>class Bazowa {
+protected:
+    int chronione;
+private:
+    int prywatne;
+};
+
+class Pochodna : public Bazowa {
+    void metoda() {
+        chronione = 5;   // OK — protected dostępne w klasie pochodnej
+        // prywatne = 5;  // BŁĄD — private niedostępne nawet w klasie pochodnej
+    }
+};</pre>
+
+<h3>Pola statyczne (<code>static</code>)</h3>
+<p>Pole współdzielone przez <strong>wszystkie</strong> obiekty danej klasy — istnieje jedna kopia, niezależnie od liczby stworzonych obiektów:</p>
+<pre>class Licznik {
+public:
+    static int liczbaObiektow;   // deklaracja
+    Licznik() { liczbaObiektow++; }
+};
+int Licznik::liczbaObiektow = 0;  // definicja i inicjalizacja poza klasą (wymagane!)
+
+Licznik a, b, c;
+std::cout &lt;&lt; Licznik::liczbaObiektow;   // 3 — dostęp przez nazwę klasy, nie obiekt</pre>
+
+<h3>Metody statyczne</h3>
+<p>Metoda należąca do klasy, nie do konkretnego obiektu — <strong>nie ma dostępu</strong> do <code>this</code> ani do pól niestatycznych (bo nie jest związana z żadnym konkretnym obiektem):</p>
+<pre>class Matematyka {
+public:
+    static int kwadrat(int x) { return x*x; }
+};
+
+int wynik = Matematyka::kwadrat(5);   // wywołanie bez tworzenia obiektu</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Konstruktory i destruktory</h2>
+
+<h3>Konstruktor</h3>
+<p>Specjalna metoda wywoływana <strong>automatycznie</strong> przy tworzeniu obiektu — inicjalizuje jego stan. Ma tę samą nazwę co klasa, brak typu zwracanego.</p>
+<pre>class Punkt {
+public:
+    double x, y;
+    Punkt() : x(0), y(0) {}                  // konstruktor domyślny
+    Punkt(double x, double y) : x(x), y(y) {} // konstruktor parametryczny
+    Punkt(const Punkt &inny) : x(inny.x), y(inny.y) {} // konstruktor kopiujący
+};
+
+Punkt p1;              // wywołuje konstruktor domyślny
+Punkt p2(1.0, 2.0);    // wywołuje konstruktor parametryczny
+Punkt p3 = p2;         // wywołuje konstruktor kopiujący</pre>
+
+<h3>Lista inicjalizacyjna</h3>
+<p><code>: x(x), y(y)</code> — inicjalizuje pola <strong>przed</strong> wejściem do ciała konstruktora; wymagana np. dla pól <code>const</code>, referencji, i pól klas bez konstruktora domyślnego.</p>
+
+<h3>Konstruktor kopiujący</h3>
+<p>Wywoływany, gdy nowy obiekt jest tworzony jako kopia istniejącego — domyślny (generowany przez kompilator) kopiuje pola "płasko" (shallow copy); jeśli klasa zarządza zasobami (np. pamięcią przez wskaźnik), trzeba go zdefiniować samodzielnie (deep copy), żeby uniknąć współdzielenia tego samego zasobu przez dwa obiekty.</p>
+
+<h3>Destruktor</h3>
+<p>Wywoływany <strong>automatycznie</strong> przy usuwaniu obiektu (koniec zasięgu dla obiektu na stosie, albo jawne <code>delete</code> dla obiektu na stercie) — zwalnia zasoby przydzielone przez obiekt:</p>
+<pre>class Bufor {
+    int *dane;
+public:
+    Bufor(int n) { dane = new int[n]; }
+    ~Bufor() { delete[] dane; }   // destruktor — zwalnia pamięć
+};
+
+{
+    Bufor b(10);
+}  // koniec bloku → automatyczne wywołanie ~Bufor()</pre>
+
+<div class="uwaga">Destruktor klasy bazowej powinien być <code>virtual</code>, jeśli klasa ma być używana polimorficznie (przez wskaźnik do klasy bazowej) — inaczej <code>delete</code> na wskaźniku bazowym wywoła tylko destruktor bazowy, pomijając destruktor klasy pochodnej (wyciek pamięci/zasobów pochodnej klasy).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Obsługa wyjątków i biblioteka STL</h2>
+
+<h3>Wyjątki — <code>try</code> / <code>catch</code> / <code>throw</code></h3>
+<pre>double dziel(double a, double b) {
+    if (b == 0) {
+        throw std::runtime_error("Dzielenie przez zero!");
+    }
+    return a / b;
+}
+
+int main() {
+    try {
+        double wynik = dziel(10, 0);
+    } catch (const std::runtime_error &e) {
+        std::cout &lt;&lt; "Blad: " &lt;&lt; e.what() &lt;&lt; std::endl;
+    } catch (...) {
+        std::cout &lt;&lt; "Nieznany blad" &lt;&lt; std::endl;   // wyłapuje wszystko inne
+    }
+}</pre>
+<ul>
+<li><code>throw</code> — zgłasza wyjątek (obiekt jakiegoś typu, często dziedziczący po <code>std::exception</code>)</li>
+<li><code>try</code> — blok kodu, w którym monitorowane są wyjątki</li>
+<li><code>catch</code> — obsługa konkretnego typu wyjątku; można mieć wiele bloków <code>catch</code> dla różnych typów</li>
+<li>gdy wyjątek nie zostanie obsłużony, program się zatrzymuje (przez <code>std::terminate</code>)</li>
+</ul>
+
+<h3>Hierarchia <code>std::exception</code></h3>
+<p>Standardowe klasy wyjątków (<code>std::runtime_error</code>, <code>std::logic_error</code>, <code>std::out_of_range</code> itd.) dziedziczą po <code>std::exception</code> — można wyłapać wiele typów jedną klauzulą <code>catch(const std::exception &e)</code>, korzystając z polimorfizmu.</p>
+
+<h3>Biblioteka STL (Standard Template Library)</h3>
+<p>Zbiór gotowych, ogólnych (generycznych, szablonowych) kontenerów, algorytmów i iteratorów.</p>
+
+<h3>Podstawowe kontenery STL</h3>
+<table>
+<tr><th>Kontener</th><th>Charakterystyka</th></tr>
+<tr><td><code>std::vector</code></td><td>dynamiczna tablica — szybki dostęp po indeksie, wolniejsze wstawianie w środku</td></tr>
+<tr><td><code>std::list</code></td><td>lista dwukierunkowa — szybkie wstawianie/usuwanie, wolny dostęp po indeksie</td></tr>
+<tr><td><code>std::map</code></td><td>tablica asocjacyjna (klucz→wartość), zwykle jako drzewo zbalansowane, \(O(\log n)\)</td></tr>
+<tr><td><code>std::unordered_map</code></td><td>tablica asocjacyjna oparta o haszowanie, średnio \(O(1)\)</td></tr>
+<tr><td><code>std::set</code></td><td>zbiór unikalnych elementów, sortowany</td></tr>
+<tr><td><code>std::stack</code>, <code>std::queue</code></td><td>stos, kolejka (na bazie innych kontenerów)</td></tr>
+</table>
+
+<h3>Przykład użycia</h3>
+<pre>#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+
+std::vector&lt;int&gt; v = {5, 3, 1, 4, 2};
+std::sort(v.begin(), v.end());        // sortowanie przez iteratory
+for (int x : v) std::cout &lt;&lt; x &lt;&lt; " ";  // 1 2 3 4 5</pre>
+
+<h3>Iteratory</h3>
+<p>Uniwersalny, spójny sposób przechodzenia po elementach różnych kontenerów (<code>begin()</code>/<code>end()</code>) — dzięki temu te same algorytmy (<code>sort</code>, <code>find</code>, <code>for_each</code>...) działają na wielu różnych strukturach danych bez modyfikacji.</p>
+
+<div class="uwaga">STL to klasyczny przykład <strong>programowania generycznego</strong> (szablony/templates) w C++ — kontenery i algorytmy są niezależne od konkretnego typu danych, ten sam <code>std::vector</code> może przechowywać <code>int</code>, <code>double</code>, obiekty własnych klas itd.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Szablony (templates)</h2>
+
+<p>Mechanizm programowania generycznego — pisanie funkcji/klas <strong>niezależnych od konkretnego typu</strong> danych, z którym będą używane. Kompilator generuje konkretną wersję kodu dla każdego użytego typu (w czasie kompilacji).</p>
+
+<h3>Szablon funkcji</h3>
+<pre>template &lt;typename T&gt;
+T maksimum(T a, T b) {
+    return (a &gt; b) ? a : b;
+}
+
+int a = maksimum(3, 7);        // T = int
+double b = maksimum(2.5, 1.2); // T = double
+std::string c = maksimum(std::string("abc"), std::string("xyz")); // T = std::string</pre>
+<p>Kompilator sam <strong>wnioskuje</strong> typ <code>T</code> na podstawie argumentów wywołania (nie trzeba pisać <code>maksimum&lt;int&gt;(3,7)</code>, choć można jawnie).</p>
+
+<h3>Szablon klasy</h3>
+<pre>template &lt;typename T&gt;
+class Stos {
+    std::vector&lt;T&gt; dane;
+public:
+    void push(T x) { dane.push_back(x); }
+    T pop() {
+        T x = dane.back();
+        dane.pop_back();
+        return x;
+    }
+    bool pusty() { return dane.empty(); }
+};
+
+Stos&lt;int&gt; s1;          // Stos przechowujący int
+Stos&lt;std::string&gt; s2; // Stos przechowujący stringi — ten sam kod klasy!</pre>
+
+<h3>Szablony z wieloma parametrami</h3>
+<pre>template &lt;typename K, typename V&gt;
+class Para {
+public:
+    K klucz;
+    V wartosc;
+};
+
+Para&lt;std::string, int&gt; p = {"wiek", 25};</pre>
+
+<h3>Parametry niebędące typami</h3>
+<pre>template &lt;typename T, int ROZMIAR&gt;
+class TablicaStala {
+    T dane[ROZMIAR];
+public:
+    int rozmiar() { return ROZMIAR; }
+};
+
+TablicaStala&lt;int, 10&gt; t;   // rozmiar jako parametr szablonu, znany w czasie kompilacji</pre>
+
+<div class="uwaga">Cała biblioteka STL (patrz punkt 8) jest zbudowana na szablonach — <code>std::vector&lt;int&gt;</code>, <code>std::vector&lt;std::string&gt;</code> to w rzeczywistości dwie różne, wygenerowane przez kompilator klasy z tego samego szablonu <code>std::vector&lt;T&gt;</code>.</div>
+
+<h3>Specjalizacja szablonu</h3>
+<p>Można podać osobną implementację szablonu dla konkretnego typu, jeśli ogólna wersja nie jest dla niego odpowiednia (np. inne zachowanie dla <code>bool</code> niż dla innych typów).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Wielodziedziczenie i problem diamentu</h2>
+
+<h3>Wielodziedziczenie (multiple inheritance)</h3>
+<p>Klasa w C++ może dziedziczyć jednocześnie po <strong>wielu</strong> klasach bazowych (w odróżnieniu np. od Javy, gdzie klasa dziedziczy tylko po jednej klasie, choć implementuje wiele interfejsów):</p>
+<pre>class Latajacy {
+public:
+    void lec() { std::cout &lt;&lt; "Lecę\n"; }
+};
+
+class Plywajacy {
+public:
+    void plyn() { std::cout &lt;&lt; "Płynę\n"; }
+};
+
+class Kaczka : public Latajacy, public Plywajacy {
+    // dziedziczy metody z obu klas
+};
+
+Kaczka k;
+k.lec();   // z Latajacy
+k.plyn();  // z Plywajacy</pre>
+
+<h3>Problem diamentu (diamond problem)</h3>
+<p>Powstaje, gdy klasa dziedziczy po dwóch klasach, które <strong>same</strong> dziedziczą po tej samej, wspólnej klasie bazowej — schemat przypomina diament:</p>
+<pre>        Zwierze
+        /      \
+     Ptak      Ssak
+        \      /
+        Nietoperz</pre>
+<pre>class Zwierze { public: int wiek; };
+class Ptak : public Zwierze {};
+class Ssak : public Zwierze {};
+class Nietoperz : public Ptak, public Ssak {};
+
+Nietoperz n;
+// n.wiek = 5;   // BŁĄD: niejednoznaczność! Które "wiek" — z Ptak czy z Ssak?
+n.Ptak::wiek = 5; // trzeba jawnie wskazać, z której ścieżki dziedziczenia</pre>
+<p>Problem: <code>Nietoperz</code> zawiera <strong>dwie niezależne kopie</strong> pól z <code>Zwierze</code> (jedną przez <code>Ptak</code>, drugą przez <code>Ssak</code>) — odwołanie do <code>wiek</code> jest niejednoznaczne.</p>
+
+<h3>Rozwiązanie — dziedziczenie wirtualne (<code>virtual</code>)</h3>
+<pre>class Zwierze { public: int wiek; };
+class Ptak : virtual public Zwierze {};
+class Ssak : virtual public Zwierze {};
+class Nietoperz : public Ptak, public Ssak {};
+
+Nietoperz n;
+n.wiek = 5;   // OK! Tylko JEDNA, współdzielona kopia Zwierze</pre>
+<p><code>virtual</code> przy dziedziczeniu zapewnia, że niezależnie od tego, przez ile "ścieżek" klasa pochodna dziedziczy po tej samej klasie bazowej, istnieje tylko <strong>jedna, współdzielona</strong> jej kopia w pamięci obiektu.</p>
+
+<div class="uwaga">Wielodziedziczenie bywa krytykowane za zwiększanie złożoności (właśnie przez problemy jak diamond problem) — część języków (Java, C#) celowo je ograniczyła do jednej klasy bazowej + wielu interfejsów, żeby uniknąć tej niejednoznaczności w ogóle.</div>
+</div>
+
+</body>
+</html>

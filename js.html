@@ -1,0 +1,496 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Języki skryptowe (Python) – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Języki skryptowe (Python)</h1>
+
+<div class="zagadnienie">
+<h2>1. Typy mutowalne i niemutowalne</h2>
+
+<p><strong>Mutowalność</strong> — czy obiekt można zmienić "w miejscu" (bez tworzenia nowego obiektu) po jego utworzeniu.</p>
+
+<table>
+<tr><th>Niemutowalne (immutable)</th><th>Mutowalne (mutable)</th></tr>
+<tr><td><code>int</code>, <code>float</code>, <code>bool</code></td><td><code>list</code></td></tr>
+<tr><td><code>str</code></td><td><code>dict</code></td></tr>
+<tr><td><code>tuple</code></td><td><code>set</code></td></tr>
+<tr><td><code>frozenset</code></td><td>obiekty klas użytkownika (domyślnie)</td></tr>
+</table>
+
+<h3>Przykład — string (niemutowalny)</h3>
+<pre>s = "abc"
+s[0] = "x"       # BŁĄD: TypeError — stringi są niemutowalne!
+s = s + "d"      # OK, ale to tworzy CAŁKIEM NOWY obiekt string, nie modyfikuje starego</pre>
+
+<h3>Przykład — lista (mutowalna)</h3>
+<pre>lista = [1, 2, 3]
+lista[0] = 99        # OK — modyfikacja w miejscu, ten sam obiekt
+lista.append(4)      # OK — też modyfikacja w miejscu</pre>
+
+<h3>Konsekwencja — zmienne jako referencje</h3>
+<pre>a = [1, 2, 3]
+b = a            # b i a wskazują na TEN SAM obiekt listy
+b.append(4)
+print(a)         # [1, 2, 3, 4] — zmiana przez b widoczna też w a!
+
+x = 5
+y = x            # y kopiuje wartość (int jest niemutowalny)
+y = y + 1
+print(x)         # 5 — x się nie zmieniło</pre>
+
+<div class="uwaga">Klasyczna pułapka: domyślny argument mutowalny w funkcji (<code>def f(lista=[]):</code>) jest tworzony <strong>tylko raz</strong>, przy definicji funkcji — kolejne wywołania współdzielą ten sam obiekt listy, co prowadzi do nieoczekiwanego "zapamiętywania" danych między wywołaniami!</div>
+
+<h3>Krotka (tuple) vs lista</h3>
+<p>Krotka jest niemutowalna, ale jeśli <strong>zawiera</strong> mutowalny obiekt (np. listę), ten obiekt wewnątrz można wciąż modyfikować — niemutowalność krotki dotyczy tylko samych referencji do elementów, nie ich zawartości:</p>
+<pre>t = ([1,2], 3)
+t[0].append(99)   # OK! modyfikujemy listę WEWNĄTRZ krotki
+# t[1] = 5        # BŁĄD — nie można zmienić samej referencji w krotce</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Podstawowe struktury danych</h2>
+
+<table>
+<tr><th>Struktura</th><th>Cecha</th><th>Przykład</th></tr>
+<tr><td><code>list</code></td><td>uporządkowana, mutowalna, dopuszcza duplikaty</td><td><code>[1, 2, "a", 3.5]</code></td></tr>
+<tr><td><code>tuple</code></td><td>uporządkowana, niemutowalna, dopuszcza duplikaty</td><td><code>(1, 2, "a")</code></td></tr>
+<tr><td><code>set</code></td><td>nieuporządkowany, mutowalny, unikalne elementy</td><td><code>{1, 2, 3}</code></td></tr>
+<tr><td><code>dict</code></td><td>mapowanie klucz→wartość, mutowalny, klucze unikalne (od Python 3.7 zachowuje kolejność wstawiania)</td><td><code>{"a": 1, "b": 2}</code></td></tr>
+
+</table>
+
+<h3>Lista — podstawowe operacje</h3>
+<pre>l = [1, 2, 3]
+l.append(4)          # dodanie na koniec
+l.insert(0, 0)        # wstawienie na konkretną pozycję
+l.remove(2)          # usunięcie pierwszego wystąpienia wartości 2
+l.pop()              # usunięcie i zwrócenie ostatniego elementu
+l[1:3]               # wycinek (slicing) — elementy od indeksu 1 do 2
+l.sort()             # sortowanie w miejscu
+sorted(l)            # sortowanie — zwraca NOWĄ listę, oryginał bez zmian</pre>
+
+<h3>Słownik — podstawowe operacje</h3>
+<pre>d = {"imie": "Jan", "wiek": 25}
+d["email"] = "jan@example.com"   # dodanie/nadpisanie klucza
+d.get("wiek", 0)                  # bezpieczny odczyt z wartością domyślną
+d.keys(), d.values(), d.items()   # widoki kluczy / wartości / par (klucz,wartość)
+del d["wiek"]                     # usunięcie klucza
+"imie" in d                       # sprawdzenie, czy klucz istnieje</pre>
+
+<h3>Zbiór — operacje mnogościowe</h3>
+<pre>a = {1, 2, 3}
+b = {2, 3, 4}
+a | b   # unia: {1,2,3,4}
+a & b   # przecięcie: {2,3}
+a - b   # różnica: {1}
+a ^ b   # różnica symetryczna: {1,4}</pre>
+
+<h3>Kiedy który wybrać?</h3>
+<ul>
+<li><strong>lista</strong> — gdy kolejność ma znaczenie i elementy mogą się powtarzać</li>
+<li><strong>krotka</strong> — jak lista, ale dane, które nie powinny się zmieniać (np. współrzędne punktu)</li>
+<li><strong>zbiór</strong> — gdy interesują nas tylko unikalne elementy, kolejność nieistotna, szybkie sprawdzanie przynależności (\(O(1)\) średnio, jak w tablicy haszującej)</li>
+<li><strong>słownik</strong> — gdy potrzebne mapowanie klucz→wartość, szybki dostęp po kluczu (\(O(1)\) średnio)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Funkcje i zasięg zmiennych</h2>
+
+<h3>Definicja funkcji</h3>
+<pre>def suma(a, b=0):          # b ma wartość domyślną
+    return a + b
+
+suma(3, 4)      # 7
+suma(3)         # 3 (b domyślnie 0)
+suma(b=5, a=2)  # 7 (argumenty nazwane, kolejność nieistotna)</pre>
+
+<h3>*args i **kwargs</h3>
+<pre>def f(*args, **kwargs):
+    print(args)     # tuple pozycyjnych argumentów
+    print(kwargs)   # dict argumentów nazwanych
+
+f(1, 2, 3, x=4, y=5)
+# args = (1, 2, 3)
+# kwargs = {'x': 4, 'y': 5}</pre>
+
+<h3>Zasięg zmiennych — reguła LEGB</h3>
+<p>Kolejność, w jakiej Python szuka zmiennej: <strong>L</strong>ocal (lokalny, wewnątrz funkcji) → <strong>E</strong>nclosing (funkcja zewnętrzna, przy zagnieżdżonych funkcjach) → <strong>G</strong>lobal (poziom modułu) → <strong>B</strong>uilt-in (wbudowane, np. <code>len</code>, <code>print</code>).</p>
+
+<pre>x = "globalna"
+
+def zewnetrzna():
+    x = "enclosing"
+    def wewnetrzna():
+        x = "lokalna"
+        print(x)      # "lokalna" (znaleziona najpierw, poziom L)
+    wewnetrzna()
+
+zewnetrzna()</pre>
+
+<h3>Słowa kluczowe <code>global</code> i <code>nonlocal</code></h3>
+<pre>licznik = 0
+
+def zwieksz():
+    global licznik    # bez tego, przypisanie stworzyłoby NOWĄ zmienną lokalną
+    licznik += 1
+
+def zewnetrzna():
+    x = 0
+    def wewnetrzna():
+        nonlocal x     # odnosi się do x z funkcji otaczającej (enclosing), nie globalnej
+        x += 1
+    wewnetrzna()
+    print(x)   # 1</pre>
+
+<div class="uwaga">Klasyczna pułapka: samo <strong>odczytanie</strong> zmiennej z zewnętrznego zasięgu działa bez żadnych słów kluczowych — <code>global</code>/<code>nonlocal</code> są potrzebne tylko, gdy chcemy <strong>przypisać</strong> (zmienić) wartość tej zmiennej z wnętrza funkcji.</div>
+
+<h3>Funkcje jako obiekty pierwszej klasy</h3>
+<p>Funkcje można przekazywać jako argumenty, zwracać z innych funkcji, przypisywać do zmiennych — podstawa dla dekoratorów i programowania funkcyjnego w Pythonie:</p>
+<pre>def kwadrat(x): return x*x
+operacja = kwadrat        # przypisanie funkcji do zmiennej
+print(operacja(5))        # 25
+
+def zastosuj(f, x): return f(x)
+zastosuj(kwadrat, 5)      # 25 — funkcja jako argument</pre>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Operacje na plikach i systemie plików</h2>
+
+<h3>Otwieranie plików</h3>
+<pre>plik = open("dane.txt", "r", encoding="utf-8")
+tresc = plik.read()
+plik.close()</pre>
+
+<h3>Menedżer kontekstu <code>with</code> (zalecane!)</h3>
+<pre>with open("dane.txt", "r", encoding="utf-8") as plik:
+    tresc = plik.read()
+# plik automatycznie zamknięty po wyjściu z bloku, nawet jeśli wystąpi wyjątek</pre>
+
+<h3>Tryby otwarcia</h3>
+<table>
+<tr><th>Tryb</th><th>Znaczenie</th></tr>
+<tr><td><code>"r"</code></td><td>odczyt (domyślny)</td></tr>
+<tr><td><code>"w"</code></td><td>zapis (nadpisuje istniejący plik)</td></tr>
+<tr><td><code>"a"</code></td><td>dopisywanie na końcu</td></tr>
+<tr><td><code>"x"</code></td><td>utworzenie nowego pliku (błąd, jeśli już istnieje)</td></tr>
+<tr><td>+ <code>b</code> (np. <code>"rb"</code>)</td><td>tryb binarny</td></tr>
+</table>
+
+<h3>Odczyt/zapis</h3>
+<pre>plik.read()          # cała zawartość jako jeden string
+plik.readline()       # jedna linia
+plik.readlines()      # lista wszystkich linii
+
+for linia in plik:    # iteracja po liniach — pamięciowo efektywna dla dużych plików
+    print(linia.strip())  # strip() usuwa końcowy znak nowej linii
+
+plik.write("tekst\n")
+plik.writelines(["linia1\n", "linia2\n"])</pre>
+
+<h3>Moduł <code>os</code> i <code>os.path</code> — operacje na systemie plików</h3>
+<pre>import os
+
+os.listdir(".")             # lista plików/katalogów w bieżącym katalogu
+os.path.exists("plik.txt")  # czy plik/katalog istnieje
+os.path.join("folder", "plik.txt")  # łączenie ścieżek (przenośne między systemami)
+os.makedirs("nowy_folder")  # tworzenie katalogu (z podkatalogami)
+os.remove("plik.txt")       # usunięcie pliku
+os.rename("stary.txt", "nowy.txt")</pre>
+
+<h3>Moduł <code>pathlib</code> (nowocześniejsze podejście, obiektowe)</h3>
+<pre>from pathlib import Path
+
+p = Path("dane") / "plik.txt"   # budowanie ścieżki operatorem /
+p.exists()
+p.read_text(encoding="utf-8")
+p.write_text("tekst", encoding="utf-8")
+for f in Path(".").iterdir():
+    print(f)</pre>
+
+<div class="uwaga"><code>with</code> jest zdecydowanie preferowane nad ręcznym <code>open()</code>/<code>close()</code> — gwarantuje zamknięcie pliku nawet przy wyjątku, eliminując klasyczny błąd "zapomnianego" <code>close()</code> (analogiczny do wycieków pamięci w C, patrz przedmioty o C).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Listy składane (list comprehensions) i generatory</h2>
+
+<h3>Listy składane — składnia</h3>
+<pre>kwadraty = [x**2 for x in range(10)]
+# odpowiednik:
+kwadraty = []
+for x in range(10):
+    kwadraty.append(x**2)</pre>
+
+<h3>Z warunkiem (filtrowanie)</h3>
+<pre>parzyste = [x for x in range(20) if x % 2 == 0]</pre>
+
+<h3>Z if-else (wybór wartości, nie filtrowanie!)</h3>
+<pre>etykiety = ["parzysta" if x % 2 == 0 else "nieparzysta" for x in range(5)]</pre>
+
+<h3>Zagnieżdżone (np. spłaszczanie listy list)</h3>
+<pre>macierz = [[1,2,3], [4,5,6]]
+splaszczona = [x for wiersz in macierz for x in wiersz]
+# [1, 2, 3, 4, 5, 6]</pre>
+
+<h3>Analogiczne konstrukcje — dict i set comprehension</h3>
+<pre>kwadraty_dict = {x: x**2 for x in range(5)}     # {0:0, 1:1, 2:4, 3:9, 4:16}
+unikalne_dlugosci = {len(s) for s in ["a","bb","ccc","dd"]}  # {1, 2, 3}</pre>
+
+<h3>Generatory — wyrażenie generatorowe</h3>
+<pre>gen = (x**2 for x in range(10))   # nawiasy okrągłe, nie kwadratowe!
+next(gen)   # 0
+next(gen)   # 1</pre>
+<p>W odróżnieniu od listy składanej, generator <strong>nie tworzy</strong> całej struktury w pamięci naraz — elementy są liczone "na żądanie" (lazy evaluation), jeden po drugim, w miarę iteracji.</p>
+
+<h3>Funkcje generatorowe (<code>yield</code>)</h3>
+<pre>def liczby_do(n):
+    for i in range(n):
+        yield i
+
+for x in liczby_do(5):
+    print(x)   # 0 1 2 3 4</pre>
+<p><code>yield</code> "zamraża" stan funkcji między kolejnymi wywołaniami <code>next()</code> — funkcja pamięta, gdzie skończyła, i wraca do tego miejsca przy następnym żądaniu wartości.</p>
+
+<h3>Lista składana vs generator — kiedy który?</h3>
+<table>
+<tr><th></th><th>Lista składana</th><th>Generator</th></tr>
+<tr><td>Pamięć</td><td>cała struktura naraz w pamięci</td><td>tylko jeden element na raz (leniwie)</td></tr>
+<tr><td>Wielokrotne przejście</td><td>tak, można iterować wiele razy</td><td>nie — po wyczerpaniu trzeba stworzyć nowy generator</td></tr>
+<tr><td>Zastosowanie</td><td>gdy potrzebujesz pełnej listy (np. do <code>sort()</code>, indeksowania)</td><td>duże/nieskończone sekwencje, przetwarzanie strumieniowe, oszczędność pamięci</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dlaczego przy przetwarzaniu bardzo dużego pliku (miliony linii) lepiej użyć generatora niż listy składanej — bo generator przetwarza linię po linii, nie wczytując całości do pamięci naraz.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Obsługa wyjątków</h2>
+
+<h3>Podstawowa składnia</h3>
+<pre>try:
+    wynik = 10 / 0
+except ZeroDivisionError:
+    print("Nie można dzielić przez zero!")
+except (TypeError, ValueError) as e:
+    print(f"Błąd typu lub wartości: {e}")
+except Exception as e:
+    print(f"Inny błąd: {e}")   # wyłapuje wszystkie pozostałe wyjątki
+else:
+    print("Kod wykonany, jeśli NIE wystąpił wyjątek")
+finally:
+    print("Wykonuje się ZAWSZE — niezależnie od wyjątku")</pre>
+
+<h3>Kolejność bloków</h3>
+<ul>
+<li><code>try</code> — kod, który może zgłosić wyjątek</li>
+<li><code>except</code> — obsługa konkretnego typu (lub typów) wyjątku; można mieć wiele bloków, sprawdzanych po kolei od najbardziej specyficznego</li>
+<li><code>else</code> (opcjonalny) — wykonuje się, tylko gdy <code>try</code> zakończył się <strong>bez</strong> wyjątku</li>
+<li><code>finally</code> (opcjonalny) — wykonuje się <strong>zawsze</strong>, nawet jeśli w <code>except</code> był <code>return</code>/kolejny wyjątek — typowe miejsce na zwalnianie zasobów (choć <code>with</code> zwykle robi to lepiej dla plików, patrz punkt 4)</li>
+</ul>
+
+<h3>Zgłaszanie własnych wyjątków — <code>raise</code></h3>
+<pre>def sprawdz_wiek(wiek):
+    if wiek &lt; 0:
+        raise ValueError("Wiek nie może być ujemny")
+    return wiek
+
+try:
+    sprawdz_wiek(-5)
+except ValueError as e:
+    print(e)   # "Wiek nie może być ujemny"</pre>
+
+<h3>Własne klasy wyjątków</h3>
+<pre>class MojWyjatek(Exception):
+    pass
+
+class BladWalidacji(MojWyjatek):
+    def __init__(self, pole, wiadomosc):
+        self.pole = pole
+        super().__init__(wiadomosc)
+
+raise BladWalidacji("email", "Nieprawidlowy format email")</pre>
+<p>Własne wyjątki dziedziczą (bezpośrednio lub pośrednio) po <code>Exception</code> — pozwala to budować hierarchię wyjątków specyficzną dla danej aplikacji, wyłapywaną selektywnie.</p>
+
+<h3>Popularne wbudowane wyjątki</h3>
+<table>
+<tr><th>Wyjątek</th><th>Sytuacja</th></tr>
+<tr><td><code>ValueError</code></td><td>poprawny typ, ale niewłaściwa wartość (np. <code>int("abc")</code>)</td></tr>
+<tr><td><code>TypeError</code></td><td>operacja na niewłaściwym typie danych</td></tr>
+<tr><td><code>KeyError</code></td><td>brak klucza w słowniku</td></tr>
+<tr><td><code>IndexError</code></td><td>indeks poza zakresem listy/stringa</td></tr>
+<tr><td><code>FileNotFoundError</code></td><td>próba otwarcia nieistniejącego pliku</td></tr>
+<tr><td><code>ZeroDivisionError</code></td><td>dzielenie przez zero</td></tr>
+</table>
+
+<div class="uwaga">Dobra praktyka: łap <strong>konkretne</strong> typy wyjątków (<code>except ValueError</code>), nie "goły" <code>except:</code> (bez typu) — inaczej łatwo przypadkiem "połknąć" też błędy programistyczne (np. literówkę w nazwie zmiennej), które powinny przerwać program i zostać zauważone.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Dekoratory</h2>
+
+<p>Funkcja, która przyjmuje inną funkcję jako argument i zwraca <strong>nową</strong> funkcję, "opakowując" (wrapping) jej zachowanie — pozwala dodać wspólną logikę (logowanie, pomiar czasu, sprawdzanie uprawnień) bez modyfikowania kodu oryginalnej funkcji.</p>
+
+<h3>Dekorator "od podstaw" (bez składni <code>@</code>)</h3>
+<pre>def moj_dekorator(funkcja):
+    def wrapper(*args, **kwargs):
+        print("Przed wywołaniem")
+        wynik = funkcja(*args, **kwargs)
+        print("Po wywołaniu")
+        return wynik
+    return wrapper
+
+def powiedz_czesc():
+    print("Cześć!")
+
+powiedz_czesc = moj_dekorator(powiedz_czesc)   # "ręczne" udekorowanie
+powiedz_czesc()
+# Przed wywołaniem
+# Cześć!
+# Po wywołaniu</pre>
+
+<h3>Składnia <code>@</code> — "cukier syntaktyczny"</h3>
+<pre>@moj_dekorator
+def powiedz_czesc():
+    print("Cześć!")
+
+powiedz_czesc()   # to samo co wyżej — @dekorator to skrót od: f = dekorator(f)</pre>
+
+<h3>Przykład praktyczny — pomiar czasu wykonania</h3>
+<pre>import time
+
+def zmierz_czas(funkcja):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        wynik = funkcja(*args, **kwargs)
+        print(f"Czas wykonania: {time.time()-start:.4f}s")
+        return wynik
+    return wrapper
+
+@zmierz_czas
+def dlugie_obliczenia():
+    time.sleep(1)
+
+dlugie_obliczenia()   # wypisze czas wykonania ~1s</pre>
+
+<h3>Dekorator z własnymi parametrami</h3>
+<pre>def powtorz(n):                      # funkcja zwracająca dekorator
+    def dekorator(funkcja):
+        def wrapper(*args, **kwargs):
+            for _ in range(n):
+                funkcja(*args, **kwargs)
+        return wrapper
+    return dekorator
+
+@powtorz(3)
+def przywitaj():
+    print("Witaj!")
+
+przywitaj()   # wypisze "Witaj!" trzy razy</pre>
+
+<h3>Popularne wbudowane dekoratory</h3>
+<table>
+<tr><th>Dekorator</th><th>Zastosowanie</th></tr>
+<tr><td><code>@staticmethod</code></td><td>metoda klasy bez dostępu do <code>self</code> (jak <code>static</code> w C++/Javie)</td></tr>
+<tr><td><code>@classmethod</code></td><td>metoda otrzymująca klasę (<code>cls</code>) jako pierwszy argument, nie konkretny obiekt</td></tr>
+<tr><td><code>@property</code></td><td>udostępnia metodę jako "zwykłe" pole (getter bez wywołania z nawiasami)</td></tr>
+<tr><td><code>@functools.lru_cache</code></td><td>automatyczna memoizacja wyników funkcji (patrz programowanie dynamiczne — przedmiot AiSD)</td></tr>
+</table>
+
+<div class="uwaga">Dekoratory to praktyczny przykład tego, że w Pythonie funkcje są <strong>obiektami pierwszej klasy</strong> (patrz punkt 3) — dekorator po prostu przyjmuje funkcję jako argument i zwraca inną funkcję, tak jak każda "zwykła" operacja na obiekcie.</div>
+</div>
+
+</body>
+</html>

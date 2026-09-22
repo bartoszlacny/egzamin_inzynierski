@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Fizyka i elektronika – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Fizyka i elektronika</h1>
+
+<div class="zagadnienie">
+<h2>1. Podstawy elektrotechniki i pola elektrycznego</h2>
+
+<h3>Podstawowe wielkości i jednostki SI</h3>
+<table>
+<tr><th>Wielkość</th><th>Symbol</th><th>Jednostka</th></tr>
+<tr><td>Ładunek elektryczny</td><td>\(Q\)</td><td>kulomb [C]</td></tr>
+<tr><td>Natężenie prądu</td><td>\(I\)</td><td>amper [A]</td></tr>
+<tr><td>Napięcie</td><td>\(U\)</td><td>wolt [V]</td></tr>
+<tr><td>Rezystancja</td><td>\(R\)</td><td>ohm [Ω]</td></tr>
+<tr><td>Moc</td><td>\(P\)</td><td>wat [W]</td></tr>
+<tr><td>Energia</td><td>\(E\)</td><td>dżul [J]</td></tr>
+<tr><td>Pojemność</td><td>\(C\)</td><td>farad [F]</td></tr>
+<tr><td>Indukcyjność</td><td>\(L\)</td><td>henr [H]</td></tr>
+</table>
+
+<h3>Ładunek elektryczny i prąd</h3>
+<p>Prąd elektryczny to uporządkowany ruch ładunków — natężenie prądu to ładunek przepływający przez przekrój przewodnika w jednostce czasu:</p>
+<p>$$I = \frac{dQ}{dt}$$</p>
+
+<h3>Pole elektryczne</h3>
+<p>Natężenie pola elektrycznego wytworzonego przez ładunek punktowy \(Q\) (prawo Coulomba):</p>
+<p>$$E = \frac{1}{4\pi\varepsilon_0}\frac{Q}{r^2}, \qquad F = qE$$</p>
+<p>gdzie \(\varepsilon_0\) to przenikalność elektryczna próżni, \(r\) odległość od ładunku, \(F\) siła działająca na ładunek próbny \(q\).</p>
+
+<h3>Potencjał i napięcie</h3>
+<p>Potencjał elektryczny — energia potencjalna na jednostkę ładunku; napięcie (różnica potencjałów) między dwoma punktami:</p>
+<p>$$U_{AB} = V_A - V_B$$</p>
+
+<h3>Prawo Gaussa (koncepcyjnie)</h3>
+<p>Strumień pola elektrycznego przez zamkniętą powierzchnię jest proporcjonalny do ładunku zamkniętego wewnątrz tej powierzchni — podstawowe prawo elektrostatyki, użyteczne do wyznaczania pola dla symetrycznych rozkładów ładunku.</p>
+
+<div class="uwaga">Rozróżnienie: <strong>pole elektryczne</strong> istnieje wokół ładunku niezależnie od tego, czy coś się w nim rusza; <strong>prąd</strong> to efekt uporządkowanego ruchu ładunków pod wpływem tego pola (lub innej przyczyny, np. reakcji chemicznej w baterii).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Elementy obwodów elektrycznych</h2>
+
+<h3>Rezystor</h3>
+<p>Element rozpraszający energię elektryczną w postaci ciepła — opisany rezystancją \(R\) [Ω], zgodnie z prawem Ohma (patrz punkt 3). Symbol schematowy: prostokąt lub linia zygzakowata.</p>
+
+<h3>Kondensator</h3>
+<p>Element gromadzący energię w polu elektrycznym między okładkami — pojemność \(C\) [F] wiąże ładunek zgromadzony z napięciem:</p>
+<p>$$Q = CU, \qquad i(t) = C\frac{du}{dt}$$</p>
+<p>Nie przepuszcza prądu stałego w stanie ustalonym (naładowany kondensator blokuje DC), ale przepuszcza prąd zmienny (im wyższa częstotliwość, tym mniejszy "opór" — patrz reaktancja, punkt 4).</p>
+
+<h3>Cewka (induktor)</h3>
+<p>Element gromadzący energię w polu magnetycznym — indukcyjność \(L\) [H] wiąże napięcie z szybkością zmiany prądu (prawo indukcji Faradaya, patrz też punkt 7):</p>
+<p>$$u(t) = L\frac{di}{dt}$$</p>
+<p>Przeciwstawia się <strong>zmianom</strong> prądu — dla DC w stanie ustalonym zachowuje się jak "zwarcie" (brak oporu), dla wysokich częstotliwości stawia duży opór.</p>
+
+<h3>Źródła napięcia i prądu</h3>
+<ul>
+<li><strong>idealne źródło napięcia</strong> — utrzymuje stałe napięcie na swoich zaciskach niezależnie od obciążenia (prądu, jaki z niego pobieramy)</li>
+<li><strong>idealne źródło prądu</strong> — utrzymuje stały prąd niezależnie od napięcia na zaciskach</li>
+<li><strong>rzeczywiste źródła</strong> mają rezystancję wewnętrzną — napięcie na zaciskach spada przy większym obciążeniu (\(U = \varepsilon - IR_{wewn}\), gdzie \(\varepsilon\) to siła elektromotoryczna, SEM)</li>
+</ul>
+
+<h3>Podstawowe oznaczenia schematowe</h3>
+<table>
+<tr><th>Element</th><th>Typowy symbol</th></tr>
+<tr><td>Rezystor</td><td>prostokąt / zygzak, z wartością R w omach</td></tr>
+<tr><td>Kondensator</td><td>dwie równoległe linie (płytki)</td></tr>
+<tr><td>Cewka</td><td>zwoje / spirala</td></tr>
+<tr><td>Źródło napięcia (bateria)</td><td>dwie linie o różnej długości (+/−)</td></tr>
+<tr><td>Dioda</td><td>trójkąt ze strzałką i linią (kierunek przewodzenia)</td></tr>
+</table>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Obwody prądu stałego (DC)</h2>
+
+<h3>Prawo Ohma</h3>
+<p>$$U = IR$$</p>
+<p>Napięcie na rezystorze jest proporcjonalne do prądu przez niego płynącego.</p>
+
+<h3>I prawo Kirchhoffa (prądowe)</h3>
+<p>Suma prądów wpływających do węzła równa się sumie prądów wypływających (zachowanie ładunku — nic "nie ginie" w węźle):</p>
+<p>$$\sum I_{wpływające} = \sum I_{wypływające}$$</p>
+
+<h3>II prawo Kirchhoffa (napięciowe)</h3>
+<p>Suma spadków napięć w zamkniętym oczku obwodu równa się zero (zachowanie energii wzdłuż obwodu):</p>
+<p>$$\sum U_i = 0 \quad \text{(w zamkniętym oczku)}$$</p>
+
+<h3>Łączenie rezystorów</h3>
+<p>Szeregowe: $$R_{ekw} = R_1+R_2+\dots+R_n$$</p>
+<p>Równoległe: $$\frac{1}{R_{ekw}} = \frac{1}{R_1}+\frac{1}{R_2}+\dots+\frac{1}{R_n}$$</p>
+
+<h3>Dzielnik napięcia</h3>
+<p>Dla dwóch rezystorów szeregowo zasilanych napięciem \(U\):</p>
+<p>$$U_2 = U\cdot\frac{R_2}{R_1+R_2}$$</p>
+
+<h3>Metody analizy obwodów</h3>
+<ul>
+<li><strong>metoda prądów oczkowych (Maxwella)</strong> — definiuje prądy "krążące" w niezależnych oczkach, układa równania z II prawa Kirchhoffa</li>
+<li><strong>metoda potencjałów węzłowych</strong> — niewiadomymi są potencjały węzłów, równania z I prawa Kirchhoffa</li>
+<li><strong>zasada superpozycji</strong> — dla obwodu liniowego z wieloma źródłami, odpowiedź (prąd/napięcie) to suma odpowiedzi od każdego źródła działającego <strong>samodzielnie</strong> (inne źródła wyłączone — napięciowe zwarte, prądowe rozwarte)</li>
+<li><strong>twierdzenie Thevenina</strong> — każdy liniowy obwód dwuzaciskowy można zastąpić jednym źródłem napięcia z rezystancją szeregową (rezystancja zastępcza widziana z tych zacisków)</li>
+</ul>
+
+<h3>Moc i energia w obwodach DC</h3>
+<p>$$P = UI = I^2R = \frac{U^2}{R}$$</p>
+<p>$$E = Pt$$</p>
+
+<div class="uwaga">Typowe zadanie: dla podanego obwodu z kilkoma rezystorami i źródłem, policz prąd w każdej gałęzi metodą praw Kirchhoffa albo uprość obwód metodą przekształceń szeregowo-równoległych i dzielnika napięcia.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Obwody prądu zmiennego (AC)</h2>
+
+<h3>Przebieg sinusoidalny</h3>
+<p>$$u(t) = U_m \sin(\omega t + \varphi)$$</p>
+<p>gdzie \(U_m\) — wartość maksymalna (amplituda), \(\omega=2\pi f\) — pulsacja, \(f\) — częstotliwość, \(\varphi\) — faza początkowa.</p>
+
+<h3>Wartość skuteczna (RMS)</h3>
+<p>Wartość prądu/napięcia stałego, który wywołałby taki sam efekt cieplny (moc) jak dany przebieg zmienny:</p>
+<p>$$U_{sk} = \frac{U_m}{\sqrt{2}} \approx 0{,}707\, U_m$$</p>
+<p>(dla przebiegu sinusoidalnego). To wartość podawana na urządzeniach (np. "230V" w gniazdku to wartość skuteczna, nie amplituda).</p>
+
+<h3>Reaktancja</h3>
+<p>"Opór" elementów gromadzących energię (C, L) dla prądu zmiennego — zależny od częstotliwości, w odróżnieniu od rezystancji:</p>
+<p>Reaktancja pojemnościowa: $$X_C = \frac{1}{\omega C}$$ (maleje z częstotliwością — kondensator "przepuszcza" coraz łatwiej wysokie częstotliwości)</p>
+<p>Reaktancja indukcyjna: $$X_L = \omega L$$ (rośnie z częstotliwością — cewka coraz bardziej "blokuje" wysokie częstotliwości)</p>
+
+<h3>Impedancja</h3>
+<p>Uogólniony "opór" obwodu AC, łączący rezystancję i reaktancję (jako liczba zespolona):</p>
+<p>$$Z = R + jX, \qquad |Z| = \sqrt{R^2+X^2}$$</p>
+<p>gdzie \(X = X_L - X_C\) (reaktancja wypadkowa).</p>
+
+<h3>Przesunięcie fazowe</h3>
+<p>Kąt \(\varphi\) między przebiegiem napięcia i prądu — w czystym rezystorze \(\varphi=0\) (w fazie), w czystej cewce prąd "spóźnia się" o \(90°\) za napięciem, w czystym kondensatorze prąd "wyprzedza" napięcie o \(90°\):</p>
+<p>$$\varphi = \arctan\frac{X}{R}$$</p>
+
+<h3>Moc w obwodach AC</h3>
+<table>
+<tr><th>Moc</th><th>Wzór</th><th>Znaczenie</th></tr>
+<tr><td>Czynna \(P\)</td><td>\(P = U_{sk}I_{sk}\cos\varphi\)</td><td>rzeczywiście zużyta/przetworzona energia (np. na ciepło)</td></tr>
+<tr><td>Biegunowa/pozorna \(S\)</td><td>\(S = U_{sk}I_{sk}\)</td><td>"całkowita" moc, jaką musi dostarczyć źródło</td></tr>
+<tr><td>Bierna \(Q\)</td><td>\(Q = U_{sk}I_{sk}\sin\varphi\)</td><td>"oscyluje" między źródłem a elementem C/L, nie jest trwale zużywana</td></tr>
+</table>
+<p>\(\cos\varphi\) — <strong>współczynnik mocy</strong>: im bliższy 1, tym efektywniej energia jest wykorzystywana (mniej mocy biernej "krążącej" bez pożytku).</p>
+
+<h3>Rezonans</h3>
+<p>Zjawisko w obwodach RLC, gdy reaktancje się znoszą (\(X_L=X_C\)), impedancja jest minimalna (czysto rezystancyjna) — częstotliwość rezonansowa:</p>
+<p>$$f_0 = \frac{1}{2\pi\sqrt{LC}}$$</p>
+<p>Przy rezonansie prąd w obwodzie szeregowym RLC jest maksymalny (bo impedancja minimalna) — wykorzystywane np. w odbiornikach radiowych do wybierania konkretnej częstotliwości (stacji).</p>
+
+<div class="uwaga">Typowe pytanie: narysuj/opisz przesunięcie fazowe prądu względem napięcia dla obwodu RC, RL, RLC i wyjaśnij, dlaczego przy rezonansie impedancja jest minimalna.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Elementy półprzewodnikowe</h2>
+
+<h3>Podstawy półprzewodników</h3>
+<p>Materiał (np. krzem) o przewodności pośredniej między przewodnikiem i izolatorem, silnie zależnej od domieszkowania:</p>
+<ul>
+<li><strong>typ N</strong> — domieszkowany atomami z nadmiarem elektronów (nośniki większościowe: elektrony)</li>
+<li><strong>typ P</strong> — domieszkowany atomami z niedomiarem elektronów, tworząc "dziury" (nośniki większościowe: dziury — brak elektronu, zachowujący się jak nośnik dodatni)</li>
+</ul>
+
+<h3>Dioda — złącze PN</h3>
+<p>Połączenie obszaru P i N tworzy złącze z barierą potencjału — dioda przewodzi prąd praktycznie tylko w <strong>jednym kierunku</strong>:</p>
+<ul>
+<li><strong>polaryzacja przewodząca (forward)</strong> — anoda (+) na obszarze P — prąd płynie po przekroczeniu napięcia przewodzenia (dla Si ok. 0,6-0,7V)</li>
+<li><strong>polaryzacja zaporowa (reverse)</strong> — praktycznie brak przewodzenia (do napięcia przebicia)</li>
+</ul>
+<p>Charakterystyka I-U diody jest silnie <strong>nieliniowa</strong> — gwałtowny wzrost prądu po przekroczeniu napięcia przewodzenia.</p>
+
+<h3>Tranzystor bipolarny (BJT)</h3>
+<p>Trójzłączowy element (NPN lub PNP) z trzema elektrodami: baza (B), kolektor (C), emiter (E) — mały prąd bazy <strong>steruje</strong> dużo większym prądem kolektora-emitera (wzmocnienie prądowe \(\beta = I_C/I_B\)).</p>
+<ul>
+<li>steruje się <strong>prądem</strong> bazy (w odróżnieniu od MOSFET, gdzie steruje się napięciem)</li>
+<li obszary pracy: odcięcia (brak przewodzenia), aktywny (wzmacnianie — liniowa zależność \(I_C\) od \(I_B\)), nasycenia (pełne przewodzenie, jak "zwarcie")</li>
+</ul>
+
+<h3>Tranzystor MOSFET</h3>
+<p>Elektrody: bramka (Gate), dren (Drain), źródło (Source) — napięcie na bramce <strong>steruje</strong> przewodnością kanału między drenem i źródłem (kondensatorowa struktura bramki — praktycznie nie płynie prąd bramki w stanie ustalonym).</p>
+<ul>
+<li><strong>typ N-kanałowy / P-kanałowy</strong> — analogicznie do NPN/PNP w BJT</li>
+<li steruje się <strong>napięciem</strong> bramki (\(V_{GS}\)) — stąd bardzo wysoka impedancja wejściowa, mniejsze straty na sterowanie niż w BJT</li>
+<li>obszary pracy: odcięcia, liniowy/triode (rezystor sterowany napięciem), nasycenia (prąd praktycznie niezależny od \(V_{DS}\), zależny od \(V_{GS}\))</li>
+</ul>
+
+<table>
+<tr><th></th><th>BJT</th><th>MOSFET</th></tr>
+<tr><td>Sterowanie</td><td>prądem bazy</td><td>napięciem bramki</td></tr>
+<tr><td>Impedancja wejściowa</td><td>niska/średnia</td><td>bardzo wysoka</td></tr>
+<tr><td>Typowe zastosowanie</td><td>wzmacniacze analogowe, przełączanie</td><td>przełączanie mocy, układy cyfrowe (CMOS)</td></tr>
+</table>
+
+<h3>Podstawowe zastosowania</h3>
+<p>Diody: prostowniki (zamiana AC→DC), stabilizacja napięcia (dioda Zenera), zabezpieczenia. Tranzystory: wzmacnianie sygnału, przełączanie (klucz elektroniczny), budowa bramek logicznych (patrz punkt 6).</p>
+
+<div class="uwaga">Typowe pytanie: naszkicuj charakterystykę I-U diody i wyjaśnij różnicę między obszarem pracy liniowym a nasycenia tranzystora, albo porównaj sterowanie prądowe (BJT) z napięciowym (MOSFET).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Układy elektroniczne i technologie scalone</h2>
+
+<h3>Wzmacniacze analogowe</h3>
+<p>Układ zwiększający amplitudę sygnału, zachowując (idealnie) jego kształt — kluczowy parametr: <strong>wzmocnienie</strong> \(A = U_{wy}/U_{we}\).</p>
+<ul>
+<li><strong>wzmacniacz operacyjny (op-amp)</strong> — uniwersalny blok budulcowy układów analogowych (bardzo wysokie wzmocnienie, wysoka impedancja wejściowa), konfigurowany zewnętrznymi rezystorami/kondensatorami do realizacji różnych funkcji (wzmacniacz odwracający/nieodwracający, sumator, integrator, komparator)</li>
+<li>klasy wzmacniaczy mocy (A, B, AB, C, D) — różnią się kompromisem między liniowością sygnału a efektywnością energetyczną</li>
+</ul>
+
+<h3>Układy cyfrowe — bramki logiczne</h3>
+<p>Podstawowe bloki budujące logikę cyfrową, realizujące funkcje algebry Boole'a na sygnałach binarnych (0/1, niskie/wysokie napięcie):</p>
+<table>
+<tr><th>Bramka</th><th>Funkcja</th></tr>
+<tr><td>AND</td><td>1 tylko gdy wszystkie wejścia = 1</td></tr>
+<tr><td>OR</td><td>1 gdy przynajmniej jedno wejście = 1</td></tr>
+<tr><td>NOT</td><td>neguje wejście</td></tr>
+<tr><td>NAND, NOR</td><td>zanegowane AND/OR — <strong>uniwersalne</strong>, z nich można zbudować każdą inną bramkę</td></tr>
+<tr><td>XOR</td><td>1 gdy wejścia są różne</td></tr>
+</table>
+<p>Bramki budowane fizycznie z tranzystorów (patrz punkt 5) — technologia CMOS (komplementarne MOSFET-y typu N i P) dominuje dziś w układach cyfrowych ze względu na niskie zużycie energii w stanie statycznym.</p>
+
+<h3>Układy scalone (IC — Integrated Circuit)</h3>
+<p>Wiele elementów (tranzystory, rezystory, diody) wytworzonych na jednej płytce półprzewodnika (chipie) — od prostych bramek logicznych (SSI) po miliardy tranzystorów w mikroprocesorze (VLSI/ULSI).</p>
+<ul>
+<li><strong>analogowe IC</strong> — np. wzmacniacze operacyjne, regulatory napięcia</li>
+<li><strong>cyfrowe IC</strong> — np. mikroprocesory, pamięci, układy logiczne programowalne (FPGA)</li>
+<li><strong>mieszane (mixed-signal)</strong> — łączą część analogową i cyfrową, np. przetworniki ADC/DAC</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj daną funkcję logiczną z użyciem tylko bramek NAND (skoro są uniwersalne) — częste zadanie sprawdzające zrozumienie algebry Boole'a i uniwersalności bramek NAND/NOR.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Fizyka w elektronice i systemy pomiarowe</h2>
+
+<h3>Elektromagnetyzm — indukcja</h3>
+<p>Prawo indukcji Faradaya — zmienne pole magnetyczne wywołuje siłę elektromotoryczną (napięcie) w obwodzie:</p>
+<p>$$\varepsilon = -\frac{d\Phi_B}{dt}$$</p>
+<p>gdzie \(\Phi_B\) to strumień pola magnetycznego przez obwód. Znak minus (prawo Lenza) — indukowany prąd przeciwstawia się zmianie, która go wywołała.</p>
+<p>Zastosowania: transformatory, generatory, silniki elektryczne, cewki (patrz punkt 2).</p>
+
+<h3>Siła elektrodynamiczna (Lorentza)</h3>
+<p>Siła działająca na ładunek/przewodnik z prądem w polu magnetycznym — podstawa działania silników elektrycznych:</p>
+<p>$$F = qv \times B, \qquad F = IL\times B \text{ (dla przewodnika)}$$</p>
+
+<h3>Zjawiska optyczne</h3>
+<ul>
+<li><strong>zjawisko fotoelektryczne</strong> — pochłonięcie fotonu przez elektron w materiale, uwolnienie/przemieszczenie elektronu — podstawa działania fotodiod, ogniw fotowoltaicznych</li>
+<li><strong>luminescencja</strong> — emisja światła przez materiał (np. w diodach LED, wskutek rekombinacji elektronów i dziur w złączu PN)</li>
+</ul>
+
+<h3>Elementy optoelektroniczne</h3>
+<table>
+<tr><th>Element</th><th>Zasada</th></tr>
+<tr><td>LED (dioda świecąca)</td><td>emituje światło przy przepływie prądu w złączu PN (rekombinacja)</td></tr>
+<tr><td>Fotodioda</td><td>generuje prąd/zmienia rezystancję pod wpływem światła (odwrotność LED)</td></tr>
+<tr><td>Fotoogniwo (panel PV)</td><td>zamienia energię światła na energię elektryczną (efekt fotowoltaiczny)</td></tr>
+<tr><td>Transoptor (optoizolator)</td><td>LED + fotodetektor w jednej obudowie — przesyła sygnał świetlnie, elektrycznie izolując dwa obwody</td></tr>
+</table>
+
+<h3>Sensory i przetworniki</h3>
+<p>Urządzenia zamieniające wielkość fizyczną (temperatura, ciśnienie, przyspieszenie, światło) na sygnał elektryczny (i odwrotnie — przetworniki wykonawcze, np. silniki).</p>
+<ul>
+<li><strong>termopara, termistor</strong> — pomiar temperatury (zmiana napięcia/rezystancji z temperaturą)</li>
+<li><strong>tensometr</strong> — pomiar odkształcenia/siły (zmiana rezystancji przy rozciąganiu)</li>
+<li><strong>akcelerometr</strong> — pomiar przyspieszenia</li>
+</ul>
+
+<h3>Podstawy pomiarów</h3>
+<ul>
+<li><strong>dokładność</strong> — jak bliski wynik pomiaru jest do wartości rzeczywistej; <strong>precyzja</strong> — jak powtarzalne są wyniki między sobą (niekoniecznie bliskie prawdy)</li>
+<li><strong>błąd pomiaru</strong> — systematyczny (powtarzalny, jedna przyczyna, np. źle wykalibrowany przyrząd) vs przypadkowy (losowy, np. szum)</li>
+<li><strong>przetworniki ADC/DAC</strong> — zamiana sygnału analogowego na cyfrowy (i odwrotnie), niezbędne do pomiaru wielkości analogowych przez systemy cyfrowe/mikrokontrolery</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: opisz zasadę działania konkretnego czujnika (np. termopary) i wyjaśnij, jak sygnał analogowy z niego trafia do systemu cyfrowego (przez ADC) do dalszego przetwarzania.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Filtry RC/RL</h2>
+
+<p>Proste obwody wykorzystujące zależność reaktancji od częstotliwości (patrz punkt 4) do przepuszczania/tłumienia sygnałów w zależności od ich częstotliwości.</p>
+
+<h3>Filtr dolnoprzepustowy RC</h3>
+<p>Rezystor szeregowo, kondensator równolegle do wyjścia (napięcie mierzone na kondensatorze):</p>
+<ul>
+<li>przy niskich częstotliwościach \(X_C\) jest duże → kondensator "blokuje" mniej, napięcie przechodzi praktycznie bez zmian</li>
+<li>przy wysokich częstotliwościach \(X_C\) jest małe → kondensator "zwiera" sygnał do masy, napięcie wyjściowe spada</li>
+</ul>
+<p>Częstotliwość odcięcia (−3dB, gdzie \(X_C=R\)):</p>
+<p>$$f_c = \frac{1}{2\pi RC}$$</p>
+
+<h3>Filtr górnoprzepustowy RC</h3>
+<p>Ten sam układ elementów, ale napięcie wyjściowe mierzone na <strong>rezystorze</strong> (nie na kondensatorze):</p>
+<ul>
+<li>niskie częstotliwości — kondensator "blokuje" (duże \(X_C\)), mało sygnału dociera do rezystora</li>
+<li>wysokie częstotliwości — kondensator przepuszcza łatwo, większość sygnału na rezystorze</li>
+</ul>
+<p>Ta sama częstotliwość odcięcia \(f_c = \dfrac{1}{2\pi RC}\) — różni się tylko to, które napięcie (na C czy na R) traktujemy jako wyjście.</p>
+
+<h3>Filtry RL</h3>
+<p>Analogicznie, z cewką zamiast kondensatora — ponieważ \(X_L\) rośnie z częstotliwością (odwrotnie niż \(X_C\)), rola elementów się zamienia: napięcie na rezystorze w układzie RL daje filtr <strong>dolnoprzepustowy</strong>, a na cewce — <strong>górnoprzepustowy</strong>. Częstotliwość odcięcia:</p>
+<p>$$f_c = \frac{R}{2\pi L}$$</p>
+
+<h3>Charakterystyka Bode'a (konceptualnie)</h3>
+<p>Wykres wzmocnienia (w dB) w funkcji częstotliwości (skala logarytmiczna) — dla prostego filtru RC/RL nachylenie poza pasmem przepustowym wynosi ok. −20dB/dekadę (filtr pierwszego rzędu) — im wyższy rząd filtru (więcej elementów RC/RL kaskadowo), tym bardziej "ostre" odcięcie.</p>
+
+<div class="uwaga">Filtr RC/RL to filtr <strong>pierwszego rzędu</strong> — daje łagodne, stopniowe przejście między pasmem przepustowym i zaporowym; ostrzejsze filtry (Butterworth, Czebyszewa) wymagają więcej elementów i wykraczają poza podstawy, ale opierają się na tej samej idei reaktancji zależnej od częstotliwości.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Zasilacze i stabilizatory napięcia</h2>
+
+<p>Układ zamieniający napięcie zmienne z sieci (AC, np. 230V/50Hz) na stabilne napięcie stałe (DC) potrzebne do zasilania układów elektronicznych.</p>
+
+<h3>Transformator</h3>
+<p>Pierwszy etap — zmniejsza napięcie sieciowe do bezpiecznego poziomu, wykorzystując indukcję elektromagnetyczną (patrz punkt 7) między dwoma zwojami (pierwotnym i wtórnym):</p>
+<p>$$\frac{U_1}{U_2} = \frac{N_1}{N_2}$$</p>
+<p>gdzie \(N_1, N_2\) to liczby zwojów uzwojenia pierwotnego/wtórnego.</p>
+
+<h3>Prostowanie (rectification)</h3>
+<p>Zamiana AC (dwubiegunowego) na sygnał jednobiegunowy, korzystając z jednokierunkowego przewodzenia diody (patrz punkt 5):</p>
+<table>
+<tr><th>Typ</th><th>Zasada</th><th>Cecha</th></tr>
+<tr>
+<td>Prostownik jednopołówkowy</td>
+<td>jedna dioda — przepuszcza tylko jedną "połówkę" (dodatnią) przebiegu AC</td>
+<td>prosty, ale nieefektywny (druga połowa energii "wyrzucona"), duże tętnienia</td>
+</tr>
+<tr>
+<td>Prostownik dwupołówkowy (mostek Graetza)</td>
+<td>cztery diody w układzie mostkowym — wykorzystuje obie połówki przebiegu</td>
+<td>efektywniejszy, mniejsze tętnienia niż jednopołówkowy</td>
+</tr>
+</table>
+
+<h3>Filtracja (wygładzanie)</h3>
+<p>Kondensator (dużej pojemności) równolegle do wyjścia prostownika — gromadzi ładunek na "szczytach" i oddaje go w przerwach między impulsami, wygładzając <strong>tętnienia (ripple)</strong> napięcia wyjściowego — czym większa pojemność, tym mniejsze tętnienia (przy danym obciążeniu).</p>
+
+<h3>Stabilizacja napięcia</h3>
+<p>Ostatni etap — utrzymuje <strong>stałe</strong> napięcie wyjściowe niezależnie od wahań napięcia wejściowego (np. resztkowych tętnień) i zmian obciążenia:</p>
+<ul>
+<li><strong>stabilizator z diodą Zenera</strong> — prosty, wykorzystuje stałe napięcie przewodzenia zaporowego diody Zenera po przekroczeniu napięcia przebicia; mało efektywny energetycznie</li>
+<li><strong>stabilizator liniowy (np. układ scalony typu 7805)</strong> — reguluje napięcie, "tracąc" nadmiar jako ciepło — prosty, mało zakłóceń, ale niska efektywność energetyczna przy dużej różnicy \(U_{we}-U_{wy}\)</li>
+<li><strong>stabilizator impulsowy (przetwornica, np. buck/boost)</strong> — szybko przełącza tranzystor, magazynując/uwalniając energię w cewce/kondensatorze — znacznie wyższa efektywność energetyczna, ale bardziej złożony i generuje więcej zakłóceń elektromagnetycznych</li>
+</ul>
+
+<h3>Pełny schemat blokowy zasilacza liniowego</h3>
+<pre>AC (sieć) → Transformator → Prostownik (mostek) → Filtr (kondensator) → Stabilizator → DC (stabilne)</pre>
+
+<div class="uwaga">Typowe pytanie: narysuj/opisz przebieg napięcia w kolejnych punktach zasilacza liniowego (po transformatorze, po prostowniku, po filtrze, po stabilizatorze) — sinusoida → "wyprostowana" sinusoida → wygładzone napięcie z tętnieniami → gładkie napięcie stałe.</div>
+</div>
+
+</body>
+</html>

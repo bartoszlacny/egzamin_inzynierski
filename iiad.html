@@ -1,0 +1,641 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Inżynieria i analiza danych – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Inżynieria i analiza danych</h1>
+
+<div class="zagadnienie">
+<h2>1. Biblioteki NumPy i pandas</h2>
+
+<h3>NumPy — tablice i operacje wektorowe</h3>
+<pre>import numpy as np
+
+a = np.array([1, 2, 3, 4])
+m = np.array([[1,2],[3,4]])
+
+a * 2, a + a, a.sum(), a.mean(), a.std()
+m.T                      # transpozycja
+m @ m                    # mnożenie macierzowe (albo np.dot(m, m))
+np.arange(0, 10, 2)      # [0,2,4,6,8]
+np.linspace(0, 1, 5)     # 5 równo rozłożonych punktów od 0 do 1</pre>
+<p>Operacje wektoryzowane (bez pętli <code>for</code> w Pythonie) — znacznie szybsze niż odpowiedniki na listach, bo wykonywane w skompilowanym kodzie C "pod spodem".</p>
+
+<h3>pandas — <code>Series</code> i <code>DataFrame</code></h3>
+<p><code>Series</code> — jednowymiarowa, indeksowana tablica (jak kolumna); <code>DataFrame</code> — dwuwymiarowa tabela (jak arkusz kalkulacyjny / tabela SQL), zbiór <code>Series</code> o wspólnym indeksie.</p>
+<pre>import pandas as pd
+
+s = pd.Series([10, 20, 30], index=['a','b','c'])
+
+df = pd.DataFrame({
+    'imie': ['Jan', 'Anna', 'Piotr'],
+    'wiek': [25, 30, 22],
+    'miasto': ['Warszawa', 'Kraków', 'Warszawa']
+})</pre>
+
+<h3>Indeksowanie i filtrowanie</h3>
+<pre>df['wiek']                      # kolumna jako Series
+df[['imie', 'wiek']]            # kilka kolumn jako DataFrame
+df.loc[0]                       # wiersz po etykiecie indeksu
+df.iloc[0]                      # wiersz po pozycji liczbowej
+df[df['wiek'] &gt; 24]              # filtrowanie warunkiem (boolean indexing)
+df[(df['wiek'] &gt; 20) & (df['miasto'] == 'Warszawa')]   # wiele warunków — nawiasy obowiązkowe!</pre>
+
+<h3>Agregacja i grupowanie</h3>
+<pre>df['wiek'].mean(), df['wiek'].sum(), df['wiek'].max()
+df.groupby('miasto')['wiek'].mean()          # średni wiek per miasto
+df.groupby('miasto').agg({'wiek': ['mean', 'count']})</pre>
+
+<h3>Łączenie danych</h3>
+<pre>pd.concat([df1, df2])                          # sklejenie "jeden pod drugim" (albo axis=1: obok siebie)
+pd.merge(df1, df2, on='id', how='inner')       # złączenie jak SQL JOIN (inner/left/right/outer)</pre>
+<p>(analogia do JOIN-ów w SQL — patrz przedmiot Relacyjne bazy danych)</p>
+
+<h3>Przekształcanie danych</h3>
+<pre>df['wiek_kategoria'] = df['wiek'].apply(lambda w: 'dorosly' if w &gt;= 18 else 'nieletni')
+df.sort_values('wiek', ascending=False)
+df.rename(columns={'imie': 'name'})
+df.pivot_table(values='wiek', index='miasto', aggfunc='mean')   # tabela przestawna</pre>
+
+<div class="uwaga">Typowe zadanie: dla podanego DataFrame wykonaj serię operacji (filtrowanie, grupowanie, agregacja) i zinterpretuj wynik — klasyczne pytanie sprawdzające biegłość w podstawowym API pandas.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Statystyka w analizie danych</h2>
+
+<h3>Miary tendencji centralnej</h3>
+<table>
+<tr><th>Miara</th><th>Wzór/opis</th></tr>
+<tr><td>Średnia arytmetyczna</td><td>\(\bar{x} = \frac{1}{n}\sum x_i\) — wrażliwa na wartości odstające</td></tr>
+<tr><td>Mediana</td><td>wartość środkowa po posortowaniu — odporna na wartości odstające</td></tr>
+<tr><td>Moda (dominanta)</td><td>najczęściej występująca wartość</td></tr>
+</table>
+
+<h3>Miary dyspersji (rozrzutu)</h3>
+<table>
+<tr><th>Miara</th><th>Wzór</th></tr>
+<tr><td>Wariancja</td><td>\(D^2(X) = \frac{1}{n}\sum(x_i-\bar{x})^2\)</td></tr>
+<tr><td>Odchylenie standardowe</td><td>\(\sigma = \sqrt{D^2(X)}\)</td></tr>
+<tr><td>Rozstęp (range)</td><td>\(\max(x) - \min(x)\)</td></tr>
+<tr><td>Rozstęp międzykwartylowy (IQR)</td><td>\(Q_3 - Q_1\) — odporny na wartości odstające (patrz punkt 3)</td></tr>
+</table>
+
+<h3>Kowariancja i korelacja</h3>
+<p>$$\text{Cov}(X,Y) = \frac{1}{n}\sum(x_i-\bar{x})(y_i-\bar{y}), \qquad r = \frac{\text{Cov}(X,Y)}{\sigma_X \sigma_Y}$$</p>
+<p>Współczynnik korelacji Pearsona \(r \in [-1,1]\) — mierzy siłę <strong>liniowej</strong> zależności (pełny opis — patrz przedmiot Matematyka 1).</p>
+<pre>df['wiek'].corr(df['dochod'])
+df.corr()          # macierz korelacji wszystkich par kolumn numerycznych</pre>
+
+<h3>Rozkłady prawdopodobieństwa (przypomnienie)</h3>
+<p>Normalny (Gaussa), dwumianowy, Poissona — pełne wzory patrz przedmiot Matematyka 1.</p>
+<pre>from scipy import stats
+stats.norm.pdf(x, loc=0, scale=1)     # gęstość rozkładu normalnego
+np.random.normal(0, 1, 1000)           # losowanie próby z rozkładu normalnego</pre>
+
+<h3>Centralne twierdzenie graniczne (przypomnienie)</h3>
+<p>Suma/średnia dużej liczby niezależnych zmiennych losowych zbiega do rozkładu normalnego, niezależnie od rozkładu wyjściowego (pełny opis — patrz przedmiot Matematyka 1) — uzasadnia, dlaczego wiele testów statystycznych zakłada normalność przy dostatecznie dużej próbie.</p>
+
+<h3>Podstawowe testy statystyczne</h3>
+<table>
+<tr><th>Test</th><th>Zastosowanie</th></tr>
+<tr><td>Test t-Studenta</td><td>porównanie średnich dwóch grup (np. czy leczenie A daje inny efekt niż B)</td></tr>
+<tr><td>Test chi-kwadrat</td><td>niezależność zmiennych kategorycznych (tabela kontyngencji)</td></tr>
+<tr><td>ANOVA</td><td>porównanie średnich więcej niż dwóch grup naraz</td></tr>
+<tr><td>Test Shapiro-Wilka</td><td>sprawdzenie, czy dane pochodzą z rozkładu normalnego</td></tr>
+</table>
+<pre>from scipy import stats
+t_stat, p_value = stats.ttest_ind(grupa_a, grupa_b)
+if p_value &lt; 0.05:
+    print("Różnica statystycznie istotna")</pre>
+
+<h3>Wartość p (p-value) i istotność statystyczna</h3>
+<p>Prawdopodobieństwo zaobserwowania wyniku równie lub bardziej "skrajnego", <strong>zakładając</strong>, że hipoteza zerowa (brak efektu/różnicy) jest prawdziwa — konwencjonalny próg \(\alpha=0.05\): jeśli \(p&lt;\alpha\), odrzucamy hipotezę zerową ("wynik istotny statystycznie").</p>
+<div class="uwaga">p-value nie mówi "jak duży" jest efekt, ani "jak prawdopodobna" jest hipoteza — tylko czy zaobserwowany wynik byłby zaskakujący, gdyby efektu naprawdę nie było. Mała próba może dać nieistotny wynik mimo realnego efektu; ogromna próba może dać "istotny statystycznie", ale praktycznie nieistotny efekt.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Czyszczenie i przygotowanie danych</h2>
+
+<h3>Braki danych (missing values)</h3>
+<pre>df.isnull().sum()                       # liczba braków w każdej kolumnie
+df.dropna()                              # usunięcie wierszy z jakimkolwiek brakiem
+df.dropna(subset=['wiek'])               # usunięcie wierszy z brakiem w konkretnej kolumnie
+df.fillna(df['wiek'].mean())             # uzupełnienie średnią
+df['wiek'].fillna(method='ffill')        # uzupełnienie ostatnią znaną wartością (forward fill)</pre>
+<table>
+<tr><th>Strategia</th><th>Kiedy stosować</th></tr>
+<tr><td>Usunięcie wierszy/kolumn</td><td>gdy braków jest mało i nie niosą informacji</td></tr>
+<tr><td>Imputacja średnią/medianą</td><td>proste, szybkie — mediana bardziej odporna na wartości odstające</td></tr>
+<tr><td>Imputacja wg innych cech</td><td>bardziej zaawansowane (np. regresja przewidująca brakującą wartość na podstawie innych kolumn)</td></tr>
+</table>
+
+<h3>Wartości odstające (outliers)</h3>
+<p>Metoda IQR (rozstęp międzykwartylowy):</p>
+<p>$$\text{granica dolna} = Q_1 - 1.5\cdot IQR, \qquad \text{granica górna} = Q_3 + 1.5\cdot IQR$$</p>
+<pre>Q1 = df['wiek'].quantile(0.25)
+Q3 = df['wiek'].quantile(0.75)
+IQR = Q3 - Q1
+odstajace = df[(df['wiek'] &lt; Q1-1.5*IQR) | (df['wiek'] &gt; Q3+1.5*IQR)]</pre>
+<p>Metoda Z-score: wartość odstająca, gdy \(|z| = \left|\frac{x-\bar{x}}{\sigma}\right| &gt; 3\) (typowy próg).</p>
+
+<h3>Duplikaty</h3>
+<pre>df.duplicated().sum()          # liczba zduplikowanych wierszy
+df.drop_duplicates()
+df.drop_duplicates(subset=['imie', 'nazwisko'])   # duplikat wg wybranych kolumn</pre>
+
+<h3>Błędne typy danych</h3>
+<pre>df['wiek'] = df['wiek'].astype(int)
+df['data'] = pd.to_datetime(df['data'])
+pd.to_numeric(df['cena'], errors='coerce')   # nieparsowalne wartości → NaN, zamiast błędu</pre>
+
+<h3>Transformacje zmiennych</h3>
+<table>
+<tr><th>Transformacja</th><th>Zastosowanie</th></tr>
+<tr><td>Standaryzacja (Z-score)</td><td>\(z = \frac{x-\mu}{\sigma}\) — średnia 0, odchylenie 1; wymagana przez wiele algorytmów ML (np. SVM, PCA)</td></tr>
+<tr><td>Normalizacja Min-Max</td><td>\(x' = \frac{x-\min}{\max-\min}\) — skalowanie do [0,1]</td></tr>
+<tr><td>One-hot encoding</td><td>zamiana zmiennej kategorycznej na kilka kolumn binarnych (0/1) — konieczne, bo większość algorytmów ML wymaga danych numerycznych</td></tr>
+<tr><td>Log-transform</td><td>redukcja skośności rozkładu (np. dochody, ceny — często mocno prawoskośne)</td></tr>
+</table>
+<pre>from sklearn.preprocessing import StandardScaler, MinMaxScaler
+scaler = StandardScaler()
+df[['wiek']] = scaler.fit_transform(df[['wiek']])
+
+pd.get_dummies(df['miasto'])   # one-hot encoding</pre>
+
+<div class="uwaga">Zasada Garbage In, Garbage Out — jakość modelu/analizy nigdy nie przewyższy jakości danych wejściowych; czyszczenie danych to zwykle najbardziej czasochłonny (i najważniejszy) etap całego procesu analizy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Odczyt, zapis i pozyskiwanie danych</h2>
+
+<h3>Pliki tabelaryczne</h3>
+<pre>df = pd.read_csv("dane.csv", sep=",", encoding="utf-8")
+df.to_csv("wynik.csv", index=False)
+
+df = pd.read_excel("dane.xlsx", sheet_name="Arkusz1")
+df.to_excel("wynik.xlsx")</pre>
+
+<h3>Pliki tekstowe i binarne (przypomnienie)</h3>
+<pre>with open("dane.txt", "r", encoding="utf-8") as f:
+    tresc = f.read()
+
+import json
+with open("dane.json") as f:
+    dane = json.load(f)</pre>
+<p>(pełne omówienie operacji plikowych — patrz przedmiot Języki skryptowe)</p>
+
+<h3>Formaty danych</h3>
+<table>
+<tr><th>Format</th><th>Cecha</th></tr>
+<tr><td>CSV</td><td>proste, tekstowe, uniwersalne, ale bez typów danych i metadanych</td></tr>
+<tr><td>JSON</td><td>hierarchiczny, dobry dla zagnieżdżonych/nieregularnych danych (patrz przedmiot Projektowanie aplikacji internetowych)</td></tr>
+<tr><td>Parquet</td><td>binarny, kolumnowy — dużo bardziej efektywny (rozmiar, szybkość odczytu) dla dużych zbiorów danych niż CSV</td></tr>
+<tr><td>SQL (baza danych)</td><td>ustrukturyzowane dane relacyjne (patrz przedmiot Relacyjne bazy danych)</td></tr>
+</table>
+<pre>df = pd.read_parquet("dane.parquet")
+
+import sqlite3
+conn = sqlite3.connect("baza.db")
+df = pd.read_sql("SELECT * FROM produkty", conn)</pre>
+
+<h3>Pozyskiwanie danych z API (interfejsy sieciowe)</h3>
+<pre>import requests
+
+odpowiedz = requests.get("https://api.example.com/dane", params={"limit": 100})
+dane = odpowiedz.json()
+df = pd.DataFrame(dane)</pre>
+<p>Typowy przepływ: żądanie HTTP GET (patrz przedmiot Sieci komputerowe) → odpowiedź JSON → parsowanie do struktury Pythona → konwersja do DataFrame.</p>
+
+<h3>Uwierzytelnianie przy API</h3>
+<pre>naglowki = {"Authorization": "Bearer TOKEN"}
+odpowiedz = requests.get(url, headers=naglowki)</pre>
+
+<h3>Web scraping (skrótowo)</h3>
+<p>Gdy dane nie są dostępne przez API, czasem pozyskuje się je bezpośrednio ze stron HTML (biblioteki jak BeautifulSoup) — parsowanie struktury DOM strony (patrz przedmiot Języki hipertekstowe) w poszukiwaniu potrzebnych danych. Wymaga uwagi na regulamin serwisu i ograniczenia prawne/etyczne.</p>
+
+<div class="uwaga">Typowe pytanie: napisz kod wczytujący dane z pliku CSV, czyszczący je (braki, duplikaty), i zapisujący wynik do nowego pliku w innym formacie (np. Parquet lub bazy SQL).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Wizualizacja danych</h2>
+
+<h3>Podstawowe biblioteki</h3>
+<pre>import matplotlib.pyplot as plt
+import seaborn as sns    # nadbudowa nad matplotlib, ładniejsze domyślne style, więcej gotowych wykresów statystycznych</pre>
+
+<h3>Dobór wykresu do typu danych</h3>
+<table>
+<tr><th>Cel</th><th>Wykres</th><th>Kod (przykładowo)</th></tr>
+<tr>
+<td>Rozkład jednej zmiennej numerycznej</td>
+<td>histogram, wykres gęstości (KDE), box plot</td>
+<td><code>plt.hist(df['wiek'])</code> / <code>sns.histplot</code> / <code>sns.boxplot</code></td>
+</tr>
+<tr>
+<td>Zależność między dwiema zmiennymi numerycznymi</td>
+<td>wykres punktowy (scatter plot)</td>
+<td><code>plt.scatter(df['x'], df['y'])</code></td>
+</tr>
+<tr>
+<td>Trend w czasie</td>
+<td>wykres liniowy</td>
+<td><code>plt.plot(df['data'], df['wartosc'])</code></td>
+</tr>
+<tr>
+<td>Porównanie grup (zmienna kategoryczna vs numeryczna)</td>
+<td>wykres słupkowy, box plot per grupa, violin plot</td>
+<td><code>sns.barplot(x='miasto', y='wiek', data=df)</code></td>
+</tr>
+<tr>
+<td>Proporcje części całości</td>
+<td>wykres kołowy (ostrożnie — trudny do precyzyjnego odczytu przy wielu kategoriach), wykres słupkowy skumulowany</td>
+<td><code>plt.pie(...)</code></td>
+</tr>
+<tr>
+<td>Korelacje między wieloma zmiennymi</td>
+<td>heatmapa macierzy korelacji, pair plot</td>
+<td><code>sns.heatmap(df.corr(), annot=True)</code></td>
+</tr>
+</table>
+
+<h3>Wizualizacja rozkładów</h3>
+<pre>sns.histplot(df['wiek'], kde=True)      # histogram + krzywa gęstości
+sns.boxplot(y=df['wiek'])                # mediana, kwartyle, wartości odstające (patrz punkt 3)</pre>
+<p>Box plot bezpośrednio wizualizuje miary z punktu 3: pudełko od \(Q_1\) do \(Q_3\), linia w środku to mediana, "wąsy" do granic \(1.5\cdot IQR\), punkty poza — wartości odstające.</p>
+
+<h3>Wizualizacja zależności między zmiennymi</h3>
+<pre>sns.scatterplot(x='wiek', y='dochod', hue='miasto', data=df)   # dodatkowy wymiar przez kolor
+sns.regplot(x='wiek', y='dochod', data=df)                       # scatter + dopasowana linia regresji</pre>
+
+<h3>Porównania grupowe</h3>
+<pre>sns.boxplot(x='miasto', y='wiek', data=df)     # rozkład wieku w każdym mieście osobno
+sns.violinplot(x='miasto', y='wiek', data=df)  # jak boxplot, ale pokazuje pełny kształt rozkładu</pre>
+
+<h3>Trendy czasowe</h3>
+<pre>df.set_index('data')['sprzedaz'].plot()
+plt.xlabel("Data"); plt.ylabel("Sprzedaż"); plt.title("Trend sprzedaży")</pre>
+
+<h3>Dobre praktyki wizualizacji</h3>
+<ul>
+<li>zawsze podpisuj osie i tytuł — wykres bez kontekstu jest bezużyteczny</li>
+<li> dobierz typ wykresu do <strong>pytania</strong>, na które chcesz odpowiedzieć, nie na odwrót</li>
+<li> unikaj wykresów kołowych przy wielu (&gt;5-6) kategoriach — trudne do porównania "na oko"</li>
+<li> skala osi (zwłaszcza zaczynanie od 0 vs "przycięta" oś) może wprowadzać w błąd — świadomie dobieraj zakres</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zbioru danych (np. sprzedaż w czasie, w podziale na regiony) zaproponuj odpowiedni typ(y) wykresu do zbadania trendu, porównania regionów i sprawdzenia korelacji ze zmienną pogodową.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Modelowanie regresyjne i ocena jakości</h2>
+
+<p><em>(pełne wzory MSE, \(R^2\) — patrz przedmiot Sztuczna Inteligencja; tu praktyczny przepływ pracy z <code>scikit-learn</code>)</em></p>
+
+<h3>Regresja liniowa</h3>
+<pre>from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)</pre>
+
+<h3>Podział na zbiór uczący i testowy</h3>
+<p><code>test_size=0.2</code> — 20% danych odłożone do oceny, model nigdy ich nie "widzi" podczas treningu — pozwala uczciwie ocenić generalizację (pełne omówienie, w tym walidacja krzyżowa — patrz przedmiot Sztuczna Inteligencja).</p>
+
+<h3>Regresja wielomianowa</h3>
+<pre>from sklearn.preprocessing import PolynomialFeatures
+
+poly = PolynomialFeatures(degree=2)
+X_poly = poly.fit_transform(X)
+model = LinearRegression().fit(X_poly, y)</pre>
+<p>Rozszerza cechy o wyrazy wielomianowe (\(x^2, x^3, \dots\)) przed dopasowaniem zwykłej regresji liniowej — pozwala modelować zależności nieliniowe, wciąż korzystając z prostego mechanizmu regresji liniowej "pod spodem".</p>
+<div class="uwaga">Zbyt wysoki stopień wielomianu prowadzi do przeuczenia (overfitting) — model "wije się" idealnie dopasowując do danych treningowych, ale słabo generalizuje na nowe dane (patrz przedmiot Sztuczna Inteligencja/Podstawy sztucznej inteligencji).</div>
+
+<h3>Regresja logistyczna — klasyfikacja binarna</h3>
+<pre>from sklearn.linear_model import LogisticRegression
+
+model = LogisticRegression()
+model.fit(X_train, y_train)
+prawdopodobienstwa = model.predict_proba(X_test)   # prawdopodobieństwo przynależności do klasy</pre>
+<p>Mimo nazwy "regresja", służy do <strong>klasyfikacji</strong> — funkcja sigmoid (patrz przedmiot Sztuczna Inteligencja) przekształca liniową kombinację cech na wartość w przedziale (0,1), interpretowaną jako prawdopodobieństwo klasy pozytywnej.</p>
+
+<h3>Etapy budowy modelu (ogólny przepływ)</h3>
+<ol>
+<li>przygotowanie danych (czyszczenie, transformacje — patrz punkt 3)</li>
+<li> podział na zbiór treningowy/testowy (ewentualnie walidacyjny)</li>
+<li>wybór i dopasowanie modelu (<code>fit</code>)</li>
+<li>predykcja na zbiorze testowym (<code>predict</code>)</li>
+<li>ocena jakości (metryki — patrz niżej)</li>
+<li>ewentualna iteracja — inne cechy, inny model, strojenie hiperparametrów</li>
+</ol>
+
+<h3>Miary jakości modeli regresyjnych</h3>
+<table>
+<tr><th>Miara</th><th>Wzór</th><th>Interpretacja</th></tr>
+<tr><td>MSE</td><td>\(\frac{1}{n}\sum(y_i-\hat{y}_i)^2\)</td><td>im mniejsze, tym lepiej; kara kwadratowa za duże błędy</td></tr>
+<tr><td>RMSE</td><td>\(\sqrt{MSE}\)</td><td>w jednostkach zmiennej \(y\) — łatwiejsza interpretacja</td></tr>
+<tr><td>MAE</td><td>\(\frac{1}{n}\sum|y_i-\hat{y}_i|\)</td><td>mniej czuła na wartości odstające niż MSE</td></tr>
+<tr><td>\(R^2\)</td><td>\(1-\frac{\sum(y_i-\hat{y}_i)^2}{\sum(y_i-\bar{y})^2}\)</td><td>jaka część wariancji \(y\) wyjaśniona przez model; 1=idealny</td></tr>
+</table>
+
+<div class="uwaga">Typowe zadanie: zbuduj model regresji liniowej przewidujący cenę mieszkania na podstawie kilku cech, oceń go metrykami MSE/R², i porównaj z modelem wielomianowym drugiego stopnia.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Klasyfikacja, redukcja wymiarowości, analiza skupień</h2>
+
+<p><em>(pełne omówienie drzew decyzyjnych, SVM, ensemble — patrz przedmiot Sztuczna Inteligencja; tu praktyczne API + dodatkowo naiwny Bayes, PCA, klasteryzacja)</em></p>
+
+<h3>Naiwny klasyfikator Bayesa</h3>
+<p>Oparty na twierdzeniu Bayesa, z "naiwnym" założeniem <strong>niezależności</strong> cech (zwykle nierealistycznym w praktyce, ale mimo to model często działa zaskakująco dobrze):</p>
+<p>$$P(\text{klasa}|x_1,\dots,x_n) \propto P(\text{klasa})\prod_i P(x_i|\text{klasa})$$</p>
+<pre>from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(X_train, y_train)</pre>
+<p><strong>Zastosowanie:</strong> klasyfikacja tekstu (np. filtr spamu — patrz "bag of words", przedmiot Podstawy sztucznej inteligencji), szybki, prosty baseline do porównania z bardziej złożonymi modelami.</p>
+
+<h3>Drzewa decyzyjne i SVM (przypomnienie)</h3>
+<pre>from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+
+drzewo = DecisionTreeClassifier(max_depth=5).fit(X_train, y_train)
+svm = SVC(kernel='rbf').fit(X_train, y_train)</pre>
+<p>(pełny opis entropii/Gini, pruning, marginesu, kernel trick — patrz przedmiot Sztuczna Inteligencja)</p>
+
+<h3>Redukcja wymiarowości — PCA (Principal Component Analysis)</h3>
+<p>Technika przekształcająca dane o wielu skorelowanych cechach w mniejszą liczbę <strong>nowych, nieskorelowanych</strong> zmiennych (składowych głównych), zachowujących jak najwięcej wariancji (informacji) z oryginalnych danych.</p>
+<pre>from sklearn.decomposition import PCA
+
+pca = PCA(n_components=2)
+X_zredukowane = pca.fit_transform(X_standaryzowane)   # wymaga wcześniejszej standaryzacji!
+print(pca.explained_variance_ratio_)                   # ile wariancji wyjaśnia każda składowa</pre>
+<ul>
+<li>składowe główne to kierunki <strong>maksymalnej wariancji</strong> danych — pierwsza składowa wyjaśnia najwięcej, druga (prostopadła do pierwszej) drugie najwięcej itd.</li>
+<li>zastosowania: wizualizacja danych wielowymiarowych w 2D/3D, redukcja liczby cech przed dalszym modelowaniem (mniej cech = szybszy trening, mniejsze ryzyko przeuczenia), usuwanie redundancji/szumu</li>
+</ul>
+<div class="uwaga">PCA wymaga <strong>standaryzacji</strong> danych przed użyciem — bez tego cechy o naturalnie większej skali (np. dochód w tysiącach vs wiek w latach) sztucznie zdominowałyby pierwsze składowe główne.</div>
+
+<h3>Analiza skupień (clustering) — uczenie nienadzorowane</h3>
+<p>Grupowanie podobnych do siebie przykładów w klastry, <strong>bez</strong> znanych z góry etykiet klas (w odróżnieniu od klasyfikacji).</p>
+
+<h3>K-means</h3>
+<pre>from sklearn.cluster import KMeans
+
+kmeans = KMeans(n_clusters=3, random_state=42)
+etykiety = kmeans.fit_predict(X)
+centra = kmeans.cluster_centers_</pre>
+<ol>
+<li>wybierz \(k\) losowych punktów jako centroidy początkowe</li>
+<li>przypisz każdy punkt do <strong>najbliższego</strong> centroidu</li>
+<li>przelicz centroidy jako średnią punktów przypisanych do każdego klastra</li>
+<li>powtarzaj (2-3), aż przypisania przestaną się zmieniać</li>
+</ol>
+<p>Wymaga <strong>z góry</strong> podania liczby klastrów \(k\) — dobór \(k\) często metodą "łokcia" (elbow method): wykres sumy kwadratów odległości wewnątrz klastrów względem \(k\), szukanie punktu, gdzie krzywa wyraźnie "łamie się".</p>
+
+<h3>DBSCAN (Density-Based Spatial Clustering)</h3>
+<pre>from sklearn.cluster import DBSCAN
+
+dbscan = DBSCAN(eps=0.5, min_samples=5)
+etykiety = dbscan.fit_predict(X)   # -1 oznacza "szum" (punkt nienależący do żadnego klastra)</pre>
+<table>
+<tr><th></th><th>K-means</th><th>DBSCAN</th></tr>
+<tr><td>Liczba klastrów</td><td>trzeba podać z góry (\(k\))</td><td>wykrywana automatycznie na podstawie gęstości</td></tr>
+<tr><td>Kształt klastrów</td><td>zakłada klastry "kuliste" (wypukłe)</td><td>radzi sobie z dowolnym kształtem klastrów</td></tr>
+<tr><td>Wartości odstające</td><td>każdy punkt trafia do jakiegoś klastra</td><td>naturalnie oznacza punkty jako "szum" (outliers)</td></tr>
+<tr><td>Parametry</td><td>\(k\)</td><td>\(eps\) (promień sąsiedztwa), <code>min_samples</code> (min. liczba punktów, by uznać obszar za gęsty)</td></tr>
+</table>
+
+<h3>Ocena jakości klasteryzacji</h3>
+<p>Bez znanych "prawdziwych" etykiet (uczenie nienadzorowane) potrzebne inne metryki niż w klasyfikacji:</p>
+<table>
+<tr><th>Metryka</th><th>Zasada</th></tr>
+<tr><td>Silhouette score</td><td>mierzy, jak dobrze punkt pasuje do swojego klastra względem najbliższego innego klastra; zakres [-1,1], im wyższy tym lepiej</td></tr>
+<tr><td>Inercja (WCSS)</td><td>suma kwadratów odległości punktów od centroidu swojego klastra — używana w metodzie łokcia dla K-means</td></tr>
+</table>
+<pre>from sklearn.metrics import silhouette_score
+score = silhouette_score(X, etykiety)</pre>
+
+<div class="uwaga">Typowe pytanie: dla opisanego zbioru danych (np. klienci sklepu z cechami wiek/dochód/częstość zakupów) zaproponuj proces segmentacji klientów — standaryzacja, ewentualnie PCA do wizualizacji, dobór \(k\) metodą łokcia, K-means, interpretacja powstałych segmentów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>8. ETL i pipeline'y danych</h2>
+
+<p>Podczas gdy poprzednie punkty dotyczyły <strong>analizy</strong> (jednorazowej pracy na gotowym zbiorze danych), ETL to <strong>inżynieryjna</strong> strona tematu — jak systematycznie i powtarzalnie dostarczać dane z różnych źródeł do miejsca, gdzie mogą być analizowane.</p>
+
+<h3>Extract — Transform — Load</h3>
+<table>
+<tr><th>Etap</th><th>Co się dzieje</th></tr>
+<tr><td><strong>Extract</strong> (ekstrakcja)</td><td>pozyskanie danych ze źródeł — bazy danych, pliki, API (patrz punkt 4), logi systemowe</td></tr>
+<tr><td><strong>Transform</strong> (transformacja)</td><td>czyszczenie, walidacja, łączenie, agregacja, zmiana formatu (patrz punkt 3) — dane doprowadzone do spójnej, użytecznej postaci</td></tr>
+<tr><td><strong>Load</strong> (ładowanie)</td><td>zapis przetworzonych danych do miejsca docelowego — hurtowni danych (data warehouse), bazy analitycznej, plików (patrz punkt 4)</td></tr>
+</table>
+
+<h3>ETL vs ELT</h3>
+<table>
+<tr><th></th><th>ETL</th><th>ELT</th></tr>
+<tr><td>Kolejność</td><td>transformacja <strong>przed</strong> załadowaniem do celu</td><td>surowe dane ładowane <strong>najpierw</strong>, transformacja dzieje się już w docelowym systemie (np. w hurtowni danych z dużą mocą obliczeniową)</td></tr>
+<tr><td>Kiedy stosować</td><td>tradycyjne podejście, ograniczone zasoby systemu docelowego</td><td>nowoczesne hurtownie chmurowe (BigQuery, Snowflake) z dużą mocą do przetwarzania "na miejscu"</td></tr>
+</table>
+
+<h3>Przykładowy prosty pipeline w Pythonie</h3>
+<pre>def extract():
+    return pd.read_csv("surowe_dane.csv")
+
+def transform(df):
+    df = df.dropna(subset=['id'])
+    df['data'] = pd.to_datetime(df['data'])
+    df = df.drop_duplicates()
+    return df
+
+def load(df, sciezka):
+    df.to_parquet(sciezka)
+
+def pipeline():
+    df = extract()
+    df = transform(df)
+    load(df, "przetworzone_dane.parquet")
+
+pipeline()</pre>
+
+<h3>Orkiestracja pipeline'ów</h3>
+<p>W praktyce produkcyjnej pipeline'y ETL uruchamia się <strong>regularnie</strong> (np. co noc) i śledzi ich powodzenie — narzędzia jak <strong>Apache Airflow</strong> pozwalają definiować pipeline jako graf zależności między krokami (DAG — Directed Acyclic Graph), z automatycznym ponawianiem przy błędach i harmonogramem uruchomień (analogicznie do <code>cron</code>/systemd timers — patrz przedmiot Administracja i integracja systemów operacyjnych, ale wyspecjalizowane pod przepływy danych).</p>
+
+<h3>Jakość danych w pipeline — walidacja</h3>
+<p>Dobry pipeline <strong>sprawdza</strong> jakość danych na wyjściu (np. czy liczba wierszy jest sensowna, czy kluczowe kolumny nie mają nagle 100% braków) — automatyczne "alarmy" przy wykryciu anomalii, zanim błędne dane trafią do raportów/modeli używanych przez innych.</p>
+
+<h3>Hurtownia danych (data warehouse) vs jezioro danych (data lake)</h3>
+<table>
+<tr><th></th><th>Data Warehouse</th><th>Data Lake</th></tr>
+<tr><td>Struktura danych</td><td>ustrukturyzowane, wcześniej przetworzone (schema-on-write)</td><td>surowe dane w dowolnym formacie, struktura nadawana przy odczycie (schema-on-read)</td></tr>
+<tr><td>Typowe zastosowanie</td><td>raportowanie biznesowe, BI</td><td>eksploracja, uczenie maszynowe na surowych, różnorodnych danych</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: zaprojektuj pipeline ETL dla scenariusza (np. "codzienne pobieranie danych sprzedażowych z API, czyszczenie, i ładowanie do hurtowni danych") — wskaż konkretne kroki extract/transform/load i sposób walidacji jakości wynikowych danych.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Analiza szeregów czasowych</h2>
+
+<p>Dane indeksowane w czasie (np. sprzedaż dzienna, temperatura, kurs akcji) — mają specyficzną strukturę (kolejne obserwacje <strong>nie są</strong> niezależne, jak zwykle zakłada się w klasycznej statystyce), wymagającą dedykowanych metod.</p>
+
+<h3>Komponenty szeregu czasowego</h3>
+<table>
+<tr><th>Komponent</th><th>Opis</th></tr>
+<tr><td>Trend</td><td>długoterminowy kierunek zmian (rosnący/malejący/stały)</td></tr>
+<tr><td>Sezonowość</td><td>powtarzalne wzorce w ustalonych odstępach (np. wzrost sprzedaży co grudnia)</td></tr>
+<tr><td>Cykliczność</td><td>wahania nieregularne, dłuższe niż sezonowość (np. cykle koniunkturalne gospodarki)</td></tr>
+<tr><td>Szum (reszta)</td><td>losowa, nieprzewidywalna część niewyjaśniona przez powyższe komponenty</td></tr>
+</table>
+
+<h3>Dekompozycja szeregu czasowego</h3>
+<pre>from statsmodels.tsa.seasonal import seasonal_decompose
+
+wynik = seasonal_decompose(df['sprzedaz'], model='additive', period=12)
+wynik.trend, wynik.seasonal, wynik.resid   # rozbicie na komponenty
+wynik.plot()</pre>
+<p><strong>Model addytywny</strong> (\(y = \text{trend}+\text{sezonowość}+\text{szum}\)) — gdy amplituda wahań sezonowych jest stała; <strong>model multiplikatywny</strong> (\(y = \text{trend}\times\text{sezonowość}\times\text{szum}\)) — gdy amplituda rośnie proporcjonalnie z trendem.</p>
+
+<h3>Stacjonarność</h3>
+<p>Szereg jest <strong>stacjonarny</strong>, jeśli jego własności statystyczne (średnia, wariancja) nie zmieniają się w czasie — wiele klasycznych metod prognozowania (jak ARIMA) wymaga stacjonarności danych wejściowych.</p>
+<pre>from statsmodels.tsa.stattools import adfuller
+wynik_testu = adfuller(df['sprzedaz'])
+p_value = wynik_testu[1]   # test Dickeya-Fullera — p&lt;0.05 sugeruje stacjonarność</pre>
+<p><strong>Różnicowanie (differencing)</strong> — odejmowanie kolejnych wartości (\(y_t - y_{t-1}\)) to standardowy sposób usunięcia trendu i uzyskania stacjonarności.</p>
+
+<h3>Autokorelacja</h3>
+<p>Korelacja szeregu z <strong>opóźnioną wersją samego siebie</strong> (lag) — pomaga zidentyfikować sezonowość i dobrać parametry modeli prognostycznych:</p>
+<pre>from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+plot_acf(df['sprzedaz'])    # autokorelacja (ACF)
+plot_pacf(df['sprzedaz'])   # autokorelacja cząstkowa (PACF)</pre>
+
+<h3>Model ARIMA (AutoRegressive Integrated Moving Average)</h3>
+<p>Klasyczny model prognozowania szeregów czasowych, łączący trzy elementy (parametry \(p, d, q\)):</p>
+<ul>
+<li><strong>AR (p)</strong> — wartość zależy od \(p\) poprzednich wartości szeregu (autoregresja)</li>
+<li><strong>I (d)</strong> — stopień różnicowania potrzebny do uzyskania stacjonarności</li>
+<li><strong>MA (q)</strong> — wartość zależy od \(q\) poprzednich błędów prognozy (średnia ruchoma błędów)</li>
+</ul>
+<pre>from statsmodels.tsa.arima.model import ARIMA
+
+model = ARIMA(df['sprzedaz'], order=(1,1,1))   # p=1, d=1, q=1
+dopasowany = model.fit()
+prognoza = dopasowany.forecast(steps=12)        # prognoza na 12 okresów naprzód</pre>
+
+<h3>Ruchoma średnia (moving average) — prosta metoda wygładzania</h3>
+<pre>df['sprzedaz_MA7'] = df['sprzedaz'].rolling(window=7).mean()</pre>
+<p>Prosta technika wygładzania krótkoterminowego szumu, ułatwiająca dostrzeżenie trendu "gołym okiem" na wykresie (patrz punkt 5).</p>
+
+<h3>Ocena jakości prognozy</h3>
+<p>Te same metryki co przy regresji (MSE, RMSE, MAE — patrz punkt 6), liczone na danych <strong>przyszłych</strong> (nie widzianych przez model) — kluczowe: podział train/test dla szeregów czasowych musi zachować <strong>chronologię</strong> (test to zawsze najpóźniejszy fragment danych, nigdy losowy podzbiór jak w zwykłej regresji).</p>
+
+<div class="uwaga">Typowe pytanie: dla podanego szeregu czasowego (np. miesięczna sprzedaż z widoczną sezonowością roczną) opisz proces przygotowania prognozy — dekompozycja, test stacjonarności, ewentualne różnicowanie, dobór parametrów ARIMA, ocena na zbiorze testowym z zachowaniem chronologii.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Algorytmy i struktury danych – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Algorytmy i struktury danych</h1>
+
+<div class="zagadnienie">
+<h2>1. Złożoność obliczeniowa i notacja asymptotyczna</h2>
+
+<h3>Złożoność czasowa i pamięciowa</h3>
+<ul>
+<li><strong>czasowa</strong> — jak liczba operacji rośnie wraz z rozmiarem danych \(n\)</li>
+<li><strong>pamięciowa</strong> — ile dodatkowej pamięci (poza samymi danymi wejściowymi) zużywa algorytm</li>
+</ul>
+
+<h3>Notacje asymptotyczne</h3>
+<ul>
+<li>\(O(f(n))\) — <strong>górne</strong> ograniczenie (algorytm działa "nie gorzej niż" \(f(n)\))</li>
+<li>\(\Omega(f(n))\) — <strong>dolne</strong> ograniczenie ("nie lepiej niż")</li>
+<li>\(\Theta(f(n))\) — ograniczenie <strong>dokładne</strong> (i górne, i dolne jednocześnie) — najbardziej precyzyjne określenie złożoności</li>
+</ul>
+<div class="uwaga">W praktyce ludzie często mówią "\(O(n^2)\)" mając na myśli \(\Theta(n^2)\) — formalnie \(O\) to tylko górne ograniczenie (np. \(n = O(n^2)\) też jest prawdą), ale \(\Theta\) precyzyjnie opisuje rząd wzrostu.</div>
+
+<h3>Klasy złożoności (od najlepszej do najgorszej)</h3>
+<p>$$O(1) < O(\log n) < O(n) < O(n\log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)$$</p>
+
+<h3>Przypadki złożoności</h3>
+<ul>
+<li><strong>pesymistyczny (worst case)</strong> — najgorszy możliwy przypadek danych wejściowych</li>
+<li><strong>optymistyczny (best case)</strong> — najlepszy możliwy przypadek</li>
+<li><strong>średni (average case)</strong> — uśredniony po wszystkich możliwych danych wejściowych</li>
+</ul>
+
+<h3>Porównywanie efektywności</h3>
+<p>Dla dużych \(n\) liczy się <strong>rząd wzrostu</strong>, nie stałe współczynniki — algorytm \(O(n\log n)\) jest asymptotycznie lepszy od \(O(n^2)\), nawet jeśli dla małych \(n\) ten drugi bywa szybszy w praktyce (mniejsze "stałe ukryte" w notacji O).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Algorytmy rekurencyjne</h2>
+
+<p>Funkcja wywołująca samą siebie. Wymaga: <strong>warunku zakończenia</strong> (przypadek bazowy) i <strong>przypadku rekurencyjnego</strong> (zbliżającego do bazy). Każde wywołanie zajmuje ramkę na <strong>stosie wywołań</strong> — zbyt głęboka rekurencja bez warunku stopu → przepełnienie stosu (stack overflow).</p>
+
+<h3>Silnia</h3>
+<pre>int silnia(int n) {
+    if (n <= 1) return 1;
+    return n * silnia(n - 1);
+}</pre>
+
+<h3>Ciąg Fibonacciego</h3>
+<pre>int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}</pre>
+<div class="uwaga">Naiwna rekurencja Fibonacciego ma złożoność \(O(2^n)\) (drzewo wywołań rośnie wykładniczo, bo te same podproblemy liczone są wielokrotnie) — poprawia się to memoizacją/programowaniem dynamicznym do \(O(n)\).</div>
+
+<h3>Algorytm Euklidesa (NWD)</h3>
+<pre>int nwd(int a, int b) {
+    if (b == 0) return a;
+    return nwd(b, a % b);
+}</pre>
+<p>Złożoność: \(O(\log(\min(a,b)))\)</p>
+
+<h3>Przeszukiwanie drzewa (rekurencyjne, in-order)</h3>
+<pre>void inorder(Wezel *w) {
+    if (w == NULL) return;
+    inorder(w->lewy);
+    printf("%d ", w->wartosc);
+    inorder(w->prawy);
+}</pre>
+
+<h3>Sortowanie przez scalanie (merge sort)</h3>
+<p>Klasyczny przykład podejścia <strong>dziel i zwyciężaj</strong>: dziel tablicę na pół, sortuj rekurencyjnie każdą połowę, scal posortowane połówki. Złożoność \(O(n\log n)\) w każdym przypadku (patrz punkt 3).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Algorytmy wyszukiwania i sortowania</h2>
+
+<h3>Wyszukiwanie liniowe</h3>
+<p>Przeglądanie kolejnych elementów aż do znalezienia szukanego — działa na dowolnej (także nieposortowanej) tablicy. Złożoność: \(O(n)\)</p>
+
+<h3>Wyszukiwanie binarne</h3>
+<p>Wymaga <strong>posortowanej</strong> tablicy — porównanie ze środkowym elementem, odrzucenie połowy zakresu, powtórzenie. Złożoność: \(O(\log n)\)</p>
+
+<h3>Klasyczne algorytmy sortowania</h3>
+<table>
+<tr><th>Algorytm</th><th>Zasada działania</th><th>Złożoność (śr./pesym.)</th><th>Pamięć</th><th>Stabilny?</th></tr>
+<tr>
+<td>Sortowanie bąbelkowe (bubble sort)</td>
+<td>wielokrotne przechodzenie tablicy, zamiana sąsiadów w złej kolejności</td>
+<td>\(O(n^2)\) / \(O(n^2)\)</td>
+<td>\(O(1)\)</td>
+<td>tak</td>
+</tr>
+<tr>
+<td>Sortowanie przez wstawianie (insertion sort)</td>
+<td>wstawianie kolejnego elementu w odpowiednie miejsce w już posortowanej części</td>
+<td>\(O(n^2)\) / \(O(n^2)\)</td>
+<td>\(O(1)\)</td>
+<td>tak</td>
+</tr>
+<tr>
+<td>Sortowanie przez wybieranie (selection sort)</td>
+<td>wybór najmniejszego elementu z nieposortowanej części i zamiana na początek</td>
+<td>\(O(n^2)\) / \(O(n^2)\)</td>
+<td>\(O(1)\)</td>
+<td>nie</td>
+</tr>
+<tr>
+<td>Sortowanie szybkie (quicksort)</td>
+<td>wybór pivota, podział na mniejsze/większe od pivota, rekurencyjne sortowanie części</td>
+<td>\(O(n\log n)\) / \(O(n^2)\)</td>
+<td>\(O(\log n)\)</td>
+<td>nie</td>
+</tr>
+<tr>
+<td>Sortowanie przez scalanie (merge sort)</td>
+<td>dziel i zwyciężaj — podział na pół, rekurencyjne sortowanie, scalanie</td>
+<td>\(O(n\log n)\) / \(O(n\log n)\)</td>
+<td>\(O(n)\)</td>
+<td>tak</td>
+</tr>
+<tr>
+<td>Sortowanie przez kopcowanie (heap sort)</td>
+<td>budowa kopca, wielokrotne wyjmowanie elementu maksymalnego z korzenia</td>
+<td>\(O(n\log n)\) / \(O(n\log n)\)</td>
+<td>\(O(1)\)</td>
+<td>nie</td>
+</tr>
+</table>
+
+<div class="uwaga"><strong>Stabilność</strong> sortowania oznacza, że elementy o równych kluczach zachowują względną kolejność z danych wejściowych — ważne np. przy sortowaniu po wielu kryteriach naraz (najpierw po jednym polu, potem stabilnie po drugim).</div>
+
+<h3>Kiedy który algorytm?</h3>
+<ul>
+<li>quicksort — zwykle najszybszy w praktyce (dobre stałe), ale pesymistycznie \(O(n^2)\) przy złym wyborze pivota (np. dane już posortowane)</li>
+<li>merge sort — gwarantowane \(O(n\log n)\) zawsze, kosztem dodatkowej pamięci \(O(n)\); dobry do sortowania list z dowiązaniami i danych zewnętrznych (nie mieszczących się w RAM)</li>
+<li>proste algorytmy \(O(n^2)\) — sensowne tylko dla małych \(n\) albo prawie posortowanych danych (insertion sort radzi sobie wtedy blisko \(O(n)\))</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Podstawowe struktury danych</h2>
+
+<table>
+<tr><th>Struktura</th><th>Charakterystyka</th><th>Dostęp</th><th>Wstaw./Usuń</th></tr>
+<tr><td>Tablica (array)</td><td>ciągły blok pamięci, stały rozmiar</td><td>\(O(1)\) po indeksie</td><td>\(O(n)\) (przesunięcie elementów)</td></tr>
+<tr><td>Lista z dowiązaniami (linked list)</td><td>węzły połączone wskaźnikami, rozmiar dynamiczny</td><td>\(O(n)\) (trzeba przejść od początku)</td><td>\(O(1)\) na znanej pozycji</td></tr>
+<tr><td>Stos (stack)</td><td>LIFO — Last In, First Out</td><td>tylko wierzchołek: \(O(1)\)</td><td>push/pop: \(O(1)\)</td></tr>
+<tr><td>Kolejka (queue)</td><td>FIFO — First In, First Out</td><td>tylko przód/tył: \(O(1)\)</td><td>enqueue/dequeue: \(O(1)\)</td></tr>
+<tr><td>Kopiec (heap)</td><td>drzewo binarne z własnością kopca</td><td>min/max w \(O(1)\)</td><td>insert/extract: \(O(\log n)\)</td></tr>
+</table>
+
+<h3>Stos — operacje</h3>
+<p><code>push</code> (dodanie na wierzch), <code>pop</code> (zdjęcie z wierzchu), <code>peek/top</code> (podgląd wierzchołka bez usuwania). Zastosowania: cofanie operacji (undo), wywołania funkcji (stos wywołań), sprawdzanie poprawności nawiasów, algorytmy DFS.</p>
+
+<h3>Kolejka — operacje</h3>
+<p><code>enqueue</code> (dodanie na koniec), <code>dequeue</code> (zdjęcie z przodu). Zastosowania: obsługa zadań w kolejności zgłoszeń, bufor, algorytmy BFS.</p>
+<p><strong>Kolejka priorytetowa</strong> — element o najwyższym priorytecie obsługiwany jest jako pierwszy (zwykle implementowana kopcem).</p>
+
+<h3>Kopiec (heap) — własność</h3>
+<p>Kopiec maksymalny: każdy węzeł ma wartość \(\ge\) wartości swoich dzieci (korzeń = element największy). Kopiec minimalny — analogicznie z \(\le\). Zwykle implementowany jako tablica (bez jawnych wskaźników): dziecko elementu o indeksie \(i\) to \(2i+1\) i \(2i+2\).</p>
+
+<h3>Lista z dowiązaniami — warianty</h3>
+<p>jednokierunkowa (każdy węzeł zna tylko następny), dwukierunkowa (zna też poprzedni), cykliczna (ostatni węzeł wskazuje na pierwszy).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Tablice z haszowaniem</h2>
+
+<p>Struktura pozwalająca na (średnio) <strong>\(O(1)\)</strong> wyszukiwanie, wstawianie i usuwanie — klucz jest przekształcany funkcją haszującą na indeks tablicy.</p>
+
+<h3>Funkcja haszująca</h3>
+<p>$$h: \text{Klucz} \to \{0, 1, \dots, m-1\}$$</p>
+<p>Dobra funkcja haszująca powinna równomiernie rozkładać klucze po całej tablicy (minimalizować kolizje) i być szybka do obliczenia. Przykład prosty: \(h(k) = k \mod m\).</p>
+
+<h3>Kolizje</h3>
+<p>Sytuacja, gdy dwa różne klucze dają ten sam indeks: \(h(k_1) = h(k_2)\), \(k_1 \ne k_2\) — nieuniknione przy dostatecznie dużej liczbie kluczy (paradoks urodzin).</p>
+
+<h3>Metody rozwiązywania kolizji</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Łańcuchowanie (chaining)</td>
+<td>w każdej "komórce" tablicy trzymana jest lista elementów o tym samym haszu — przy kolizji nowy element dołącza do listy</td>
+</tr>
+<tr>
+<td>Adresowanie otwarte (open addressing)</td>
+<td>przy kolizji szukamy kolejnej wolnej komórki wg ustalonej sekwencji (np. liniowo, kwadratowo, lub double hashing)</td>
+</tr>
+</table>
+
+<h3>Adresowanie otwarte — warianty próbkowania</h3>
+<ul>
+<li><strong>liniowe</strong>: sprawdzaj \(h(k), h(k)+1, h(k)+2, \dots \pmod m\) — proste, ale podatne na "grupowanie" (clustering)</li>
+<li><strong>kwadratowe</strong>: \(h(k), h(k)+1^2, h(k)+2^2, \dots\) — redukuje grupowanie</li>
+<li><strong>podwójne haszowanie</strong>: krok wyznaczany drugą funkcją haszującą, najlepiej rozprasza elementy</li>
+</ul>
+
+<h3>Współczynnik wypełnienia (load factor)</h3>
+<p>$$\alpha = \frac{\text{liczba elementów}}{\text{rozmiar tablicy}}$$</p>
+<p>Im wyższy \(\alpha\), tym więcej kolizji i wolniejsze operacje — po przekroczeniu progu (np. \(\alpha>0.7\)) tablica zwykle jest powiększana i wszystkie elementy przehaszowywane (rehashing).</p>
+
+<div class="uwaga">Złożoność operacji na tablicy haszującej: <strong>średnio</strong> \(O(1)\), ale <strong>pesymistycznie</strong> \(O(n)\) (gdyby wszystkie klucze trafiały do tej samej komórki).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Drzewa i ich zastosowania</h2>
+
+<h3>Podstawowe pojęcia</h3>
+<p>korzeń (root), węzeł (node), liść (leaf, brak dzieci), rodzic/dziecko, wysokość drzewa (najdłuższa ścieżka od korzenia do liścia).</p>
+
+<h3>Drzewo binarne</h3>
+<p>Każdy węzeł ma co najwyżej dwoje dzieci (lewe i prawe).</p>
+
+<h3>Drzewo BST (Binary Search Tree)</h3>
+<p>Drzewo binarne z własnością porządku: dla każdego węzła — wszystkie wartości w lewym poddrzewie \(<\) wartość węzła \(<\) wszystkie wartości w prawym poddrzewie.</p>
+<ul>
+<li>wyszukiwanie/wstawianie/usuwanie: \(O(h)\), gdzie \(h\) to wysokość drzewa</li>
+<li>dla drzewa <strong>zbalansowanego</strong>: \(h = O(\log n)\) → operacje \(O(\log n)\)</li>
+<li>dla drzewa <strong>zdegenerowanego</strong> (np. wstawianie posortowanych danych do zwykłego BST bez balansowania — drzewo staje się listą): \(h = O(n)\) → operacje \(O(n)\)</li>
+</ul>
+
+<h3>Drzewa zrównoważone (samobalansujące)</h3>
+<table>
+<tr><th>Typ</th><th>Cecha</th></tr>
+<tr>
+<td>AVL</td>
+<td>dla każdego węzła różnica wysokości poddrzew \(\le 1\); rotacje po każdej operacji utrzymują balans</td>
+</tr>
+<tr>
+<td>Drzewo czerwono-czarne</td>
+<td>węzły kolorowane cz./cz. wg reguł gwarantujących \(h = O(\log n)\); mniej rotacji niż AVL, używane m.in. w implementacji <code>std::map</code> w C++</td>
+</tr>
+</table>
+<p>Wszystkie operacje na drzewach zrównoważonych: \(O(\log n)\) gwarantowane (nawet w najgorszym przypadku).</p>
+
+<h3>B-drzewa</h3>
+<p>Drzewa o wielu dzieciach na węzeł (nie tylko dwóch) — projektowane pod pamięć zewnętrzną (dyski, bazy danych), gdzie odczyt jednego bloku z dysku jest kosztowny, więc opłaca się przechowywać wiele kluczy w jednym węźle (mniejsza wysokość drzewa = mniej odczytów z dysku).</p>
+<ul>
+<li>szeroko stosowane w indeksach baz danych i systemach plików</li>
+<li>wszystkie liście na tej samej głębokości (drzewo idealnie zbalansowane)</li>
+</ul>
+
+<h3>Przechodzenie drzewa (traversal)</h3>
+<ul>
+<li><strong>in-order</strong> (lewo, korzeń, prawo) — dla BST daje elementy w kolejności rosnącej</li>
+<li><strong>pre-order</strong> (korzeń, lewo, prawo) — przydatne do kopiowania struktury drzewa</li>
+<li><strong>post-order</strong> (lewo, prawo, korzeń) — przydatne do usuwania drzewa (najpierw dzieci)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Grafy i algorytmy grafowe</h2>
+
+<h3>Podstawowe pojęcia</h3>
+<ul>
+<li><strong>graf</strong> \(G=(V,E)\) — zbiór wierzchołków \(V\) i krawędzi \(E\)</li>
+<li><strong>skierowany</strong> (digraf) — krawędzie mają kierunek; <strong>nieskierowany</strong> — krawędzie symetryczne</li>
+<li><strong>ważony</strong> — krawędzie mają przypisaną wagę (koszt/odległość)</li>
+<li><strong>ścieżka</strong> — ciąg wierzchołków połączonych krawędziami; <strong>cykl</strong> — ścieżka wracająca do punktu startu</li>
+<li><strong>spójność</strong> — graf spójny, jeśli istnieje ścieżka między każdą parą wierzchołków</li>
+</ul>
+
+<h3>Reprezentacje grafu</h3>
+<table>
+<tr><th>Reprezentacja</th><th>Opis</th><th>Pamięć</th><th>Sprawdzenie krawędzi (u,v)</th></tr>
+<tr><td>Macierz sąsiedztwa</td><td>tablica \(n \times n\), 1 (lub waga) jeśli krawędź istnieje</td><td>\(O(n^2)\)</td><td>\(O(1)\)</td></tr>
+<tr><td>Lista sąsiedztwa</td><td>dla każdego wierzchołka lista jego sąsiadów</td><td>\(O(n+m)\)</td><td>\(O(\deg(u))\)</td></tr>
+</table>
+<p>(gdzie \(n\) = liczba wierzchołków, \(m\) = liczba krawędzi; lista sąsiedztwa jest efektywniejsza pamięciowo dla grafów rzadkich — czyli większości grafów spotykanych w praktyce)</p>
+
+<h3>Przeszukiwanie grafu</h3>
+<ul>
+<li><strong>BFS (przeszukiwanie wszerz)</strong> — używa kolejki (FIFO), odwiedza wierzchołki warstwami wg odległości od startu; znajduje najkrótszą ścieżkę w grafie <strong>nieważonym</strong>; złożoność \(O(n+m)\)</li>
+<li><strong>DFS (przeszukiwanie w głąb)</strong> — używa stosu (lub rekurencji), zagłębia się maksymalnie w jedną gałąź przed cofnięciem; złożoność \(O(n+m)\); zastosowania: wykrywanie cykli, sortowanie topologiczne, wyznaczanie spójnych składowych</li>
+</ul>
+
+<h3>Najkrótsze ścieżki</h3>
+<table>
+<tr><th>Algorytm</th><th>Zastosowanie</th><th>Złożoność</th></tr>
+<tr>
+<td>BFS</td>
+<td>najkrótsza ścieżka w grafie nieważonym</td>
+<td>\(O(n+m)\)</td>
+</tr>
+<tr>
+<td>Dijkstra</td>
+<td>najkrótsze ścieżki z jednego źródła, wagi <strong>nieujemne</strong></td>
+<td>\(O((n+m)\log n)\) z kopcem</td>
+</tr>
+<tr>
+<td>Bellman-Ford</td>
+<td>najkrótsze ścieżki z jednego źródła, dopuszcza wagi <strong>ujemne</strong> (wykrywa też cykle ujemne)</td>
+<td>\(O(n \cdot m)\)</td>
+</tr>
+<tr>
+<td>Floyd-Warshall</td>
+<td>najkrótsze ścieżki między <strong>wszystkimi</strong> parami wierzchołków</td>
+<td>\(O(n^3)\)</td>
+</tr>
+</table>
+
+<h3>Algorytm Dijkstry — idea</h3>
+<ol>
+<li>ustaw odległość źródła na 0, pozostałych na \(\infty\)</li>
+<li>wybierz nieodwiedzony wierzchołek o najmniejszej znanej odległości (kolejka priorytetowa/kopiec)</li>
+<li>zrelaksuj (zaktualizuj) odległości jego sąsiadów, jeśli znaleziono krótszą ścieżkę przez niego</li>
+<li>oznacz wierzchołek jako odwiedzony, powtarzaj aż wszystkie wierzchołki odwiedzone</li>
+</ol>
+
+<div class="uwaga">Dijkstra <strong>nie działa poprawnie</strong> przy ujemnych wagach krawędzi (może dać błędny wynik) — wtedy trzeba użyć Bellmana-Forda.</div>
+
+<h3>Minimalne drzewo rozpinające (MST)</h3>
+<p>Podzbiór krawędzi łączący wszystkie wierzchołki przy minimalnej sumie wag, bez cykli. Algorytmy: <strong>Kruskala</strong> (sortuj krawędzie rosnąco, dodawaj jeśli nie tworzy cyklu — struktura zbiorów rozłącznych) i <strong>Prima</strong> (rozbudowuj drzewo od jednego wierzchołka, zawsze dodając najtańszą krawędź wychodzącą z aktualnego drzewa).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Programowanie dynamiczne</h2>
+
+<p>Technika rozwiązywania problemów przez podział na <strong>nakładające się podproblemy</strong> (overlapping subproblems) i zapamiętywanie ich wyników, żeby nie liczyć tego samego wielokrotnie — w przeciwieństwie do naiwnej rekurencji (np. Fibonacci z punktu 2, gdzie \(fib(3)\) liczy się wielokrotnie w różnych gałęziach drzewa wywołań).</p>
+
+<h3>Warunek stosowalności</h3>
+<ul>
+<li><strong>optymalna podstruktura</strong> — rozwiązanie problemu da się zbudować z optymalnych rozwiązań podproblemów</li>
+<li><strong>nakładające się podproblemy</strong> — te same podproblemy pojawiają się wielokrotnie</li>
+</ul>
+
+<h3>Dwa podejścia</h3>
+<table>
+<tr><th>Podejście</th><th>Zasada</th></tr>
+<tr>
+<td>Memoizacja (top-down)</td>
+<td>zwykła rekurencja + tablica/mapa zapamiętująca już policzone wyniki (jeśli wynik dla danych argumentów już istnieje, zwróć go zamiast liczyć ponownie)</td>
+</tr>
+<tr>
+<td>Tabulacja (bottom-up)</td>
+<td>iteracyjne wypełnianie tablicy wyników od najmniejszych podproblemów do właściwego, bez rekurencji</td>
+</tr>
+</table>
+
+<h3>Przykład — Fibonacci z memoizacją</h3>
+<pre>int memo[100] = {0};
+
+int fib(int n) {
+    if (n <= 1) return n;
+    if (memo[n] != 0) return memo[n];   // wynik już policzony
+    return memo[n] = fib(n-1) + fib(n-2);
+}</pre>
+<p>Złożoność spada z \(O(2^n)\) (naiwna rekurencja) do \(O(n)\).</p>
+
+<h3>Klasyczne problemy DP</h3>
+<ul>
+<li><strong>problem plecakowy (knapsack)</strong> — wybór podzbioru przedmiotów o maksymalnej wartości przy ograniczonej pojemności</li>
+<li><strong>najdłuższy wspólny podciąg (LCS)</strong> — dla dwóch ciągów znaków</li>
+<li><strong>najdłuższy rosnący podciąg (LIS)</strong></li>
+<li><strong>problem zmiany monet (coin change)</strong> — minimalna liczba monet dającą daną sumę</li>
+</ul>
+
+<div class="uwaga">Typowe pytanie: rozróżnij, czy dany problem nadaje się do DP (ma optymalną podstrukturę i nakładające się podproblemy), czy wystarczy podejście zachłanne (patrz punkt 9).</div>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Algorytmy zachłanne (greedy)</h2>
+
+<p>Podejmowanie w każdym kroku decyzji <strong>lokalnie najlepszej</strong> (bez oglądania się na przyszłe konsekwencje), z nadzieją, że suma lokalnie optymalnych wyborów da globalnie optymalne rozwiązanie.</p>
+
+<h3>Kiedy działa poprawnie</h3>
+<p>Tylko gdy problem ma <strong>własność wyboru zachłannego</strong> — lokalnie optymalny wybór w danym kroku prowadzi do globalnie optymalnego rozwiązania. Nie każdy problem to spełnia!</p>
+
+<h3>Przykłady, gdzie greedy działa</h3>
+<ul>
+<li><strong>algorytm Kruskala/Prima</strong> (minimalne drzewo rozpinające, patrz punkt 7) — zawsze wybieraj najtańszą dostępną krawędź</li>
+<li><strong>algorytm Dijkstry</strong> (patrz punkt 7) — zawsze przetwarzaj najbliższy nieodwiedzony wierzchołek</li>
+<li><strong>kodowanie Huffmana</strong> (patrz przedmiot Teoretyczne podstawy informatyki) — zawsze łącz dwa węzły o najmniejszej wadze</li>
+<li><strong>problem wydawania reszty</strong> — dla "wygodnych" nominałów (np. 1,5,10,25...) zachłanne wybieranie największego możliwego nominału daje optymalny wynik</li>
+<li><strong>problem wyboru zajęć (activity selection)</strong> — sortuj wg czasu zakończenia, wybieraj kolejne niekolidujące</li>
+</ul>
+
+<h3>Przykład, gdzie greedy zawodzi</h3>
+<p>Problem plecakowy 0/1 (nie da się wziąć ułamka przedmiotu) — wybieranie zachłannie przedmiotów o najlepszym stosunku wartość/waga <strong>nie zawsze</strong> daje optymalne rozwiązanie; tu potrzeba DP.</p>
+
+<div class="uwaga">Greedy jest zwykle znacznie szybszy niż DP (nie trzeba przechowywać/przeglądać wszystkich podproblemów), ale wymaga <strong>dowodu poprawności</strong> dla konkretnego problemu — "wydaje się słuszne" nie wystarczy.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Zbiory rozłączne (Union-Find)</h2>
+
+<p>Struktura danych do zarządzania podziałem elementów na rozłączne grupy (zbiory), z dwiema głównymi operacjami:</p>
+<ul>
+<li><code>Find(x)</code> — zwraca reprezentanta (etykietę) zbioru, do którego należy element \(x\)</li>
+<li><code>Union(x,y)</code> — łączy zbiory zawierające \(x\) i \(y\) w jeden</li>
+</ul>
+
+<h3>Implementacja — las drzew (forest)</h3>
+<p>Każdy zbiór to drzewo; każdy element wskazuje na swojego rodzica, korzeń wskazuje sam na siebie (reprezentant zbioru).</p>
+
+<h3>Optymalizacje</h3>
+<ul>
+<li><strong>kompresja ścieżek (path compression)</strong> — podczas <code>Find</code>, każdy odwiedzony węzeł na ścieżce podłącza się bezpośrednio pod korzeń, spłaszczając drzewo na przyszłość</li>
+<li><strong>łączenie wg rangi/rozmiaru (union by rank/size)</strong> — przy <code>Union</code> mniejsze/płytsze drzewo podłącza się pod większe, zamiast odwrotnie</li>
+</ul>
+<p>Z obiema optymalizacjami złożoność operacji jest praktycznie stała: \(O(\alpha(n))\), gdzie \(\alpha\) to odwrotna funkcja Ackermanna (rośnie tak wolno, że dla wszystkich praktycznych \(n\) jest \(\le 4\)).</p>
+
+<h3>Zastosowania</h3>
+<ul>
+<li><strong>algorytm Kruskala</strong> (patrz punkt 7) — sprawdzanie, czy dodanie krawędzi utworzyłoby cykl (czy oba wierzchołki są już w tym samym zbiorze)</li>
+<li>wykrywanie spójnych składowych grafu</li>
+<li>algorytmy dotyczące dynamicznej łączności (czy dwa elementy są already połączone jakąś ścieżką operacji)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Sortowanie nieporównawcze</h2>
+
+<p>Sortowania, które <strong>nie</strong> opierają się na porównywaniu par elementów (stąd mogą przełamać teoretyczną dolną granicę \(\Omega(n\log n)\) dla sortowań porównawczych) — kosztem dodatkowych założeń o danych (np. że to liczby całkowite z ograniczonego zakresu).</p>
+
+<h3>Sortowanie przez zliczanie (counting sort)</h3>
+<ol>
+<li>policz, ile razy występuje każda wartość z zakresu \([0,k]\) (tablica liczników)</li>
+<li>przelicz sumy skumulowane liczników (pozycja, na której powinien skończyć się dany klucz w wyniku)</li>
+<li>przepisz elementy na właściwe pozycje w tablicy wynikowej</li>
+</ol>
+<p>Złożoność: \(O(n+k)\), gdzie \(k\) to rozpiętość wartości. Dobre, gdy \(k = O(n)\) (mały zakres wartości), fatalne przy dużym rozrzucie liczb (duże zużycie pamięci na tablicę liczników).</p>
+
+<h3>Sortowanie kubełkowe (bucket sort)</h3>
+<p>Rozrzuć elementy do "kubełków" (przedziałów wartości), posortuj każdy kubełek osobno (np. insertion sortem), połącz wyniki. Dobre dla danych równomiernie rozłożonych w znanym przedziale (np. liczb zmiennoprzecinkowych z \([0,1)\)). Średnia złożoność: \(O(n+k)\).</p>
+
+<h3>Sortowanie pozycyjne (radix sort)</h3>
+<p>Sortuj kolejno po cyfrach/bajtach klucza (od najmniej znaczącej do najbardziej znaczącej), używając stabilnego sortowania pomocniczego (zwykle counting sort) na każdym etapie. Złożoność: \(O(d\cdot(n+k))\), gdzie \(d\) to liczba cyfr, \(k\) to podstawa systemu liczbowego.</p>
+
+<div class="uwaga">Te algorytmy <strong>omijają</strong> dolne ograniczenie \(\Omega(n\log n)\) obowiązujące dla sortowań opartych na porównaniach, ale robią to kosztem założeń o strukturze danych (np. że są to liczby całkowite z ograniczonego zakresu) — nie da się nimi posortować dowolnych, niezależnie porównywalnych obiektów.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>12. Drzewo TRIE</h2>
+
+<p>Drzewo wyszukiwania przechowujące <strong>ciągi znaków</strong> (stringi), gdzie każda ścieżka od korzenia reprezentuje prefiks jakiegoś słowa — węzły dzielą wspólne prefiksy między sobą.</p>
+
+<h3>Struktura</h3>
+<ul>
+<li>każdy węzeł ma do 26 (lub więcej, zależnie od alfabetu) dzieci — po jednym na możliwy kolejny znak</li>
+<li>węzeł oznaczony jako "koniec słowa" wskazuje, że ścieżka od korzenia do niego stanowi kompletne słowo w zbiorze</li>
+</ul>
+
+<h3>Przykład — wstawione słowa: "kot", "kotek", "koc"</h3>
+<pre>root
+ └─ k
+     └─ o
+         ├─ t (koniec słowa: "kot")
+         │   └─ e
+         │       └─ k (koniec słowa: "kotek")
+         └─ c (koniec słowa: "koc")</pre>
+<p>Wspólny prefiks "ko" jest przechowywany tylko raz, mimo że pojawia się w trzech słowach.</p>
+
+<h3>Operacje i złożoność</h3>
+<ul>
+<li>wstawianie/wyszukiwanie słowa o długości \(m\): \(O(m)\) — <strong>niezależne od liczby słów</strong> w strukturze!</li>
+<li>wyszukiwanie wszystkich słów o danym prefiksie — bardzo wydajne (od razu "schodzisz" do odpowiedniego węzła)</li>
+</ul>
+
+<h3>Zastosowania</h3>
+<p>autouzupełnianie (podpowiedzi wyszukiwarki), słowniki ortograficzne, routing IP (najdłuższy pasujący prefiks), sprawdzanie unikalności/duplikatów prefiksów w dużych zbiorach tekstu.</p>
+
+<div class="uwaga">Koszt: zużycie pamięci może być duże (każdy węzeł potencjalnie ma wiele wskaźników na dzieci) — kompromis między szybkością operacji a zużyciem pamięci względem np. tablicy haszującej przechowującej całe stringi.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Komunikacja i zarządzanie projektami – Egzamin Inżynierski</title>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    text-align: left;
+}
+
+th {
+    background: #e9edf2;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Komunikacja i zarządzanie projektami</h1>
+
+<div class="zagadnienie">
+<h2>1. Waterfall, Scrum i Kanban</h2>
+
+<h3>Waterfall (model kaskadowy)</h3>
+<p>Klasyczne, <strong>sekwencyjne</strong> podejście — projekt przechodzi przez ustalone fazy jedna po drugiej (analiza wymagań → projekt → implementacja → testy → wdrożenie), każda faza zaczyna się po zakończeniu poprzedniej.</p>
+<ul>
+<li>zalety: przejrzysta struktura, łatwe do zaplanowania z góry (harmonogram, budżet), dobre dla projektów ze stabilnymi, dobrze znanymi wymaganiami</li>
+<li>wady: bardzo trudna/kosztowna zmiana wymagań w trakcie (powrót do wcześniejszej fazy jest kosztowny), klient/użytkownik widzi działający produkt bardzo późno</li>
+</ul>
+
+<h3>Scrum (podejście Agile, iteracyjne)</h3>
+<p>Praca podzielona na krótkie, powtarzalne iteracje (<strong>sprinty</strong>, zwykle 1-4 tygodnie) — po każdym sprincie powstaje działający, przyrostowy fragment produktu.</p>
+<table>
+<tr><th>Element</th><th>Opis</th></tr>
+<tr><td>Sprint</td><td>ustalony, krótki okres pracy z konkretnym celem</td></tr>
+<tr><td>Product Backlog</td><td>uporządkowana lista wszystkich wymagań/funkcji do zrealizowania</td></tr>
+<tr><td>Sprint Backlog</td><td>podzbiór zadań wybranych do realizacji w danym sprincie</td></tr>
+<tr><td>Daily Scrum (stand-up)</td><td>krótkie, codzienne spotkanie zespołu — co zrobiono, co planowane, jakie przeszkody</td></tr>
+<tr><td>Sprint Review</td><td>prezentacja rezultatów sprintu interesariuszom</td></tr>
+<tr><td>Sprint Retrospective</td><td>refleksja zespołu — co poszło dobrze/źle, jak usprawnić proces na przyszłość</td></tr>
+</table>
+<p>Role: <strong>Product Owner</strong> (odpowiada za priorytety, reprezentuje potrzeby biznesu/klienta), <strong>Scrum Master</strong> (dba o proces, usuwa przeszkody, nie jest "szefem" zespołu), <strong>zespół deweloperski</strong>.</p>
+
+<h3>Kanban</h3>
+<p>Podejście skupione na <strong>ciągłym przepływie</strong> pracy, wizualizowanym na tablicy z kolumnami (np. To Do / In Progress / Done) — w odróżnieniu od Scrum, brak sztywnych sprintów, zadania płyną przez tablicę w sposób ciągły.</p>
+<ul>
+<li><strong>limit WIP (Work In Progress)</strong> — ograniczenie liczby zadań, które mogą być jednocześnie "w trakcie" w danej kolumnie — zapobiega przeciążeniu zespołu i rozpraszaniu uwagi na zbyt wiele rzeczy naraz</li>
+<li dobra elastyczność przy zmiennym, nieprzewidywalnym napływie zadań (np. wsparcie techniczne, utrzymanie systemów)</li>
+</ul>
+
+<h3>Porównanie</h3>
+<table>
+<tr><th></th><th>Waterfall</th><th>Scrum</th><th>Kanban</th></tr>
+<tr><td>Struktura pracy</td><td>sekwencyjna, fazowa</td><td>iteracyjna, sprinty</td><td>ciągły przepływ</td></tr>
+<tr><td>Elastyczność wymagań</td><td>niska</td><td>średnia/wysoka (co sprint)</td><td>wysoka (w każdym momencie)</td></tr>
+<tr><td>Kiedy stosować</td><td>stabilne, dobrze znane wymagania (np. projekty regulowane prawnie)</td><td>produkt rozwijany iteracyjnie, potrzebna regularna informacja zwrotna</td><td>praca o nieregularnym, ciągłym napływie zadań (support, maintenance)</td></tr>
+</table>
+
+<div class="uwaga">Typowe pytanie: dla opisanego scenariusza projektu (np. "budowa mostu" vs "rozwój aplikacji mobilnej z częstymi zmianami wymagań od klienta") wskaż i uzasadnij, które podejście byłoby najbardziej odpowiednie.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Estymacja, planowanie i budżetowanie</h2>
+
+<h3>Metody estymacji czasu/pracy</h3>
+<table>
+<tr><th>Metoda</th><th>Zasada</th></tr>
+<tr>
+<td>Analogia (analogous estimating)</td>
+<td>szacowanie na podstawie podobnych, wcześniej zrealizowanych projektów/zadań</td>
+</tr>
+<tr>
+<td>Ekspertów (expert judgment)</td>
+<td>ocena doświadczonych osób znających dany typ zadania</td>
+</tr>
+<tr>
+<td>Trzypunktowa (PERT)</td>
+<td>łączy trzy szacunki: optymistyczny (\(O\)), najbardziej prawdopodobny (\(M\)), pesymistyczny (\(P\)): $$E = \frac{O+4M+P}{6}$$</td>
+</tr>
+<tr>
+<td>Planning Poker</td>
+<td>zespołowa technika estymacji w Agile — każdy członek zespołu niezależnie ocenia złożoność zadania (np. w punktach Fibonacciego: 1,2,3,5,8...), różnice w ocenach są dyskutowane do uzgodnienia wspólnej wartości</li>
+</tr>
+</table>
+
+<h3>Story points vs godziny</h3>
+<p>W Agile zadania często estymuje się w <strong>punktach story (story points)</strong> — relatywnej mierze złożoności/pracy, nie bezpośrednio w godzinach — pozwala to unikać fałszywej precyzji i skupić się na porównaniu względnej trudności zadań.</p>
+
+<h3>Harmonogramowanie — wykres Gantta</h3>
+<p>Wizualizacja zadań projektu na osi czasu (poziome paski), pokazująca czas trwania, zależności między zadaniami (które musi się skończyć, zanim inne zacznie) i kamienie milowe (milestones — kluczowe punkty kontrolne projektu).</p>
+
+<h3>Ścieżka krytyczna (critical path)</h3>
+<p>Najdłuższa sekwencja zależnych od siebie zadań w projekcie — wyznacza <strong>minimalny</strong> możliwy czas realizacji całego projektu; opóźnienie <strong>jakiegokolwiek</strong> zadania na ścieżce krytycznej opóźnia cały projekt (zadania poza ścieżką krytyczną mają pewien "luz" — zapas czasu bez wpływu na termin końcowy).</p>
+
+<h3>Budżetowanie projektu</h3>
+<ul>
+<li><strong>koszty pracy</strong> — zwykle dominujący składnik w projektach IT (wynagrodzenia zespołu × czas)</li>
+<li><strong>koszty infrastruktury/licencji</strong> — serwery, oprogramowanie, usługi w chmurze</li>
+<li><strong>rezerwa budżetowa (bufor)</strong> — dodatkowe środki na nieprzewidziane sytuacje/ryzyka (patrz punkt 3)</li>
+</ul>
+
+<h3>Trójkąt ograniczeń projektu (iron triangle)</h3>
+<p>Zakres (scope), czas (time) i koszt/budżet (cost) — wzajemnie powiązane: zmiana jednego zwykle wymusza zmianę przynajmniej jednego z pozostałych (np. rozszerzenie zakresu bez zmiany czasu wymaga większego budżetu/zespołu, albo obniżenia jakości).</p>
+
+<div class="uwaga">Typowe zadanie: policz estymatę PERT dla podanych wartości optymistycznej/najprawdopodobniejszej/pesymistycznej, albo wyznacz ścieżkę krytyczną dla podanego zestawu zadań z zależnościami i czasami trwania.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Komunikacja, zarządzanie ryzykiem i zmianą</h2>
+
+<h3>Plan komunikacji w projekcie</h3>
+<p>Określenie: kto, co, kiedy i jak komunikuje (np. cotygodniowy raport statusu dla sponsora, codzienny stand-up dla zespołu, comiesięczny przegląd dla zarządu) — źle zaplanowana komunikacja jest jedną z najczęstszych przyczyn niepowodzeń projektów IT.</p>
+
+<h3>Interesariusze (stakeholders)</h3>
+<p>Wszystkie osoby/grupy mające wpływ na projekt lub podlegające jego wpływowi (sponsor, klient, użytkownicy końcowi, zespół, zarząd) — zarządzanie interesariuszami obejmuje identyfikację ich potrzeb/oczekiwań i odpowiednie dopasowanie częstotliwości/formy komunikacji do każdej grupy.</p>
+
+<h3>Zarządzanie ryzykiem — proces</h3>
+<ol>
+<li><strong>identyfikacja ryzyk</strong> — co może pójść źle (np. odejście kluczowego programisty, zmiana wymagań, awaria dostawcy zewnętrznego)</li>
+<li><strong>analiza/ocena</strong> — oszacowanie prawdopodobieństwa wystąpienia i wpływu (skutku) każdego ryzyka</li>
+<li><strong>planowanie odpowiedzi</strong> — strategia dla każdego istotnego ryzyka</li>
+<li><strong>monitorowanie</strong> — ciągłe śledzenie ryzyk w trakcie projektu (nowe ryzyka mogą się pojawić, stare zmienić priorytet)</li>
+</ol>
+
+<h3>Matryca ryzyka (prawdopodobieństwo × wpływ)</h3>
+<p>Klasyfikacja ryzyk na siatce — ryzyka o wysokim prawdopodobieństwie i wysokim wpływie wymagają priorytetowej uwagi, o niskim obu parametrom można często zignorować/monitorować bez aktywnej reakcji.</p>
+
+<h3>Strategie odpowiedzi na ryzyko</h3>
+<table>
+<tr><th>Strategia</th><th>Zasada</th></tr>
+<tr><td>Unikanie (avoid)</td><td>zmiana planu, żeby ryzyko w ogóle nie mogło zajść</td></tr>
+<tr><td>Ograniczanie (mitigate)</td><td>działania zmniejszające prawdopodobieństwo lub wpływ ryzyka</td></tr>
+<tr><td>Przeniesienie (transfer)</td><td>przekazanie ryzyka innej stronie (np. ubezpieczenie, outsourcing z gwarancją SLA)</td></tr>
+<tr><td>Akceptacja (accept)</td><td>świadome przyjęcie ryzyka (zwykle gdy koszt reakcji przewyższa potencjalny skutek) — z rezerwą budżetową/czasową na wypadek wystąpienia</td></tr>
+</table>
+
+<h3>Zarządzanie zmianą (change management)</h3>
+<p>Formalny proces obsługi zmian w zakresie/wymaganiach projektu <strong>po</strong> jego rozpoczęciu — nieskontrolowane, niesformalizowane przyjmowanie zmian ("scope creep") prowadzi do przekroczenia budżetu/terminu bez świadomej decyzji o tym.</p>
+<ol>
+<li>zgłoszenie żądania zmiany (change request)</li>
+<li>ocena wpływu na zakres/czas/koszt (patrz trójkąt ograniczeń, punkt 2)</li>
+<li>decyzja — akceptacja, odrzucenie, lub modyfikacja żądania</li>
+<li>aktualizacja planu projektu i komunikacja zmiany do zespołu/interesariuszy</li>
+</ol>
+
+<div class="uwaga">Typowe pytanie: dla opisanej sytuacji (np. "klient w połowie projektu chce dodać nową funkcję") opisz, jak powinien wyglądać proces zarządzania zmianą, oraz zaproponuj analizę ryzyka dla podanego scenariusza projektowego.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Fazy rozwoju zespołu (model Tuckmana)</h2>
+
+<p>Model opisujący typowe etapy, przez które przechodzi zespół projektowy od momentu powstania do osiągnięcia pełnej efektywności.</p>
+
+<table>
+<tr><th>Faza</th><th>Charakterystyka</th></tr>
+<tr>
+<td>Forming (formowanie)</td>
+<td>zespół dopiero się poznaje — uprzejmość, niepewność co do ról, unikanie konfliktów, zależność od liderа w kwestii kierunku działania</td>
+</tr>
+<tr>
+<td>Storming (docieranie/konflikt)</td>
+<td>pojawiają się różnice opinii, napięcia, rywalizacja o role/pozycję — najtrudniejsza faza, ale <strong>naturalna i konieczna</strong> do przejścia dalej</td>
+</tr>
+<tr>
+<td>Norming (normowanie)</td>
+<td>zespół ustala wspólne normy pracy, role się stabilizują, rośnie zaufanie i współpraca</td>
+</tr>
+<tr>
+<td>Performing (wydajność)</td>
+<td>zespół działa efektywnie, samodzielnie rozwiązuje problemy, skupiony na celu, minimalny narzut na "polityki" wewnętrzne</td>
+</tr>
+<tr>
+<td>Adjourning (rozwiązanie)</td>
+<td>zakończenie projektu, rozwiązanie zespołu — czasem z elementem "żałoby" po zakończonej współpracy, warto podsumować doświadczenia (patrz retrospektywa, punkt 1)</td>
+</tr>
+</table>
+
+<h3>Zastosowanie praktyczne</h3>
+<p>Lider/kierownik projektu powinien dopasować styl zarządzania do aktualnej fazy — np. w fazie <em>storming</em> nie należy oczekiwać pełnej samoorganizacji zespołu i trzeba aktywniej mediować konflikty, a w fazie <em>performing</em> nadmierna mikro-kontrola raczej szkodzi niż pomaga.</p>
+
+<div class="uwaga">Faza <em>storming</em> jest często błędnie odbierana jako "coś poszło nie tak" — w rzeczywistości to normalny, wręcz konieczny etap budowania zespołu; pomijanie/ukrywanie konfliktów w tej fazie zwykle odsuwa problem w czasie, nie rozwiązuje go.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Rozwiązywanie konfliktów w zespole</h2>
+
+<h3>Style radzenia sobie z konfliktem (model Thomasa-Kilmanna)</h3>
+<table>
+<tr><th>Styl</th><th>Zasada</th><th>Kiedy stosować</th></tr>
+<tr>
+<td>Rywalizacja (competing)</td>
+<td>forsowanie własnego stanowiska, niska troska o relację</td>
+<td>sytuacje wymagające szybkiej, jednoznacznej decyzji (np. kryzys)</td>
+</tr>
+<tr>
+<td>Współpraca (collaborating)</td>
+<td>szukanie rozwiązania korzystnego dla obu stron (win-win)</td>
+<td>gdy sprawa jest ważna dla obu stron i jest czas na wypracowanie wspólnego rozwiązania</td>
+</tr>
+<tr>
+<td>Kompromis (compromising)</td>
+<td>obie strony ustępują częściowo</td>
+<td>gdy cele stron się częściowo wykluczają, a pełne win-win nie jest możliwe w danym czasie</td>
+</tr>
+<tr>
+<td>Unikanie (avoiding)</td>
+<td>odłożenie/zignorowanie konfliktu</td>
+<td>sprawy drobne, albo gdy potrzeba czasu na "ochłonięcie" przed rozmową</td>
+</tr>
+<tr>
+<td>Dostosowanie (accommodating)</td>
+<td>ustępstwo dla dobra relacji, mimo własnych racji</td>
+<td>gdy sprawa jest ważniejsza dla drugiej strony niż dla nas, budowanie zaufania</td>
+</tr>
+</table>
+
+<h3>Konstruktywny feedback</h3>
+<p>Popularne techniki strukturyzowania informacji zwrotnej, żeby była konkretna i mniej konfrontacyjna:</p>
+<ul>
+<li><strong>metoda SBI (Situation-Behavior-Impact)</strong> — opisz konkretną sytuację, konkretne zachowanie, i jego wpływ/skutek — zamiast ogólnych ocen ("jesteś nieodpowiedzialny") odnoś się do faktów</li>
+<li><strong>feedback sandwich</strong> — pozytyw → obszar do poprawy → pozytyw (kontrowersyjna technika — bywa krytykowana za "rozmywanie" trudnej informacji)</li>
+</ul>
+
+<h3>Aktywne słuchanie</h3>
+<p>Technika komunikacji polegająca na pełnym skupieniu na wypowiedzi drugiej strony, parafrazowaniu ("czy dobrze rozumiem, że...") i dopytywaniu, zamiast od razu formułowania odpowiedzi/kontrargumentu — zmniejsza liczbę nieporozumień, które są częstą przyczyną konfliktów.</p>
+
+<div class="uwaga">Typowe pytanie: dla opisanego konfliktu w zespole (np. "dwóch programistów nie zgadza się co do architektury rozwiązania") zaproponuj odpowiedni styl rozwiązania konfliktu i uzasadnij wybór.</div>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Inne metodyki zarządzania projektami (PRINCE2, PMBOK)</h2>
+
+<h3>PMBOK / PMI (Project Management Institute)</h3>
+<p>Nie jest to metodyka w wąskim sensie, a <strong>zbiór dobrych praktyk</strong> (Project Management Body of Knowledge) obejmujący wszystkie obszary zarządzania projektem — zakres, czas, koszt, jakość, ryzyko, komunikację, zasoby, zamówienia, interesariuszy. Punkt odniesienia dla certyfikacji PMP (Project Management Professional).</p>
+
+<h3>PRINCE2 (Projects IN Controlled Environments)</h3>
+<p>Metodyka strukturalna, popularna zwłaszcza w Europie (w tym w sektorze publicznym) — projekt podzielony na ustalone <strong>etapy zarządcze</strong>, z formalnymi punktami decyzyjnymi (czy kontynuować projekt) między nimi.</p>
+<ul>
+<li>silny nacisk na <strong>uzasadnienie biznesowe (business case)</strong> — projekt musi mieć ciągle aktualne uzasadnienie, weryfikowane na każdym etapie</li>
+<li>jasno zdefiniowane role i odpowiedzialności (np. Komitet Sterujący, Kierownik Projektu)</li>
+<li>bardziej "ciężka" (formalna) niż Agile, ale też bardziej przewidywalna/kontrolowana</li>
+</ul>
+
+<h3>Porównanie z podejściami z punktu 1</h3>
+<table>
+<tr><th></th><th>PRINCE2/PMBOK</th><th>Scrum/Kanban (Agile)</th></tr>
+<tr><td>Charakter</td><td>formalny, oparty na dokumentacji i punktach kontrolnych</td><td>lekki, iteracyjny, adaptacyjny</td></tr>
+<tr><td>Elastyczność wobec zmian</td><td>zmiana wymaga formalnego procesu (patrz zarządzanie zmianą, punkt 3)</td><td>zmiana wpisana w naturę procesu (co sprint/na bieżąco)</td></tr>
+<tr><td>Typowe zastosowanie</td><td>duże projekty, sektor publiczny, wymogi compliance</td><td>rozwój produktów cyfrowych, startupy, częste zmiany rynku</td></tr>
+</table>
+
+<div class="uwaga">W praktyce wiele organizacji stosuje podejścia <strong>hybrydowe</strong> — np. formalne zarządzanie na poziomie całego programu/portfela projektów (PRINCE2/PMBOK), a Agile/Scrum na poziomie codziennej pracy zespołów deweloperskich wewnątrz takiego projektu.</div>
+</div>
+
+</body>
+</html>

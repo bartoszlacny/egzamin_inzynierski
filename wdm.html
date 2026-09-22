@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="utf-8">
+<title>Wstęp do matematyki – Egzamin Inżynierski</title>
+
+<script>
+MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['$$', '$$']] }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+
+<style>
+body {
+    font-family: Arial;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    color: #222;
+}
+
+.powrot {
+    display: inline-block;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.powrot:hover {
+    background: #0056b3;
+}
+
+h1 {
+    border-bottom: 3px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.zagadnienie {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background: #fafafa;
+}
+
+.zagadnienie h2 {
+    margin-top: 0;
+    color: #0056b3;
+}
+
+.zagadnienie h3 {
+    margin-bottom: 4px;
+}
+
+code, pre {
+    background: #eef1f5;
+    border-radius: 4px;
+    font-family: "Courier New", monospace;
+}
+
+code {
+    padding: 2px 5px;
+}
+
+pre {
+    padding: 10px;
+    overflow-x: auto;
+}
+
+.uwaga {
+    background: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 8px 12px;
+    margin: 10px 0;
+}
+</style>
+</head>
+
+<body>
+
+<a class="powrot" href="index.html">&larr; Powrót do listy przedmiotów</a>
+
+<h1>Wstęp do matematyki</h1>
+
+<div class="zagadnienie">
+<h2>1. Działania na liczbach i zbiorach</h2>
+
+<h3>Zbiory liczbowe</h3>
+<p>\(\mathbb{N}\) (naturalne) \(\subset\) \(\mathbb{Z}\) (całkowite) \(\subset\) \(\mathbb{Q}\) (wymierne) \(\subset\) \(\mathbb{R}\) (rzeczywiste) \(\subset\) \(\mathbb{C}\) (zespolone).</p>
+
+<h3>Działania na zbiorach</h3>
+<ul>
+<li>suma \(A \cup B\), przecięcie \(A \cap B\), różnica \(A \setminus B\), dopełnienie \(A'\)</li>
+<li>prawa De Morgana: \((A \cup B)' = A' \cap B'\), \((A \cap B)' = A' \cup B'\)</li>
+<li>iloczyn kartezjański \(A \times B\) (zbiór par uporządkowanych)</li>
+<li>\(A \subset B\) (podzbiór), zbiór pusty \(\emptyset\), zbiór potęgowy \(P(A)\)</li>
+</ul>
+
+<h3>Przedziały</h3>
+<p>otwarty \((a,b)\), domknięty \([a,b]\), jednostronnie domknięty \([a,b)\) itd.</p>
+
+<h3>Wartość bezwzględna</h3>
+<p>\(|x|\) — odległość od 0. Własności: \(|a \cdot b| = |a|\cdot|b|\), \(|a+b| \le |a|+|b|\) (nierówność trójkąta).</p>
+
+<h3>Potęgi, pierwiastki, logarytmy</h3>
+<ul>
+<li>\(a^m \cdot a^n = a^{m+n}\), \((a^m)^n = a^{mn}\)</li>
+<li>\(\log_a(xy) = \log_a x + \log_a y\)</li>
+<li>\(\log_a(x/y) = \log_a x - \log_a y\)</li>
+<li>\(\log_a x^n = n\log_a x\)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>2. Równania i nierówności</h2>
+
+<h3>Równania liniowe</h3>
+<p>\(ax + b = 0 \Rightarrow x = -\dfrac{b}{a}\) (dla \(a \ne 0\))</p>
+
+<h3>Równania kwadratowe</h3>
+<p>$$ax^2 + bx + c = 0, \qquad \Delta = b^2 - 4ac$$</p>
+<ul>
+<li>\(\Delta > 0\): dwa pierwiastki \(x = \dfrac{-b \pm \sqrt{\Delta}}{2a}\)</li>
+<li>\(\Delta = 0\): jeden pierwiastek \(x = -\dfrac{b}{2a}\)</li>
+<li>\(\Delta < 0\): brak pierwiastków rzeczywistych</li>
+</ul>
+
+<h3>Nierówności</h3>
+<div class="uwaga">Przy mnożeniu/dzieleniu przez liczbę ujemną — zmiana znaku nierówności!</div>
+<ul>
+<li>nierówności kwadratowe: szkicujesz parabolę (znak <code>a</code> + miejsca zerowe) i odczytujesz przedziały</li>
+<li>\(|x| < a \iff -a < x < a\)</li>
+<li>\(|x| > a \iff x < -a \text{ lub } x > a\)</li>
+</ul>
+
+<h3>Układy równań</h3>
+<p>metoda podstawiania, przeciwnych współczynników, metoda wyznaczników (dla 2x2: \(x = W_x/W\), \(y = W_y/W\))</p>
+
+<div class="uwaga">Równania/nierówności wymierne — pamiętaj o założeniach (mianownik ≠ 0)!</div>
+</div>
+
+<div class="zagadnienie">
+<h2>3. Podstawowe własności funkcji</h2>
+
+<h3>Dziedzina i przeciwdziedzina</h3>
+<p>dla czego funkcja jest określona / co może zwracać</p>
+
+<h3>Monotoniczność</h3>
+<ul>
+<li>rosnąca: \(x_1 < x_2 \Rightarrow f(x_1) < f(x_2)\)</li>
+<li>malejąca: \(x_1 < x_2 \Rightarrow f(x_1) > f(x_2)\)</li>
+<li>niemalejąca / nierosnąca — analogicznie z \(\le\) / \(\ge\)</li>
+</ul>
+
+<h3>Parzystość / nieparzystość</h3>
+<ul>
+<li>parzysta: \(f(-x) = f(x)\) — symetria względem osi Y</li>
+<li>nieparzysta: \(f(-x) = -f(x)\) — symetria względem początku układu</li>
+</ul>
+
+<h3>Różnowartościowość (iniekcja)</h3>
+<p>\(x_1 \ne x_2 \Rightarrow f(x_1) \ne f(x_2)\) — każda pozioma prosta przecina wykres maks. raz</p>
+
+<h3>Funkcja odwrotna</h3>
+<p>istnieje tylko gdy f jest różnowartościowa; wykres \(f^{-1}\) to odbicie wykresu f względem prostej \(y = x\)</p>
+
+<h3>Funkcja złożona</h3>
+<p>\((f \circ g)(x) = f(g(x))\) — uwaga na kolejność, zwykle \(f \circ g \ne g \circ f\)</p>
+
+<h3>Inne</h3>
+<p>ograniczoność (z góry / z dołu), okresowość: \(f(x+T) = f(x)\), miejsca zerowe: \(f(x) = 0\), asymptoty (pozioma, pionowa, ukośna)</p>
+</div>
+
+<div class="zagadnienie">
+<h2>4. Ciągi liczbowe</h2>
+
+<p>Ciąg — funkcja o dziedzinie \(\mathbb{N}\) (\(a_n\), \(n = 1,2,3,\dots\))</p>
+
+<h3>Ciąg arytmetyczny</h3>
+<ul>
+<li>różnica: \(r = a_{n+1} - a_n\) (stała)</li>
+<li>wzór ogólny: \(a_n = a_1 + (n-1)r\)</li>
+<li>suma n wyrazów: \(S_n = \dfrac{n(a_1+a_n)}{2} = \dfrac{n[2a_1+(n-1)r]}{2}\)</li>
+</ul>
+
+<h3>Ciąg geometryczny</h3>
+<ul>
+<li>iloraz: \(q = a_{n+1}/a_n\) (stały)</li>
+<li>wzór ogólny: \(a_n = a_1 \cdot q^{n-1}\)</li>
+<li>suma n wyrazów (\(q \ne 1\)): \(S_n = \dfrac{a_1(1-q^n)}{1-q}\)</li>
+<li>suma nieskończona (\(|q|<1\)): \(S = \dfrac{a_1}{1-q}\)</li>
+</ul>
+
+<h3>Ciągi rekurencyjne</h3>
+<ul>
+<li>\(a_{n+1} = a_n + r\) (arytmetyczny w postaci rekurencyjnej)</li>
+<li>Fibonacci: \(a_1=a_2=1\), \(a_n = a_{n-1} + a_{n-2}\)</li>
+</ul>
+
+<h3>Granica ciągu</h3>
+<p>$$\lim_{n\to\infty} a_n = g$$ jeśli wyrazy zbliżają się dowolnie blisko do g. Ciąg zbieżny/rozbieżny.</p>
+<p>Ważne granice: \(\lim (1/n) = 0\), \(\lim q^n = 0\) dla \(|q| < 1\)</p>
+
+<h3>Monotoniczność i ograniczoność ciągu</h3>
+<p>analogicznie jak dla funkcji (\(a_{n+1}\) vs \(a_n\), albo \(a_{n+1} - a_n\))</p>
+</div>
+
+<div class="zagadnienie">
+<h2>5. Algebra wektorów</h2>
+
+<p>Wektor w \(\mathbb{R}^3\): \(\vec{v} = (x,y,z)\) lub \(\vec{AB} = B - A\) (koniec minus początek)</p>
+
+<h3>Działania podstawowe</h3>
+<ul>
+<li>dodawanie: \((x_1,y_1,z_1) + (x_2,y_2,z_2) = (x_1+x_2,\, y_1+y_2,\, z_1+z_2)\)</li>
+<li>mnożenie przez skalar: \(k\cdot(x,y,z) = (kx,ky,kz)\)</li>
+<li>długość (norma): \(|\vec{v}| = \sqrt{x^2+y^2+z^2}\)</li>
+<li>wektor jednostkowy (wersor): \(\vec{v} / |\vec{v}|\)</li>
+</ul>
+
+<h3>Iloczyn skalarny (dot product)</h3>
+<p>$$\vec{a}\cdot\vec{b} = a_x b_x + a_y b_y + a_z b_z = |\vec{a}||\vec{b}|\cos\theta$$</p>
+<ul>
+<li>wynik to liczba (skalar)</li>
+<li>\(\vec{a} \perp \vec{b} \iff \vec{a}\cdot\vec{b} = 0\)</li>
+<li>kąt między wektorami: \(\cos\theta = \dfrac{\vec{a}\cdot\vec{b}}{|\vec{a}||\vec{b}|}\)</li>
+</ul>
+
+<h3>Iloczyn wektorowy (cross product) — tylko w \(\mathbb{R}^3\)</h3>
+<p>wynik to wektor prostopadły do obu wektorów a i b (reguła prawej dłoni na kierunek)</p>
+<ul>
+<li>\(|\vec{a}\times\vec{b}| = |\vec{a}||\vec{b}|\sin\theta\) = pole równoległoboku rozpiętego na a, b</li>
+<li>\(\vec{a}\times\vec{b} = \vec{0} \iff\) wektory są równoległe</li>
+<li>antyprzemienność: \(\vec{a}\times\vec{b} = -(\vec{b}\times\vec{a})\)</li>
+</ul>
+
+<h3>Iloczyn mieszany</h3>
+<p>\((\vec{a}\times\vec{b})\cdot\vec{c}\) = objętość równoległościanu rozpiętego na trzech wektorach</p>
+</div>
+
+<div class="zagadnienie">
+<h2>6. Dziedzina funkcji — przykłady</h2>
+
+<p>Dziedzina to zbiór argumentów x, dla których wyrażenie ma sens (da się obliczyć).</p>
+
+<table style="border-collapse: collapse; width: 100%;">
+<tr style="background:#e9edf2;">
+<th style="border:1px solid #ccc; padding:6px; text-align:left;">Funkcja</th>
+<th style="border:1px solid #ccc; padding:6px; text-align:left;">Warunek</th>
+<th style="border:1px solid #ccc; padding:6px; text-align:left;">Przykład</th>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">\(\sqrt{f(x)}\)</td>
+<td style="border:1px solid #ccc; padding:6px;">wyrażenie pod pierwiastkiem \(\ge 0\)</td>
+<td style="border:1px solid #ccc; padding:6px;">\(\sqrt{x-3} \to x \ge 3\)</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">\(1/f(x)\)</td>
+<td style="border:1px solid #ccc; padding:6px;">mianownik \(\ne 0\)</td>
+<td style="border:1px solid #ccc; padding:6px;">\(1/(x-2) \to x \ne 2\)</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">\(\log_a f(x)\)</td>
+<td style="border:1px solid #ccc; padding:6px;">wyrażenie logarytmowane \(> 0\)</td>
+<td style="border:1px solid #ccc; padding:6px;">\(\log(x+1) \to x > -1\)</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">\(\sqrt{f(x)}\) w mianowniku</td>
+<td style="border:1px solid #ccc; padding:6px;">wyrażenie pod pierwiastkiem \(> 0\) (ostro, bo dzielenie przez 0 niedozwolone)</td>
+<td style="border:1px solid #ccc; padding:6px;">\(1/\sqrt{x-3} \to x > 3\)</td>
+</tr>
+<tr>
+<td style="border:1px solid #ccc; padding:6px;">\(\text{tg}(x)\)</td>
+<td style="border:1px solid #ccc; padding:6px;">\(x \ne \pi/2 + k\pi\)</td>
+<td style="border:1px solid #ccc; padding:6px;">—</td>
+</tr>
+</table>
+
+<div class="uwaga">Gdy w wyrażeniu jest kilka takich "podejrzanych" miejsc naraz (np. pierwiastek i ułamek), warunki się łączy koniunkcją (część wspólna wszystkich warunków, czyli przecięcie zbiorów).</div>
+
+<h3>Przykład złożony</h3>
+<p>Dziedzina \(f(x) = \dfrac{\sqrt{x-1}}{x-4}\):</p>
+<ul>
+<li>pod pierwiastkiem: \(x-1 \ge 0 \to x \ge 1\)</li>
+<li>mianownik: \(x-4 \ne 0 \to x \ne 4\)</li>
+<li>razem: \(D = [1, 4) \cup (4, \infty)\)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>7. Wykresy podstawowych funkcji</h2>
+
+<div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:space-around;">
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<line x1="20" y1="130" x2="140" y2="30" stroke="#007bff" stroke-width="2"/>
+</svg>
+<p>Liniowa: \(f(x)=ax+b\)</p>
+</div>
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<path d="M 20 140 Q 80 10 140 140" stroke="#007bff" stroke-width="2" fill="none"/>
+</svg>
+<p>Kwadratowa: \(f(x)=ax^2+bx+c\) (parabola)</p>
+</div>
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<path d="M 85 150 Q 90 20 150 15" stroke="#007bff" stroke-width="2" fill="none"/>
+<path d="M 75 150 Q 70 20 10 15" stroke="#007bff" stroke-width="2" fill="none"/>
+</svg>
+<p>Homograficzna: \(f(x)=1/x\)</p>
+</div>
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<path d="M 20 150 Q 60 150 140 20" stroke="#007bff" stroke-width="2" fill="none"/>
+</svg>
+<p>Wykładnicza: \(f(x)=a^x\) (a&gt;1)</p>
+</div>
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<path d="M 82 150 Q 82 120 140 100" stroke="#007bff" stroke-width="2" fill="none"/>
+</svg>
+<p>Logarytmiczna: \(f(x)=\log_a(x)\)</p>
+</div>
+
+<div style="text-align:center;">
+<svg viewBox="0 0 160 160" width="160" height="160">
+<line x1="10" y1="80" x2="150" y2="80" stroke="#999"/>
+<line x1="80" y1="10" x2="80" y2="150" stroke="#999"/>
+<path d="M 10 80 Q 40 20 70 80 T 130 80" stroke="#007bff" stroke-width="2" fill="none"/>
+</svg>
+<p>Trygonometryczna: \(f(x)=\sin(x)\)</p>
+</div>
+
+</div>
+
+<p>Warto umieć naszkicować te kształty "z pamięci" i wiedzieć, jak zmienia się wykres przy przesunięciach: \(f(x)+c\) (przesunięcie w górę/dół), \(f(x+c)\) (przesunięcie w lewo/prawo), \(-f(x)\) (odbicie względem osi X), \(f(-x)\) (odbicie względem osi Y).</p>
+</div>
+
+<div class="zagadnienie">
+<h2>8. Równania wykładnicze i logarytmiczne</h2>
+
+<h3>Równania wykładnicze</h3>
+<p>Niewiadoma w wykładniku, np. \(a^x = b\).</p>
+<ul>
+<li>sprowadzenie do wspólnej podstawy: \(2^x = 8 \to 2^x = 2^3 \to x = 3\)</li>
+<li>logarytmowanie obu stron, gdy nie da się sprowadzić do wspólnej podstawy: \(3^x = 5 \to x = \log_3 5 = \dfrac{\ln 5}{\ln 3}\)</li>
+<li>podstawienie pomocnicze: np. \(4^x - 2^{x+1} - 8 = 0\), podstawiamy \(t = 2^x\) (\(t>0\)) \(\to t^2 - 2t - 8 = 0\)</li>
+</ul>
+
+<h3>Równania logarytmiczne</h3>
+<p>Niewiadoma pod logarytmem, np. \(\log_a f(x) = c\).</p>
+<ul>
+<li>zapis w postaci wykładniczej: \(\log_a x = c \iff x = a^c\)</li>
+<li>korzystanie z własności logarytmów, żeby zwinąć/rozwinąć wyrażenie do jednego logarytmu</li>
+<li><strong>zawsze sprawdź założenia i dziedzinę</strong> po rozwiązaniu — łatwo o "pierwiastki obce" (rozwiązanie matematycznie poprawne, ale spoza dziedziny)</li>
+</ul>
+
+<h3>Przykład</h3>
+<p>\(\log_2(x) + \log_2(x-2) = 3\), założenie: \(x>0\) i \(x-2>0 \to x>2\)</p>
+<p>$$\log_2[x(x-2)] = 3 \Rightarrow x(x-2) = 2^3 = 8 \Rightarrow x^2-2x-8=0 \Rightarrow x=4 \text{ lub } x=-2$$</p>
+<p>\(x=-2\) odrzucamy (nie spełnia założenia \(x>2\)) → jedyne rozwiązanie: \(x=4\)</p>
+</div>
+
+<div class="zagadnienie">
+<h2>9. Geometria wektorowa: równanie prostej i płaszczyzny</h2>
+
+<h3>Prosta w \(\mathbb{R}^2\) (na płaszczyźnie)</h3>
+<ul>
+<li>kierunkowa: \(y = ax + b\)</li>
+<li>ogólna: \(Ax + By + C = 0\)</li>
+<li>odległość punktu \(P(x_0,y_0)\) od prostej \(Ax+By+C=0\): $$d = \frac{|Ax_0+By_0+C|}{\sqrt{A^2+B^2}}$$</li>
+</ul>
+
+<h3>Prosta w \(\mathbb{R}^3\) (przestrzeń)</h3>
+<p>Prosta określona przez punkt \(P_0=(x_0,y_0,z_0)\) i wektor kierunkowy \(\vec{v}=(a,b,c)\):</p>
+<ul>
+<li>parametryczna: \(x=x_0+at,\ y=y_0+bt,\ z=z_0+ct\) (\(t \in \mathbb{R}\))</li>
+<li>kierunkowa (gdy \(a,b,c\ne0\)): \(\dfrac{x-x_0}{a} = \dfrac{y-y_0}{b} = \dfrac{z-z_0}{c}\)</li>
+</ul>
+
+<h3>Płaszczyzna w \(\mathbb{R}^3\)</h3>
+<p>Płaszczyzna określona przez punkt \(P_0=(x_0,y_0,z_0)\) i wektor normalny \(\vec{n}=(A,B,C)\) (prostopadły do płaszczyzny):</p>
+<ul>
+<li>równanie ogólne: \(A(x-x_0) + B(y-y_0) + C(z-z_0) = 0\), czyli \(Ax+By+Cz+D=0\)</li>
+<li>wektor normalny można wyznaczyć z iloczynu wektorowego dwóch niewspółliniowych wektorów leżących w płaszczyźnie: \(\vec{n} = \vec{u} \times \vec{v}\)</li>
+</ul>
+
+<div class="uwaga">Typowe zadanie: mając 3 punkty w przestrzeni, wyznacz równanie płaszczyzny — tworzysz dwa wektory z tych punktów, liczysz ich iloczyn wektorowy (to da wektor normalny), a potem podstawiasz jeden z punktów do równania ogólnego.</div>
+
+<h3>Kąt i odległość</h3>
+<ul>
+<li>kąt między dwiema prostymi/płaszczyznami — przez iloczyn skalarny wektorów kierunkowych/normalnych</li>
+<li>prosta równoległa do płaszczyzny \(\iff\) wektor kierunkowy prostej \(\perp\) wektor normalny płaszczyzny (ich iloczyn skalarny = 0)</li>
+</ul>
+</div>
+
+<div class="zagadnienie">
+<h2>10. Dokładniejsze warunki dla logarytmów</h2>
+
+<p>\(\log_a(x)\) ma sens tylko, gdy spełnione są <strong>wszystkie</strong> poniższe warunki jednocześnie:</p>
+
+<ul>
+<li><strong>\(a > 0\)</strong> — podstawa musi być dodatnia</li>
+<li><strong>\(a \ne 1\)</strong> — bo \(\log_1\) nie jest dobrze określony (1 do każdej potęgi to zawsze 1)</li>
+<li><strong>\(x > 0\)</strong> — logarytmować można tylko liczby dodatnie (dziedzina logarytmu to \((0,\infty)\))</li>
+</ul>
+
+<div class="uwaga">To jeden z najczęstszych błędów na egzaminie: przy równaniach/nierównościach logarytmicznych trzeba zapisać założenia dla <strong>każdego</strong> logarytmu w wyrażeniu osobno (jeśli podstawa też zależy od zmiennej — dodatkowo a&gt;0 i a≠1), a na końcu wziąć część wspólną wszystkich warunków.</div>
+
+<h3>Przykład z podstawą zależną od x</h3>
+<p>\(\log_{x-1}(x+2)\) — założenia: \(x-1>0\) i \(x-1\ne1\) i \(x+2>0\), czyli: \(x>1,\ x\ne2,\ x>-2\) → razem: \(x\in(1,2)\cup(2,\infty)\)</p>
+</div>
+
+<div class="zagadnienie">
+<h2>11. Podstawy trygonometrii</h2>
+
+<h3>Definicje w trójkącie prostokątnym</h3>
+<p>$$\sin\alpha = \frac{\text{przeciwprostokątna naprzeciw}}{\text{przeciwprostokątna}}, \quad \cos\alpha = \frac{\text{przyprostokątna przy kącie}}{\text{przeciwprostokątna}}$$</p>
+<p>$$\text{tg}\,\alpha = \frac{\sin\alpha}{\cos\alpha}, \qquad \text{ctg}\,\alpha = \frac{\cos\alpha}{\sin\alpha} = \frac{1}{\text{tg}\,\alpha}$$</p>
+
+<h3>Wartości dla kątów szczególnych</h3>
+<table>
+<tr><th>\(\alpha\)</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr>
+<tr><td>\(\sin\alpha\)</td><td>0</td><td>1/2</td><td>\(\sqrt{2}/2\)</td><td>\(\sqrt{3}/2\)</td><td>1</td></tr>
+<tr><td>\(\cos\alpha\)</td><td>1</td><td>\(\sqrt{3}/2\)</td><td>\(\sqrt{2}/2\)</td><td>1/2</td><td>0</td></tr>
+<tr><td>\(\text{tg}\,\alpha\)</td><td>0</td><td>\(\sqrt{3}/3\)</td><td>1</td><td>\(\sqrt{3}\)</td><td>—</td></tr>
+</table>
+
+<h3>Jedynka trygonometryczna</h3>
+<p>$$\sin^2\alpha + \cos^2\alpha = 1$$</p>
+
+<h3>Wzory redukcyjne (skrót zasady)</h3>
+<p>Dla kątów postaci \(90°\pm\alpha\), \(180°\pm\alpha\), \(270°\pm\alpha\), \(360°-\alpha\):</p>
+<ul>
+<li>przy \(90°\) i \(270°\) funkcja "zamienia się" (sin ↔ cos, tg ↔ ctg)</li>
+<li>przy \(180°\) i \(360°\) funkcja zostaje ta sama (sin zostaje sin, cos zostaje cos)</li>
+<li>znak wyniku zależy od tego, w której ćwiartce leży kąt wyjściowy \(\alpha\) (przyjmując, że \(\alpha\) jest mały/ostry) — sprawdzasz znak tej samej funkcji w odpowiedniej ćwiartce koła jednostkowego</li>
+</ul>
+<p>Przykłady: \(\sin(180°-\alpha) = \sin\alpha\), \(\cos(180°-\alpha) = -\cos\alpha\), \(\sin(90°-\alpha) = \cos\alpha\), \(\sin(-\alpha) = -\sin\alpha\) (sinus jest nieparzysty), \(\cos(-\alpha)=\cos\alpha\) (cosinus jest parzysty)</p>
+
+<h3>Wzory sumy i różnicy kątów</h3>
+<p>$$\sin(\alpha\pm\beta) = \sin\alpha\cos\beta \pm \cos\alpha\sin\beta$$</p>
+<p>$$\cos(\alpha\pm\beta) = \cos\alpha\cos\beta \mp \sin\alpha\sin\beta$$</p>
+
+<h3>Wzory podwójnego kąta</h3>
+<p>$$\sin 2\alpha = 2\sin\alpha\cos\alpha$$</p>
+<p>$$\cos 2\alpha = \cos^2\alpha - \sin^2\alpha = 2\cos^2\alpha - 1 = 1-2\sin^2\alpha$$</p>
+
+<h3>Koło jednostkowe i znaki funkcji</h3>
+<table>
+<tr><th>Ćwiartka</th><th>Zakres kąta</th><th>sin</th><th>cos</th><th>tg</th></tr>
+<tr><td>I</td><td>0°–90°</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><td>II</td><td>90°–180°</td><td>+</td><td>−</td><td>−</td></tr>
+<tr><td>III</td><td>180°–270°</td><td>−</td><td>−</td><td>+</td></tr>
+<tr><td>IV</td><td>270°–360°</td><td>−</td><td>+</td><td>−</td></tr>
+</table>
+
+<h3>Okresowość</h3>
+<p>\(\sin\) i \(\cos\) mają okres \(360°=2\pi\); \(\text{tg}\) i \(\text{ctg}\) mają okres \(180°=\pi\).</p>
+
+<div class="uwaga">Typowe zadanie: znając wartość jednej funkcji trygonometrycznej i ćwiartkę, w której leży kąt, wyznacz wartości pozostałych funkcji (korzystając z jedynki trygonometrycznej i znaków w danej ćwiartce).</div>
+</div>
+
+</body>
+</html>
