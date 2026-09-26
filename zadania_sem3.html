@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,44 +32,61 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -82,16 +100,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -116,108 +124,121 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="matematyka2">
 <h2>1. Matematyka 2 (analiza, liczby zespolone, algebra liniowa)</h2>
 
-<div class="pytanie">
-<h3>1. Dowód nieistnienia granicy</h3>
-<p class="polecenie">Polecenie: Wykazać, że \(\lim_{x\to0}\left(\dfrac{1}{x^2}\right)\) nie istnieje.</p>
-<p>Z definicji Heinego: granica \(\lim_{x\to0}f(x)=L\) (skończona) istnieje, jeśli dla każdego ciągu \(x_n\to0\) (\(x_n\ne0\)) ciąg wartości \(f(x_n)\to L\).</p>
-<p>Weźmy ciąg \(x_n = \dfrac{1}{n} \to 0\). Wtedy \(f(x_n) = \dfrac{1}{(1/n)^2} = n^2 \to +\infty\).</p>
-<p>Ponieważ \(n^2\) rośnie nieograniczenie, żadna liczba rzeczywista \(L\) nie może być granicą — dla dowolnego kandydata \(L\) i dowolnego \(\varepsilon>0\), dla dostatecznie dużych \(n\) mamy \(|f(x_n)-L|=|n^2-L|>\varepsilon\), co przeczy definicji granicy właściwej (skończonej).</p>
-<div class="odp">
-Funkcja \(f(x)=1/x^2\) jest nieograniczona w każdym otoczeniu punktu \(x=0\) (dąży do \(+\infty\) zarówno z lewej, jak i z prawej strony), więc granica właściwa (skończona) nie istnieje. Piszemy umownie \(\lim_{x\to0}\dfrac{1}{x^2}=+\infty\) (granica niewłaściwa), ale w sensie ścisłym — jako liczba rzeczywista — granica nie istnieje.
+<div class="q-block">
+<span class="q-text">1. Wykazać, że \(\lim_{x\to0}\left(\dfrac{1}{x^2}\right)\) nie istnieje.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Z definicji Heinego: granica \(\lim_{x\to0}f(x)=L\) (skończona) istnieje, jeśli dla każdego ciągu \(x_n\to0\) (\(x_n\ne0\)) ciąg wartości \(f(x_n)\to L\).<br><br>
+Weźmy ciąg \(x_n = \dfrac{1}{n} \to 0\). Wtedy \(f(x_n) = \dfrac{1}{(1/n)^2} = n^2 \to +\infty\).<br><br>
+Ponieważ \(n^2\) rośnie nieograniczenie, żadna liczba rzeczywista \(L\) nie może być granicą — dla dowolnego kandydata \(L\) i dowolnego \(\varepsilon>0\), dla dostatecznie dużych \(n\) mamy \(|f(x_n)-L|=|n^2-L|>\varepsilon\), co przeczy definicji granicy właściwej (skończonej).<br><br>
+<b>Odpowiedź:</b> Funkcja \(f(x)=1/x^2\) jest nieograniczona w każdym otoczeniu punktu \(x=0\) (dąży do \(+\infty\) zarówno z lewej, jak i z prawej strony), więc granica właściwa (skończona) nie istnieje. Piszemy umownie \(\lim_{x\to0}\dfrac{1}{x^2}=+\infty\) (granica niewłaściwa), ale w sensie ścisłym — jako liczba rzeczywista — granica nie istnieje.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>2. Ekstrema lokalne i punkty przegięcia</h3>
-<p class="polecenie">Polecenie: Znaleźć ekstrema lokalne i punkty przegięcia funkcji a) \(f(x)=x+\dfrac{4}{x}\), b) \(f(x)=\sqrt[5]{x^2}\).</p>
-
-<p><strong>a) \(f(x)=x+\dfrac{4}{x}\)</strong>, dziedzina: \(x\ne0\).</p>
-<p>\(f'(x)=1-\dfrac{4}{x^2}\). \(f'(x)=0 \Rightarrow x^2=4 \Rightarrow x=\pm2\).</p>
-<p>\(f''(x)=\dfrac{8}{x^3}\). \(f''(2)=1>0\) → minimum lokalne; \(f''(-2)=-1<0\) → maksimum lokalne.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">2. Znaleźć ekstrema lokalne i punkty przegięcia funkcji a) \(f(x)=x+\dfrac{4}{x}\), b) \(f(x)=\sqrt[5]{x^2}\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a) \(f(x)=x+\dfrac{4}{x}\)</b>, dziedzina: \(x\ne0\).<br><br>
+\(f'(x)=1-\dfrac{4}{x^2}\). \(f'(x)=0 \Rightarrow x^2=4 \Rightarrow x=\pm2\).<br>
+\(f''(x)=\dfrac{8}{x^3}\). \(f''(2)=1>0\) → minimum lokalne; \(f''(-2)=-1<0\) → maksimum lokalne.<br><br>
 Minimum lokalne w \((2,4)\), maksimum lokalne w \((-2,-4)\).<br>
-Punkty przegięcia: \(f''(x)=8/x^3\) nigdy nie zeruje się dla \(x\ne0\) (a \(x=0\) nie należy do dziedziny) — brak punktów przegięcia. Wklęsłość zmienia się "przez" wyłączony punkt \(x=0\) (wykres jest wypukły dla \(x>0\) i wklęsły dla \(x<0\)), ale ponieważ \(x=0\) nie jest elementem dziedziny, formalnie nie ma tam punktu przegięcia.
-</div>
+Punkty przegięcia: \(f''(x)=8/x^3\) nigdy nie zeruje się dla \(x\ne0\) (a \(x=0\) nie należy do dziedziny) — brak punktów przegięcia. Wklęsłość zmienia się "przez" wyłączony punkt \(x=0\) (wykres jest wypukły dla \(x>0\) i wklęsły dla \(x<0\)), ale ponieważ \(x=0\) nie jest elementem dziedziny, formalnie nie ma tam punktu przegięcia.<br><br>
 
-<p><strong>b) \(f(x)=\sqrt[5]{x^2}\)</strong>, dziedzina: \(\mathbb{R}\) (funkcja zawsze nieujemna, \(f(x)=|x|^{2/5}\)).</p>
-<p>\(f'(x)=\dfrac{2}{5}x^{-3/5}\;\) dla \(x>0\), oraz \(f'(x)=-\dfrac{2}{5}|x|^{-3/5}\;\) dla \(x<0\) — pochodna dąży do \(\pm\infty\) przy \(x\to0\) (ostrze/cusp), więc \(f'(0)\) nie istnieje.</p>
-<p>Znak \(f'\): ujemny dla \(x<0\), dodatni dla \(x>0\) — funkcja maleje, a potem rośnie, więc w \(x=0\) jest minimum (mimo braku różniczkowalności).</p>
-<div class="odp">
+<b>b) \(f(x)=\sqrt[5]{x^2}\)</b>, dziedzina: \(\mathbb{R}\) (funkcja zawsze nieujemna, \(f(x)=|x|^{2/5}\)).<br><br>
+\(f'(x)=\dfrac{2}{5}x^{-3/5}\;\) dla \(x>0\), oraz \(f'(x)=-\dfrac{2}{5}|x|^{-3/5}\;\) dla \(x<0\) — pochodna dąży do \(\pm\infty\) przy \(x\to0\) (ostrze/cusp), więc \(f'(0)\) nie istnieje.<br>
+Znak \(f'\): ujemny dla \(x<0\), dodatni dla \(x>0\) — funkcja maleje, a potem rośnie, więc w \(x=0\) jest minimum (mimo braku różniczkowalności).<br><br>
 Minimum globalne (i lokalne) w punkcie \((0,0)\) — punkt osobliwy typu ostrza (cusp), pochodna tam nie istnieje.<br>
 Punkty przegięcia: \(f''(x)<0\) dla każdego \(x\ne0\) (funkcja wklęsła po obu stronach 0) — brak zmiany wklęsłości, więc brak punktów przegięcia.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Szereg Maclaurina dla ln(x+1)</h3>
-<p class="polecenie">Polecenie: Rozwinąć w szereg Maclaurina funkcję \(f(x) = \ln(x+1)\).</p>
-<p>Obliczamy kolejne pochodne w \(x=0\): \(f'(x)=\dfrac{1}{1+x}\), \(f''(x)=-\dfrac{1}{(1+x)^2}\), \(f'''(x)=\dfrac{2}{(1+x)^3}\), \(f^{(4)}(x)=-\dfrac{6}{(1+x)^4}\), ogólnie \(f^{(n)}(0)=(-1)^{n-1}(n-1)!\) dla \(n\ge1\).</p>
-<p>Wzór Maclaurina: \(f(x)=\displaystyle\sum_{n=1}^\infty \dfrac{f^{(n)}(0)}{n!}x^n = \sum_{n=1}^\infty \dfrac{(-1)^{n-1}(n-1)!}{n!}x^n\)</p>
-<div class="odp">
-\(\ln(1+x) = x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \dfrac{x^4}{4} + \cdots = \displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}x^n\), zbieżny dla \(x\in(-1,1]\).
+<div class="q-block">
+<span class="q-text">3. Rozwinąć w szereg Maclaurina funkcję \(f(x) = \ln(x+1)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Obliczamy kolejne pochodne w \(x=0\): \(f'(x)=\dfrac{1}{1+x}\), \(f''(x)=-\dfrac{1}{(1+x)^2}\), \(f'''(x)=\dfrac{2}{(1+x)^3}\), \(f^{(4)}(x)=-\dfrac{6}{(1+x)^4}\), ogólnie \(f^{(n)}(0)=(-1)^{n-1}(n-1)!\) dla \(n\ge1\).<br><br>
+Wzór Maclaurina: \(f(x)=\displaystyle\sum_{n=1}^\infty \dfrac{f^{(n)}(0)}{n!}x^n = \sum_{n=1}^\infty \dfrac{(-1)^{n-1}(n-1)!}{n!}x^n\)<br><br>
+<b>Odpowiedź:</b> \(\ln(1+x) = x - \dfrac{x^2}{2} + \dfrac{x^3}{3} - \dfrac{x^4}{4} + \cdots = \displaystyle\sum_{n=1}^{\infty}\dfrac{(-1)^{n+1}}{n}x^n\), zbieżny dla \(x\in(-1,1]\).
 </div>
-</div>
-
-<div class="pytanie">
-<h3>4. Zbieżność szeregu potęgowego</h3>
-<p class="polecenie">Polecenie: Zbadać zbieżność szeregu potęgowego postaci \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^n}{n^2}\).</p>
-<p>Kryterium d'Alemberta (ilorazowe): \(\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{|x|^{n+1}}{(n+1)^2}\cdot\dfrac{n^2}{|x|^n} = |x|\cdot\dfrac{n^2}{(n+1)^2} \xrightarrow{n\to\infty} |x|\)</p>
-<p>Szereg zbieżny bezwzględnie dla \(|x|<1\), rozbieżny dla \(|x|>1\). Promień zbieżności \(R=1\).</p>
-<p>Badanie krańców przedziału: dla \(x=1\): \(\sum 1/n^2\) — szereg zbieżny (szereg harmoniczny rzędu \(p=2>1\)). Dla \(x=-1\): \(\sum(-1)^n/n^2\) — zbieżny bezwzględnie (bo \(\sum1/n^2\) zbieżny).</p>
-<div class="odp">
-Szereg jest zbieżny (bezwzględnie) dla wszystkich \(x\in[-1,1]\), a rozbieżny dla \(|x|>1\).
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>5. Całka a pole + pole między parabolami</h3>
-<p class="polecenie">Polecenie: Podać związek całki \(\int_a^b f(x)dx\) z polem. Obliczyć pole zawarte między parabolami \(y=x^2\), \(y^2=x\).</p>
-<p>Jeśli \(f(x)\ge0\) na przedziale \([a,b]\), to całka oznaczona \(\int_a^b f(x)dx\) jest równa polu obszaru zawartego między wykresem funkcji \(f\) a osią OX dla \(x\in[a,b]\).</p>
-<p>Punkty przecięcia parabol \(y=x^2\) i \(y^2=x\) (czyli \(y=\sqrt{x}\) dla \(y\ge0\)): rozwiązujemy \(x^2=y\) i \(y^2=x\) łącznie: \(x=y^2 \Rightarrow y=(y^2)^2=y^4 \Rightarrow y^4-y=0 \Rightarrow y(y^3-1)=0 \Rightarrow y=0\) lub \(y=1\). Punkty: \((0,0)\) i \((1,1)\).</p>
-<p>Dla \(x\in[0,1]\) górną krzywą jest \(y=\sqrt{x}\), dolną \(y=x^2\) (sprawdzenie dla \(x=0{,}5\): \(\sqrt{0{,}5}\approx0{,}707 > 0{,}25=x^2\)).</p>
-<div class="odp">
-\(\text{Pole} = \displaystyle\int_0^1 (\sqrt{x}-x^2)\,dx = \left[\dfrac{2}{3}x^{3/2}-\dfrac{x^3}{3}\right]_0^1 = \dfrac{2}{3}-\dfrac{1}{3} = \dfrac{1}{3}\)
+<div class="q-block">
+<span class="q-text">4. Zbadać zbieżność szeregu potęgowego postaci \(\displaystyle\sum_{n=1}^{\infty}\dfrac{x^n}{n^2}\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Kryterium d'Alemberta (ilorazowe): \(\left|\dfrac{a_{n+1}}{a_n}\right| = \dfrac{|x|^{n+1}}{(n+1)^2}\cdot\dfrac{n^2}{|x|^n} = |x|\cdot\dfrac{n^2}{(n+1)^2} \xrightarrow{n\to\infty} |x|\)<br><br>
+Szereg zbieżny bezwzględnie dla \(|x|<1\), rozbieżny dla \(|x|>1\). Promień zbieżności \(R=1\).<br><br>
+Badanie krańców przedziału: dla \(x=1\): \(\sum 1/n^2\) — szereg zbieżny (szereg harmoniczny rzędu \(p=2>1\)). Dla \(x=-1\): \(\sum(-1)^n/n^2\) — zbieżny bezwzględnie (bo \(\sum1/n^2\) zbieżny).<br><br>
+<b>Odpowiedź:</b> Szereg jest zbieżny (bezwzględnie) dla wszystkich \(x\in[-1,1]\), a rozbieżny dla \(|x|>1\).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Pierwiastek zespolony / potęga zespolona</h3>
-<p class="polecenie">Polecenie: Korzystając z odpowiednich wzorów obliczyć \(\sqrt[3]{i}\) lub \(i^i\).</p>
+<div class="q-block">
+<span class="q-text">5. Podać związek całki \(\int_a^b f(x)dx\) z polem. Obliczyć pole zawarte między parabolami \(y=x^2\), \(y^2=x\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Jeśli \(f(x)\ge0\) na przedziale \([a,b]\), to całka oznaczona \(\int_a^b f(x)dx\) jest równa polu obszaru zawartego między wykresem funkcji \(f\) a osią OX dla \(x\in[a,b]\).<br><br>
+Punkty przecięcia parabol \(y=x^2\) i \(y^2=x\) (czyli \(y=\sqrt{x}\) dla \(y\ge0\)): rozwiązujemy \(x^2=y\) i \(y^2=x\) łącznie: \(x=y^2 \Rightarrow y=(y^2)^2=y^4 \Rightarrow y^4-y=0 \Rightarrow y(y^3-1)=0 \Rightarrow y=0\) lub \(y=1\). Punkty: \((0,0)\) i \((1,1)\).<br><br>
+Dla \(x\in[0,1]\) górną krzywą jest \(y=\sqrt{x}\), dolną \(y=x^2\) (sprawdzenie dla \(x=0{,}5\): \(\sqrt{0{,}5}\approx0{,}707 > 0{,}25=x^2\)).<br><br>
+<b>Odpowiedź:</b> \(\text{Pole} = \displaystyle\int_0^1 (\sqrt{x}-x^2)\,dx = \left[\dfrac{2}{3}x^{3/2}-\dfrac{x^3}{3}\right]_0^1 = \dfrac{2}{3}-\dfrac{1}{3} = \dfrac{1}{3}\)
+</div>
+</details>
+</div>
 
-<p><strong>\(i^i\):</strong> zapisujemy \(i=e^{i\pi/2}\) (postać wykładnicza, argument główny). Wtedy:</p>
-<p>\(i^i = e^{i\cdot i\pi/2} = e^{-\pi/2}\)</p>
-<div class="odp">\(i^i = e^{-\pi/2} \approx 0{,}2079\) — wynik jest liczbą rzeczywistą!</div>
+<div class="q-block">
+<span class="q-text">6. Korzystając z odpowiednich wzorów obliczyć \(\sqrt[3]{i}\) lub \(i^i\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>\(i^i\):</b> zapisujemy \(i=e^{i\pi/2}\) (postać wykładnicza, argument główny). Wtedy:<br>
+\(i^i = e^{i\cdot i\pi/2} = e^{-\pi/2}\)<br><br>
+<b>Odpowiedź:</b> \(i^i = e^{-\pi/2} \approx 0{,}2079\) — wynik jest liczbą rzeczywistą!<br><br>
 
-<p><strong>\(\sqrt[3]{i}\):</strong> \(i=\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}\). Ze wzoru de Moivre'a pierwiastki trzeciego stopnia: \(z_k=\cos\dfrac{\pi/2+2k\pi}{3}+i\sin\dfrac{\pi/2+2k\pi}{3}\), \(k=0,1,2\).</p>
-<div class="odp">
+<b>\(\sqrt[3]{i}\):</b> \(i=\cos\frac{\pi}{2}+i\sin\frac{\pi}{2}\). Ze wzoru de Moivre'a pierwiastki trzeciego stopnia: \(z_k=\cos\dfrac{\pi/2+2k\pi}{3}+i\sin\dfrac{\pi/2+2k\pi}{3}\), \(k=0,1,2\).<br><br>
+<b>Odpowiedź:</b><br>
 \(k=0\): \(z_0=\dfrac{\sqrt3}{2}+\dfrac{1}{2}i\)<br>
 \(k=1\): \(z_1=-\dfrac{\sqrt3}{2}+\dfrac{1}{2}i\)<br>
 \(k=2\): \(z_2=-i\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>7. Wzory Cramera</h3>
-<p class="polecenie">Polecenie: Rozwiązać układ równań za pomocą wzorów Cramera:<br>
+<div class="q-block">
+<span class="q-text">7. Rozwiązać układ równań za pomocą wzorów Cramera:<br>
 \(x+2y+3z=14\)<br>
 \(4x+3y-z=7\)<br>
-\(x-y+z=2\)</p>
-<p>Macierz współczynników: \(A=\begin{pmatrix}1&2&3\\4&3&-1\\1&-1&1\end{pmatrix}\)</p>
-<p>\(\det(A) = 1(3\cdot1-(-1)(-1)) - 2(4\cdot1-(-1)\cdot1) + 3(4\cdot(-1)-3\cdot1) = 1\cdot2 - 2\cdot5 + 3\cdot(-7) = 2-10-21=-29\)</p>
-<p>Zastępując kolejno kolumny wektorem wyrazów wolnych \((14,7,2)\) i licząc wyznaczniki: \(\det(A_x)=-29\), \(\det(A_y)=-58\), \(\det(A_z)=-87\).</p>
-<div class="odp">
-\(x = \dfrac{-29}{-29}=1\), \(y=\dfrac{-58}{-29}=2\), \(z=\dfrac{-87}{-29}=3\)<br><br>
+\(x-y+z=2\)</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Macierz współczynników: \(A=\begin{pmatrix}1&2&3\\4&3&-1\\1&-1&1\end{pmatrix}\)<br><br>
+\(\det(A) = 1(3\cdot1-(-1)(-1)) - 2(4\cdot1-(-1)\cdot1) + 3(4\cdot(-1)-3\cdot1) = 1\cdot2 - 2\cdot5 + 3\cdot(-7) = 2-10-21=-29\)<br><br>
+Zastępując kolejno kolumny wektorem wyrazów wolnych \((14,7,2)\) i licząc wyznaczniki: \(\det(A_x)=-29\), \(\det(A_y)=-58\), \(\det(A_z)=-87\).<br><br>
+<b>Odpowiedź:</b> \(x = \dfrac{-29}{-29}=1\), \(y=\dfrac{-58}{-29}=2\), \(z=\dfrac{-87}{-29}=3\)<br><br>
 Sprawdzenie: \(1+2(2)+3(3)=1+4+9=14\) ✓; \(4(1)+3(2)-3=7\) ✓; \(1-2+3=2\) ✓
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="oop">
 <h2>2. Programowanie obiektowe (C++)</h2>
 
-<div class="pytanie">
-<h3>8. Klasa z dynamiczną tablicą znakową i licznikiem obiektów</h3>
-<p class="polecenie">Polecenie: Proszę napisać program, w którym jest klasa "dane", mająca prywatną tablicę znakową, alokowaną dynamicznie. Odpowiednia metoda klasy powinna umożliwiać wypisanie na ekran zawartości tej tablicy i liczby obiektów tej klasy. Proszę utworzyć we funkcji main(), dwa obiekty tej klasy, pierwszy z nich powinien być zainicjalizowany zawartością lokalnej tablicy we funkcji main(). Natomiast drugi powinien być zainicjalizowany pierwszym obiektem (w tej samej linijce, w której jest tworzony pierwszy obiekt). Następnie proszę wypisać zawartości obu obiektów na ekran oraz ilość utworzonych obiektów tej klasy, z odpowiednim komentarzem.</p>
+<div class="q-block">
+<span class="q-text">8. Proszę napisać program, w którym jest klasa "dane", mająca prywatną tablicę znakową, alokowaną dynamicznie. Odpowiednia metoda klasy powinna umożliwiać wypisanie na ekran zawartości tej tablicy i liczby obiektów tej klasy. Proszę utworzyć we funkcji main(), dwa obiekty tej klasy, pierwszy z nich powinien być zainicjalizowany zawartością lokalnej tablicy we funkcji main(). Natomiast drugi powinien być zainicjalizowany pierwszym obiektem (w tej samej linijce, w której jest tworzony pierwszy obiekt). Następnie proszę wypisać zawartości obu obiektów na ekran oraz ilość utworzonych obiektów tej klasy, z odpowiednim komentarzem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;iostream&gt;
 #include &lt;cstring&gt;
 using namespace std;
@@ -232,7 +253,7 @@ public:
         strcpy(tab, src);
         licznik++;
     }
-    dane(const dane &other) {     // konstruktor kopiujacy
+    dane(const dane &amp;other) {     // konstruktor kopiujacy
         tab = new char[strlen(other.tab) + 1];
         strcpy(tab, other.tab);
         licznik++;
@@ -257,12 +278,16 @@ int main() {
 
     return 0;
 }</pre>
-<p>Pole <code>licznik</code> jest statyczne, więc jest współdzielone przez wszystkie obiekty klasy — zwiększane w każdym konstruktorze i zmniejszane w destruktorze, dzięki czemu zawsze pokazuje aktualną liczbę istniejących obiektów.</p>
+Pole <code>licznik</code> jest statyczne, więc jest współdzielone przez wszystkie obiekty klasy — zwiększane w każdym konstruktorze i zmniejszane w destruktorze, dzięki czemu zawsze pokazuje aktualną liczbę istniejących obiektów.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>9. Przeciążenie operatora wypisania na strumień</h3>
-<p class="polecenie">Polecenie: Proszę przeciążyć operator wypisania na strumień, dla klasy "student", mającej prywatne pola: liczbę całkowitą przechowującą numer albumu studenta oraz liczbę zmiennoprzecinkową typu float, przechowującą średnią ocen studenta. Program powinien, po utworzeniu obiektu klasy "student", poprosić użytkownika o podanie z klawiatury odpowiednich danych dla inicjalizacji tego obiektu, a następnie powinien wypisać na ekran zawartość obiektu klasy (z odpowiednim komentarzem) w postaci: nr albumu: 12345, średnia ocen: 4.5.</p>
+<div class="q-block">
+<span class="q-text">9. Proszę przeciążyć operator wypisania na strumień, dla klasy "student", mającej prywatne pola: liczbę całkowitą przechowującą numer albumu studenta oraz liczbę zmiennoprzecinkową typu float, przechowującą średnią ocen studenta. Program powinien, po utworzeniu obiektu klasy "student", poprosić użytkownika o podanie z klawiatury odpowiednich danych dla inicjalizacji tego obiektu, a następnie powinien wypisać na ekran zawartość obiektu klasy (z odpowiednim komentarzem) w postaci: nr albumu: 12345, średnia ocen: 4.5.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;iostream&gt;
 using namespace std;
 
@@ -277,10 +302,10 @@ public:
         cout &lt;&lt; "Podaj srednia ocen: ";
         cin &gt;&gt; srednia;
     }
-    friend ostream& operator&lt;&lt;(ostream &os, const student &s);
+    friend ostream&amp; operator&lt;&lt;(ostream &amp;os, const student &amp;s);
 };
 
-ostream& operator&lt;&lt;(ostream &os, const student &s) {
+ostream&amp; operator&lt;&lt;(ostream &amp;os, const student &amp;s) {
     os &lt;&lt; "nr albumu: " &lt;&lt; s.nr_albumu &lt;&lt; ", srednia ocen: " &lt;&lt; s.srednia;
     return os;
 }
@@ -291,10 +316,14 @@ int main() {
     return 0;
 }</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>10. Dziedziczenie — klasa samolot i samolot_pasazerski</h3>
-<p class="polecenie">Polecenie: Proszę napisać program, w którym jest klasa bazowa "samolot", mająca pole prywatne typu całkowitego: "zasięg". Jej składowymi publicznymi są: konstruktor i metoda wypisująca na ekran zawartość obiektu tej klasy. Proszę wyprowadzić w sposób publiczny (dziedziczenie) z klasy "samolot" klasę pochodną "samolot_pasazerski", mającą swoje własne, prywatne, dodatkowe pole typu całkowitego "ilosc_pasazerow", a także metody publiczne: konstruktor i metodę wypisującą na ekran całą zawartość obiektu tej klasy. Proszę we funkcji main() utworzyć po jednym obiekcie każdej z tych klas, odpowiednio je zainicjalizować z klawiatury na żądanie programu i wypisać na ekran całą zawartość każdego z tych obiektów, z odpowiednim komentarzem.</p>
+<div class="q-block">
+<span class="q-text">10. Proszę napisać program, w którym jest klasa bazowa "samolot", mająca pole prywatne typu całkowitego: "zasięg". Jej składowymi publicznymi są: konstruktor i metoda wypisująca na ekran zawartość obiektu tej klasy. Proszę wyprowadzić w sposób publiczny (jest to dziedziczenie) z klasy "samolot" klasę pochodną o nazwie "samolot_pasazerski", mającą swoje własne, prywatne, dodatkowe pole typu całkowitego, o nazwie "ilosc_pasazerow", a także metody publiczne: konstruktor i metodę wypisującą na ekran całą zawartość obiektu tej klasy. Proszę we funkcji main() utworzyć po jednym obiekcie każdej z tych klas, odpowiednio je zainicjalizować z klawiatury na żądanie programu i wypisać na ekran całą zawartość każdego z tych obiektów, z odpowiednim komentarzem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;iostream&gt;
 using namespace std;
 
@@ -341,45 +370,54 @@ int main() {
     return 0;
 }</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="so">
 <h2>3. Systemy operacyjne</h2>
 
-<div class="pytanie">
-<h3>11. Zasoby przy tworzeniu wątku vs procesu</h3>
-<p class="polecenie">Polecenie: Jakie zasoby są używane podczas tworzenia wątku? Czym różnią się od tych używanych podczas tworzenia procesu?</p>
-<div class="odp">
-<strong>Proces</strong> wymaga przydzielenia: nowej, oddzielnej przestrzeni adresowej (pamięci), własnej tablicy deskryptorów plików, własnego stosu oraz innych zasobów systemowych — jest kompletnie niezależną jednostką z własnym, odseparowanym kontekstem wykonania.<br><br>
-<strong>Wątek</strong> potrzebuje znacznie mniej: jedynie własnego stosu (stack), zestawu rejestrów (licznik rozkazów, wskaźnik stosu) oraz struktury opisującej jego stan (np. TCB). Wątek współdzieli z innymi wątkami tego samego procesu przestrzeń adresową, otwarte pliki i pozostałe zasoby procesu macierzystego.<br><br>
+<div class="q-block">
+<span class="q-text">11. Jakie zasoby są używane podczas tworzenia wątku? Czym różnią się od tych używanych podczas tworzenia procesu?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Proces</b> wymaga przydzielenia: nowej, oddzielnej przestrzeni adresowej (pamięci), własnej tablicy deskryptorów plików, własnego stosu oraz innych zasobów systemowych — jest kompletnie niezależną jednostką z własnym, odseparowanym kontekstem wykonania.<br><br>
+<b>Wątek</b> potrzebuje znacznie mniej: jedynie własnego stosu (stack), zestawu rejestrów (licznik rozkazów, wskaźnik stosu) oraz struktury opisującej jego stan (np. TCB). Wątek współdzieli z innymi wątkami tego samego procesu przestrzeń adresową, otwarte pliki i pozostałe zasoby procesu macierzystego.<br><br>
 Różnica: proces to niezależna jednostka z pełnym, odseparowanym zestawem zasobów; wątek to "lekka" jednostka współdzieląca większość zasobów z innymi wątkami — dlatego tworzenie wątku jest znacznie szybsze i tańsze niż tworzenie procesu.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>12. Planowanie z wywłaszczaniem vs bez wywłaszczania</h3>
-<p class="polecenie">Polecenie: Zdefiniuj różnicę między planowaniem z wywłaszczaniem a planowaniem niewywłaszczającym.</p>
-<div class="odp">
-<strong>Planowanie z wywłaszczaniem (preemptive)</strong> — system operacyjny może w dowolnym momencie odebrać procesor procesowi aktywnemu (np. gdy pojawi się proces o wyższym priorytecie lub upłynie przydzielony kwant czasu) i przekazać go innemu procesowi; proces nie kontroluje momentu utraty CPU.<br><br>
-<strong>Planowanie niewywłaszczające (non-preemptive)</strong> — raz przydzielony procesorowi proces zatrzymuje go, dopóki sam go nie odda (dobrowolne zakończenie, przejście w stan oczekiwania na we/wy). System nie może wymusić odebrania CPU w trakcie działania procesu.
+<div class="q-block">
+<span class="q-text">12. Zdefiniuj różnicę między planowaniem z wywłaszczaniem a planowaniem niewywłaszczającym.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Planowanie z wywłaszczaniem (preemptive)</b> — system operacyjny może w dowolnym momencie odebrać procesor procesowi aktywnemu (np. gdy pojawi się proces o wyższym priorytecie lub upłynie przydzielony kwant czasu) i przekazać go innemu procesowi; proces nie kontroluje momentu utraty CPU.<br><br>
+<b>Planowanie niewywłaszczające (non-preemptive)</b> — raz przydzielony procesorowi proces zatrzymuje go, dopóki sam go nie odda (dobrowolne zakończenie, przejście w stan oczekiwania na we/wy). System nie może wymusić odebrania CPU w trakcie działania procesu.
 </div>
-</div>
-
-<div class="pytanie">
-<h3>13. Zakleszczenia spoza środowiska komputerowego</h3>
-<p class="polecenie">Polecenie: Wymień trzy przykłady zakleszczeń, które nie są związane ze środowiskiem systemu komputerowego.</p>
-<div class="odp">
-1. <strong>Skrzyżowanie drogowe</strong> bez sygnalizacji, gdzie cztery samochody wjeżdżają jednocześnie z czterech stron i każdy czeka, aż zwolni się droga zajęta przez pojazd po jego prawej — żaden nie może ruszyć.<br>
-2. <strong>Biurokracja</strong>: urząd A wymaga zaświadczenia z urzędu B jako warunku wydania dokumentu, a urząd B wymaga analogicznego zaświadczenia z urzędu A.<br>
-3. <strong>Wspólny posiłek</strong>: dwie osoby chcą pokroić wspólny tort, ale każda trzyma tylko jeden z dwóch potrzebnych noży i czeka, aż druga odda swój — obie czekają w nieskończoność (odmiana problemu ucztujących filozofów w realiach życiowych).
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>14. Błędy strony (page fault)</h3>
-<p class="polecenie">Polecenie: W jakich okolicznościach występują błędy strony? Opisz działania podjęte przez system operacyjny, gdy wystąpi błąd strony.</p>
-<p>Błąd strony występuje, gdy proces odwołuje się do strony pamięci logicznej, która aktualnie nie jest załadowana do pamięci fizycznej (RAM) — np. została wymieciona na dysk w ramach zarządzania pamięcią wirtualną, albo nigdy jeszcze nie została załadowana.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">13. Wymień trzy przykłady zakleszczeń, które nie są związane ze środowiskiem systemu komputerowego.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>Skrzyżowanie drogowe</b> bez sygnalizacji, gdzie cztery samochody wjeżdżają jednocześnie z czterech stron i każdy czeka, aż zwolni się droga zajęta przez pojazd po jego prawej — żaden nie może ruszyć.<br>
+2. <b>Biurokracja</b>: urząd A wymaga zaświadczenia z urzędu B jako warunku wydania dokumentu, a urząd B wymaga analogicznego zaświadczenia z urzędu A.<br>
+3. <b>Wspólny posiłek</b>: dwie osoby chcą pokroić wspólny tort, ale każda trzyma tylko jeden z dwóch potrzebnych noży i czeka, aż druga odda swój — obie czekają w nieskończoność (odmiana problemu ucztujących filozofów w realiach życiowych).
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">14. W jakich okolicznościach występują błędy strony? Opisz działania podjęte przez system operacyjny, gdy wystąpi błąd strony.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Błąd strony występuje, gdy proces odwołuje się do strony pamięci logicznej, która aktualnie nie jest załadowana do pamięci fizycznej (RAM) — np. została wymieciona na dysk w ramach zarządzania pamięcią wirtualną, albo nigdy jeszcze nie została załadowana.<br><br>
 Działania systemu operacyjnego przy błędzie strony:<br>
 1. Sprawdzenie poprawności odwołania (czy adres jest prawidłowy dla danego procesu) — jeśli nie, generowany jest błąd segmentacji.<br>
 2. Znalezienie wolnej ramki w pamięci fizycznej (lub wybranie ramki do zwolnienia algorytmem zastępowania stron, ewentualnie zapisanie usuwanej strony na dysk, jeśli była zmodyfikowana).<br>
@@ -387,52 +425,59 @@ Działania systemu operacyjnego przy błędzie strony:<br>
 4. Aktualizacja tablicy stron procesu (bit obecności, adres ramki).<br>
 5. Wznowienie wykonania instrukcji, która spowodowała błąd strony.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>15. SSTF a faworyzowanie środkowych cylindrów</h3>
-<p class="polecenie">Polecenie: Wyjaśnij, dlaczego planowanie SSTF ma tendencję do faworyzowania środkowych cylindrów w porównaniu z najbardziej wewnętrznymi i zewnętrznymi cylindrami.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">15. Wyjaśnij, dlaczego planowanie SSTF ma tendencję do faworyzowania środkowych cylindrów w porównaniu z najbardziej wewnętrznymi i zewnętrznymi cylindrami.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 SSTF (Shortest Seek Time First) zawsze wybiera żądanie znajdujące się najbliżej aktualnej pozycji głowicy. Cylindry środkowe mają sąsiadów po obu stronach, natomiast cylindry skrajne (najbardziej wewnętrzne i zewnętrzne) mają sąsiadów tylko z jednej strony. W efekcie żądania dotyczące cylindrów środkowych mają statystycznie większą szansę być "najbliższym" żądaniem względem dowolnej pozycji głowicy, więc są częściej wybierane, podczas gdy żądania do cylindrów brzegowych mogą być odwlekane (a nawet zagłodzone).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>16. DMA — współbieżność i komplikacje sprzętowe</h3>
-<p class="polecenie">Polecenie: W jaki sposób DMA zwiększa współbieżność systemu? Jak to komplikuje projektowanie sprzętu?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">16. W jaki sposób DMA zwiększa współbieżność systemu? Jak to komplikuje projektowanie sprzętu?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 DMA (Direct Memory Access) pozwala urządzeniom we/wy przesyłać dane bezpośrednio do/z pamięci głównej bez angażowania procesora do każdego pojedynczego słowa — procesor jedynie inicjuje transfer (ustawia adresy i rozmiar), a kontroler DMA samodzielnie wykonuje cały transfer, informując procesor przerwaniem po zakończeniu. Dzięki temu procesor może równolegle wykonywać inne zadania — zwiększa to współbieżność systemu.<br><br>
 Komplikacje: kontroler DMA i procesor współdzielą magistralę systemową (pamięć, szynę danych), więc potrzebny jest mechanizm arbitrażu magistrali (bus arbitration), by uniknąć konfliktów dostępu do pamięci między CPU a kontrolerem DMA w tym samym momencie (tzw. cycle stealing). Wymaga to dodatkowej logiki sterującej synchronizującej dostęp wielu urządzeń do wspólnej magistrali.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>17. Listy możliwości vs listy dostępu</h3>
-<p class="polecenie">Polecenie: Jakie są główne różnice między listami możliwości a listami dostępu?</p>
-<div class="odp">
-<strong>Lista dostępu (Access Control List, ACL)</strong> jest powiązana z obiektem (zasobem) — dla każdego obiektu przechowuje listę podmiotów wraz z ich uprawnieniami. Łatwo sprawdzić "kto ma dostęp do tego zasobu", trudniej sprawdzić "do czego ma dostęp dany podmiot" (trzeba przejrzeć listy wszystkich obiektów).<br><br>
-<strong>Lista możliwości (capability list)</strong> jest powiązana z podmiotem — dla każdego podmiotu przechowuje listę obiektów, do których ma dostęp, wraz z rodzajem dostępu. Odwrotnie niż ACL: łatwo sprawdzić, do czego dany podmiot ma dostęp, trudniej sprawdzić, kto ma dostęp do danego obiektu.<br><br>
+<div class="q-block">
+<span class="q-text">17. Jakie są główne różnice między listami możliwości a listami dostępu?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Lista dostępu (Access Control List, ACL)</b> jest powiązana z obiektem (zasobem) — dla każdego obiektu przechowuje listę podmiotów wraz z ich uprawnieniami. Łatwo sprawdzić "kto ma dostęp do tego zasobu", trudniej sprawdzić "do czego ma dostęp dany podmiot" (trzeba przejrzeć listy wszystkich obiektów).<br><br>
+<b>Lista możliwości (capability list)</b> jest powiązana z podmiotem — dla każdego podmiotu przechowuje listę obiektów, do których ma dostęp, wraz z rodzajem dostępu. Odwrotnie niż ACL: łatwo sprawdzić, do czego dany podmiot ma dostęp, trudniej sprawdzić, kto ma dostęp do danego obiektu.<br><br>
 Są to podejścia dualne względem siebie — odpowiadają odczytywaniu macierzy uprawnień odpowiednio wierszami (capability list) i kolumnami (ACL).
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="xml">
 <h2>4. XML i technologie webowe</h2>
 
-<div class="pytanie">
-<h3>18. XSLT — opis i przykłady</h3>
-<p class="polecenie">Polecenie: Opisz XSLT (eXtensible Stylesheet Language Transformations). Pokaż na przykładach typowe elementy, dyrektywy.</p>
-<p>XSLT to język oparty na XML, służący do przekształcania dokumentów XML w inne formaty (HTML, tekst, inny XML) za pomocą arkuszy stylów definiujących reguły transformacji (szablony).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">18. Opisz XSLT (eXtensible Stylesheet Language Transformations). Pokaż na przykładach typowe elementy, dyrektywy.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+XSLT to język oparty na XML, służący do przekształcania dokumentów XML w inne formaty (HTML, tekst, inny XML) za pomocą arkuszy stylów definiujących reguły transformacji (szablony).<br><br>
 Typowe elementy i dyrektywy:<br>
 — <code>&lt;xsl:stylesheet&gt;</code> — element główny arkusza, deklaruje wersję i przestrzeń nazw<br>
 — <code>&lt;xsl:template match="..."&gt;</code> — definiuje regułę stosowaną do węzłów pasujących do wyrażenia XPath<br>
 — <code>&lt;xsl:value-of select="..."&gt;</code> — wstawia wartość wybranego węzła<br>
 — <code>&lt;xsl:for-each select="..."&gt;</code> — iteruje po zbiorze węzłów<br>
 — <code>&lt;xsl:if test="..."&gt;</code> — warunkowe wykonanie zawartości<br>
-— <code>&lt;xsl:sort select="..."&gt;</code> — sortowanie iterowanych elementów
-</div>
+— <code>&lt;xsl:sort select="..."&gt;</code> — sortowanie iterowanych elementów<br><br>
 <pre>&lt;?xml version="1.0"?&gt;
 &lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
   &lt;xsl:template match="/"&gt;
@@ -450,12 +495,13 @@ Typowe elementy i dyrektywy:<br>
     &lt;/html&gt;
   &lt;/xsl:template&gt;
 &lt;/xsl:stylesheet&gt;</pre>
-<p>Ten arkusz przekształca dowolny plik XML z listą <code>&lt;osoby&gt;&lt;osoba&gt;&lt;imie&gt;..&lt;/imie&gt;&lt;nazwisko&gt;..&lt;/nazwisko&gt;&lt;/osoba&gt;...&lt;/osoby&gt;</code> na tabelę HTML.</p>
+Ten arkusz przekształca dowolny plik XML z listą <code>&lt;osoby&gt;&lt;osoba&gt;&lt;imie&gt;..&lt;/imie&gt;&lt;nazwisko&gt;..&lt;/nazwisko&gt;&lt;/osoba&gt;...&lt;/osoby&gt;</code> na tabelę HTML.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>19. Wyrażenia XPath</h3>
-<p class="polecenie">Polecenie: Mamy plik XML:</p>
+<div class="q-block">
+<span class="q-text">19. Mamy plik XML:</span>
 <pre>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;phones&gt;
 &lt;phone type="home"&gt;447 858&lt;/phone&gt;
@@ -463,39 +509,48 @@ Typowe elementy i dyrektywy:<br>
 &lt;phone type="mobile" primary="primary"&gt;123 456&lt;/phone&gt;
 &lt;phone type="work"&gt;654 321&lt;/phone&gt;
 &lt;/phones&gt;</pre>
-<p class="polecenie">Utwórz wyrażenia XPath dla: a) wybrania telefonów o typie "praca", b) wybrania telefonu głównego, c) wybrania pierwszego telefonu z listy.</p>
-<div class="odp">
+<div class="q-text" style="font-weight: normal;">Utwórz wyrażenia XPath dla:<br>
+a) wybrania telefonów o typie "praca"<br>
+b) wybrania telefonu głównego<br>
+c) wybrania pierwszego telefonu z listy</div>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 a) <code>//phone[@type='work']</code><br>
 b) <code>//phone[@primary='primary']</code><br>
 c) <code>//phone[1]</code> (lub równoważnie <code>/phones/phone[1]</code>)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. DTD — opis i przykłady</h3>
-<p class="polecenie">Polecenie: Opisz DTD (Document Type Definitions). Pokaż przykłady dotyczące deklarowania elementów w DTD i deklarowania atrybutów w DTD.</p>
-<p>DTD definiuje strukturę i legalną gramatykę dokumentu XML — określa, jakie elementy mogą występować, w jakiej kolejności, ile razy, oraz jakie atrybuty mogą/muszą mieć poszczególne elementy.</p>
-<div class="odp">
-<strong>Deklarowanie elementów:</strong> <code>&lt;!ELEMENT nazwa (typ_zawartosci)&gt;</code><br>
+<div class="q-block">
+<span class="q-text">20. Opisz DTD (Document Type Definitions). Pokaż te same przykłady dotyczące deklarowania elementów w DTD i deklarowania atrybutów w DTD.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+DTD definiuje strukturę i legalną gramatykę dokumentu XML — określa, jakie elementy mogą występować, w jakiej kolejności, ile razy, oraz jakie atrybuty mogą/muszą mieć poszczególne elementy.<br><br>
+<b>Deklarowanie elementów:</b> <code>&lt;!ELEMENT nazwa (typ_zawartosci)&gt;</code><br>
 <pre>&lt;!ELEMENT note (to, from, heading, body)&gt;   &lt;!-- dokladnie te 4 podelementy, w tej kolejnosci --&gt;
 &lt;!ELEMENT to (#PCDATA)&gt;                       &lt;!-- element zawierajacy tylko tekst --&gt;
 &lt;!ELEMENT ksiazka (rozdzial+)&gt;                &lt;!-- 1 lub wiecej elementow rozdzial --&gt;
 &lt;!ELEMENT lista (pozycja*)&gt;                   &lt;!-- 0 lub wiecej elementow pozycja --&gt;</pre>
-<strong>Deklarowanie atrybutów:</strong> <code>&lt;!ATTLIST element atrybut typ domyslna&gt;</code><br>
+<b>Deklarowanie atrybutów:</b> <code>&lt;!ATTLIST element atrybut typ domyslna&gt;</code><br>
 <pre>&lt;!ATTLIST phone type CDATA #REQUIRED&gt;   &lt;!-- atrybut wymagany --&gt;
 &lt;!ATTLIST phone primary CDATA #IMPLIED&gt;  &lt;!-- atrybut opcjonalny --&gt;
 &lt;!ATTLIST osoba id ID #REQUIRED&gt;         &lt;!-- unikalny identyfikator, wymagany --&gt;</pre>
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="sieci">
 <h2>5. Sieci komputerowe</h2>
 
-<div class="pytanie">
-<h3>21. Czynności wykonywane przez switch</h3>
-<p class="polecenie">Polecenie: Wymień czynności, które może wykonywać switch.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">21. Wymień czynności, które może wykonywać switch.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Switch (przełącznik) działa w warstwie 2 modelu OSI i wykonuje m.in.:<br>
 1. Odbiór ramek Ethernet i analizę docelowego adresu MAC.<br>
 2. Uczenie się adresów MAC urządzeń podłączonych do poszczególnych portów (budowa tablicy przełączania).<br>
@@ -504,12 +559,14 @@ Switch (przełącznik) działa w warstwie 2 modelu OSI i wykonuje m.in.:<br>
 5. Filtrowanie ruchu — odrzucanie ramek błędnych.<br>
 6. Segmentację domen kolizyjnych — każdy port to osobna domena kolizyjna.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>22. Czynności wykonywane przez router</h3>
-<p class="polecenie">Polecenie: Wymień czynności, które wykonuje router.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">22. Wymień czynności, które wykonuje router.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Router działa w warstwie 3 modelu OSI i wykonuje m.in.:<br>
 1. Analizę adresów IP źródłowego i docelowego.<br>
 2. Wyznaczanie najlepszej trasy (routing) na podstawie tablicy routingu.<br>
@@ -520,35 +577,38 @@ Router działa w warstwie 3 modelu OSI i wykonuje m.in.:<br>
 7. Ograniczanie zasięgu domeny rozgłoszeniowej — nie przekazuje ramek broadcastowych między sieciami.<br>
 8. Wymianę informacji o trasach z innymi routerami (protokoły routingu: OSPF, RIP, BGP).
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="bazy">
 <h2>6. Bazy danych</h2>
 
-<div class="pytanie">
-<h3>23. Klucze i indeksy w bazach relacyjnych</h3>
-<p class="polecenie">Polecenie: Klucz i indeksy w bazach relacyjnych. Podaj przykład zapytania SQL wykorzystującego połączenie PK-FK.</p>
-<div class="odp">
-<strong>Klucz główny (Primary Key, PK)</strong> — kolumna (lub zestaw kolumn) jednoznacznie identyfikująca każdy wiersz tabeli; nie może być NULL ani się powtarzać.<br>
-<strong>Klucz obcy (Foreign Key, FK)</strong> — kolumna odwołująca się do klucza głównego innej (lub tej samej) tabeli, zapewniająca integralność referencyjną.<br>
-<strong>Indeks</strong> — dodatkowa struktura danych (najczęściej B-tree) przyspieszająca wyszukiwanie po wartości kolumny, kosztem dodatkowej pamięci i wolniejszego zapisu.
-</div>
+<div class="q-block">
+<span class="q-text">23. Klucz i indeksy w bazach relacyjnych. Podaj przykład zapytania SQL wykorzystującego połączenie PK-FK.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Klucz główny (Primary Key, PK)</b> — kolumna (lub zestaw kolumn) jednoznacznie identyfikująca każdy wiersz tabeli; nie może być NULL ani się powtarzać.<br>
+<b>Klucz obcy (Foreign Key, FK)</b> — kolumna odwołująca się do klucza głównego innej (lub tej samej) tabeli, zapewniająca integralność referencyjną.<br>
+<b>Indeks</b> — dodatkowa struktura danych (najczęściej B-tree) przyspieszająca wyszukiwanie po wartości kolumny, kosztem dodatkowej pamięci i wolniejszego zapisu.<br><br>
 <pre>SELECT Zamowienie.id, Zamowienie.data, Klient.nazwa
 FROM Zamowienie
 JOIN Klient ON Zamowienie.id_klient = Klient.id;</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>24. Flota samochodów i kierowcy — projekt tabel i zapytania SQL</h3>
-<p class="polecenie">Polecenie: Firma posiada flotę samochodów i zatrudnia wielu kierowców. Samochód może być prowadzony przez różnych kierowców (nie w tym samym czasie). Kierowca może prowadzić dowolny samochód. Baza odpowiada jedynie na pytanie o to kto i kiedy prowadził dany samochód. Zaproponuj układ tabel spełniających postulat unikania redundancji, atomizację oraz istnienie Primary Key. Schemat przedstaw w postaci diagramu ERD w dowolnej notacji. Sformułuj przykładowe zapytania SQL: a) kto jeździł samochodem 'samochód1', b) którymi samochodami jeździł 'kierowca1'.</p>
-<p>Relacja między samochodami a kierowcami jest typu wiele-do-wielu (z dodatkowym atrybutem czasu), więc potrzebna jest tabela pośrednicząca:</p>
+<div class="q-block">
+<span class="q-text">24. Firma posiada flotę samochodów i zatrudnia wielu kierowców. Samochód może być prowadzony przez różnych kierowców (oczywiście nie w tym samym czasie). Kierowca może prowadzić dowolny samochód. Baza odpowiada jedynie na pytanie o to kto i kiedy prowadził dany samochód. Zaproponuj układ tabel spełniających postulat unikania redundancji, atomizację oraz istnienie Primary Key. Schemat przedstaw w postaci diagramu ERD w dowolnej notacji. Sformułuj przykładowe zapytania SQL: a) kto jeździł samochodem 'samochód1', b) którymi samochodami jeździł 'kierowca1'.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Relacja między samochodami a kierowcami jest typu wiele-do-wielu (z dodatkowym atrybutem czasu), więc potrzebna jest tabela pośrednicząca:<br><br>
 <pre>Samochod(id_samochodu PK, nazwa)
 Kierowca(id_kierowcy PK, imie, nazwisko)
 Jazda(id_jazdy PK, id_samochodu FK, id_kierowcy FK, data_od, data_do)</pre>
-<div class="odp">
-ERD: <code>Samochod (1) --- (N) Jazda (N) --- (1) Kierowca</code> — tabela <code>Jazda</code> rozwiązuje relację wiele-do-wielu, przechowując klucze obce do obu tabel oraz przedział czasu jazdy.
-</div>
+ERD: <code>Samochod (1) --- (N) Jazda (N) --- (1) Kierowca</code> — tabela <code>Jazda</code> rozwiązuje relację wiele-do-wielu, przechowując klucze obce do obu tabel oraz przedział czasu jazdy.<br><br>
 <pre>-- a) kto jezdzil samochodem 'samochod1'
 SELECT K.imie, K.nazwisko, J.data_od, J.data_do
 FROM Jazda J
@@ -563,17 +623,19 @@ JOIN Samochod S ON J.id_samochodu = S.id_samochodu
 JOIN Kierowca K ON J.id_kierowcy = K.id_kierowcy
 WHERE K.nazwisko = 'kierowca1';</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>25. Tabela STARTOWA — normalizacja i zapytania SQL</h3>
-<p class="polecenie">Polecenie: Baza danych zawiera tabelę STARTOWA (imię, nazwisko, wydarzenie, data). Tabela przechowuje informacje na temat uczestnictwa osób w różnych wydarzeniach. W jednym wydarzeniu może uczestniczyć wiele osób. Jedna osoba może uczestniczyć w wielu wydarzeniach (ale niedopuszczalne jest wielokrotne uczestnictwo w jednym wydarzeniu). Zaproponuj diagram ERD dla znormalizowanej bazy danych. Zapisz pytania SQL: a) uczestnicy wydarzenia 'SPOTKANIE1', b) lista spotkań z liczbą uczestników, c) spotkanie, w którym nikt nie bierze udziału.</p>
-<p>Tabela STARTOWA w postaci nieznormalizowanej powiela dane osób i wydarzeń (redundancja). Znormalizowany projekt:</p>
+<div class="q-block">
+<span class="q-text">25. Baza danych zawiera tabelę STARTOWA o następującej strukturze: kolumny — imię, nazwisko, wydarzenie — typu tekstowego, data — typu timestamp lub data. Tabela przechowuje informacje na temat uczestnictwa osób w różnych wydarzeniach. W jednym wydarzeniu może uczestniczyć wiele osób. Jedna osoba może uczestniczyć w wielu wydarzeniach (ale niedopuszczalne jest wielokrotne uczestnictwo w jednym wydarzeniu). Zaproponuj diagram ERD dla znormalizowanej bazy danych przechowującej informacje zgodnie z powyższymi założeniami. Zapisz pytania SQL: a) uczestnicy wydarzenia 'SPOTKANIE1', b) lista spotkań z liczbą uczestników, c) spotkanie, w którym nikt nie bierze udziału.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Tabela STARTOWA w postaci nieznormalizowanej powiela dane osób i wydarzeń (redundancja). Znormalizowany projekt:<br><br>
 <pre>Osoba(id_osoby PK, imie, nazwisko)
 Wydarzenie(id_wydarzenia PK, nazwa, data)
 Uczestnictwo(id_osoby FK, id_wydarzenia FK, PRIMARY KEY(id_osoby, id_wydarzenia))</pre>
-<div class="odp">
-ERD: <code>Osoba (1) --- (N) Uczestnictwo (N) --- (1) Wydarzenie</code>. Złożony klucz główny <code>(id_osoby, id_wydarzenia)</code> w tabeli <code>Uczestnictwo</code> gwarantuje, że jedna osoba nie może wystąpić dwukrotnie w tym samym wydarzeniu.
-</div>
+ERD: <code>Osoba (1) --- (N) Uczestnictwo (N) --- (1) Wydarzenie</code>. Złożony klucz główny <code>(id_osoby, id_wydarzenia)</code> w tabeli <code>Uczestnictwo</code> gwarantuje, że jedna osoba nie może wystąpić dwukrotnie w tym samym wydarzeniu.<br><br>
 <pre>-- a) uczestnicy wydarzenia 'SPOTKANIE1'
 SELECT O.imie, O.nazwisko
 FROM Uczestnictwo U
@@ -593,36 +655,46 @@ FROM Wydarzenie W
 LEFT JOIN Uczestnictwo U ON W.id_wydarzenia = U.id_wydarzenia
 WHERE U.id_osoby IS NULL;</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="python">
 <h2>7. Języki skryptowe (Python)</h2>
 
-<div class="pytanie">
-<h3>26. Odwrócenie słownika — invert_dict()</h3>
-<p class="polecenie">Polecenie: Dany jest słownik, którego wartości są obiektami mogącymi pełnić rolę kluczy słownika. Zdefiniuj funkcję invert_dict(), która przyjmie słownik jako argument i zwróci jego odwrócony odpowiednik — klucze mają stać się wartościami, a wartości kluczami. Np.: d={2:4,3:9,4:16,5:25} → invert_dict(d) = {4:2,9:3,16:4,25:5}. W przypadku jakich słowników po odwróceniu otrzymamy słownik z mniejszą liczbą par? Wyjaśnij dlaczego może dojść do takiej utraty danych, podaj przykład. W jakich przypadkach odwrócenie nie będzie możliwe?</p>
+<div class="q-block">
+<span class="q-text">26. Dany jest słownik, którego wartości są obiektami mogącymi pełnić rolę kluczy słownika. Zdefiniuj funkcję invert_dict(), która przyjmie słownik jako argument i zwróci jego odwrócony odpowiednik. W tym słowniku klucze mają stać się wartościami, a wartości kluczami. Np.: d={2:4,3:9,4:16,5:25} → invert_dict(d) = {4:2,9:3,16:4,25:5}. W przypadku jakich słowników spełniających warunki zadania po odwróceniu otrzymamy słownik z mniejszą liczbą par niż w oryginalnym słowniku? Wyjaśnij dlaczego może dojść do takiej utraty danych? Podaj przykład takiego słownika. W jakich przypadkach wykonanie operacji odwrócenia słownika nie będzie możliwe?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>def invert_dict(d):
     return {v: k for k, v in d.items()}</pre>
-<div class="odp">
-Utrata danych następuje, gdy oryginalny słownik ma <strong>powtarzające się wartości</strong> (nie są parami różnowartościowe) — bo w odwróconym słowniku klucze muszą być unikalne. Jeśli dwie różne pary \((k_1,v)\) i \((k_2,v)\) mają tę samą wartość \(v\), to po odwróceniu obie "chcą" utworzyć klucz \(v\) — słownik zachowa tylko jedną z nich (nadpisze poprzednią).<br><br>
+Utrata danych następuje, gdy oryginalny słownik ma <b>powtarzające się wartości</b> (nie są parami różnowartościowe) — bo w odwróconym słowniku klucze muszą być unikalne. Jeśli dwie różne pary \((k_1,v)\) i \((k_2,v)\) mają tę samą wartość \(v\), to po odwróceniu obie "chcą" utworzyć klucz \(v\) — słownik zachowa tylko jedną z nich (nadpisze poprzednią).<br><br>
 Przykład: <code>d = {1:"a", 2:"a", 3:"b"}</code> → <code>invert_dict(d) = {"a":2, "b":3}</code> — para <code>(1,"a")</code> zostaje utracona, nadpisana przez <code>(2,"a")</code>.<br><br>
 Odwrócenie będzie niemożliwe, gdy którakolwiek wartość oryginalnego słownika nie jest haszowalna (np. jest listą lub innym słownikiem) — bo wartości mają stać się kluczami, a klucze słownika w Pythonie muszą być niemutowalne/haszowalne. Przykład: <code>d = {1: [1,2,3]}</code> → <code>invert_dict(d)</code> zgłosi <code>TypeError: unhashable type: 'list'</code>.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>27. Suma i maksimum liczb z pliku</h3>
-<p class="polecenie">Polecenie: Załóżmy, że w pliku tekstowym numbers.txt znajdują się liczby całkowite zapisane w osobnych wierszach. Napisz program, który wypisze na ekranie sumę tych liczb i największą z nich.</p>
+<div class="q-block">
+<span class="q-text">27. Załóżmy, że w pliku tekstowym numbers.txt znajdują się liczby całkowite zapisane w osobnych wierszach. Napisz program, który wypisze na ekranie sumę tych liczb i największą z nich.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>with open("numbers.txt") as f:
     liczby = [int(linia.strip()) for linia in f if linia.strip()]
 
 print("Suma:", sum(liczby))
 print("Maksimum:", max(liczby))</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>28. Liczba niepowtarzających się liter w słowach z pliku</h3>
-<p class="polecenie">Polecenie: Załóżmy, że w pliku tekstowym words.txt znajdują się słowa zbudowane z liter alfabetu angielskiego (zarówno dużych, jak i małych) zapisane w osobnych wierszach. Napisz program, który wypisze na ekranie liczbę niepowtarzających się liter dla każdego słowa bez rozróżniania wielkości liter.</p>
+<div class="q-block">
+<span class="q-text">28. Załóżmy, że w pliku tekstowym words.txt znajdują się słowa zbudowane z liter alfabetu angielskiego (zarówno dużych, jak i małych) zapisane w osobnych wierszach. Napisz program, który wypisze na ekranie liczbę niepowtarzających się liter dla każdego słowa bez rozróżniania wielkości liter.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>with open("words.txt") as f:
     for linia in f:
         slowo = linia.strip()
@@ -633,7 +705,9 @@ print("Maksimum:", max(liczby))</pre>
         # zliczamy litery, ktore wystepuja dokladnie raz (nie powtarzaja sie)
         niepowtarzajace = sum(1 for litera in litery_wystepujace if slowo_lower.count(litera) == 1)
         print(f"{slowo}: {niepowtarzajace}")</pre>
-<p>Dla każdej unikalnej litery słowa sprawdzamy, ile razy występuje w nim (po sprowadzeniu do małych liter) — jeśli dokładnie raz, zaliczamy ją do "niepowtarzających się".</p>
+Dla każdej unikalnej litery słowa sprawdzamy, ile razy występuje w nim (po sprowadzeniu do małych liter) — jeśli dokładnie raz, zaliczamy ją do "niepowtarzających się".
+</div>
+</details>
 </div>
 </div>
 

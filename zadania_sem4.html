@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,52 +32,70 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 .uwaga {
     background: #fff3cd;
     border-left: 3px solid #e0a800;
     padding: 8px 12px;
-    margin-top: 8px;
+    margin-bottom: 10px;
     font-size: 0.92rem;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -90,16 +109,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -122,173 +131,204 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="fizyka">
 <h2>1. Fizyka i elektronika — podzespoły półprzewodnikowe i optoelektronika</h2>
 
-<div class="pytanie">
-<h3>1. Dioda półprzewodnikowa — złącze p-n</h3>
-<p class="polecenie">Polecenie: Dioda półprzewodnikowa. Idea złącza p-n. Budowa, działanie, charakterystyka prądowo-napięciowa. Zastosowania.</p>
-<div class="odp">
-<strong>Idea złącza p-n:</strong> zetknięcie dwóch obszarów półprzewodnika o różnym domieszkowaniu — typu p (nadmiar dziur) i typu n (nadmiar elektronów). Na granicy zachodzi dyfuzja i rekombinacja nośników większościowych, tworząc obszar zubożony (warstwę zaporową) z wewnętrznym polem elektrycznym pochodzącym od nieskompensowanych jonów domieszek.<br><br>
-<strong>Budowa:</strong> kryształ półprzewodnika (najczęściej Si) z dwoma obszarami domieszkowanymi inaczej, z elektrodami: anoda (p), katoda (n).<br><br>
-<strong>Działanie:</strong> polaryzacja w kierunku przewodzenia (anoda+) zwęża warstwę zaporową i umożliwia przepływ prądu; polaryzacja zaporowa poszerza warstwę zaporową, blokując przepływ prądu (poza znikomym prądem nasycenia).<br><br>
-<strong>Charakterystyka I-U:</strong> silnie nieliniowa — w kierunku przewodzenia prąd rośnie wykładniczo po przekroczeniu napięcia progowego (ok. 0,6–0,7 V dla Si); w kierunku zaporowym prąd jest znikomy aż do napięcia przebicia.<br><br>
-<strong>Zastosowania:</strong> prostowanie prądu, stabilizacja napięcia (dioda Zenera), detekcja sygnałów, emisja światła (LED), fotodetekcja (fotodioda), ograniczanie przepięć.
+<div class="q-block">
+<span class="q-text">1. Dioda półprzewodnikowa. Idea złącza p-n. Budowa, działanie, charakterystyka prądowo-napięciowa. Zastosowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Idea złącza p-n:</b> zetknięcie dwóch obszarów półprzewodnika o różnym domieszkowaniu — typu p (nadmiar dziur) i typu n (nadmiar elektronów). Na granicy zachodzi dyfuzja i rekombinacja nośników większościowych, tworząc obszar zubożony (warstwę zaporową) z wewnętrznym polem elektrycznym pochodzącym od nieskompensowanych jonów domieszek.<br><br>
+<b>Budowa:</b> kryształ półprzewodnika (najczęściej Si) z dwoma obszarami domieszkowanymi inaczej, z elektrodami: anoda (p), katoda (n).<br><br>
+<b>Działanie:</b> polaryzacja w kierunku przewodzenia (anoda+) zwęża warstwę zaporową i umożliwia przepływ prądu; polaryzacja zaporowa poszerza warstwę zaporową, blokując przepływ prądu (poza znikomym prądem nasycenia).<br><br>
+<b>Charakterystyka I-U:</b> silnie nieliniowa — w kierunku przewodzenia prąd rośnie wykładniczo po przekroczeniu napięcia progowego (ok. 0,6–0,7 V dla Si); w kierunku zaporowym prąd jest znikomy aż do napięcia przebicia.<br><br>
+<b>Zastosowania:</b> prostowanie prądu, stabilizacja napięcia (dioda Zenera), detekcja sygnałów, emisja światła (LED), fotodetekcja (fotodioda), ograniczanie przepięć.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>2. Tranzystor — rodzaje, tranzystory unipolarne</h3>
-<p class="polecenie">Polecenie: Tranzystor, rodzaje, w tym tranzystory unipolarne i ich zastosowania.</p>
-<div class="odp">
-Rodzaje: <strong>bipolarne</strong> (BJT, npn/pnp) oraz <strong>unipolarne</strong> (polowe, FET: JFET, MOSFET).<br><br>
+<div class="q-block">
+<span class="q-text">2. Tranzystor, rodzaje, w tym tranzystory unipolarne i ich zastosowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Rodzaje: <b>bipolarne</b> (BJT, npn/pnp) oraz <b>unipolarne</b> (polowe, FET: JFET, MOSFET).<br><br>
 Tranzystory unipolarne (FET) — prąd płynie tylko poprzez jeden typ nośników (elektrony lub dziury) w kanale sterowanym polem elektrycznym z bramki (gate), bez wstrzykiwania prądu do sterującej elektrody (jak w BJT) — sterowanie napięciowe, bardzo duża impedancja wejściowa.<br><br>
 Rodzaje FET: JFET (złączowy), MOSFET (z izolowaną bramką; typu wzbogacanego lub zubożanego, kanał n lub p).<br><br>
 Zastosowania: wzmacniacze o dużej impedancji wejściowej, przełączniki analogowe, klucze cyfrowe (technologia CMOS — podstawa współczesnych procesorów i pamięci), regulatory prądu stałego.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Pamięć RAM statyczna (SRAM)</h3>
-<p class="polecenie">Polecenie: Pamięć półprzewodnikowa RAM statyczna.</p>
-<div class="odp">
-Komórka pamięci zbudowana jest zwykle z 6 tranzystorów MOS tworzących przerzutnik (dwa sprzężone zwrotnie inwertery + 2 tranzystory dostępu). Stan bitu utrzymywany jest dzięki sprzężeniu zwrotnemu, dopóki podtrzymywane jest zasilanie — <strong>nie wymaga odświeżania</strong>.<br><br>
+<div class="q-block">
+<span class="q-text">3. Pamięć półprzewodnikowa RAM statyczna.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Komórka pamięci zbudowana jest zwykle z 6 tranzystorów MOS tworzących przerzutnik (dwa sprzężone zwrotnie inwertery + 2 tranzystory dostępu). Stan bitu utrzymywany jest dzięki sprzężeniu zwrotnemu, dopóki podtrzymywane jest zasilanie — <b>nie wymaga odświeżania</b>.<br><br>
 Cechy: szybsza od DRAM, droższa i mniej gęsta (więcej tranzystorów na bit) — stosowana w pamięciach podręcznych procesora (cache L1/L2/L3).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Pamięć RAM dynamiczna (DRAM)</h3>
-<p class="polecenie">Polecenie: Pamięć półprzewodnikowa RAM dynamiczna.</p>
-<div class="odp">
-Komórka pamięci to jeden tranzystor + jeden kondensator (1T1C) — informacja przechowywana jako ładunek na kondensatorze. Ładunek rozprasza się z czasem (upływność), dlatego pamięć wymaga cyklicznego <strong>odświeżania</strong> (refresh) co kilka milisekund.<br><br>
+<div class="q-block">
+<span class="q-text">4. Pamięć półprzewodnikowa RAM dynamiczna.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Komórka pamięci to jeden tranzystor + jeden kondensator (1T1C) — informacja przechowywana jako ładunek na kondensatorze. Ładunek rozprasza się z czasem (upływność), dlatego pamięć wymaga cyklicznego <b>odświeżania</b> (refresh) co kilka milisekund.<br><br>
 Cechy: wyższa gęstość upakowania i niższy koszt niż SRAM, ale wolniejsza (narzut na odświeżanie) — stosowana jako główna pamięć operacyjna komputera.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>5. Pamięć Flash (EEPROM) — pendrive, SSD</h3>
-<p class="polecenie">Polecenie: Pamięć Flash (EEPROM) i jej zastosowanie w urządzeniach informatycznych (pendrive, dysk SSD).</p>
-<div class="odp">
-Budowa: tranzystory MOS z <strong>bramką pływającą</strong> (floating gate), odizolowaną warstwą tlenku — uwięziony na niej ładunek reprezentuje bit i utrzymuje się bez zasilania (pamięć nieulotna).<br><br>
+<div class="q-block">
+<span class="q-text">5. Pamięć Flash (EEPROM) i jej zastosowanie w urządzeniach informatycznych (pendrive, dysk SSD).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Budowa: tranzystory MOS z <b>bramką pływającą</b> (floating gate), odizolowaną warstwą tlenku — uwięziony na niej ładunek reprezentuje bit i utrzymuje się bez zasilania (pamięć nieulotna).<br><br>
 Zapis/kasowanie: programowanie poprzez wstrzykiwanie elektronów na bramkę pływającą (tunelowanie Fowlera-Nordheima lub wstrzykiwanie gorących elektronów), kasowanie przez usunięcie ładunku — w pamięciach NAND kasowanie odbywa się całymi blokami.<br><br>
 Zastosowanie: pendrive'y, dyski SSD (macierze kości NAND zarządzane kontrolerem), karty pamięci, pamięć firmware/BIOS.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Dysk twardy (HDD)</h3>
-<p class="polecenie">Polecenie: Dysk sztywny (HDD). Zasady zapisu informacji. Pętla histerezy. Budowa, działanie. Rodzaje głowic.</p>
-<div class="odp">
-<strong>Zapis:</strong> głowica zapisująca (elektromagnes) zmienia lokalną orientację namagnesowania cząstek ferromagnetycznych na talerzu, kodując bity jako kierunek namagnesowania.<br><br>
-<strong>Pętla histerezy:</strong> materiał magnetyczny wykazuje histerezę — po usunięciu pola zewnętrznego zachowuje trwałe namagnesowanie (remanencja), co pozwala trwale zapisać informację; koercja (szerokość pętli) determinuje siłę potrzebną do przemagnesowania materiału.<br><br>
-<strong>Budowa:</strong> wirujące talerze pokryte warstwą magnetyczną, głowice na ramieniu pozycjonującym (siłownik VCM), cienka poduszka powietrzna między głowicą a talerzem.<br><br>
-<strong>Rodzaje głowic:</strong> indukcyjne (starsze, zapis i odczyt), MR/GMR (magnetorezystancyjne/gigantycznego magnetooporu, do odczytu), TMR (tunelowego magnetooporu, najczulsze, najnowsze).
+<div class="q-block">
+<span class="q-text">6. Dysk sztywny (HDD). Zasady zapisu informacji. Pętla histerezy. Budowa, działanie. Rodzaje głowic.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Zapis:</b> głowica zapisująca (elektromagnes) zmienia lokalną orientację namagnesowania cząstek ferromagnetycznych na talerzu, kodując bity jako kierunek namagnesowania.<br><br>
+<b>Pętla histerezy:</b> materiał magnetyczny wykazuje histerezę — po usunięciu pola zewnętrznego zachowuje trwałe namagnesowanie (remanencja), co pozwala trwale zapisać informację; koercja (szerokość pętli) determinuje siłę potrzebną do przemagnesowania materiału.<br><br>
+<b>Budowa:</b> wirujące talerze pokryte warstwą magnetyczną, głowice na ramieniu pozycjonującym (siłownik VCM), cienka poduszka powietrzna między głowicą a talerzem.<br><br>
+<b>Rodzaje głowic:</b> indukcyjne (starsze, zapis i odczyt), MR/GMR (magnetorezystancyjne/gigantycznego magnetooporu, do odczytu), TMR (tunelowego magnetooporu, najczulsze, najnowsze).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>7. Dyski optyczne (CD, DVD, Blu-ray)</h3>
-<p class="polecenie">Polecenie: Dyski optyczne (CD, DVD, Blue Ray). Napędy dysków optycznych i podstawy ich działania.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">7. Dyski optyczne (CD, DVD, Blue Ray). Napędy dysków optycznych i podstawy ich działania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Informacja jest zakodowana jako sekwencja mikroskopijnych zagłębień (pity) i płaskich odcinków (land) na spiralnej ścieżce nośnika; laser odczytuje różnice w odbiciu światła między pit i land jako zmiany intensywności odbitego światła, interpretowane jako bity.<br><br>
 Napęd zawiera diodę laserową (długość fali zależna od nośnika: CD ~780 nm, DVD ~650 nm, Blu-ray ~405 nm), układ optyczny i fotodetektor odbierający odbite światło.<br><br>
 Krótsza długość fali lasera pozwala skupić wiązkę w mniejszą plamkę, umożliwiając gęstszy zapis — stąd Blu-ray ma znacznie większą pojemność niż DVD i CD.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>8. Monitor LCD — ciekłe kryształy, matryce pasywne i aktywne</h3>
-<p class="polecenie">Polecenie: Monitor LCD. Ciekłe kryształy. Zasada działania. Matryce pasywne i aktywne.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">8. Monitor LCD. Ciekłe kryształy. Zasada działania. Matryce pasywne i aktywne.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Ciekłe kryształy — substancje o właściwościach pośrednich między cieczą a ciałem stałym; cząsteczki mają uporządkowanie orientacyjne, ale mogą płynąć, i zmieniają orientację pod wpływem pola elektrycznego.<br><br>
 Zasada działania: matryca umieszczona między dwoma skrzyżowanymi polaryzatorami — bez napięcia ciekłe kryształy skręcają płaszczyznę polaryzacji światła (przepuszczając je), po przyłożeniu napięcia cząsteczki prostują się, blokując światło; kolor uzyskiwany jest przez filtry RGB.<br><br>
-<strong>Matryce pasywne (STN/DSTN):</strong> piksele adresowane przecinającymi się liniami wierszy/kolumn bez elementu przełączającego na piksel — wolniejsza reakcja, gorszy kontrast, tańsza.<br><br>
-<strong>Matryce aktywne (TFT):</strong> każdy piksel ma własny tranzystor cienkowarstwowy sterujący nim niezależnie — lepszy kontrast, szybszy czas reakcji, stosowana we współczesnych ekranach.
+<b>Matryce pasywne (STN/DSTN):</b> piksele adresowane przecinającymi się liniami wierszy/kolumn bez elementu przełączającego na piksel — wolniejsza reakcja, gorszy kontrast, tańsza.<br><br>
+<b>Matryce aktywne (TFT):</b> każdy piksel ma własny tranzystor cienkowarstwowy sterujący nim niezależnie — lepszy kontrast, szybszy czas reakcji, stosowana we współczesnych ekranach.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>9. Dioda LED i jej zastosowania</h3>
-<p class="polecenie">Polecenie: Dioda LED i jej zastosowania.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">9. Dioda LED i jej zastosowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Dioda LED emituje światło podczas przewodzenia w kierunku przewodzenia, w wyniku rekombinacji elektronów i dziur w obszarze złącza p-n (emisja spontaniczna fotonów o energii odpowiadającej szerokości przerwy energetycznej materiału).<br><br>
 Kolor światła zależy od materiału (szerokości przerwy wzbronionej): GaAs — podczerwień, GaAsP/GaP — czerwony/żółty/zielony, GaN/InGaN — niebieski/biały.<br><br>
 Zastosowania: oświetlenie, wskaźniki stanu, wyświetlacze (telebimy, podświetlenie LCD), transmisja optyczna krótkiego zasięgu (piloty IR, światłowody plastikowe).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>10. Laser półprzewodnikowy — zastosowania i własności światła laserowego</h3>
-<p class="polecenie">Polecenie: Laser półprzewodnikowy i jego zastosowania w informatyce. Własności światła laserowego.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">10. Laser półprzewodnikowy i jego zastosowania w informatyce. Własności światła laserowego.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Laser diodowy działa na zasadzie emisji wymuszonej w silnie domieszkowanym złączu p-n, przy dużej gęstości wstrzykiwanego prądu, w rezonatorze optycznym (zwykle utworzonym przez naturalne zwierciadła na krawędziach kryształu) — inwersja obsadzeń prowadzi do wzmocnienia światła.<br><br>
-<strong>Własności światła laserowego:</strong> monochromatyczność, spójność (koherencja czasowa i przestrzenna), duża kierunkowość (mała rozbieżność wiązki), duża gęstość mocy.<br><br>
+<b>Własności światła laserowego:</b> monochromatyczność, spójność (koherencja czasowa i przestrzenna), duża kierunkowość (mała rozbieżność wiązki), duża gęstość mocy.<br><br>
 Zastosowania w informatyce: odczyt/zapis dysków optycznych, transmisja danych w światłowodach, drukarki laserowe, skanery kodów kreskowych, mysz laserowa.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>11. Fotodetekcja, fotodioda p-i-n, efekt fotoelektryczny wewnętrzny</h3>
-<p class="polecenie">Polecenie: Fotodetekcja i fotodioda p-i-n. Efekt fotoelektryczny wewnętrzny.</p>
-<div class="odp">
-<strong>Efekt fotoelektryczny wewnętrzny:</strong> absorpcja fotonu o energii większej niż przerwa energetyczna wzbudza elektron z pasma walencyjnego do pasma przewodnictwa, generując parę elektron-dziura wewnątrz materiału (w odróżnieniu od zewnętrznego efektu fotoelektrycznego, gdzie elektron opuszcza materiał).<br><br>
-<strong>Fotodioda p-i-n:</strong> złącze p-n z dodatkową szeroką warstwą samoistną (intrinsic) między obszarami p i n — zwiększa objętość obszaru, w którym generowane są pary elektron-dziura pod wpływem światła, poprawiając czułość i szybkość odpowiedzi. Pracuje spolaryzowana zaporowo — nośniki generowane światłem są odprowadzane polem złącza, dając prąd proporcjonalny do natężenia światła.<br><br>
+<div class="q-block">
+<span class="q-text">11. Fotodetekcja i fotodioda p-i-n. Efekt fotoelektryczny wewnętrzny.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Efekt fotoelektryczny wewnętrzny:</b> absorpcja fotonu o energii większej niż przerwa energetyczna wzbudza elektron z pasma walencyjnego do pasma przewodnictwa, generując parę elektron-dziura wewnątrz materiału (w odróżnieniu od zewnętrznego efektu fotoelektrycznego, gdzie elektron opuszcza materiał).<br><br>
+<b>Fotodioda p-i-n:</b> złącze p-n z dodatkową szeroką warstwą samoistną (intrinsic) między obszarami p i n — zwiększa objętość obszaru, w którym generowane są pary elektron-dziura pod wpływem światła, poprawiając czułość i szybkość odpowiedzi. Pracuje spolaryzowana zaporowo — nośniki generowane światłem są odprowadzane polem złącza, dając prąd proporcjonalny do natężenia światła.<br><br>
 Zastosowania: detekcja sygnałów w łączach światłowodowych, czujniki światła, odbiorniki pilotów IR.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>12. Model pasmowy półprzewodników, generacja i rekombinacja, złącze p-n</h3>
-<p class="polecenie">Polecenie: Model pasmowy półprzewodników. Generacja i rekombinacja nośników. Złącze p-n.</p>
-<div class="odp">
-<strong>Model pasmowy:</strong> poziomy energetyczne elektronów tworzą pasma (walencyjne — zapełnione w T=0K, przewodnictwa — puste w T=0K) rozdzielone przerwą wzbronioną \(E_g\). W półprzewodnikach \(E_g\) jest wąska (Si: 1,12 eV, Ge: 0,67 eV), w odróżnieniu od izolatorów (szeroka przerwa) i metali (pasma nakładają się).<br><br>
-<strong>Generacja:</strong> dostarczenie energii (cieplnej, świetlnej) przenosi elektron z pasma walencyjnego do pasma przewodnictwa, tworząc parę elektron-dziura.<br><br>
-<strong>Rekombinacja:</strong> proces odwrotny — elektron "spada" z powrotem, zapełniając dziurę, z wydzieleniem energii jako ciepło (rekombinacja niepromienista) lub foton (rekombinacja promienista, jak w LED).<br><br>
-<strong>Złącze p-n:</strong> dyfuzja nośników większościowych na granicy obszarów p i n prowadzi do powstania obszaru zubożonego z wewnętrznym polem elektrycznym (barierą potencjału) równoważącym dalszą dyfuzję w stanie równowagi.
+<div class="q-block">
+<span class="q-text">12. Model pasmowy półprzewodników. Generacja i rekombinacja nośników. Złącze p-n.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Model pasmowy:</b> poziomy energetyczne elektronów tworzą pasma (walencyjne — zapełnione w T=0K, przewodnictwa — puste w T=0K) rozdzielone przerwą wzbronioną \(E_g\). W półprzewodnikach \(E_g\) jest wąska (Si: 1,12 eV, Ge: 0,67 eV), w odróżnieniu od izolatorów (szeroka przerwa) i metali (pasma nakładają się).<br><br>
+<b>Generacja:</b> dostarczenie energii (cieplnej, świetlnej) przenosi elektron z pasma walencyjnego do pasma przewodnictwa, tworząc parę elektron-dziura.<br><br>
+<b>Rekombinacja:</b> proces odwrotny — elektron "spada" z powrotem, zapełniając dziurę, z wydzieleniem energii jako ciepło (rekombinacja niepromienista) lub foton (rekombinacja promienista, jak w LED).<br><br>
+<b>Złącze p-n:</b> dyfuzja nośników większościowych na granicy obszarów p i n prowadzi do powstania obszaru zubożonego z wewnętrznym polem elektrycznym (barierą potencjału) równoważącym dalszą dyfuzję w stanie równowagi.
 </div>
-</div>
-
-<div class="pytanie">
-<h3>13. Światłowód — budowa, rodzaje, straty</h3>
-<p class="polecenie">Polecenie: Światłowód. Budowa, rodzaje i charakterystyka optyczna, straty.</p>
-<div class="odp">
-<strong>Budowa:</strong> rdzeń (core) o wyższym współczynniku załamania, otoczony płaszczem (cladding) o niższym współczynniku — różnica współczynników powoduje całkowite wewnętrzne odbicie światła wzdłuż rdzenia; całość pokryta powłoką ochronną.<br><br>
-<strong>Rodzaje:</strong> jednomodowe (SMF — mały rdzeń ~9 μm, jeden mod, mniejsze straty na duże odległości, telekomunikacja dalekiego zasięgu) i wielomodowe (MMF — większy rdzeń ~50-62,5 μm, wiele modów, większe straty/dyspersja, tańsze, krótsze odległości).<br><br>
-<strong>Straty:</strong> tłumienie (absorpcja materiałowa, rozpraszanie Rayleigha, minima w oknach transmisyjnych 850/1310/1550 nm), straty na zgięciach i złączach/spawach, dyspersja modowa i chromatyczna ograniczająca pasmo na dużych odległościach.
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>14. Fale elektromagnetyczne jako nośniki informacji, transmisja radiowa</h3>
-<p class="polecenie">Polecenie: Własności fali elektromagnetycznej. Fale emg jako nośniki informacji. Transmisja radiowa (bezprzewodowa) i jej rodzaje.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">13. Światłowód. Budowa, rodzaje i charakterystyka optyczna, straty.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Budowa:</b> rdzeń (core) o wyższym współczynniku załamania, otoczony płaszczem (cladding) o niższym współczynniku — różnica współczynników powoduje całkowite wewnętrzne odbicie światła wzdłuż rdzenia; całość pokryta powłoką ochronną.<br><br>
+<b>Rodzaje:</b> jednomodowe (SMF — mały rdzeń ~9 μm, jeden mod, mniejsze straty na duże odległości, telekomunikacja dalekiego zasięgu) i wielomodowe (MMF — większy rdzeń ~50-62,5 μm, wiele modów, większe straty/dyspersja, tańsze, krótsze odległości).<br><br>
+<b>Straty:</b> tłumienie (absorpcja materiałowa, rozpraszanie Rayleigha, minima w oknach transmisyjnych 850/1310/1550 nm), straty na zgięciach i złączach/spawach, dyspersja modowa i chromatyczna ograniczająca pasmo na dużych odległościach.
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">14. Własności fali elektromagnetycznej. Fale emg jako nośniki informacji. Transmisja radiowa (bezprzewodowa) i jej rodzaje.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Fala EM rozchodzi się w próżni z prędkością światła \(c=\lambda f\), niesie energię \(E=hf\), podlega odbiciu, załamaniu, dyfrakcji i interferencji, może być spolaryzowana.<br><br>
 Jako nośnik informacji — informację koduje się modulując parametr fali nośnej sygnałem informacyjnym: amplitudę (AM), częstotliwość (FM), fazę (PM).<br><br>
 Rodzaje transmisji radiowej: fale długie/średnie/krótkie (radiofonia AM), UKF/VHF (radiofonia FM), mikrofale (Wi-Fi, Bluetooth, łączność satelitarna, radary), fale milimetrowe (5G). Ze względu na propagację: fala przyziemna, jonosferyczna (odbicie od jonosfery), oraz fala przestrzenna/LOS (line of sight, wymagająca widoczności optycznej — typowa dla mikrofal).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>15. Touchpad, ekran dotykowy — budowa i zasada działania</h3>
-<p class="polecenie">Polecenie: Touchpad, ekran dotykowy. Budowa i zasada działania.</p>
-<div class="odp">
-<strong>Touchpad</strong> (najczęściej pojemnościowy): siatka elektrod tworzących kondensatory — dotyk palca (przewodzącego) zmienia lokalną pojemność w miejscu dotyku, wykrywane przez kontroler i przeliczane na współrzędne.<br><br>
-<strong>Ekran rezystancyjny:</strong> dwie przewodzące warstwy oddzielone szczeliną powietrzną — nacisk powoduje ich zetknięcie w punkcie dotyku, zmieniając lokalny rozkład napięcia/rezystancji; działa z dowolnym przedmiotem, ale wymaga nacisku i jest mniej precyzyjny.<br><br>
-<strong>Ekran pojemnościowy</strong> (najpopularniejszy w smartfonach): warstwa przewodząca pod szkłem — dotyk palca zaburza pole elektryczne, zmieniając lokalną pojemność w siatce elektrod; umożliwia obsługę wielodotykową (multi-touch), ale wymaga dotyku palcem lub przewodzącym rysikiem.
+<div class="q-block">
+<span class="q-text">15. Touchpad, ekran dotykowy. Budowa i zasada działania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Touchpad</b> (najczęściej pojemnościowy): siatka elektrod tworzących kondensatory — dotyk palca (przewodzącego) zmienia lokalną pojemność w miejscu dotyku, wykrywane przez kontroler i przeliczane na współrzędne.<br><br>
+<b>Ekran rezystancyjny:</b> dwie przewodzące warstwy oddzielone szczeliną powietrzną — nacisk powoduje ich zetknięcie w punkcie dotyku, zmieniając lokalny rozkład napięcia/rezystancji; działa z dowolnym przedmiotem, ale wymaga nacisku i jest mniej precyzyjny.<br><br>
+<b>Ekran pojemnościowy</b> (najpopularniejszy w smartfonach): warstwa przewodząca pod szkłem — dotyk palca zaburza pole elektryczne, zmieniając lokalną pojemność w siatce elektrod; umożliwia obsługę wielodotykową (multi-touch), ale wymaga dotyku palcem lub przewodzącym rysikiem.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="java">
 <h2>2. Programowanie obiektowe (Java)</h2>
 
-<div class="pytanie">
-<h3>16. Dwa sposoby inicjalizacji pola prywatnego</h3>
-<p class="polecenie">Polecenie: Rozważmy fragment definicji klasy: <code>public class A{ private int liczba; ... }</code>. Podaj dwa sposoby zainicjowania pola liczba wartością 10.</p>
-<div class="odp">
-<strong>Sposób 1 — inicjalizacja przy deklaracji pola:</strong>
+<div class="q-block">
+<span class="q-text">16. Rozważmy następujący fragment definicji klasy: <code>public class A{ private int liczba; ... }</code>. Podaj dwa sposoby zainicjowania pola liczba wartością 10.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Sposób 1 — inicjalizacja przy deklaracji pola:</b>
 <pre>public class A {
     private int liczba = 10;
 }</pre>
-<strong>Sposób 2 — inicjalizacja w konstruktorze:</strong>
+<b>Sposób 2 — inicjalizacja w konstruktorze:</b>
 <pre>public class A {
     private int liczba;
     public A() {
@@ -296,12 +336,33 @@ Rodzaje transmisji radiowej: fale długie/średnie/krótkie (radiofonia AM), UKF
     }
 }</pre>
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>17. Wielopoziomowa inicjalizacja pól klas A, B, C bez modyfikacji klasy A</h3>
-<p class="polecenie">Polecenie: Mamy klasę A z polami prywatnymi int a1, int a2. Stwórz klasę B z polem double b oraz klasę C z polem boolean c. Napisz rozwiązanie, które przy inicjalizacji klasy C zainicjuje jednocześnie pola z klas A, B i C. Nie można modyfikować klasy A! Wywołanie: <code>A obj = new C(23, 12, 40.5, true);</code></p>
-<p>Rozwiązanie: klasa B dziedziczy po A i w konstruktorze wywołuje konstruktor klasy bazowej przez <code>super(...)</code>; klasa C dziedziczy po B analogicznie.</p>
+<div class="q-block">
+    <div class="q-text">
+        17. Mamy do dyspozycji klasę A, która posiada pola prywatne int a1, int a2. Stwórz klasę B, która będzie mieć pole double b oraz klasę C, która będzie mieć pole boolean c. Napisz rozwiązanie, które przy inicjalizacji klasy C zainicjuje jednocześnie pola z klas A,B i C. Nie można modyfikować klasy A ! Wywołanie klasy C w następujący sposób
+    </div>
+
+    <pre>
+    A obj = new C(23, 12, 40.5, true);
+    public class A {
+        private int a1;
+        private int a2;
+
+        public A(int a1, int a2){
+            this.a1 = a1;
+            this.a2 = a2;
+        }
+
+    public wypisz(){System.out.println(this.a1 + " " +
+        this.a2);}
+    }</pre>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Rozwiązanie: klasa B dziedziczy po A i w konstruktorze wywołuje konstruktor klasy bazowej przez <code>super(...)</code>; klasa C dziedziczy po B analogicznie.
 <pre>public class B extends A {
     private double b;
     public B(int a1, int a2, double b) {
@@ -317,14 +378,27 @@ public class C extends B {
         this.c = c;
     }
 }</pre>
-<div class="odp">
 Dzięki łańcuchowi wywołań <code>super(...)</code> (C→B→A) jedno wywołanie <code>new C(23, 12, 40.5, true)</code> inicjuje wszystkie pola z trzech klas. Przypisanie <code>A obj = new C(...)</code> jest poprawne dzięki polimorfizmowi — obiekt klasy C jest jednocześnie obiektem klasy B i A (upcasting).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>18. Pola tylko do odczytu</h3>
-<p class="polecenie">Polecenie: Klasa A ma pola prywatne a1 i a2. Uzupełnij klasę A o instrukcje i metody, które spowodują, że pola będą tylko do odczytu.</p>
+<div class="q-block">
+    <div class="q-text">
+        18. Klasa A ma pola prywatne a1 i a2. Uzupełnij klasę A o instrukcje i metody, które spowodują, że pola będą tylko do odczytu.
+    </div>
+
+    <pre>
+        public class A {
+            private int a1;
+            private int a2;
+            
+        ...
+        }</pre>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>public class A {
     private final int a1;
     private final int a2;
@@ -337,35 +411,37 @@ Dzięki łańcuchowi wywołań <code>super(...)</code> (C→B→A) jedno wywoła
     public int getA1() { return a1; }
     public int getA2() { return a2; }
 }</pre>
-<div class="odp">
 Słowo kluczowe <code>final</code> sprawia, że pole może być przypisane tylko raz (w konstruktorze) i nie może być później zmienione. Udostępnienie wyłącznie metod odczytujących (getterów), bez setterów, sprawia, że pola są dostępne z zewnątrz klasy tylko do odczytu.
 </div>
-</div>
+</details>
 </div>
 
 <div class="zagadnienie" id="naukowa">
 <h2>3. Metodyka pracy naukowej</h2>
 
-<div class="pytanie">
-<h3>19. Big Data jako kierunek rozwoju informatyki</h3>
-<p class="polecenie">Polecenie: Omów jeden z podstawowych kierunków rozwoju współczesnej informatyki, jakim jest zagadnienie Big Data.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">19. Omów jeden z podstawowych kierunków rozwoju współczesnej informatyki, jakim jest zagadnienie Big Data.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Big Data odnosi się do zbiorów danych o tak dużym rozmiarze, zmienności i różnorodności, że tradycyjne metody przetwarzania (pojedyncze bazy danych, standardowe narzędzia analityczne) są niewystarczające.<br><br>
 Charakterystyka Big Data — model "5V":<br>
-— <strong>Volume</strong> (objętość) — ogromne ilości danych (terabajty, petabajty i więcej)<br>
-— <strong>Velocity</strong> (szybkość) — dane generowane i przetwarzane niemal w czasie rzeczywistym (strumienie danych)<br>
-— <strong>Variety</strong> (różnorodność) — dane strukturalne, częściowo strukturalne (XML, JSON) i niestrukturalne (tekst, obraz, wideo)<br>
-— <strong>Veracity</strong> (wiarygodność) — jakość i niepewność danych<br>
-— <strong>Value</strong> (wartość) — potencjalna wartość biznesowa/naukowa możliwa do wydobycia<br><br>
+— <b>Volume</b> (objętość) — ogromne ilości danych (terabajty, petabajty i więcej)<br>
+— <b>Velocity</b> (szybkość) — dane generowane i przetwarzane niemal w czasie rzeczywistym (strumienie danych)<br>
+— <b>Variety</b> (różnorodność) — dane strukturalne, częściowo strukturalne (XML, JSON) i niestrukturalne (tekst, obraz, wideo)<br>
+— <b>Veracity</b> (wiarygodność) — jakość i niepewność danych<br>
+— <b>Value</b> (wartość) — potencjalna wartość biznesowa/naukowa możliwa do wydobycia<br><br>
 Technologie: Hadoop, MapReduce, Apache Spark, bazy NoSQL (MongoDB, Cassandra), systemy strumieniowe (Kafka, Flink).<br><br>
 Zastosowania: analiza zachowań użytkowników, business intelligence, medycyna (dane genomowe, obrazowanie), IoT, uczenie maszynowe.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. Etapy realizacji pracy naukowej</h3>
-<p class="polecenie">Polecenie: Omów podstawowe etapy realizacji pracy naukowej.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">20. Omów podstawowe etapy realizacji pracy naukowej.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Wybór i sformułowanie tematu/problemu badawczego.<br>
 2. Przegląd literatury (state-of-the-art) — analiza istniejących rozwiązań.<br>
 3. Sformułowanie celu i hipotez (lub pytań) badawczych.<br>
@@ -376,18 +452,20 @@ Zastosowania: analiza zachowań użytkowników, business intelligence, medycyna 
 8. Napisanie i redakcja opracowania naukowego.<br>
 9. Recenzja i publikacja/prezentacja wyników.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>21. Aspekty prawne i etyczne opracowań naukowych</h3>
-<p class="polecenie">Polecenie: Omów aspekty prawne i etyczne związane z przygotowaniem opracowań naukowych.</p>
-<div class="odp">
-<strong>Aspekty prawne:</strong><br>
+<div class="q-block">
+<span class="q-text">21. Omów aspekty prawne i etyczne związane z przygotowaniem opracowań naukowych.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Aspekty prawne:</b><br>
 — prawo autorskie — ochrona twórczości naukowej, obowiązek poprawnego cytowania źródeł<br>
 — zasady licencjonowania publikacji (Open Access, licencje Creative Commons)<br>
 — ochrona danych osobowych uczestników badań (RODO/GDPR)<br>
 — ewentualna ochrona patentowa wynalazków powstałych w toku badań<br><br>
-<strong>Aspekty etyczne:</strong><br>
+<b>Aspekty etyczne:</b><br>
 — zakaz plagiatu — niedopuszczalne przywłaszczanie cudzych wyników/tekstów bez cytowania<br>
 — rzetelność naukowa — zakaz fabrykowania i fałszowania danych badawczych<br>
 — właściwe określanie autorstwa (unikanie "gift authorship" i "ghost authorship")<br>
@@ -395,87 +473,58 @@ Zastosowania: analiza zachowań użytkowników, business intelligence, medycyna 
 — unikanie konfliktu interesów, ujawnianie źródeł finansowania<br>
 — zakaz ghostwritingu (publikowania cudzej pracy pod własnym nazwiskiem)
 </div>
+</details>
 </div>
 </div>
 
-<div class="zagadnienie" id="cad">
-<h2>4. Grafika inżynierska (AutoCAD / Inventor)</h2>
-
-<div class="pytanie">
-<h3>22. Rysunek 2D w AutoCAD z warstwami</h3>
-<p class="polecenie">Polecenie: W programie AutoCAD wykonać rysunek (bez wymiarowania), ustawiając odpowiednio warstwy (min. 3) — szerokość i rodzaj linii. Rysunek przedstawia płaski kształt z fazą 4×45°, zaokrąglonymi górnymi narożnikami, otworem Ø5 oraz wymiarami pomocniczymi 27, 20, 7, 6, 3.</p>
-<div class="uwaga">To zadanie polega na praktycznym wykonaniu rysunku technicznego w programie CAD, a nie na obliczeniach — poniżej opisano procedurę krok po kroku.</div>
-<div class="odp">
-1. Utwórz co najmniej 3 warstwy (polecenie <code>LAYER</code>), np.: "Kontur" (linia ciągła gruba, np. 0,5 mm, kolor biały/czarny), "Osie" (linia osiowa/przerywana cienka typu CENTER, kolor czerwony), "Pomocnicze" (linia cienka ciągła, kolor niebieski) — i ustaw bieżącą warstwę przed rysowaniem każdego elementu.<br>
-2. Narysuj zewnętrzny kontur figury poleceniem <code>LINE</code> / <code>PLINE</code> na warstwie "Kontur", uwzględniając prostokątny obrys o wymiarach 20×27.<br>
-3. Wykonaj fazę 4×45° na górnych narożnikach poleceniem <code>CHAMFER</code> (z odległościami 4 i 4).<br>
-4. Narysuj okrąg Ø5 poleceniem <code>CIRCLE</code> w odpowiednim miejscu konturu.<br>
-5. Dodaj linie osi symetrii (pionową i poziomą przez środek okręgu) na warstwie "Osie" poleceniem <code>LINE</code>, zmieniając typ linii na przerywaną osiową (<code>LINETYPE</code> → np. ACAD_ISO04W100).<br>
-6. Zapisz rysunek — bez dodawania wymiarów (<code>DIMLINEAR</code> itp. pomijamy, zgodnie z poleceniem).
-</div>
-</div>
-
-<div class="pytanie">
-<h3>23. Bryła 3D w Inventorze</h3>
-<p class="polecenie">Polecenie: W programie Inventor stworzyć bryłę 3D — stopniowany prostopadłościenny element z otworem Ø14 i fazą 2×45°, o wymiarach pomocniczych 50, 30, 25, 15 (wymiary potrzebne jedynie do stworzenia bryły, nie powinny pojawić się w rysunku końcowym).</p>
-<div class="uwaga">To zadanie polega na praktycznym modelowaniu 3D — poniżej opisano procedurę krok po kroku.</div>
-<div class="odp">
-1. Utwórz nowy plik część (.ipt) i wybierz płaszczyznę szkicu (np. płaszczyznę XY).<br>
-2. Naszkicuj profil podstawy — stopniowany prostokąt o szerokości 50 i wysokościach odpowiadających dwóm poziomom bryły (15 dla dolnej podstawy, dodatkowe 30 dla górnej części o szerokości 25), używając narzędzi <code>Line</code>/<code>Rectangle</code> z zakładki Szkic (Sketch).<br>
-3. Zakończ szkic (<code>Finish Sketch</code>) i użyj narzędzia <code>Extrude</code> (Wyciągnięcie proste) z zakładki MODEL 3D, aby nadać bryle głębokość.<br>
-4. Dodaj otwór poleceniem <code>Hole</code>, wskazując środek na odpowiedniej ścianie i ustawiając średnicę Ø14 (otwór przelotowy).<br>
-5. Dodaj fazę poleceniem <code>Chamfer</code> na wskazanej krawędzi górnej, z parametrem 2×45°.<br>
-6. Wymiary pomocnicze (50, 30, 25, 15, Ø14) służą jedynie do zbudowania szkicu/bryły — nie dodawaj ich jako adnotacji w widoku bryły.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>24. Szyk kołowy nakrętek w AutoCAD</h3>
-<p class="polecenie">Polecenie: W programie AutoCAD wykonać rysunek sześciu nakrętek (sześciokątów z otworem Ø4) rozmieszczonych po okręgu wokół wskazanego punktu środkowego (wymiary i tekst pomocnicze, nie powinny pojawić się w rysunku końcowym).</p>
-<div class="uwaga">To zadanie polega na praktycznym wykonaniu rysunku technicznego — poniżej opisano procedurę krok po kroku.</div>
-<div class="odp">
-1. Narysuj jeden sześciokąt (nakrętkę) poleceniem <code>POLYGON</code> (6 boków) w wybranym punkcie.<br>
-2. Narysuj otwór Ø4 w środku sześciokąta poleceniem <code>CIRCLE</code>.<br>
-3. Zaznacz oba obiekty (sześciokąt + okrąg) jako jeden zestaw.<br>
-4. Użyj polecenia <code>ARRAY</code> (Szyk) w trybie biegunowym (<code>Polar Array</code>), wskazując jako środek szyku podany punkt środkowy (np. 20,0), liczbę elementów: 6, kąt wypełnienia: 360°.<br>
-5. Program automatycznie rozmieści 6 kopii nakrętki równomiernie po okręgu wokół wskazanego punktu.<br>
-6. Wymiary pomocnicze (Ø4, 10) oraz podpis "Punkt środkowy" służą tylko do wykonania rysunku i nie powinny pozostać w finalnym pliku.
-</div>
-</div>
-</div>
 
 <div class="zagadnienie" id="elektronika">
-<h2>5. Elektronika — obliczenia i układy</h2>
+<h2>4. Elektronika — obliczenia i układy</h2>
 
-<div class="pytanie">
-<h3>25. Obliczenie rezystancji i mocy rezystora R1</h3>
-<p class="polecenie">Polecenie: Proszę obliczyć wartość rezystancji i moc rezystora R1 znajdującego się w obwodzie prądu stałego. Dane: krzemowa dioda prostownicza 1N4002 U_FD1=0,6 V, diody LED D2-D5 — U_FD2=U_FD3=U_FD4=U_FD5=2,1 V, I_FD2-D5=20 mA, U_FD6=3 V, I_FD6=20 mA, Vcc=15 V, R2=270 Ω.</p>
-<p>Zakładamy typową dla tego rodzaju zadań topologię jednego oczka szeregowego: zasilanie Vcc, rezystor R1, dioda prostownicza D1 oraz diody D2-D5 połączone szeregowo, wszystkie w jednym obwodzie (ten sam prąd 20 mA płynie przez wszystkie elementy). Gałąź z R2 i D6 stanowi osobne, niezależne oczko obwodu i nie wpływa na obliczenia R1.</p>
-<p>Z II prawa Kirchhoffa dla oczka z R1:</p>
-<p>\(V_{CC} = I \cdot R_1 + U_{FD1} + U_{FD2}+U_{FD3}+U_{FD4}+U_{FD5}\)</p>
-<p>\(15 = 0{,}02 \cdot R_1 + 0{,}6 + 4\times2{,}1\)</p>
-<p>\(15 = 0{,}02\cdot R_1 + 0{,}6+8{,}4 = 0{,}02\cdot R_1+9\)</p>
-<p>\(0{,}02\cdot R_1 = 6 \Rightarrow R_1 = 300\ \Omega\)</p>
-<div class="odp">
-\(R_1 = 300\ \Omega\)<br>
+<div class="q-block">
+<span class="q-text">22. Proszę obliczyć wartość rezystancji i moc rezystora R1 znajdującego się w obwodzie prądu stałego. Dane:</span>
+<div style="overflow-x:auto; margin: 8px 0 14px 0;">
+<table style="margin:0; min-width:380px;">
+<tr><th>Element</th><th>Napięcie</th><th>Prąd</th></tr>
+<tr><td>D1 (dioda prostownicza 1N4002)</td><td>U<sub>FD1</sub>=0,6 V</td><td>—</td></tr>
+<tr><td>D2–D5 (LED)</td><td>U<sub>FD2</sub>=U<sub>FD3</sub>=U<sub>FD4</sub>=U<sub>FD5</sub>=2,1 V</td><td>I<sub>FD2-D5</sub>=20 mA</td></tr>
+<tr><td>D6</td><td>U<sub>FD6</sub>=3 V</td><td>I<sub>FD6</sub>=20 mA</td></tr>
+<tr><td>V<sub>CC</sub></td><td colspan="2">15 V</td></tr>
+<tr><td>R2</td><td colspan="2">270 Ω</td></tr>
+</table>
+</div>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Zakładamy typową dla tego rodzaju zadań topologię jednego oczka szeregowego: zasilanie Vcc, rezystor R1, dioda prostownicza D1 oraz diody D2-D5 połączone szeregowo, wszystkie w jednym obwodzie (ten sam prąd 20 mA płynie przez wszystkie elementy). Gałąź z R2 i D6 stanowi osobne, niezależne oczko obwodu i nie wpływa na obliczenia R1.<br><br>
+Z II prawa Kirchhoffa dla oczka z R1:<br><br>
+\(V_{CC} = I \cdot R_1 + U_{FD1} + U_{FD2}+U_{FD3}+U_{FD4}+U_{FD5}\)<br>
+\(15 = 0{,}02 \cdot R_1 + 0{,}6 + 4\times2{,}1\)<br>
+\(15 = 0{,}02\cdot R_1 + 0{,}6+8{,}4 = 0{,}02\cdot R_1+9\)<br>
+\(0{,}02\cdot R_1 = 6 \Rightarrow R_1 = 300\ \Omega\)<br><br>
+<b>Odpowiedź:</b> \(R_1 = 300\ \Omega\)<br>
 \(P_{R1} = I^2\cdot R_1 = (0{,}02)^2\cdot300 = 0{,}12\ W\ (120\ mW)\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>26. Tranzystor bipolarny jako wzmacniacz i przełącznik</h3>
-<p class="polecenie">Polecenie: Budowa oraz zasada działania tranzystora bipolarnego, który jest wzmacniaczem i może jednocześnie być przełącznikiem.</p>
-<div class="odp">
-<strong>Budowa:</strong> tranzystor bipolarny (BJT) składa się z trzech obszarów półprzewodnikowych o naprzemiennym domieszkowaniu (npn lub pnp), tworzących dwa złącza p-n: baza-emiter (BE) i baza-kolektor (BC). Elektrody: emiter (E), baza (B, cienka, słabo domieszkowana), kolektor (C).<br><br>
-<strong>Jako wzmacniacz</strong> (praca w obszarze aktywnym: złącze BE spolaryzowane w kierunku przewodzenia, BC zaporowo): niewielki prąd bazy \(I_B\) steruje znacznie większym prądem kolektora \(I_C=\beta\cdot I_B\) (β — statyczny współczynnik wzmocnienia prądowego, zwykle 50-300) — małe zmiany sygnału wejściowego dają dużo większe zmiany sygnału wyjściowego.<br><br>
-<strong>Jako przełącznik:</strong> tranzystor pracuje w dwóch skrajnych stanach — odcięcia (\(I_B=0\), brak przewodzenia, jak otwarty łącznik) oraz nasycenia (duży prąd bazy, minimalny spadek napięcia kolektor-emiter, jak zamknięty łącznik). Przełączanie między tymi stanami realizuje funkcję klucza elektronicznego.
+<div class="q-block">
+<span class="q-text">23. Budowa oraz zasada działania tranzystora bipolarnego, który jest wzmacniaczem i może jednocześnie być przełącznikiem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Budowa:</b> tranzystor bipolarny (BJT) składa się z trzech obszarów półprzewodnikowych o naprzemiennym domieszkowaniu (npn lub pnp), tworzących dwa złącza p-n: baza-emiter (BE) i baza-kolektor (BC). Elektrody: emiter (E), baza (B, cienka, słabo domieszkowana), kolektor (C).<br><br>
+<b>Jako wzmacniacz</b> (praca w obszarze aktywnym: złącze BE spolaryzowane w kierunku przewodzenia, BC zaporowo): niewielki prąd bazy \(I_B\) steruje znacznie większym prądem kolektora \(I_C=\beta\cdot I_B\) (β — statyczny współczynnik wzmocnienia prądowego, zwykle 50-300) — małe zmiany sygnału wejściowego dają dużo większe zmiany sygnału wyjściowego.<br><br>
+<b>Jako przełącznik:</b> tranzystor pracuje w dwóch skrajnych stanach — odcięcia (\(I_B=0\), brak przewodzenia, jak otwarty łącznik) oraz nasycenia (duży prąd bazy, minimalny spadek napięcia kolektor-emiter, jak zamknięty łącznik). Przełączanie między tymi stanami realizuje funkcję klucza elektronicznego.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>27. Ujemne sprzężenie zwrotne we wzmacniaczach operacyjnych</h3>
-<p class="polecenie">Polecenie: Dlaczego we wzmacniaczach operacyjnych jest stosowane napięciowe ujemne sprzężenie zwrotne?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">24. Dlaczego we wzmacniaczach operacyjnych jest stosowane napięciowe ujemne sprzężenie zwrotne?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Stabilizuje wzmocnienie układu — czyni je niezależnym od bardzo dużego i niestabilnego wzmocnienia otwartej pętli wzmacniacza, a zależnym jedynie od precyzyjnych elementów zewnętrznych (rezystorów sprzężenia).<br>
 2. Zmniejsza zniekształcenia nieliniowe wprowadzane przez wzmacniacz.<br>
 3. Zwiększa pasmo przenoszonych częstotliwości.<br>
@@ -483,28 +532,35 @@ Zastosowania: analiza zachowań użytkowników, business intelligence, medycyna 
 5. Stabilizuje punkt pracy, zmniejszając wpływ temperatury i tolerancji elementów.<br>
 6. Zapewnia stabilność układu, zapobiegając niekontrolowanym oscylacjom przy bardzo dużym wzmocnieniu otwartej pętli.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>28. Napięcie wyjściowe wzmacniacza nieodwracającego z dzielnikiem</h3>
-<p class="polecenie">Polecenie: Jaka jest wartość napięcia Uwy na wyjściu układu z nieodwracającym fazy sygnału wzmacniaczem operacyjnym U1A, jeżeli: napięcie wejściowe Uwe=0,1 V, rezystor sprzężenia zwrotnego R2=9,9 kΩ, rezystor R1=100 Ω, rezystor R3=R4=1 kΩ (schemat: wzmacniacz nieodwracający z dzielnikiem napięcia R3-R4 na wyjściu układu).</p>
-<p>Napięcie na wyjściu samego wzmacniacza operacyjnego (przed dzielnikiem R3-R4), dla konfiguracji nieodwracającej ze wzmocnieniem \(1+\frac{R_2}{R_1}\):</p>
-<p>\(U_{wzm} = U_{we}\left(1+\dfrac{R_2}{R_1}\right) = 0{,}1\cdot\left(1+\dfrac{9900}{100}\right) = 0{,}1\cdot100 = 10\ V\)</p>
-<p>Rezystory R3 i R4 (po 1 kΩ) tworzą na wyjściu prosty dzielnik napięcia do masy (przy braku obciążenia na wyjściu Wy):</p>
-<p>\(U_{wy} = U_{wzm}\cdot\dfrac{R_4}{R_3+R_4} = 10\cdot\dfrac{1000}{1000+1000} = 10\cdot0{,}5\)</p>
-<div class="odp">\(U_{wy} = 5\ V\)</div>
+<div class="q-block">
+<span class="q-text">25. Jaka jest wartość napięcia Uwy na wyjściu układu z nieodwracającym fazy sygnału wzmacniaczem operacyjnym U1A, jeżeli: napięcie wejściowe Uwe=0,1 V, rezystor sprzężenia zwrotnego R2=9,9 kΩ, rezystor R1=100 Ω, rezystor R3=R4=1 kΩ (schemat: wzmacniacz nieodwracający z dzielnikiem napięcia R3-R4 na wyjściu układu)?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Napięcie na wyjściu samego wzmacniacza operacyjnego (przed dzielnikiem R3-R4), dla konfiguracji nieodwracającej ze wzmocnieniem \(1+\frac{R_2}{R_1}\):<br><br>
+\(U_{wzm} = U_{we}\left(1+\dfrac{R_2}{R_1}\right) = 0{,}1\cdot\left(1+\dfrac{9900}{100}\right) = 0{,}1\cdot100 = 10\ V\)<br><br>
+Rezystory R3 i R4 (po 1 kΩ) tworzą na wyjściu prosty dzielnik napięcia do masy (przy braku obciążenia na wyjściu Wy):<br><br>
+\(U_{wy} = U_{wzm}\cdot\dfrac{R_4}{R_3+R_4} = 10\cdot\dfrac{1000}{1000+1000} = 10\cdot0{,}5\)<br><br>
+<b>Odpowiedź:</b> \(U_{wy} = 5\ V\)
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>29. Komparator napięcia — zasada działania i zastosowanie</h3>
-<p class="polecenie">Polecenie: Proszę opisać zasadę działania i zastosowanie komparatora napięcia.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">26. Proszę opisać zasadę działania i zastosowanie komparatora napięcia.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Komparator napięcia (często zbudowany na bazie wzmacniacza operacyjnego pracującego bez sprzężenia zwrotnego) porównuje dwa napięcia wejściowe (\(U_+\) i \(U_-\)) i ustawia na wyjściu jeden z dwóch skrajnych poziomów napięcia w zależności od tego, które napięcie jest większe:<br>
 — jeśli \(U_+ > U_-\): wyjście przyjmuje maksymalne napięcie dodatnie (\(+V_{sat}\))<br>
 — jeśli \(U_+ < U_-\): wyjście przyjmuje minimalne napięcie (\(-V_{sat}\) lub 0)<br><br>
 Dzięki bardzo dużemu wzmocnieniu otwartej pętli, nawet niewielka różnica napięć wejściowych powoduje natychmiastowe nasycenie wyjścia do jednego z dwóch poziomów — działanie binarne, podobne do przełącznika.<br><br>
-<strong>Zastosowania:</strong> detekcja przekroczenia progu napięcia (np. wykrywanie rozładowania baterii), przetworniki ADC typu flash (wiele komparatorów równolegle), generatory przebiegów prostokątnych, układy zabezpieczające (termostaty elektroniczne), przerzutnik Schmitta (komparator z histerezą).
+<b>Zastosowania:</b> detekcja przekroczenia progu napięcia (np. wykrywanie rozładowania baterii), przetworniki ADC typu flash (wiele komparatorów równolegle), generatory przebiegów prostokątnych, układy zabezpieczające (termostaty elektroniczne), przerzutnik Schmitta (komparator z histerezą).
 </div>
+</details>
 </div>
 </div>
 

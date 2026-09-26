@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,52 +32,70 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 .uwaga {
     background: #fff3cd;
     border-left: 3px solid #e0a800;
     padding: 8px 12px;
-    margin-top: 8px;
+    margin-bottom: 10px;
     font-size: 0.92rem;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -90,16 +109,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -124,23 +133,27 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="numeryczne">
 <h2>1. Metody numeryczne</h2>
 
-<div class="pytanie">
-<h3>1. Metoda Newtona — opis i błąd n-tego przybliżenia</h3>
-<p class="polecenie">Polecenie: Omów metodę Newtona i podaj błąd n-tego przybliżenia.</p>
-<p>Metoda Newtona (stycznych) służy do przybliżonego rozwiązywania równań nieliniowych \(f(x)=0\). Startując z przybliżenia \(x_0\), kolejne przybliżenia wyznacza się wzorem:</p>
-<p>\(x_{n+1} = x_n - \dfrac{f(x_n)}{f'(x_n)}\)</p>
-<p>Interpretacja geometryczna: kolejne przybliżenie to punkt przecięcia stycznej do wykresu \(f\) w punkcie \((x_n,f(x_n))\) z osią OX.</p>
-<div class="odp">
-Błąd n-tego przybliżenia (dla \(f\) klasy \(C^2\), \(f'(\alpha)\ne0\), gdzie \(\alpha\) to dokładny pierwiastek):<br>
+<div class="q-block">
+<span class="q-text">1. Omów metodę Newtona i podaj błąd n-tego przybliżenia.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Metoda Newtona (stycznych) służy do przybliżonego rozwiązywania równań nieliniowych \(f(x)=0\). Startując z przybliżenia \(x_0\), kolejne przybliżenia wyznacza się wzorem:<br><br>
+\(x_{n+1} = x_n - \dfrac{f(x_n)}{f'(x_n)}\)<br><br>
+Interpretacja geometryczna: kolejne przybliżenie to punkt przecięcia stycznej do wykresu \(f\) w punkcie \((x_n,f(x_n))\) z osią OX.<br><br>
+<b>Odpowiedź:</b> Błąd n-tego przybliżenia (dla \(f\) klasy \(C^2\), \(f'(\alpha)\ne0\), gdzie \(\alpha\) to dokładny pierwiastek):<br>
 \(e_{n+1} \approx \dfrac{f''(\alpha)}{2f'(\alpha)}\cdot e_n^2\), gdzie \(e_n=x_n-\alpha\)<br><br>
-Oznacza to <strong>zbieżność kwadratową</strong> (rząd zbieżności 2) — liczba poprawnych cyfr przybliżenia w przybliżeniu podwaja się w każdej iteracji, o ile punkt startowy jest dostatecznie bliski pierwiastkowi.
+Oznacza to <b>zbieżność kwadratową</b> (rząd zbieżności 2) — liczba poprawnych cyfr przybliżenia w przybliżeniu podwaja się w każdej iteracji, o ile punkt startowy jest dostatecznie bliski pierwiastkowi.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>2. Metoda Newtona — pierwiastek równania eˣ=3x²</h3>
-<p class="polecenie">Polecenie: Za pomocą metody Newtona znajdź pierwsze, dodatnie rozwiązanie równania \(e^x=3x^2\). Oszacuj błąd po pięciu krokach.</p>
-<p>Definiujemy \(f(x)=e^x-3x^2\), \(f'(x)=e^x-6x\). Ponieważ \(f(0)=1>0\) a \(f(1)=e-3\approx-0{,}282<0\), pierwiastek leży w \((0,1)\), bliżej 1. Przyjmujemy punkt startowy \(x_0=1\).</p>
+<div class="q-block">
+<span class="q-text">2. Za pomocą metody Newtona znajdź pierwsze, dodatnie rozwiązanie równania \(e^x=3x^2\). Oszacuj błąd po pięciu krokach.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Definiujemy \(f(x)=e^x-3x^2\), \(f'(x)=e^x-6x\). Ponieważ \(f(0)=1>0\) a \(f(1)=e-3\approx-0{,}282<0\), pierwiastek leży w \((0,1)\), bliżej 1. Przyjmujemy punkt startowy \(x_0=1\).<br><br>
 <table>
 <tr><th>n</th><th>\(x_n\)</th><th>\(f(x_n)\)</th></tr>
 <tr><td>0</td><td>1,00000</td><td>-0,28172</td></tr>
@@ -149,45 +162,51 @@ Oznacza to <strong>zbieżność kwadratową</strong> (rząd zbieżności 2) — 
 <tr><td>3</td><td>0,91001</td><td>≈0</td></tr>
 <tr><td>4-5</td><td>0,91001</td><td>≈0 (zbieżność)</td></tr>
 </table>
-<div class="odp">
-Pierwsze dodatnie rozwiązanie: \(x \approx 0{,}91001\).<br>
+<b>Odpowiedź:</b> Pierwsze dodatnie rozwiązanie: \(x \approx 0{,}91001\).<br>
 Błąd po pięciu krokach: \(|x_5-x_4| < 10^{-6}\) — dzięki kwadratowej zbieżności metody Newtona wynik stabilizuje się już po 3-4 iteracjach, a błąd po 5 krokach jest praktycznie pomijalny (rzędu \(10^{-7}\) lub mniejszy).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Oszacowanie błędu interpolacji dla ln(100,5)</h3>
-<p class="polecenie">Polecenie: Korzystając ze wzoru \(|\varepsilon(x)|\le\dfrac{M_{n+1}}{(n+1)!}|(x-x_0)(x-x_1)\cdots(x-x_n)|\), gdzie \(M_{n+1}=\sup_{x_0\le x\le x_n}|f^{(n+1)}(x)|\), oszacować z jaką dokładnością można obliczyć wartość \(\ln(100{,}5)\), jeżeli dane są wartości \(\ln(100), \ln(101), \ln(102), \ln(103)\).</p>
-<p>Mamy 4 węzły (\(n+1=4 \Rightarrow n=3\)): \(x_0=100,x_1=101,x_2=102,x_3=103\). Dla \(f(x)=\ln x\): \(f^{(4)}(x)=-\dfrac{6}{x^4}\).</p>
-<p>\(M_4 = \sup_{100\le x\le103}\left|-\dfrac{6}{x^4}\right| = \dfrac{6}{100^4} = 6\times10^{-8}\) (maksimum przy najmniejszym \(x\)).</p>
-<p>Iloczyn dla \(x=100{,}5\): \(|(0{,}5)(-0{,}5)(-1{,}5)(-2{,}5)| = 0{,}5\cdot0{,}5\cdot1{,}5\cdot2{,}5 = 0{,}9375\)</p>
-<div class="odp">
-\(|\varepsilon(100{,}5)| \le \dfrac{6\times10^{-8}}{4!}\cdot0{,}9375 = \dfrac{6\times10^{-8}}{24}\cdot0{,}9375 \approx 2{,}34\times10^{-9}\)<br><br>
+<div class="q-block">
+<span class="q-text">3. Korzystając ze wzoru \(|\varepsilon(x)|\le\dfrac{M_{n+1}}{(n+1)!}|(x-x_0)(x-x_1)\cdots(x-x_n)|\), gdzie \(M_{n+1}=\sup_{x_0\le x\le x_n}|f^{(n+1)}(x)|\), oszacować z jaką dokładnością można obliczyć wartość \(\ln(100{,}5)\), jeżeli dane są wartości \(\ln(100), \ln(101), \ln(102), \ln(103)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Mamy 4 węzły (\(n+1=4 \Rightarrow n=3\)): \(x_0=100,x_1=101,x_2=102,x_3=103\). Dla \(f(x)=\ln x\): \(f^{(4)}(x)=-\dfrac{6}{x^4}\).<br><br>
+\(M_4 = \sup_{100\le x\le103}\left|-\dfrac{6}{x^4}\right| = \dfrac{6}{100^4} = 6\times10^{-8}\) (maksimum przy najmniejszym \(x\)).<br><br>
+Iloczyn dla \(x=100{,}5\): \(|(0{,}5)(-0{,}5)(-1{,}5)(-2{,}5)| = 0{,}5\cdot0{,}5\cdot1{,}5\cdot2{,}5 = 0{,}9375\)<br><br>
+<b>Odpowiedź:</b> \(|\varepsilon(100{,}5)| \le \dfrac{6\times10^{-8}}{4!}\cdot0{,}9375 = \dfrac{6\times10^{-8}}{24}\cdot0{,}9375 \approx 2{,}34\times10^{-9}\)<br><br>
 Wartość \(\ln(100{,}5)\) można więc obliczyć interpolacyjnie z dokładnością do ok. \(2{,}3\times10^{-9}\) — czyli poprawnie do ok. 8-9 miejsc po przecinku.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Metoda Simpsona — obliczenie całki ∫sin(2x)dx</h3>
-<p class="polecenie">Polecenie: Korzystając z metody Simpsona oblicz \(\int_0^1\sin(2x)dx\) i oszacuj błąd przyjmując długość podprzedziału h=0,1.</p>
-<p>Dla \(h=0{,}1\) mamy \(n=10\) podprzedziałów, węzły \(x_i=0{,}0{,}1{,}\ldots,1{,}0\). Wzór Simpsona złożonego:</p>
-<p>\(I \approx \dfrac{h}{3}\left[f(x_0)+f(x_{10}) + 4\sum_{\text{nieparz.}}f(x_i) + 2\sum_{\text{parz. wewn.}}f(x_i)\right]\)</p>
-<p>Suma dla indeksów nieparzystych (1,3,5,7,9): \(0{,}19867+0{,}56464+0{,}84147+0{,}98545+0{,}97385 = 3{,}56408\)</p>
-<p>Suma dla indeksów parzystych wewnętrznych (2,4,6,8): \(0{,}38942+0{,}71736+0{,}93204+0{,}99957 = 3{,}03839\)</p>
-<p>\(I \approx \dfrac{0{,}1}{3}\left[0+0{,}90930+4\cdot3{,}56408+2\cdot3{,}03839\right] = \dfrac{0{,}1}{3}\cdot21{,}24239 \approx 0{,}70808\)</p>
-<p>Dokładna wartość: \(\int_0^1\sin(2x)dx = \dfrac{1-\cos2}{2} \approx 0{,}70807\)</p>
-<p>Oszacowanie błędu ze wzoru: \(|E|\le\dfrac{(b-a)h^4}{180}\max|f^{(4)}(x)|\), gdzie \(f^{(4)}(x)=16\sin(2x)\), \(\max|f^{(4)}|=16\):</p>
-<div class="odp">
-\(I \approx 0{,}70808\) (dokładna wartość: \(0{,}70807\))<br>
+<div class="q-block">
+<span class="q-text">4. Korzystając z metody Simpsona oblicz \(\int_0^1\sin(2x)dx\) i oszacuj błąd przyjmując długość podprzedziału h=0,1.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Dla \(h=0{,}1\) mamy \(n=10\) podprzedziałów, węzły \(x_i=0{,}0{,}1{,}\ldots,1{,}0\). Wzór Simpsona złożonego:<br><br>
+\(I \approx \dfrac{h}{3}\left[f(x_0)+f(x_{10}) + 4\sum_{\text{nieparz.}}f(x_i) + 2\sum_{\text{parz. wewn.}}f(x_i)\right]\)<br><br>
+Suma dla indeksów nieparzystych (1,3,5,7,9): \(0{,}19867+0{,}56464+0{,}84147+0{,}98545+0{,}97385 = 3{,}56408\)<br><br>
+Suma dla indeksów parzystych wewnętrznych (2,4,6,8): \(0{,}38942+0{,}71736+0{,}93204+0{,}99957 = 3{,}03839\)<br><br>
+\(I \approx \dfrac{0{,}1}{3}\left[0+0{,}90930+4\cdot3{,}56408+2\cdot3{,}03839\right] = \dfrac{0{,}1}{3}\cdot21{,}24239 \approx 0{,}70808\)<br><br>
+Dokładna wartość: \(\int_0^1\sin(2x)dx = \dfrac{1-\cos2}{2} \approx 0{,}70807\)<br><br>
+Oszacowanie błędu ze wzoru: \(|E|\le\dfrac{(b-a)h^4}{180}\max|f^{(4)}(x)|\), gdzie \(f^{(4)}(x)=16\sin(2x)\), \(\max|f^{(4)}|=16\):<br><br>
+<b>Odpowiedź:</b> \(I \approx 0{,}70808\) (dokładna wartość: \(0{,}70807\))<br>
 \(|E| \le \dfrac{1\cdot(0{,}1)^4}{180}\cdot16 \approx 8{,}9\times10^{-6}\) — zgodne z rzeczywistą różnicą (~\(7\times10^{-6}\)).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>5. Metoda Eulera dla równania y''=-x</h3>
-<p class="polecenie">Polecenie: Metodą Eulera rozwiąż równanie \(y''=-x\) dla \(x\in[0;2]\) przyjmując \(y'(0)=1\), \(y(0)=0\) oraz długość podprzedziału h=0,1.</p>
-<p>Sprowadzamy do układu równań pierwszego rzędu: \(y_1=y\), \(y_2=y'\), więc \(y_1'=y_2\), \(y_2'=-x\). Metoda Eulera:</p>
-<p>\(y_{1,n+1}=y_{1,n}+h\cdot y_{2,n}\), \(\quad y_{2,n+1}=y_{2,n}+h\cdot(-x_n)\), z \(y_{1,0}=0\), \(y_{2,0}=1\)</p>
+<div class="q-block">
+<span class="q-text">5. Metodą Eulera rozwiąż równanie \(y''=-x\) dla \(x\in[0;2]\) przyjmując \(y'(0)=1\), \(y(0)=0\) oraz długość podprzedziału h=0,1.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Sprowadzamy do układu równań pierwszego rzędu: \(y_1=y\), \(y_2=y'\), więc \(y_1'=y_2\), \(y_2'=-x\). Metoda Eulera:<br><br>
+\(y_{1,n+1}=y_{1,n}+h\cdot y_{2,n}\), \(\quad y_{2,n+1}=y_{2,n}+h\cdot(-x_n)\), z \(y_{1,0}=0\), \(y_{2,0}=1\)<br><br>
 <table>
 <tr><th>n</th><th>\(x_n\)</th><th>\(y_{1,n}\) (≈y)</th><th>\(y_{2,n}\) (≈y')</th></tr>
 <tr><td>0</td><td>0,0</td><td>0,000</td><td>1,000</td></tr>
@@ -196,19 +215,21 @@ Wartość \(\ln(100{,}5)\) można więc obliczyć interpolacyjnie z dokładnośc
 <tr><td>3</td><td>0,3</td><td>0,299</td><td>0,970</td></tr>
 <tr><td>4</td><td>0,4</td><td>0,396</td><td>0,940</td></tr>
 <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
-<tr><td>20</td><td>2,0</td><td><strong>0,860</strong></td><td>-1,000</td></tr>
+<tr><td>20</td><td>2,0</td><td><b>0,860</b></td><td>-1,000</td></tr>
 </table>
-<p>Rozwiązanie dokładne: \(y=x-\dfrac{x^3}{6}\) (z podwójnego całkowania \(y''=-x\)), dające \(y(2)=2-\dfrac{8}{6}\approx0{,}6667\).</p>
-<div class="odp">
-Przybliżenie Eulera: \(y(2)\approx0{,}860\), wobec dokładnej wartości \(y(2)=0{,}6667\) — widoczny znaczny błąd (metoda Eulera jest tylko pierwszego rzędu, a błąd kumuluje się przy 20 krokach z dość dużym h=0,1).
+Rozwiązanie dokładne: \(y=x-\dfrac{x^3}{6}\) (z podwójnego całkowania \(y''=-x\)), dające \(y(2)=2-\dfrac{8}{6}\approx0{,}6667\).<br><br>
+<b>Odpowiedź:</b> Przybliżenie Eulera: \(y(2)\approx0{,}860\), wobec dokładnej wartości \(y(2)=0{,}6667\) — widoczny znaczny błąd (metoda Eulera jest tylko pierwszego rzędu, a błąd kumuluje się przy 20 krokach z dość dużym h=0,1).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Metoda Rungego-Kutty rzędu 2 dla y'=-y·sin(x)</h3>
-<p class="polecenie">Polecenie: Napisz równanie Rungego-Kutty rzędu drugiego dla równania \(y'=-y\sin(x)\) bazując na wzorze \(y_{n+1}=y_n+\frac12 h f(x_n,y_n)+\frac12hf(x_n+h,y_n+hf(x_n,y_n))\). Oblicz \(y_5\) przyjmując \(y_0=1\) oraz h=0,1.</p>
-<p>Dla \(f(x,y)=-y\sin(x)\), wzór RK2 przyjmuje postać:</p>
-<p>\(y_{n+1} = y_n - \dfrac{h}{2}y_n\sin(x_n) - \dfrac{h}{2}\left[y_n-hy_n\sin(x_n)\right]\sin(x_n+h)\)</p>
+<div class="q-block">
+<span class="q-text">6. Napisz równanie Rungego-Kutty rzędu drugiego dla równania \(y'=-y\sin(x)\) bazując na wzorze \(y_{n+1}=y_n+\frac12 h f(x_n,y_n)+\frac12hf(x_n+h,y_n+hf(x_n,y_n))\). Oblicz \(y_5\) przyjmując \(y_0=1\) oraz h=0,1.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Dla \(f(x,y)=-y\sin(x)\), wzór RK2 przyjmuje postać:<br><br>
+\(y_{n+1} = y_n - \dfrac{h}{2}y_n\sin(x_n) - \dfrac{h}{2}\left[y_n-hy_n\sin(x_n)\right]\sin(x_n+h)\)<br><br>
 <table>
 <tr><th>n</th><th>\(x_n\)</th><th>\(y_n\)</th></tr>
 <tr><td>0</td><td>0,0</td><td>1,00000</td></tr>
@@ -216,158 +237,189 @@ Przybliżenie Eulera: \(y(2)\approx0{,}860\), wobec dokładnej wartości \(y(2)=
 <tr><td>2</td><td>0,2</td><td>0,98026</td></tr>
 <tr><td>3</td><td>0,3</td><td>0,95632</td></tr>
 <tr><td>4</td><td>0,4</td><td>0,92412</td></tr>
-<tr><td>5</td><td>0,5</td><td><strong>0,88484</strong></td></tr>
+<tr><td>5</td><td>0,5</td><td><b>0,88484</b></td></tr>
 </table>
-<p>Rozwiązanie dokładne (równanie separowalne): \(y=e^{\cos x-1}\), więc \(y(0{,}5)=e^{\cos(0{,}5)-1}\approx0{,}88481\) — RK2 daje wynik niemal identyczny z dokładnym.</p>
-<div class="odp">\(y_5 \approx 0{,}8848\)</div>
+Rozwiązanie dokładne (równanie separowalne): \(y=e^{\cos x-1}\), więc \(y(0{,}5)=e^{\cos(0{,}5)-1}\approx0{,}88481\) — RK2 daje wynik niemal identyczny z dokładnym.<br><br>
+<b>Odpowiedź:</b> \(y_5 \approx 0{,}8848\)
+</div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="bazy">
 <h2>2. Bazy danych</h2>
 
-<div class="pytanie">
-<h3>7. Model transakcji ACID</h3>
-<p class="polecenie">Polecenie: Opisz, na czym polega model transakcji ACID.</p>
-<div class="odp">
-— <strong>Atomicity</strong> (atomowość) — transakcja wykonuje się w całości albo wcale (w razie niepowodzenia — rollback).<br>
-— <strong>Consistency</strong> (spójność) — transakcja przenosi bazę z jednego spójnego stanu do drugiego, zachowując reguły integralności.<br>
-— <strong>Isolation</strong> (izolacja) — równoległe transakcje nie wpływają wzajemnie na swoje wyniki, jakby wykonywały się sekwencyjnie.<br>
-— <strong>Durability</strong> (trwałość) — efekty zatwierdzonej (commit) transakcji są trwałe, nawet w razie awarii systemu.
+<div class="q-block">
+<span class="q-text">7. Opisz, na czym polega model transakcji ACID.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+— <b>Atomicity</b> (atomowość) — transakcja wykonuje się w całości albo wcale (w razie niepowodzenia — rollback).<br>
+— <b>Consistency</b> (spójność) — transakcja przenosi bazę z jednego spójnego stanu do drugiego, zachowując reguły integralności.<br>
+— <b>Isolation</b> (izolacja) — równoległe transakcje nie wpływają wzajemnie na swoje wyniki, jakby wykonywały się sekwencyjnie.<br>
+— <b>Durability</b> (trwałość) — efekty zatwierdzonej (commit) transakcji są trwałe, nawet w razie awarii systemu.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>8. Kursory w relacyjnych bazach danych</h3>
-<p class="polecenie">Polecenie: Do czego służą kursory w relacyjnych bazach danych?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">8. Do czego służą kursory w relacyjnych bazach danych?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Kursor pozwala na iteracyjne przetwarzanie wyników zapytania SQL wiersz po wierszu (zamiast operowania na całym zbiorze naraz) — stosowany głównie w procedurach składowanych/skryptach proceduralnych (PL/SQL, T-SQL), gdy potrzebna jest logika wymagająca dostępu do pojedynczych rekordów po kolei. Typowe operacje: <code>DECLARE CURSOR</code>, <code>OPEN</code>, <code>FETCH</code>, <code>CLOSE</code>.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>9. Widok w relacyjnych bazach danych</h3>
-<p class="polecenie">Polecenie: Czym jest widok w relacyjnych bazach danych i do czego służy?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">9. Czym jest widok w relacyjnych bazach danych i do czego służy?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Widok (VIEW) to wirtualna tabela zdefiniowana zapytaniem SQL — nie przechowuje fizycznie danych (poza widokami materializowanymi), lecz przy każdym odwołaniu wykonuje zdefiniowane zapytanie na tabelach źródłowych.<br><br>
 Zastosowania: uproszczenie skomplikowanych zapytań (ukrycie złożoności JOIN-ów), ograniczenie dostępu do danych (udostępnienie tylko wybranych kolumn/wierszy), zapewnienie niezależności logicznej aplikacji od zmian struktury tabel bazowych.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="inzynieria">
 <h2>3. Inżynieria oprogramowania i testowanie</h2>
 
-<div class="pytanie">
-<h3>10. Przypadek testowy</h3>
-<p class="polecenie">Polecenie: Co to jest przypadek testowy?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">10. Co to jest przypadek testowy?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Zestaw warunków, danych wejściowych, kroków wykonania oraz oczekiwanych wyników, służący do sprawdzenia, czy dana funkcjonalność systemu działa zgodnie z wymaganiami. Zwykle zawiera: identyfikator, opis/cel, dane wejściowe, kroki wykonania, oczekiwany wynik, wynik rzeczywisty, status (zaliczony/niezaliczony).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>11. Specyfikacja wymagań i problemy przy jej formułowaniu</h3>
-<p class="polecenie">Polecenie: Co to jest specyfikacja wymagań i jakie problemy napotykamy przy jej formułowaniu?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">11. Co to jest specyfikacja wymagań i jakie problemy napotykamy przy jej formułowaniu?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Specyfikacja wymagań to dokument opisujący wymagania funkcjonalne i niefunkcjonalne wobec systemu.<br><br>
 Problemy: niejednoznaczność sformułowań, niekompletność (pominięcie przypadków brzegowych), sprzeczność wymagań zgłaszanych przez różnych interesariuszy, trudność komunikacji między klientem a zespołem, zmienność wymagań w czasie (requirement creep), trudność priorytetyzacji, brak weryfikowalności niektórych wymagań.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>12. Ograniczenie testowania — spostrzeżenia Dijkstry</h3>
-<p class="polecenie">Polecenie: Ograniczenie testowania — spostrzeżenia Dijkstry.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">12. Ograniczenie testowania — spostrzeżenia Dijkstry.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 E. Dijkstra: "testowanie może wykazać obecność błędów, ale nigdy nie może udowodnić ich całkowitego braku" (testing shows the presence, not the absence of bugs). Oznacza to, że nawet przejście wszystkich zaplanowanych testów nie gwarantuje braku błędów — testowanie jedynie zwiększa poziom zaufania do jakości oprogramowania, nie dając formalnego dowodu poprawności, ze względu na praktyczną niemożność przetestowania wszystkich kombinacji danych i ścieżek wykonania.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>13. Statyczna i dynamiczna weryfikacja kodu</h3>
-<p class="polecenie">Polecenie: Statyczna i dynamiczna weryfikacja kodu — wyjaśnij różnice.</p>
-<div class="odp">
-<strong>Weryfikacja statyczna</strong> — analiza kodu bez jego uruchamiania: przegląd kodu (code review), narzędzia analizy statycznej, inspekcje.<br>
-<strong>Weryfikacja dynamiczna</strong> — testowanie poprzez rzeczywiste uruchomienie programu i obserwację jego zachowania (testy jednostkowe, integracyjne, systemowe).<br><br>
+<div class="q-block">
+<span class="q-text">13. Statyczna i dynamiczna weryfikacja kodu — wyjaśnij różnice.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Weryfikacja statyczna</b> — analiza kodu bez jego uruchamiania: przegląd kodu (code review), narzędzia analizy statycznej, inspekcje.<br>
+<b>Weryfikacja dynamiczna</b> — testowanie poprzez rzeczywiste uruchomienie programu i obserwację jego zachowania (testy jednostkowe, integracyjne, systemowe).<br><br>
 Różnica: statyczna wykrywa błędy bez wykonywania kodu (wcześniej, taniej), dynamiczna wymaga uruchomienia programu i wykrywa błędy przejawiające się w rzeczywistym działaniu, ale nie gwarantuje pokrycia wszystkich ścieżek.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>14. Diagramy UML</h3>
-<p class="polecenie">Polecenie: Jakie diagramy są stosowane w języku UML?</p>
-<div class="odp">
-<strong>Diagramy strukturalne:</strong> klas, obiektów, komponentów, wdrożenia (deployment), pakietów, struktury złożonej.<br>
-<strong>Diagramy zachowania:</strong> przypadków użycia (use case), sekwencji, komunikacji, stanów (state machine), aktywności, przeglądu interakcji, czasowy (timing).
+<div class="q-block">
+<span class="q-text">14. Jakie diagramy są stosowane w języku UML?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Diagramy strukturalne:</b> klas, obiektów, komponentów, wdrożenia (deployment), pakietów, struktury złożonej.<br>
+<b>Diagramy zachowania:</b> przypadków użycia (use case), sekwencji, komunikacji, stanów (state machine), aktywności, przeglądu interakcji, czasowy (timing).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>15. UML — perspektywa 4+1</h3>
-<p class="polecenie">Polecenie: UML jest często określany, jako język modelowania z perspektywą 4+1, wyjaśnij.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">15. UML jest często określany, jako język modelowania z perspektywą 4+1, wyjaśnij.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Model architektury 4+1 (Kruchten) opisuje system z pięciu powiązanych widoków:<br>
-1. <strong>Widok logiczny</strong> — struktura klas i obiektów (funkcjonalność).<br>
-2. <strong>Widok procesów</strong> — współbieżność, synchronizacja, komunikacja między procesami/wątkami.<br>
-3. <strong>Widok fizyczny/wdrożenia</strong> — rozmieszczenie komponentów na sprzęcie/węzłach sieci.<br>
-4. <strong>Widok implementacji</strong> — organizacja kodu, modułów z perspektywy programisty.<br>
-5. <strong>"+1" widok przypadków użycia</strong> — spina i weryfikuje spójność pozostałych czterech widoków z perspektywy funkcjonalności widzianej przez użytkownika.
+1. <b>Widok logiczny</b> — struktura klas i obiektów (funkcjonalność).<br>
+2. <b>Widok procesów</b> — współbieżność, synchronizacja, komunikacja między procesami/wątkami.<br>
+3. <b>Widok fizyczny/wdrożenia</b> — rozmieszczenie komponentów na sprzęcie/węzłach sieci.<br>
+4. <b>Widok implementacji</b> — organizacja kodu, modułów z perspektywy programisty.<br>
+5. <b>"+1" widok przypadków użycia</b> — spina i weryfikuje spójność pozostałych czterech widoków z perspektywy funkcjonalności widzianej przez użytkownika.
 </div>
-</div>
-
-<div class="pytanie">
-<h3>16. Przypadek użycia vs diagram przypadków użycia</h3>
-<p class="polecenie">Polecenie: Różnice między "Przypadkami użycia", a "Diagramem przypadków użycia"?</p>
-<div class="odp">
-<strong>Przypadek użycia</strong> — tekstowy opis pojedynczego scenariusza interakcji między aktorem a systemem, prowadzącego do osiągnięcia celu (np. kroki logowania).<br><br>
-<strong>Diagram przypadków użycia</strong> — graficzna reprezentacja UML pokazująca zbiór przypadków użycia, aktorów i relacje między nimi (asocjacje, include, extend, generalizacja) — daje przegląd wysokopoziomowej funkcjonalności bez szczegółów przebiegu każdego scenariusza.
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>17. Rodzaje testów</h3>
-<p class="polecenie">Polecenie: Rodzaje testów wymień i opisz.</p>
-<div class="odp">
-— <strong>Jednostkowe</strong> — testowanie izolowanych jednostek kodu (funkcji, metod).<br>
-— <strong>Integracyjne</strong> — sprawdzają współpracę połączonych modułów.<br>
-— <strong>Systemowe</strong> — testowanie całego zintegrowanego systemu wobec wymagań.<br>
-— <strong>Akceptacyjne</strong> — weryfikacja zgodności z oczekiwaniami klienta (UAT).<br>
-— <strong>Regresyjne</strong> — sprawdzają, czy zmiany nie zepsuły istniejącej funkcjonalności.<br>
-— <strong>Wydajnościowe</strong> — szybkość, przepustowość, zużycie zasobów pod obciążeniem.<br>
-— <strong>Bezpieczeństwa</strong> — wykrywanie podatności na ataki.<br>
-— <strong>Na dym (smoke)</strong> — szybka weryfikacja kluczowych funkcji.<br>
-— <strong>Eksploracyjne</strong> — nieformalne, kreatywne testowanie bez wcześniej zdefiniowanych przypadków.
+<div class="q-block">
+<span class="q-text">16. Różnice między "Przypadkami użycia", a "Diagramem przypadków użycia"?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Przypadek użycia</b> — tekstowy opis pojedynczego scenariusza interakcji między aktorem a systemem, prowadzącego do osiągnięcia celu (np. kroki logowania).<br><br>
+<b>Diagram przypadków użycia</b> — graficzna reprezentacja UML pokazująca zbiór przypadków użycia, aktorów i relacje między nimi (asocjacje, include, extend, generalizacja) — daje przegląd wysokopoziomowej funkcjonalności bez szczegółów przebiegu każdego scenariusza.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>18. Test na dym (smoke test)</h3>
-<p class="polecenie">Polecenie: Co to jest test na dym (ang. smoke test)?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">17. Rodzaje testów wymień i opisz.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+— <b>Jednostkowe</b> — testowanie izolowanych jednostek kodu (funkcji, metod).<br>
+— <b>Integracyjne</b> — sprawdzają współpracę połączonych modułów.<br>
+— <b>Systemowe</b> — testowanie całego zintegrowanego systemu wobec wymagań.<br>
+— <b>Akceptacyjne</b> — weryfikacja zgodności z oczekiwaniami klienta (UAT).<br>
+— <b>Regresyjne</b> — sprawdzają, czy zmiany nie zepsuły istniejącej funkcjonalności.<br>
+— <b>Wydajnościowe</b> — szybkość, przepustowość, zużycie zasobów pod obciążeniem.<br>
+— <b>Bezpieczeństwa</b> — wykrywanie podatności na ataki.<br>
+— <b>Na dym (smoke)</b> — szybka weryfikacja kluczowych funkcji.<br>
+— <b>Eksploracyjne</b> — nieformalne, kreatywne testowanie bez wcześniej zdefiniowanych przypadków.
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">18. Co to jest test na dym (ang. smoke test)?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Wstępny, podstawowy zestaw testów sprawdzających, czy najważniejsze funkcje systemu działają poprawnie po nowej kompilacji/wdrożeniu, zanim przystąpi się do bardziej szczegółowego testowania. Ma na celu szybkie wykrycie poważnych, "blokujących" problemów — jeśli nie przechodzi, dalsze testowanie jest wstrzymywane. Nazwa pochodzi z elektroniki (sprawdzenie, czy urządzenie po włączeniu "nie dymi").
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>19. Testowanie metodą czarnej skrzynki</h3>
-<p class="polecenie">Polecenie: Czym jest testowanie metodą czarnej skrzynki?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">19. Czym jest testowanie metodą czarnej skrzynki?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Technika testowania, w której tester nie zna wewnętrznej struktury/implementacji kodu — testy projektowane są wyłącznie na podstawie specyfikacji wymagań/funkcjonalności, sprawdzając czy dla danych wejściowych system zwraca oczekiwane wyjścia. Techniki: podział na klasy równoważności, analiza wartości brzegowych, tabele decyzyjne.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. Testowanie metodą białej skrzynki</h3>
-<p class="polecenie">Polecenie: Czym jest testowanie metodą białej skrzynki?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">20. Czym jest testowanie metodą białej skrzynki?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Technika testowania oparta na znajomości wewnętrznej struktury kodu — testy projektowane są tak, by pokryć konkretne instrukcje, gałęzie, warunki czy ścieżki wykonania. Miary pokrycia: pokrycie instrukcji, pokrycie gałęzi, pokrycie warunków, pokrycie ścieżek.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>21. Siedem zasad testowania</h3>
-<p class="polecenie">Polecenie: Siedem zasad testowania.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">21. Siedem zasad testowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Testowanie wykazuje obecność błędów, a nie ich brak.<br>
 2. Wyczerpujące testowanie jest niemożliwe — potrzebna priorytetyzacja i analiza ryzyka.<br>
 3. Testowanie należy rozpocząć jak najwcześniej.<br>
@@ -376,31 +428,43 @@ Technika testowania oparta na znajomości wewnętrznej struktury kodu — testy 
 6. Testowanie zależy od kontekstu.<br>
 7. Błędne przekonanie o braku błędów — brak wykrytych błędów nie oznacza, że system jest użyteczny.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="czasrzeczywisty">
 <h2>4. Systemy czasu rzeczywistego</h2>
 
-<div class="pytanie">
-<h3>22. Algorytm EDF — analiza szeregowalności i średni czas oczekiwania</h3>
-<p class="polecenie">Polecenie: Tabela zawiera warunki wykonywania się kilku zadań w systemie czasu rzeczywistego, które mają być obsłużone przez jeden procesor (Z1: czas 10, tmin 0, tmax 40; Z2: czas 10, tmin 0, tmax 30; Z3: czas 30, tmin 30, tmax 100; Z4: czas 40, tmin 50, tmax 200; Z5: czas 10, tmin 70, tmax 90). a) Dokonaj analizy działania programu z zastosowaniem algorytmu EDF wykorzystując diagram Gantta. b) Oceń, czy program spełnia warunek szeregowalności. c) Oblicz średni czas oczekiwania na przetwarzanie przez procesor.</p>
-<p><strong>a) Symulacja EDF</strong> (wybierany zawsze zadanie gotowe o najwcześniejszym terminie tmax; algorytm z wywłaszczaniem):</p>
+<div class="q-block">
+<span class="q-text">22. Tabela zawiera warunki wykonywania się kilku zadań w systemie czasu rzeczywistego, które mają być obsłużone przez jeden procesor:</span>
+<table>
+<tr><th>Zadanie</th><th>Czas wykonania</th><th>tmin</th><th>tmax</th></tr>
+<tr><td>Z1</td><td>10</td><td>0</td><td>40</td></tr>
+<tr><td>Z2</td><td>10</td><td>0</td><td>30</td></tr>
+<tr><td>Z3</td><td>30</td><td>30</td><td>100</td></tr>
+<tr><td>Z4</td><td>40</td><td>50</td><td>200</td></tr>
+<tr><td>Z5</td><td>10</td><td>70</td><td>90</td></tr>
+</table>
+<div class="q-text" style="font-weight: normal;">tmin – moment, w którym zadanie jest gotowe do wykonania<br>
+tmax – ostateczny termin zakończenia zadania</div>
+<span class="q-text">a) Dokonaj analizy działania programu z zastosowaniem algorytmu EDF (ang. Earlier Deadline First) wykorzystując w tym celu diagram Gantta. b) Oceń, czy taki program spełnia warunek szeregowalności (tak lub nie – należy to wyjaśnić). c) Oblicz średni czas oczekiwania na przetwarzanie przez procesor dla tego algorytmu.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a) Symulacja EDF</b> (wybierany zawsze zadanie gotowe o najwcześniejszym terminie tmax; algorytm z wywłaszczaniem):<br><br>
 <pre>t=0:  gotowe Z1(dl.40), Z2(dl.30) -&gt; wybieramy Z2 (wczesniejszy termin)
 [0-10]   Z2 wykonywane (koniec, dotrzymany termin 30)
 [10-20]  Z1 wykonywane (jedyne gotowe; koniec, dotrzymany termin 40)
 [20-30]  PROCESOR BEZCZYNNY (brak gotowych zadan)
 [30-60]  Z3 wykonywane (gotowe od t=30; w trakcie, o t=50 pojawia sie Z4
-         z terminem 200 > 100 = termin Z3, wiec BRAK wywlaszczenia)
+         z terminem 200 &gt; 100 = termin Z3, wiec BRAK wywlaszczenia)
 [60-70]  Z4 wykonywane (jedyne gotowe od t=60)
 t=70:    pojawia sie Z5 (termin 90 &lt; 200 = termin Z4) -&gt; WYWLASZCZENIE Z4
 [70-80]  Z5 wykonywane (koniec, dotrzymany termin 90)
 [80-110] Z4 wznowione i dokonczone (pozostale 30 ms; koniec, dotrzymany termin 200)</pre>
-<p><strong>b) Szeregowalność:</strong></p>
-<div class="odp">
-TAK — wszystkie zadania kończą się przed swoimi terminami ostatecznymi: Z2 (10≤30), Z1 (20≤40), Z3 (60≤100), Z5 (80≤90), Z4 (110≤200). Harmonogram jest w pełni szeregowalny.
-</div>
-<p><strong>c) Średni czas oczekiwania</strong> (= czas zakończenia − tmin − czas wykonania):</p>
+<b>b) Szeregowalność:</b><br>
+TAK — wszystkie zadania kończą się przed swoimi terminami ostatecznymi: Z2 (10≤30), Z1 (20≤40), Z3 (60≤100), Z5 (80≤90), Z4 (110≤200). Harmonogram jest w pełni szeregowalny.<br><br>
+<b>c) Średni czas oczekiwania</b> (= czas zakończenia − tmin − czas wykonania):<br><br>
 <table>
 <tr><th>Zadanie</th><th>tmin</th><th>Zakończenie</th><th>Czas wykonania</th><th>Oczekiwanie</th></tr>
 <tr><td>Z1</td><td>0</td><td>20</td><td>10</td><td>10</td></tr>
@@ -409,27 +473,71 @@ TAK — wszystkie zadania kończą się przed swoimi terminami ostatecznymi: Z2 
 <tr><td>Z4</td><td>50</td><td>110</td><td>40</td><td>20</td></tr>
 <tr><td>Z5</td><td>70</td><td>80</td><td>10</td><td>0</td></tr>
 </table>
-<div class="odp">Średni czas oczekiwania = (10+0+0+20+0)/5 = 6 ms</div>
+<b>Odpowiedź:</b> Średni czas oczekiwania = (10+0+0+20+0)/5 = 6 ms
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>23. RMS — wykorzystanie procesora i granica szeregowalności</h3>
-<p class="polecenie">Polecenie: W systemie czasu rzeczywistego wykonuje się zadania okresowe (Z1: C=20, T=100; Z2: C=40, T=150; Z3: C=100, T=350). a) Oblicz całkowite wykorzystanie procesora. b) Wyznacz górną granicę szeregowalności metodą RMS wg wzoru \(granica(n)=n(2^{1/n}-1)\). c) Wykaż, czy wszystkie zadania można pomyślnie zaplanować algorytmem RMS.</p>
-<p><strong>a)</strong> \(U = \sum \dfrac{C_i}{T_i} = \dfrac{20}{100}+\dfrac{40}{150}+\dfrac{100}{350} = 0{,}2+0{,}2667+0{,}2857 = 0{,}7524\)</p>
-<p><strong>b)</strong> Dla \(n=3\): \(granica(3) = 3(2^{1/3}-1) = 3(1{,}25992-1) = 3\cdot0{,}25992 = 0{,}7798\)</p>
-<p><strong>c)</strong> Warunek wystarczający Liu-Layland: jeśli \(U \le granica(n)\), zbiór zadań jest szeregowalny wg RMS.</p>
-<div class="odp">
-\(U=0{,}7524 < granica(3)=0{,}7798\) — warunek jest spełniony, więc wszystkie zadania Z1, Z2, Z3 mogą zostać pomyślnie zaplanowane algorytmem RMS.
+<div class="q-block">
+    <div class="q-text">
+        23. W systemie czasu rzeczywistego wykonuje się kilka zadań okresowych.
+    </div>
+
+    <table class="rms-table">
+        <thead>
+            <tr>
+                <th>Zadanie</th>
+                <th>Czas wykonania<br>C [ms]</th>
+                <th>Okres powtarzania<br>T [ms]</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Z<sub>1</sub></td>
+                <td>20</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>Z<sub>2</sub></td>
+                <td>40</td>
+                <td>150</td>
+            </tr>
+            <tr>
+                <td>Z<sub>3</sub></td>
+                <td>100</td>
+                <td>350</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        Na podstawie parametrów podanych w tabeli należy wykonać następujące czynności:<br>
+        a) obliczyć całkowite wykorzystanie procesora przez zadania: Z<sub>1</sub>, Z<sub>2</sub> i Z<sub>3</sub><br>
+        b) wyznaczyć górną granicę szeregowalności za pomocą metody planowania monotonicznego tempa RMS (ang. Rate Monotonic Scheduling) wg wzoru:<br>
+        <div style="text-align: center; font-style: italic; margin: 15px 0;">
+            granica szeregowalności RMS (n) = n(2<sup><span style="display: inline-block; vertical-align: middle; text-align: center; font-size: 0.75em; line-height: 1.1;"><span style="border-bottom: 1px solid currentColor; display: block;">1</span>n</span></sup> - 1)
+        </div>
+        c) wykazać, czy wszystkie zadania (Z<sub>1</sub>, Z<sub>2</sub>, Z<sub>3</sub>) można pomyślnie zaplanować stosując algorytm RMS (ang. Rate Monotonic Scheduling).
+    </div>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a)</b> \(U = \sum \dfrac{C_i}{T_i} = \dfrac{20}{100}+\dfrac{40}{150}+\dfrac{100}{350} = 0{,}2+0{,}2667+0{,}2857 = 0{,}7524\)<br><br>
+<b>b)</b> Dla \(n=3\): \(granica(3) = 3(2^{1/3}-1) = 3(1{,}25992-1) = 3\cdot0{,}25992 = 0{,}7798\)<br><br>
+<b>c)</b> Warunek wystarczający Liu-Layland: jeśli \(U \le granica(n)\), zbiór zadań jest szeregowalny wg RMS.<br><br>
+<b>Odpowiedź:</b> \(U=0{,}7524 < granica(3)=0{,}7798\) — warunek jest spełniony, więc wszystkie zadania Z1, Z2, Z3 mogą zostać pomyślnie zaplanowane algorytmem RMS.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>24. Zadania rygorystyczne vs łagodne — funkcje zysku</h3>
-<p class="polecenie">Polecenie: Wyjaśnij różnicę pomiędzy rygorystycznym a łagodnym traktowaniem zadań czasu rzeczywistego oraz narysuj odpowiednie funkcje zysku.</p>
-<div class="odp">
-<strong>Zadania rygorystyczne (hard real-time):</strong> przekroczenie terminu powoduje całkowitą utratę wartości wyniku, czasem katastrofalne skutki (np. sterowanie lotem). Funkcja zysku utrzymuje stałą wartość do terminu, po czym <strong>gwałtownie (skokowo) spada do zera</strong> (lub wartości ujemnej).<br><br>
-<strong>Zadania łagodne (soft real-time):</strong> przekroczenie terminu stopniowo zmniejsza użyteczność wyniku, ale nie zeruje jej natychmiast (np. strumieniowanie wideo). Funkcja zysku utrzymuje stałą wartość do terminu, po czym <strong>maleje płynnie/stopniowo</strong> wraz z upływem czasu.
-</div>
+<div class="q-block">
+<span class="q-text">24. Wyjaśnij różnicę pomiędzy rygorystycznym a łagodnym traktowaniem zadań czasu rzeczywistego oraz narysuj odpowiednie funkcje zysku.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Zadania rygorystyczne (hard real-time):</b> przekroczenie terminu powoduje całkowitą utratę wartości wyniku, czasem katastrofalne skutki (np. sterowanie lotem). Funkcja zysku utrzymuje stałą wartość do terminu, po czym <b>gwałtownie (skokowo) spada do zera</b> (lub wartości ujemnej).<br><br>
+<b>Zadania łagodne (soft real-time):</b> przekroczenie terminu stopniowo zmniejsza użyteczność wyniku, ale nie zeruje jej natychmiast (np. strumieniowanie wideo). Funkcja zysku utrzymuje stałą wartość do terminu, po czym <b>maleje płynnie/stopniowo</b> wraz z upływem czasu.<br><br>
 <pre>Zysk                              Zysk
  |___                              |___
  |   \                             |   \___
@@ -439,214 +547,54 @@ TAK — wszystkie zadania kończą się przed swoimi terminami ostatecznymi: Z2 
       termin                           termin
    (zadanie rygorystyczne)          (zadanie lagodne)</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="si">
 <h2>5. Sztuczna inteligencja</h2>
 
-<div class="pytanie">
-<h3>25. Architektura sieci Kohonena</h3>
-<p class="polecenie">Polecenie: Opisz architekturę sieci Kohonena.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">25. Opisz architekturę sieci Kohonena.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Sieć Kohonena (SOM — Self-Organizing Map) to sieć neuronowa uczona bez nadzoru, redukująca wymiarowość i wizualizująca dane poprzez odwzorowanie przestrzeni wejściowej na (zwykle) dwuwymiarową siatkę neuronów, zachowując topologię danych (podobne dane aktywują sąsiadujące neurony).<br><br>
-<strong>Architektura:</strong> warstwa wejściowa (cechy wektora wejściowego) połączona w pełni z warstwą wyjściową zorganizowaną jako siatka 2D (prostokątna lub heksagonalna); każdy neuron wyjściowy ma wektor wag o wymiarze równym wymiarowi wejścia.<br><br>
-<strong>Uczenie:</strong> dla każdego wektora wejściowego wyznacza się neuron zwycięski (BMU — Best Matching Unit, najbliższy wejściu); wagi BMU i jego sąsiadów w siatce są aktualizowane w kierunku wejścia, przy malejącym z czasem promieniu sąsiedztwa i tempie uczenia.<br><br>
+<b>Architektura:</b> warstwa wejściowa (cechy wektora wejściowego) połączona w pełni z warstwą wyjściową zorganizowaną jako siatka 2D (prostokątna lub heksagonalna); każdy neuron wyjściowy ma wektor wag o wymiarze równym wymiarowi wejścia.<br><br>
+<b>Uczenie:</b> dla każdego wektora wejściowego wyznacza się neuron zwycięski (BMU — Best Matching Unit, najbliższy wejściu); wagi BMU i jego sąsiadów w siatce są aktualizowane w kierunku wejścia, przy malejącym z czasem promieniu sąsiedztwa i tempie uczenia.<br><br>
 Zastosowania: klasteryzacja, wizualizacja danych wielowymiarowych, kompresja danych, rozpoznawanie wzorców.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>26. Twarda i miękka sztuczna inteligencja</h3>
-<p class="polecenie">Polecenie: Podaj definicje twardej i miękkiej sztucznej inteligencji.</p>
-<div class="odp">
-<strong>Twarda SI (Strong AI / AGI)</strong> — hipotetyczny system o ogólnej zdolności rozumowania, porównywalnej (lub przewyższającej) ludzką, zdolny do wykonania dowolnego zadania intelektualnego niezależnie od dziedziny.<br><br>
-<strong>Miękka SI (Weak AI / Narrow AI)</strong> — systemy wyspecjalizowane do wykonywania konkretnych, wąsko zdefiniowanych zadań (rozpoznawanie obrazów, przetwarzanie języka), bez ogólnej zdolności rozumowania — obecnie wszystkie praktycznie stosowane systemy SI należą do tej kategorii.
+<div class="q-block">
+<span class="q-text">26. Podaj definicje twardej i miękkiej sztucznej inteligencji.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Twarda SI (Strong AI / AGI)</b> — hipotetyczny system o ogólnej zdolności rozumowania, porównywalnej (lub przewyższającej) ludzką, zdolny do wykonania dowolnego zadania intelektualnego niezależnie od dziedziny.<br><br>
+<b>Miękka SI (Weak AI / Narrow AI)</b> — systemy wyspecjalizowane do wykonywania konkretnych, wąsko zdefiniowanych zadań (rozpoznawanie obrazów, przetwarzanie języka), bez ogólnej zdolności rozumowania — obecnie wszystkie praktycznie stosowane systemy SI należą do tej kategorii.
 </div>
-</div>
-
-<div class="pytanie">
-<h3>27. Zasady działania algorytmu ewolucyjnego</h3>
-<p class="polecenie">Polecenie: Przedstaw zasady działania algorytmu ewolucyjnego.</p>
-<div class="odp">
-1. <strong>Inicjalizacja</strong> populacji — losowe wygenerowanie początkowych rozwiązań (osobników/chromosomów).<br>
-2. <strong>Ocena (fitness)</strong> — obliczenie wartości funkcji przystosowania dla każdego osobnika.<br>
-3. <strong>Selekcja</strong> — wybór osobników do reprodukcji, faworyzujący lepiej przystosowanych.<br>
-4. <strong>Krzyżowanie</strong> — łączenie materiału genetycznego rodziców w celu wytworzenia potomstwa.<br>
-5. <strong>Mutacja</strong> — losowe, niewielkie zmiany w chromosomach potomstwa (różnorodność, unikanie minimów lokalnych).<br>
-6. <strong>Zastąpienie populacji</strong> — nowe pokolenie zastępuje (częściowo lub całkowicie) poprzednie.<br>
-7. <strong>Iteracja</strong> kroków 2-6 aż do spełnienia kryterium stopu (liczba pokoleń, brak poprawy, satysfakcjonujące rozwiązanie).
-</div>
-</div>
+</details>
 </div>
 
-<div class="zagadnienie" id="mikrokontrolery">
-<h2>6. Mikrokontrolery i systemy wbudowane (AVR / BASCOM)</h2>
-
-<div class="pytanie">
-<h3>28. Połączenie pinów AVR z wyświetlaczem LCD</h3>
-<p class="polecenie">Polecenie: Proszę określić sposób połączenia pinów mikrokontrolera AVR z wyprowadzeniami alfanumerycznego wyświetlacza LCD.</p>
-<div class="odp">
-Standardowy wyświetlacz LCD (kontroler HD44780) łączy się z AVR poprzez:<br>
-— <strong>D4-D7</strong> (tryb 4-bitowy, oszczędza piny) lub <strong>D0-D7</strong> (tryb 8-bitowy) — piny danych podłączone do dowolnych pinów portu.<br>
-— <strong>RS</strong> (Register Select) — wybór między rejestrem danych (znak) a rejestrem instrukcji (komenda).<br>
-— <strong>RW</strong> (Read/Write) — wybór zapis/odczyt, zwykle na stałe podłączony do GND (tylko zapis).<br>
-— <strong>E</strong> (Enable) — impuls zatwierdzający transfer danych.<br>
-— Zasilanie: <strong>VDD</strong> (+5V), <strong>VSS</strong> (GND), <strong>V0</strong> (kontrast, przez potencjometr).<br>
-— Podświetlenie: <strong>A</strong> (+5V przez rezystor), <strong>K</strong> (GND).<br><br>
-W BASCOM konfiguracja odbywa się deklaracjami <code>Config Lcd</code> i <code>Config Lcdpin</code>, przypisującymi sygnały do konkretnych pinów portu.
+<div class="q-block">
+<span class="q-text">27. Przedstaw zasady działania algorytmu ewolucyjnego.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>Inicjalizacja</b> populacji — losowe wygenerowanie początkowych rozwiązań (osobników/chromosomów).<br>
+2. <b>Ocena (fitness)</b> — obliczenie wartości funkcji przystosowania dla każdego osobnika.<br>
+3. <b>Selekcja</b> — wybór osobników do reprodukcji, faworyzujący lepiej przystosowanych.<br>
+4. <b>Krzyżowanie</b> — łączenie materiału genetycznego rodziców w celu wytworzenia potomstwa.<br>
+5. <b>Mutacja</b> — losowe, niewielkie zmiany w chromosomach potomstwa (różnorodność, unikanie minimów lokalnych).<br>
+6. <b>Zastąpienie populacji</b> — nowe pokolenie zastępuje (częściowo lub całkowicie) poprzednie.<br>
+7. <b>Iteracja</b> kroków 2-6 aż do spełnienia kryterium stopu (liczba pokoleń, brak poprawy, satysfakcjonujące rozwiązanie).
+</div>
+</details>
 </div>
 </div>
 
-<div class="pytanie">
-<h3>29. BASCOM — wyświetlacz LCD 16x2</h3>
-<p class="polecenie">Polecenie: Proszę uzupełnić fragment kodu, którego zadaniem jest wyświetlenie tekstu na środku pierwszej linii wyświetlacza LCD o organizacji 16x2. W drugiej linii wyświetlacza należy umieścić tekst "Voltage V=" z wyświetleniem zmiennej 'Vol' za znakiem równości. Proszę zadeklarować zmienną 'Vol', której wartości należą do przedziału (-32 768 – +32 767).</p>
-<pre>Dim Vol As Integer          ' zakres -32768..32767 -> typ Integer
-
-Config Lcd = 16 * 2         ' konfiguracja wyswietlacza 16x2
-Cls
-Locate 1 , 5                ' pozycjonowanie na srodku pierwszej linii
-Lcd "Accu 1"
-Locate 2 , 1                ' poczatek drugiej linii
-Lcd "Voltage V=" ; Vol      ' tekst + wartosc zmiennej Vol
-End</pre>
-<div class="odp">
-Zmienna <code>Vol</code> zadeklarowana jako <code>Integer</code> (typ 16-bitowy ze znakiem, zakres dokładnie -32768...32767). Pozycja <code>Locate 1,5</code> centruje 7-znakowy napis na 16-kolumnowym wyświetlaczu (\((16-7)/2\approx4{,}5\), zaokrąglone do kolumny 5).
-</div>
-</div>
-
-<div class="pytanie">
-<h3>30. BASCOM — odczyt danych z enkodera</h3>
-<p class="polecenie">Polecenie: Należy uzupełnić kod programu umożliwiającego odczytywanie danych z enkodera, połączonego z PINA.1 oraz PINA.0. Zakres wyświetlanych wartości Licz=(0-24). Po każdej zmianie wartości należy wyświetlić tekst i wartość zmiennej 'Licz'. Proszę zadeklarować zmienną Li1 (zakres 0-255) oraz zmienną Licz (ten sam zakres wartości).</p>
-<pre>Dim Li1 As Byte              ' zakres 0-255
-Dim Licz As Byte             ' zakres 0-255 (wykorzystywany 0-24)
-
-Config PORTA = Input
-PORTA = 255
-Cls
-Lcd "Encoder test"
-Do
-   Li1 = Encoder(PINA.1 , PINA.0 , Lewo1 , Prawo1 , 0)
-   Waitus 200
-Loop
-End
-
-Lewo1:
-If Li1 = 0 Then
-   If Licz &gt; 0 Then
-      Decr Licz
-      Gosub Disp
-   End If
-End If
-Return
-
-Prawo1:
-If Li1 = 0 Then
-   If Licz &lt; 24 Then
-      Incr Licz
-      Gosub Disp
-   End If
-End If
-Return
-
-Disp:
-Cls
-Lcd "Licz=" ; Licz
-Return</pre>
-<div class="odp">
-Podprogram <code>Lewo1</code> zmniejsza <code>Licz</code> (z zabezpieczeniem przed zejściem poniżej 0), <code>Prawo1</code> zwiększa (z zabezpieczeniem przed przekroczeniem 24) — po każdej zmianie wywoływany jest <code>Gosub Disp</code>, który czyści ekran i wyświetla etykietę "Licz=" wraz z aktualną wartością zmiennej.
-</div>
-</div>
-</div>
-
-<div class="zagadnienie" id="robotyka">
-<h2>7. Robotyka</h2>
-
-<div class="pytanie">
-<h3>31. Metody planowania trajektorii manipulatora robota</h3>
-<p class="polecenie">Polecenie: Opisz metody planowania trajektorii manipulatora robota.</p>
-<div class="odp">
-— <strong>Planowanie w przestrzeni złączowej</strong> — trajektoria definiowana jako funkcje kątów złączy w czasie (np. wielomiany interpolacyjne) — prostsze obliczeniowo, trudniejsze do kontrolowania kształtu ścieżki efektora.<br>
-— <strong>Planowanie w przestrzeni kartezjańskiej</strong> — trajektoria efektora zdefiniowana bezpośrednio w przestrzeni 3D (np. linia prosta), wymaga rozwiązania kinematyki odwrotnej w każdym punkcie.<br>
-— <strong>Interpolacja wielomianowa</strong> (3. lub 5. stopnia) — zapewnia gładkie profile prędkości i przyspieszenia.<br>
-— <strong>Profile trapezoidalne prędkości</strong> — fazy przyspieszania, ruchu stałego, hamowania.<br>
-— <strong>Planowanie z unikaniem przeszkód</strong> — algorytmy potencjałów pola, RRT, PRM — dla środowisk z przeszkodami.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>32. Budowa serwomotoru i jego funkcje</h3>
-<p class="polecenie">Polecenie: Opisz budowę serwomotoru i jego funkcje.</p>
-<div class="odp">
-Serwomotor składa się z: silnika DC (lub bezszczotkowego), przekładni redukcyjnej (zwiększa moment, redukuje prędkość), potencjometru/enkodera sprzężonego z wałem wyjściowym (sygnał zwrotny o aktualnej pozycji), oraz elektroniki sterującej porównującej zadaną pozycję (sygnał PWM) z rzeczywistą i regulującej prąd silnika w pętli sprzężenia zwrotnego.<br><br>
-Funkcje: precyzyjne pozycjonowanie wału na podstawie sygnału sterującego, utrzymywanie zadanej pozycji pod obciążeniem — stosowane w napędach stawów manipulatorów, kołach robotów mobilnych, sterowaniu powierzchniami modeli RC.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>33. Środowisko do symulacji i wizualizacji 3D robotów</h3>
-<p class="polecenie">Polecenie: Wymień i opisz minimum jedno środowisko do wizualnej symulacji i wizualizacji 3D robotów, uwzględniające wszelkie prawa fizyki.</p>
-<div class="odp">
-<strong>Gazebo</strong> — środowisko symulacyjne open-source, często integrowane z ROS (Robot Operating System). Umożliwia realistyczną symulację fizyki (silnik fizyki np. ODE, Bullet — grawitacja, kolizje, tarcie, dynamika brył sztywnych), renderowanie 3D robotów i otoczenia, symulację czujników (kamery, lidary, IMU) oraz interakcję robota ze środowiskiem w czasie rzeczywistym — pozwala testować algorytmy sterowania bez fizycznego robota.<br><br>
-Inne przykłady: CoppeliaSim (V-REP), Webots, MuJoCo, PyBullet.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>34. Główne komponenty schematu budowy robota</h3>
-<p class="polecenie">Polecenie: Opisz główne komponenty schematu budowy robota.</p>
-<div class="odp">
-— <strong>Czujniki (sensory)</strong> — zbierają informacje o stanie robota i otoczenia.<br>
-— <strong>Jednostka sterująca</strong> — przetwarza dane z czujników, realizuje algorytmy sterowania.<br>
-— <strong>Aktuatory (napędy)</strong> — elementy wykonawcze realizujące ruch.<br>
-— <strong>Zasilanie</strong> — źródło energii (baterie, akumulatory).<br>
-— <strong>Struktura mechaniczna</strong> — fizyczny szkielet robota, manipulatory, podwozie.<br>
-— <strong>Interfejsy komunikacyjne</strong> — komunikacja z operatorem/innymi systemami.<br>
-— <strong>Oprogramowanie/algorytmy sterujące</strong> — percepcja, planowanie, sterowanie ruchem.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>35. Definicja sensora (czujnika)</h3>
-<p class="polecenie">Polecenie: Podaj definicję sensora (czujnika).</p>
-<div class="odp">
-Sensor (czujnik) to urządzenie przetwarzające mierzoną wielkość fizyczną (np. temperaturę, odległość, ciśnienie, natężenie światła, przyspieszenie) na sygnał elektryczny (analogowy lub cyfrowy) możliwy do dalszego przetworzenia przez układ elektroniczny/komputer, umożliwiający pomiar i monitorowanie stanu otoczenia lub samego urządzenia.
-</div>
-</div>
-
-<div class="pytanie">
-<h3>36. Definicja mikrokontrolera i jego schemat</h3>
-<p class="polecenie">Polecenie: Podaj definicję mikrokontrolera, narysuj jego uproszczony schemat.</p>
-<p>Mikrokontroler to układ scalony integrujący w jednej strukturze jednostkę centralną (CPU), pamięć programu (Flash/ROM), pamięć danych (RAM, czasem EEPROM) oraz układy peryferyjne wejścia-wyjścia — zaprojektowany do sterowania urządzeniem/procesem poprzez wykonywanie zapisanego programu.</p>
-<pre>                    +-----------------------+
-                    |          CPU          |
-                    +-----------+-----------+
-                                |
-              wewnetrzna magistrala (bus)
-     +---------+---------+---------+---------+---------+
-     |         |         |         |         |         |
-+---------+ +------+ +--------+ +------+ +---------+ +--------+
-|  Flash  | | RAM  | | EEPROM | | GPIO | | Timery  | | ADC /  |
-|(program)| |(dane)| | (dane) | |porty | |/liczniki| | UART/  |
-|         | |      | |nieulotne| |     | |         | | SPI/I2C|
-+---------+ +------+ +--------+ +------+ +---------+ +--------+</pre>
-<div class="odp">Wszystkie bloki (pamięci, porty, peryferia) komunikują się z CPU przez wspólną wewnętrzną magistralę.</div>
-</div>
-
-<div class="pytanie">
-<h3>37. Cechy konstrukcji robotów autonomicznych</h3>
-<p class="polecenie">Polecenie: Wymień cechy typowe dla konstrukcji robotów autonomicznych.</p>
-<div class="odp">
-— Zdolność do samodzielnego podejmowania decyzji bez ciągłej ingerencji operatora.<br>
-— Zestaw czujników umożliwiających percepcję otoczenia (kamery, lidary, IMU).<br>
-— Własne źródło zasilania (baterie/akumulatory) niezależne od zasilania zewnętrznego.<br>
-— Zdolność planowania trajektorii i unikania przeszkód w czasie rzeczywistym.<br>
-— Zdolność lokalizacji i mapowania otoczenia (np. SLAM).<br>
-— Adaptacyjność — reagowanie na zmiany w otoczeniu.<br>
-— Autonomia obliczeniowa — przetwarzanie danych na pokładzie, bez stałej komunikacji z zewnętrznym serwerem.<br>
-— Redundancja i odporność na błędy (fault tolerance) w bardziej zaawansowanych konstrukcjach.
-</div>
-</div>
-</div>
 
 </body>
 </html>

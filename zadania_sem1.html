@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,44 +32,62 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+.zagadnienie > p em a { color: #007bff; }
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -82,16 +101,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -115,60 +124,78 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="matematyka">
 <h2>1. Matematyka (Wstęp do matematyki)</h2>
 
-<div class="pytanie">
-<h3>1. Szkic wykresu funkcji z modułem</h3>
-<p class="polecenie">Polecenie: Naszkicuj wykres funkcji \(f(x) = (5 - |x|)(x + 1)\).</p>
-<p>Rozbijamy funkcję na dwie gałęzie w zależności od znaku \(x\), bo tylko wtedy można "zdjąć" moduł.</p>
-<p><strong>Dla \(x \ge 0\):</strong> \(|x| = x\), więc</p>
-<p>\(f(x) = (5-x)(x+1) = -x^2 + 4x + 5\)</p>
-<p>To parabola z ramionami w dół. Wierzchołek: \(x_w = -\tfrac{4}{-2} = 2\), \(f(2) = 9\) &rarr; wierzchołek \((2, 9)\). Miejsca zerowe: \(-x^2+4x+5=0 \Rightarrow x^2-4x-5=0 \Rightarrow (x-5)(x+1)=0 \Rightarrow x=5 \lor x=-1\). W zakresie \(x\ge 0\) branych pod uwagę jest tylko \(x=5\) (drugie miejsce zerowe, \(x=-1\), leży poza tym przedziałem, ale patrz niżej — pojawia się też w drugiej gałęzi).</p>
-<p><strong>Dla \(x < 0\):</strong> \(|x| = -x\), więc</p>
-<p>\(f(x) = (5+x)(x+1) = x^2 + 6x + 5\)</p>
-<p>To parabola z ramionami w górę. Wierzchołek: \(x_w = -3\), \(f(-3) = 9-18+5=-4\) &rarr; wierzchołek \((-3,-4)\). Miejsca zerowe: \(x^2+6x+5=0 \Rightarrow (x+1)(x+5)=0 \Rightarrow x=-1 \lor x=-5\), oba leżą w zakresie \(x<0\) (a \(x=-1\) jest punktem stycznym łączenia obu gałęzi).</p>
-<p>Sprawdzenie ciągłości w \(x=0\): obie gałęzie dają \(f(0)=5\), więc wykres jest ciągły (bez "skoku").</p>
-<div class="odp">
-Wykres: dla \(x<0\) — parabola z ramionami w górę, przechodząca przez zera w \(x=-5\) i \(x=-1\), z minimum w \((-3,-4)\), rosnąca aż do punktu \((0,5)\). Dla \(x\ge 0\) — parabola z ramionami w dół, startująca z \((0,5)\), z maksimum w \((2,9)\), malejąca do zera w \(x=5\) i dalej ujemna. Funkcja "dotyka" osi OX w \(x=-1\) (podwójne miejsce zerowe łączące obie gałęzie) i przecina ją w \(x=-5\) oraz \(x=5\).
+<div class="q-block">
+<span class="q-text">1. Naszkicuj wykres funkcji \(f(x) = (5 - |x|)(x + 1)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Rozbijamy funkcję na dwie gałęzie w zależności od znaku \(x\), bo tylko wtedy można "zdjąć" moduł.<br><br>
+<b>Dla \(x \ge 0\):</b> \(|x| = x\), więc<br>
+\(f(x) = (5-x)(x+1) = -x^2 + 4x + 5\)<br><br>
+To parabola z ramionami w dół. Wierzchołek: \(x_w = -\tfrac{4}{-2} = 2\), \(f(2) = 9\) &rarr; wierzchołek \((2, 9)\). Miejsca zerowe: \(-x^2+4x+5=0 \Rightarrow x^2-4x-5=0 \Rightarrow (x-5)(x+1)=0 \Rightarrow x=5 \lor x=-1\). W zakresie \(x\ge 0\) branych pod uwagę jest tylko \(x=5\) (drugie miejsce zerowe, \(x=-1\), leży poza tym przedziałem, ale patrz niżej — pojawia się też w drugiej gałęzi).<br><br>
+<b>Dla \(x < 0\):</b> \(|x| = -x\), więc<br>
+\(f(x) = (5+x)(x+1) = x^2 + 6x + 5\)<br><br>
+To parabola z ramionami w górę. Wierzchołek: \(x_w = -3\), \(f(-3) = 9-18+5=-4\) &rarr; wierzchołek \((-3,-4)\). Miejsca zerowe: \(x^2+6x+5=0 \Rightarrow (x+1)(x+5)=0 \Rightarrow x=-1 \lor x=-5\), oba leżą w zakresie \(x<0\) (a \(x=-1\) jest punktem stycznym łączenia obu gałęzi).<br><br>
+Sprawdzenie ciągłości w \(x=0\): obie gałęzie dają \(f(0)=5\), więc wykres jest ciągły (bez "skoku").<br><br>
+<b>Odpowiedź:</b> Wykres: dla \(x<0\) — parabola z ramionami w górę, przechodząca przez zera w \(x=-5\) i \(x=-1\), z minimum w \((-3,-4)\), rosnąca aż do punktu \((0,5)\). Dla \(x\ge 0\) — parabola z ramionami w dół, startująca z \((0,5)\), z maksimum w \((2,9)\), malejąca do zera w \(x=5\) i dalej ujemna. Funkcja "dotyka" osi OX w \(x=-1\) (podwójne miejsce zerowe łączące obie gałęzie) i przecina ją w \(x=-5\) oraz \(x=5\).
 </div>
-</div>
-
-<div class="pytanie">
-<h3>2. Nierówność z modułem</h3>
-<p class="polecenie">Polecenie: Rozwiąż nierówność \(x^2 + 1 > |x| - x\).</p>
-<p><strong>Przypadek \(x \ge 0\):</strong> \(|x|=x\), więc prawa strona \(= x - x = 0\). Nierówność: \(x^2+1>0\) — prawdziwa dla każdego \(x\), więc cały przedział \(x\ge 0\) jest rozwiązaniem.</p>
-<p><strong>Przypadek \(x < 0\):</strong> \(|x|=-x\), więc prawa strona \(= -x-x=-2x\). Nierówność: \(x^2+1 > -2x \Rightarrow x^2+2x+1>0 \Rightarrow (x+1)^2 > 0\). To prawda dla każdego \(x\) oprócz \(x=-1\) (bo wtedy kwadrat wynosi 0, a nierówność jest ostra). Więc w tym przedziale rozwiązaniem jest cały \(x<0\) poza \(x=-1\).</p>
-<div class="odp">Rozwiązanie: \(x \in \mathbb{R} \setminus \{-1\}\) — nierówność jest spełniona dla wszystkich liczb rzeczywistych z wyjątkiem \(x=-1\).</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Zbiory na płaszczyźnie (koło i obszar nad parabolą)</h3>
-<p class="polecenie">Polecenie: Na płaszczyźnie narysować zbiory: \(A\), \(B\), \(A \cap B\), jeśli: \(A = \{(x,y): x^2+(y-1)^2 \le 1\}\), \(B = \{(x,y): y > x^2+2\}\).</p>
-<p><strong>Zbiór \(A\)</strong> to koło domknięte (brzeg wliczony, bo \(\le\)) o środku \((0,1)\) i promieniu \(1\). Skrajne wartości \(y\) w tym kole to \(y \in [0, 2]\) (najniższy punkt \((0,0)\), najwyższy \((0,2)\)).</p>
-<p><strong>Zbiór \(B\)</strong> to obszar leżący ściśle nad parabolą \(y=x^2+2\) (brzeg wykluczony, bo nierówność ostra). Wierzchołek paraboli to \((0,2)\) — to najniższy punkt tej krzywej, więc dla każdego \(x\) potrzeba \(y > x^2+2 \ge 2\).</p>
-<p><strong>Przecięcie \(A \cap B\):</strong> każdy punkt koła \(A\) spełnia \(y \le 2\), natomiast każdy punkt zbioru \(B\) wymaga \(y>2\). Te dwa warunki wzajemnie się wykluczają — nie ma punktu spełniającego oba jednocześnie.</p>
-<div class="odp">\(A \cap B = \varnothing\) (zbiór pusty). Koło \(A\) styka się "od dołu" z wierzchołkiem paraboli w punkcie \((0,2)\), ale nie wchodzi w obszar \(B\), ponieważ nierówność w \(B\) jest ostra — narysowane koło leży w całości poniżej lub na paraboli, nigdy ściśle nad nią.</div>
+<div class="q-block">
+<span class="q-text">2. Rozwiąż nierówność \(x^2 + 1 > |x| - x\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Przypadek \(x \ge 0\):</b> \(|x|=x\), więc prawa strona \(= x - x = 0\). Nierówność: \(x^2+1>0\) — prawdziwa dla każdego \(x\), więc cały przedział \(x\ge 0\) jest rozwiązaniem.<br><br>
+<b>Przypadek \(x < 0\):</b> \(|x|=-x\), więc prawa strona \(= -x-x=-2x\). Nierówność: \(x^2+1 > -2x \Rightarrow x^2+2x+1>0 \Rightarrow (x+1)^2 > 0\). To prawda dla każdego \(x\) oprócz \(x=-1\) (bo wtedy kwadrat wynosi 0, a nierówność jest ostra). Więc w tym przedziale rozwiązaniem jest cały \(x<0\) poza \(x=-1\).<br><br>
+<b>Odpowiedź:</b> \(x \in \mathbb{R} \setminus \{-1\}\) — nierówność jest spełniona dla wszystkich liczb rzeczywistych z wyjątkiem \(x=-1\).
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Dziedzina funkcji z logarytmem pod pierwiastkiem</h3>
-<p class="polecenie">Polecenie: Wyznacz dziedzinę funkcji \(f(x) = \sqrt{\log_3 \frac{x+1}{x-1}}\).</p>
-<p>Warunki dziedziny: (1) argument logarytmu musi być dodatni, (2) wartość logarytmu musi być nieujemna (żeby pierwiastek miał sens).</p>
-<p><strong>Warunek 1:</strong> \(\dfrac{x+1}{x-1} > 0 \Rightarrow x < -1 \lor x > 1\) (iloraz dodatni, gdy licznik i mianownik mają ten sam znak).</p>
-<p><strong>Warunek 2:</strong> \(\log_3 \dfrac{x+1}{x-1} \ge 0 \Leftrightarrow \dfrac{x+1}{x-1} \ge 1\). Przekształcamy:</p>
-<p>\(\dfrac{x+1}{x-1} - 1 \ge 0 \Rightarrow \dfrac{(x+1)-(x-1)}{x-1} \ge 0 \Rightarrow \dfrac{2}{x-1} \ge 0 \Rightarrow x-1>0 \Rightarrow x>1\).</p>
-<p>Sprawdzamy zgodność z warunkiem 1: \(x>1\) automatycznie mieści się w \(x<-1 \lor x>1\), więc dodatkowego zawężenia nie ma. Dla gałęzi \(x<-1\) iloraz \(\frac{x+1}{x-1}\) przyjmuje wartości z przedziału \((0,1)\) (np. dla \(x=-2\): \(\frac{-1}{-3}=\frac13\)), więc logarytm byłby ujemny — ta gałąź odpada.</p>
-<div class="odp">\(D_f = (1, +\infty)\)</div>
+<div class="q-block">
+<span class="q-text">3. Na płaszczyźnie narysować zbiory: \(A\), \(B\), \(A \cap B\), jeśli: \(A = \{(x,y): x^2+(y-1)^2 \le 1\}\), \(B = \{(x,y): y > x^2+2\}\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Zbiór \(A\)</b> to koło domknięte (brzeg wliczony, bo \(\le\)) o środku \((0,1)\) i promieniu \(1\). Skrajne wartości \(y\) w tym kole to \(y \in [0, 2]\) (najniższy punkt \((0,0)\), najwyższy \((0,2)\)).<br><br>
+<b>Zbiór \(B\)</b> to obszar leżący ściśle nad parabolą \(y=x^2+2\) (brzeg wykluczony, bo nierówność ostra). Wierzchołek paraboli to \((0,2)\) — to najniższy punkt tej krzywej, więc dla każdego \(x\) potrzeba \(y > x^2+2 \ge 2\).<br><br>
+<b>Przecięcie \(A \cap B\):</b> każdy punkt koła \(A\) spełnia \(y \le 2\), natomiast każdy punkt zbioru \(B\) wymaga \(y>2\). Te dwa warunki wzajemnie się wykluczają — nie ma punktu spełniającego oba jednocześnie.<br><br>
+<b>Odpowiedź:</b> \(A \cap B = \varnothing\) (zbiór pusty). Koło \(A\) styka się "od dołu" z wierzchołkiem paraboli w punkcie \((0,2)\), ale nie wchodzi w obszar \(B\), ponieważ nierówność w \(B\) jest ostra — narysowane koło leży w całości poniżej lub na paraboli, nigdy ściśle nad nią.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>5. Monotoniczność ciągu z silniami — parametr k</h3>
-<p class="polecenie">Polecenie: Dla jakich wartości \(k \in \mathbb{R}\) ciąg o wyrazie ogólnym \(a_n = \dfrac{n! - k(n-1)!}{n! + (n-1)!}\) jest rosnący?</p>
-<p>Upraszczamy wyrażenie, dzieląc licznik i mianownik przez \((n-1)!\), pamiętając że \(n! = n\cdot(n-1)!\):</p>
-<p>\(a_n = \dfrac{(n-1)!\,(n-k)}{(n-1)!\,(n+1)} = \dfrac{n-k}{n+1}\)</p>
-<p>Wygodnie zapisać to jako: \(a_n = \dfrac{n+1-(k+1)}{n+1} = 1 - \dfrac{k+1}{n+1}\).</p>
-<p>Badamy różnicę \(a_{n+1}-a_n\):</p>
-<p>\(a_{n+1}-a_n = \left(1-\dfrac{k+1}{n+2}\right) - \left(1-\dfrac{k+1}{n+1}\right) = (k+1)\left(\dfrac{1}{n+1}-\dfrac{1}{n+2}\right) = \dfrac{k+1}{(n+1)(n+2)}\)</p>
-<p>Mianownik \((n+1)(n+2)\) jest zawsze dodatni (dla \(n\ge 1\)), więc znak różnicy \(a_{n+1}-a_n\) zależy wyłącznie od znaku \((k+1)\). Ciąg jest rosnący, gdy ta różnica jest dodatnia dla każdego \(n\), czyli gdy \(k+1>0\).</p>
-<div class="odp">Ciąg jest rosnący dla \(k > -1\), tj. \(k \in (-1, +\infty)\).</div>
+<div class="q-block">
+<span class="q-text">4. Wyznacz dziedzinę funkcji \(f(x) = \sqrt{\log_3 \frac{x+1}{x-1}}\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Warunki dziedziny: (1) argument logarytmu musi być dodatni, (2) wartość logarytmu musi być nieujemna (żeby pierwiastek miał sens).<br><br>
+<b>Warunek 1:</b> \(\dfrac{x+1}{x-1} > 0 \Rightarrow x < -1 \lor x > 1\) (iloraz dodatni, gdy licznik i mianownik mają ten sam znak).<br><br>
+<b>Warunek 2:</b> \(\log_3 \dfrac{x+1}{x-1} \ge 0 \Leftrightarrow \dfrac{x+1}{x-1} \ge 1\). Przekształcamy:<br>
+\(\dfrac{x+1}{x-1} - 1 \ge 0 \Rightarrow \dfrac{(x+1)-(x-1)}{x-1} \ge 0 \Rightarrow \dfrac{2}{x-1} \ge 0 \Rightarrow x-1>0 \Rightarrow x>1\).<br><br>
+Sprawdzamy zgodność z warunkiem 1: \(x>1\) automatycznie mieści się w \(x<-1 \lor x>1\), więc dodatkowego zawężenia nie ma. Dla gałęzi \(x<-1\) iloraz \(\frac{x+1}{x-1}\) przyjmuje wartości z przedziału \((0,1)\) (np. dla \(x=-2\): \(\frac{-1}{-3}=\frac13\)), więc logarytm byłby ujemny — ta gałąź odpada.<br><br>
+<b>Odpowiedź:</b> \(D_f = (1, +\infty)\)
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">5. Dla jakich wartości \(k \in \mathbb{R}\) ciąg o wyrazie ogólnym \(a_n = \dfrac{n! - k(n-1)!}{n! + (n-1)!}\) jest rosnący?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Upraszczamy wyrażenie, dzieląc licznik i mianownik przez \((n-1)!\), pamiętając że \(n! = n\cdot(n-1)!\):<br>
+\(a_n = \dfrac{(n-1)!\,(n-k)}{(n-1)!\,(n+1)} = \dfrac{n-k}{n+1}\)<br><br>
+Wygodnie zapisać to jako: \(a_n = \dfrac{n+1-(k+1)}{n+1} = 1 - \dfrac{k+1}{n+1}\).<br><br>
+Badamy różnicę \(a_{n+1}-a_n\):<br>
+\(a_{n+1}-a_n = \left(1-\dfrac{k+1}{n+2}\right) - \left(1-\dfrac{k+1}{n+1}\right) = (k+1)\left(\dfrac{1}{n+1}-\dfrac{1}{n+2}\right) = \dfrac{k+1}{(n+1)(n+2)}\)<br><br>
+Mianownik \((n+1)(n+2)\) jest zawsze dodatni (dla \(n\ge 1\)), więc znak różnicy \(a_{n+1}-a_n\) zależy wyłącznie od znaku \((k+1)\). Ciąg jest rosnący, gdy ta różnica jest dodatnia dla każdego \(n\), czyli gdy \(k+1>0\).<br><br>
+<b>Odpowiedź:</b> Ciąg jest rosnący dla \(k > -1\), tj. \(k \in (-1, +\infty)\).
+</div>
+</details>
 </div>
 </div>
 
@@ -176,43 +203,55 @@ Wykres: dla \(x<0\) — parabola z ramionami w górę, przechodząca przez zera 
 <h2>2. Systemy operacyjne</h2>
 <p><em>(pełna teoria — patrz plik <a href="wdso.html">Wprowadzenie do systemów operacyjnych</a>)</em></p>
 
-<div class="pytanie">
-<h3>6. Pięć głównych czynności SO w zarządzaniu procesami</h3>
-<p class="polecenie">Polecenie: Jakie jest pięć głównych czynności systemu operacyjnego w odniesieniu do zarządzania procesami?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">6. Jakie jest pięć głównych czynności systemu operacyjnego w odniesieniu do zarządzania procesami?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Tworzenie i usuwanie procesów<br>
 2. Wstrzymywanie i wznawianie procesów<br>
 3. Zapewnianie mechanizmów synchronizacji procesów<br>
 4. Zapewnianie mechanizmów komunikacji między procesami (IPC)<br>
 5. Zapewnianie mechanizmów obsługi zakleszczeń
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>7. Różnice kosztowe: pamięć ulotna, nieulotna, stabilna</h3>
-<p class="polecenie">Polecenie: Wyjaśnij, pod względem kosztów, różnice między trzema typami pamięci masowej: ulotne, nieulotne i stabilne.</p>
+<div class="q-block">
+<span class="q-text">7. Wyjaśnij, pod względem kosztów, różnice między trzema typami pamięci masowej: ulotne, nieulotne i stabilne.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <table>
 <tr><th>Typ</th><th>Koszt/bajt</th><th>Charakterystyka</th></tr>
 <tr><td>Ulotna (volatile)</td><td>najwyższy</td><td>RAM/cache — szybka, ale traci dane bez zasilania</td></tr>
 <tr><td>Nieulotna (nonvolatile)</td><td>niższy</td><td>dysk/SSD — wolniejsza, ale trwała bez zasilania</td></tr>
-<tr><td>Stabilna (stable)</td><td>najwyższy całkowity</td><td>koncepcja teoretyczna — dane nigdy nie giną nawet przy awarii; w praktyce realizowana przez <strong>replikację</strong> na wielu nośnikach nieulotnych — koszt wynika z redundancji, nie z samego nośnika</td></tr>
+<tr><td>Stabilna (stable)</td><td>najwyższy całkowity</td><td>koncepcja teoretyczna — dane nigdy nie giną nawet przy awarii; w praktyce realizowana przez <b>replikację</b> na wielu nośnikach nieulotnych — koszt wynika z redundancji, nie z samego nośnika</td></tr>
 </table>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>8. Dwie różnice: adres logiczny vs fizyczny</h3>
-<p class="polecenie">Polecenie: Wymień dwie różnice między adresami logicznymi i fizycznymi.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">8. Wymień dwie różnice między adresami logicznymi i fizycznymi.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Adres logiczny generowany jest przez CPU/program (przestrzeń adresowa logiczna), adres fizyczny to rzeczywisty adres w pamięci RAM (przestrzeń adresowa fizyczna).<br>
 2. Adresy logiczne są tłumaczone na fizyczne przez MMU (Memory Management Unit) w czasie wykonania — mogą się różnić; program "nie wie", gdzie faktycznie fizycznie leżą jego dane.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>9. Jak cache poprawia wydajność i dlaczego nie robi się ich większych?</h3>
-<p class="polecenie">Polecenie: W jaki sposób pamięci podręczne pomagają poprawić wydajność? Dlaczego systemy nie używają większej pojemności lub większej liczby pamięci podręcznych, skoro są one tak przydatne?</p>
-<p>Cache wykorzystuje <strong>lokalność odwołań</strong> (czasową i przestrzenną) — przechowuje niedawno/często używane dane bliżej CPU, redukując średni czas dostępu względem wolniejszego RAM.</p>
-<div class="odp">Większe/liczniejsze cache nie są stosowane, bo: (1) pamięć SRAM używana w cache jest znacznie droższa za bit niż DRAM, (2) większy fizyczny obszar pamięci cache wydłuża czas jej przeszukania (większa odległość sygnału/więcej układów), więc zbyt duży cache sam staje się wolniejszy — istnieje punkt malejących korzyści.</div>
+<div class="q-block">
+<span class="q-text">9. W jaki sposób pamięci podręczne pomagają poprawić wydajność? Dlaczego systemy nie używają większej pojemności lub większej liczby pamięci podręcznych, skoro są one tak przydatne?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Cache wykorzystuje <b>lokalność odwołań</b> (czasową i przestrzenną) — przechowuje niedawno/często używane dane bliżej CPU, redukując średni czas dostępu względem wolniejszego RAM.<br><br>
+<b>Odpowiedź:</b> Większe/liczniejsze cache nie są stosowane, bo: (1) pamięć SRAM używana w cache jest znacznie droższa za bit niż DRAM, (2) większy fizyczny obszar pamięci cache wydłuża czas jej przeszukania (większa odległość sygnału/więcej układów), więc zbyt duży cache sam staje się wolniejszy — istnieje punkt malejących korzyści.
+</div>
+</details>
 </div>
 </div>
 
@@ -220,13 +259,15 @@ Wykres: dla \(x<0\) — parabola z ramionami w górę, przechodząca przez zera 
 <h2>3. Programowanie w C</h2>
 <p><em>(pełna teoria — patrz pliki <a href="pp.html">Podstawy programowania</a> i <a href="p_proc.html">Programowanie proceduralne</a>)</em></p>
 
-<div class="pytanie">
-<h3>10. Sortowanie bąbelkowe — funkcja w C</h3>
-<p class="polecenie">Polecenie: Napisz funkcję w języku C, która jako parametry otrzymuje: n-elementową tablicę liczb całkowitych oraz rozmiar tej tablicy (n), a następnie sortuje tę tablicę rosnąco metodą bąbelkową. Metoda ta polega na porównywaniu dwóch sąsiednich elementów tablicy i przesuwaniu większego w kierunku końca.</p>
+<div class="q-block">
+<span class="q-text">10. Napisz funkcję w języku C, która jako parametry otrzymuje: n-elementową tablicę liczb całkowitych oraz rozmiar tej tablicy (n), a następnie sortuje tę tablicę rosnąco metodą bąbelkową. Metoda ta polega na porównywaniu dwóch sąsiednich elementów tablicy i przesuwaniu większego w kierunku końca.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>void bubbleSort(int tab[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - 1 - i; j++) {
-            if (tab[j] > tab[j+1]) {
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - 1 - i; j++) {
+            if (tab[j] &gt; tab[j+1]) {
                 int tmp = tab[j];
                 tab[j] = tab[j+1];
                 tab[j+1] = tmp;
@@ -234,17 +275,21 @@ Wykres: dla \(x<0\) — parabola z ramionami w górę, przechodząca przez zera 
         }
     }
 }</pre>
-<p>Metoda bąbelkowa: w każdym przebiegu porównujemy sąsiednie elementy i zamieniamy miejscami, jeśli są w złej kolejności — po każdym pełnym przebiegu największy nieuporządkowany element "wypływa" na swoje miejsce na końcu, stąd zewnętrzna pętla może skracać zakres wewnętrznej (<code>n-1-i</code>).</p>
+Metoda bąbelkowa: w każdym przebiegu porównujemy sąsiednie elementy i zamieniamy miejscami, jeśli są w złej kolejności — po każdym pełnym przebiegu największy nieuporządkowany element "wypływa" na swoje miejsce na końcu, stąd zewnętrzna pętla może skracać zakres wewnętrznej (<code>n-1-i</code>).
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>11. Liczba (z trzech) z największą liczbą nietrywialnych dzielników</h3>
-<p class="polecenie">Polecenie: Napisz program w języku C, w którym użytkownik podaje trzy liczby naturalne, a następnie program sprawdza i wypisuje tę z nich, która ma najwięcej nietrywialnych podzielników (różnych od 1 i od samej siebie).</p>
+<div class="q-block">
+<span class="q-text">11. Napisz program w języku C, w którym użytkownik podaje trzy liczby naturalne, a następnie program sprawdza i wypisuje tę z nich, która ma najwięcej nietrywialnych podzielników (różnych od 1 i od samej siebie).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;stdio.h&gt;
 
 int liczbaDzielnikow(int n) {
     int licznik = 0;
-    for (int i = 2; i < n; i++) {       // dzielniki różne od 1 i n
+    for (int i = 2; i &lt; n; i++) {       // dzielniki różne od 1 i n
         if (n % i == 0) licznik++;
     }
     return licznik;
@@ -252,24 +297,35 @@ int liczbaDzielnikow(int n) {
 
 int main(void) {
     int a, b, c;
-    scanf("%d %d %d", &a, &b, &c);
+    scanf("%d %d %d", &amp;a, &amp;b, &amp;c);
 
     int da = liczbaDzielnikow(a);
     int db = liczbaDzielnikow(b);
     int dc = liczbaDzielnikow(c);
 
     int wynik = a, maxD = da;
-    if (db > maxD) { wynik = b; maxD = db; }
-    if (dc > maxD) { wynik = c; maxD = dc; }
+    if (db &gt; maxD) { wynik = b; maxD = db; }
+    if (dc &gt; maxD) { wynik = c; maxD = dc; }
 
     printf("%d\n", wynik);
     return 0;
 }</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>12. Punkty z tablicy t[10] w I ćwiartce — odbicie względem osi OX</h3>
-<p class="polecenie">Polecenie: Tablica t zawiera 10 elementów typu struct point. Uzupełnij poniższy kod w języku C o potrzebne deklaracje (zdefiniuj tablicę) oraz instrukcje, po wykonaniu których, punkty z tablicy t, które leżą w pierwszej ćwiartce układu współrzędnych zostaną przekształcone względem symetrii, którą jest oś OX.</p>
+<div class="q-block">
+<span class="q-text">12. Tablica t zawiera 10 elementów typu struct point. Uzupełnij poniższy kod w języku C o potrzebne deklaracje (zdefiniuj tablicę) oraz instrukcje, po wykonaniu których, punkty z tablicy t, które leżą w pierwszej ćwiartce układu współrzędnych zostaną przekształcone względem symetrii, którą jest oś OX.</span>
+<pre>struct point{
+float x, y;
+};
+int j; //deklaracje:
+......................................................
+for(j=0; j&lt;10; ++j) //instrukcje:
+......................................................</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>struct point{
     float x, y;
 };
@@ -277,36 +333,41 @@ int main(void) {
 struct point t[10];   // deklaracja tablicy 10 struktur point
 int j;
 
-for (j = 0; j < 10; ++j) {
-    if (t[j].x > 0 && t[j].y > 0) {   // I ćwiartka: x>0 i y>0
+for (j = 0; j &lt; 10; ++j) {
+    if (t[j].x &gt; 0 &amp;&amp; t[j].y &gt; 0) {   // I ćwiartka: x&gt;0 i y&gt;0
         t[j].y = -t[j].y;              // symetria względem osi OX
     }
 }</pre>
-<p>I ćwiartka układu współrzędnych to obszar, gdzie <strong>obie</strong> współrzędne są dodatnie (\(x>0\) i \(y>0\)). Symetria względem osi OX polega na zmianie znaku współrzędnej \(y\), przy zachowaniu \(x\) bez zmian.</p>
+I ćwiartka układu współrzędnych to obszar, gdzie <b>obie</b> współrzędne są dodatnie (\(x>0\) i \(y>0\)). Symetria względem osi OX polega na zmianie znaku współrzędnej \(y\), przy zachowaniu \(x\) bez zmian.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>13. Funkcja f — mniejsza wartość wyświetlana jako pierwsza</h3>
-<p class="polecenie">Polecenie: Uzupełnij poniższy kod programu o definicję funkcji f, w taki sposób, by wartość mniejsza była wyświetlana jako pierwsza, a wartość większa jako druga.
-<br><br>
-<code>#include &lt;stdio.h&gt;<br>
-int main(void)<br>
-{<br>
-&nbsp;&nbsp;int a, b;<br>
-&nbsp;&nbsp;scanf("%d %d", &amp;a, &amp;b);<br>
-&nbsp;&nbsp;f(&amp;a, &amp;b);<br>
-&nbsp;&nbsp;printf("%d %d\n", a, b);<br>
-&nbsp;&nbsp;return 0;<br>
-}</code>
-</p>
+<div class="q-block">
+<span class="q-text">13. Uzupełnij poniższy kod programu o definicję funkcji f, w taki sposób, by wartość mniejsza była wyświetlana jako pierwsza, a wartość większa jako druga.<br><br>
+<pre>#include &lt;stdio.h&gt;
+int main(void)
+{
+    int a, b;
+    scanf("%d %d", &amp;a, &amp;b);
+    f(&amp;a, &amp;b);
+    printf("%d %d\n", a, b);
+    return 0;
+}</pre>
+</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>void f(int *a, int *b) {
-    if (*a > *b) {
+    if (*a &gt; *b) {
         int tmp = *a;
         *a = *b;
         *b = tmp;
     }
 }</pre>
-<p>Funkcja musi przyjmować wskaźniki (<code>int*</code>), żeby móc <strong>zamienić wartości</strong> zmiennych <code>a</code> i <code>b</code> z funkcji <code>main</code> — przekazanie przez wartość nie pozwoliłoby zmodyfikować oryginałów (patrz przedmiot Podstawy programowania — różnica przekazania przez wartość i przez wskaźnik).</p>
+Funkcja musi przyjmować wskaźniki (<code>int*</code>), żeby móc <b>zamienić wartości</b> zmiennych <code>a</code> i <code>b</code> z funkcji <code>main</code> — przekazanie przez wartość nie pozwoliłoby zmodyfikować oryginałów (patrz przedmiot Podstawy programowania — różnica przekazania przez wartość i przez wskaźnik).
+</div>
+</details>
 </div>
 </div>
 
@@ -314,9 +375,11 @@ int main(void)<br>
 <h2>4. Grafika komputerowa</h2>
 <p><em>(pełna teoria — patrz plik <a href="kgu.html">Komputerowa grafika użytkowa</a> i <a href="poc.html">Przetwarzanie obrazów cyfrowych</a>)</em></p>
 
-<div class="pytanie">
-<h3>14. Popularne formaty graficzne i ich zastosowania</h3>
-<p class="polecenie">Polecenie: Wymień i scharakteryzuj popularne formaty graficzne. Wskaż przykłady zastosowania każdego ze wskazanych formatów.</p>
+<div class="q-block">
+<span class="q-text">14. Wymień i scharakteryzuj popularne formaty graficzne. Wskaż przykłady zastosowania każdego ze wskazanych formatów.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <table>
 <tr><th>Format</th><th>Zastosowanie</th></tr>
 <tr><td>JPEG</td><td>zdjęcia (kompresja stratna)</td></tr>
@@ -327,10 +390,14 @@ int main(void)<br>
 <tr><td>WebP</td><td>nowoczesny format webowy, mniejszy niż JPEG/PNG</td></tr>
 </table>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>15. Pojęcia: bitmapa, głębia koloru, dithering, antyaliasing, progowanie, resampling, trasowanie</h3>
-<p class="polecenie">Polecenie: Wyjaśnij pojęcia lub wskaż na czym polega dany proces: bitmapa, głębia koloru, dithering, antyaliasing, progowanie, resampling, trasowanie.</p>
+<div class="q-block">
+<span class="q-text">15. Wyjaśnij pojęcia lub wskaż, na czym polega dany proces: bitmapa, głębia koloru, dithering, antyaliasing, progowanie, resampling, trasowanie.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <table>
 <tr><td>Bitmapa</td><td>obraz zapisany jako siatka (macierz) pikseli — grafika rastrowa</td></tr>
 <tr><td>Głębia koloru</td><td>liczba bitów opisujących kolor pojedynczego piksela</td></tr>
@@ -341,11 +408,18 @@ int main(void)<br>
 <tr><td>Trasowanie</td><td>zamiana obrazu rastrowego na wektorowy (wektoryzacja/tracing) — odtworzenie kształtów jako krzywych</td></tr>
 </table>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>16. Histogram obrazu — tworzenie i zastosowanie</h3>
-<p class="polecenie">Polecenie: Wyjaśnij w jaki sposób tworzony jest histogram obrazu oraz jakie jest jego zastosowanie.</p>
-<div class="odp">Tworzony przez zliczenie liczby pikseli przypadających na każdy poziom jasności/koloru (0-255). Zastosowanie: analiza rozkładu jasności/kontrastu, dobór progu do binaryzacji (metoda Otsu), wyrównywanie histogramu (poprawa kontrastu).</div>
+<div class="q-block">
+<span class="q-text">16. Wyjaśnij, w jaki sposób tworzony jest histogram obrazu oraz jakie jest jego zastosowanie.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Tworzony przez zliczenie liczby pikseli przypadających na każdy poziom jasności/koloru (0-255).<br><br>
+<b>Zastosowanie:</b> analiza rozkładu jasności/kontrastu, dobór progu do binaryzacji (metoda Otsu), wyrównywanie histogramu (poprawa kontrastu).
+</div>
+</details>
 </div>
 </div>
 
@@ -353,19 +427,27 @@ int main(void)<br>
 <h2>5. Bazy danych</h2>
 <p><em>(pełna teoria — patrz plik <a href="rbd.html">Relacyjne bazy danych</a>)</em></p>
 
-<div class="pytanie">
-<h3>17. Relacja jeden-do-wielu</h3>
-<p class="polecenie">Polecenie: Wyjaśnij na czym polega typ relacji jeden-do-wielu w relacyjnych bazach danych. Przedstaw na przykładowym schemacie.</p>
-<p>Jeden wiersz tabeli A może odpowiadać wielu wierszom tabeli B, ale każdy wiersz B odpowiada tylko jednemu wierszowi A.</p>
-<div class="odp">Przykład: Klient (1) — Zamówienia (N). Klucz obcy <code>id_klient</code> umieszczony jest w tabeli po stronie "wiele" (Zamówienie).</div>
+<div class="q-block">
+<span class="q-text">17. Wyjaśnij, na czym polega typ relacji jeden-do-wielu w relacyjnych bazach danych. Przedstaw na przykładowym schemacie.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Jeden wiersz tabeli A może odpowiadać wielu wierszom tabeli B, ale każdy wiersz B odpowiada tylko jednemu wierszowi A.<br><br>
+<b>Przykład:</b> Klient (1) — Zamówienia (N). Klucz obcy <code>id_klient</code> umieszczony jest w tabeli po stronie "wiele" (Zamówienie).
 <pre>Klient(id, nazwa)
-Zamowienie(id, id_klient → Klient.id, data)</pre>
+Zamowienie(id, id_klient &rarr; Klient.id, data)</pre>
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>18. Klucz główny — pojęcie i rola</h3>
-<p class="polecenie">Polecenie: Wyjaśnij pojęcie klucz główny (podstawowy) i rolę jaką pełni w relacyjnych bazach danych.</p>
-<div class="odp">Kolumna (lub zestaw kolumn) jednoznacznie identyfikująca każdy wiersz tabeli — nie może się powtarzać ani być pusta (NULL). Pełni rolę "adresu" wiersza, wykorzystywanego m.in. jako cel kluczy obcych z innych tabel, zapewniając integralność referencyjną bazy danych.</div>
+<div class="q-block">
+<span class="q-text">18. Wyjaśnij pojęcie klucz główny (podstawowy) i rolę, jaką pełni w relacyjnych bazach danych.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Kolumna (lub zestaw kolumn) jednoznacznie identyfikująca każdy wiersz tabeli — nie może się powtarzać ani być pusta (NULL). Pełni rolę "adresu" wiersza, wykorzystywanego m.in. jako cel kluczy obcych z innych tabel, zapewniając integralność referencyjną bazy danych.
+</div>
+</details>
 </div>
 </div>
 
@@ -373,40 +455,51 @@ Zamowienie(id, id_klient → Klient.id, data)</pre>
 <h2>6. Biznes i przedsiębiorczość</h2>
 <p><em>(powiązane tematy zarządzania — patrz plik <a href="kizp.html">Komunikacja i zarządzanie projektami</a>)</em></p>
 
-<div class="pytanie">
-<h3>19. Model biznesowy — dlaczego jest potrzebny + przykład z branży IT</h3>
-<p class="polecenie">Polecenie: Dlaczego każde przedsiębiorstwo powinno mieć określony model biznesowy? Proszę podać przykładowy model biznesowy w branży IT i wyjaśnić na czym polega.</p>
-<p>Model biznesowy opisuje, jak firma <strong>tworzy, dostarcza i przechwytuje wartość</strong> — pozwala spójnie planować działania, przewidywać przychody/koszty i komunikować wartość klientom/inwestorom. Bez jasnego modelu firma działa chaotycznie, nie wiedząc, skąd realnie mają płynąć przychody.</p>
-<div class="odp">Przykład: model SaaS (Software as a Service) — firma IT oferuje oprogramowanie w subskrypcji (miesięcznej/rocznej) zamiast jednorazowej sprzedaży licencji, co daje przewidywalne, powtarzalne przychody (recurring revenue) i niższy próg wejścia dla klienta.</div>
+<div class="q-block">
+<span class="q-text">19. Dlaczego każde przedsiębiorstwo powinno mieć określony model biznesowy? Proszę podać przykładowy model biznesowy w branży IT i wyjaśnić, na czym polega.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Model biznesowy opisuje, jak firma <b>tworzy, dostarcza i przechwytuje wartość</b> — pozwala spójnie planować działania, przewidywać przychody/koszty i komunikować wartość klientom/inwestorom. Bez jasnego modelu firma działa chaotycznie, nie wiedząc, skąd realnie mają płynąć przychody.<br><br>
+<b>Przykład:</b> model SaaS (Software as a Service) — firma IT oferuje oprogramowanie w subskrypcji (miesięcznej/rocznej) zamiast jednorazowej sprzedaży licencji, co daje przewidywalne, powtarzalne przychody (recurring revenue) i niższy próg wejścia dla klienta.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. Reguła SMART, cel strategiczny vs operacyjny</h3>
-<p class="polecenie">Polecenie: Wyjaśnij regułę SMART odnoszącą się do wyznaczania celów biznesowych. Czym się różni cel strategiczny od celu operacyjnego? Podaj przykłady celu strategicznego i celów operacyjnych, które z niego wynikają stosując regułę SMART.</p>
-<p><strong>SMART</strong>: cele powinny być <strong>S</strong>pecific (konkretne), <strong>M</strong>easurable (mierzalne), <strong>A</strong>chievable (osiągalne), <strong>R</strong>elevant (istotne), <strong>T</strong>ime-bound (określone w czasie).</p>
+<div class="q-block">
+<span class="q-text">20. Wyjaśnij regułę SMART odnoszącą się do wyznaczania celów biznesowych. Czym się różni cel strategiczny od celu operacyjnego? Podaj przykłady celu strategicznego i celów operacyjnych, które z niego wynikają, stosując regułę SMART.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>SMART</b>: cele powinny być <b>S</b>pecific (konkretne), <b>M</b>easurable (mierzalne), <b>A</b>chievable (osiągalne), <b>R</b>elevant (istotne), <b>T</b>ime-bound (określone w czasie).<br><br>
 <table>
 <tr><th>Typ celu</th><th>Charakter</th><th>Przykład</th></tr>
 <tr><td>Strategiczny</td><td>długoterminowy, ogólny kierunek</td><td>„Zostać liderem rynku aplikacji mobilnych w Polsce w ciągu 5 lat”</td></tr>
 <tr><td>Operacyjny</td><td>krótkoterminowy, konkretny krok realizujący cel strategiczny</td><td>„Zwiększyć liczbę pobrań aplikacji o 20% w ciągu najbliższego kwartału poprzez kampanię w mediach społecznościowych” (spełnia SMART: konkretne +20%, mierzalne, osiągalne, istotne dla wzrostu, ograniczone czasowo do 1 kwartału)</td></tr>
 </table>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>21. Marketing-mix (4P) + rdzeń/produkt rzeczywisty/poszerzony</h3>
-<p class="polecenie">Polecenie: Wyjaśnij koncepcję marketingu-mix na przykładzie wybranej firmy z branży IT – opisz dokładnie każdy element. Pamiętaj, by w ramach tego określić również, czym jest rdzeń produktu, produkt rzeczywisty i poszerzony. Odpowiedź zostanie zaliczona, jeśli wyjaśniając zarówno koncepcję marketingu-mix, jak i produktu, podasz przykłady z branży IT.</p>
-<p>Koncepcja marketingu-mix opisuje cztery obszary decyzji marketingowych firmy:</p>
+<div class="q-block">
+<span class="q-text">21. Wyjaśnij koncepcję marketingu-mix na przykładzie wybranej firmy z branży IT – opisz dokładnie każdy element. Pamiętaj, by w ramach tego określić również, czym jest rdzeń produktu, produkt rzeczywisty i poszerzony. Odpowiedź zostanie zaliczona, jeśli wyjaśniając zarówno koncepcję marketingu-mix, jak i produktu, podasz przykłady z branży IT.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Koncepcja marketingu-mix opisuje cztery obszary decyzji marketingowych firmy:<br><br>
 <table>
-<tr><td><strong>Product</strong> (produkt)</td><td>co firma oferuje — patrz niżej rozbicie na 3 warstwy</td></tr>
-<tr><td><strong>Price</strong> (cena)</td><td>strategia cenowa — np. model subskrypcyjny, freemium, licencja jednorazowa</td></tr>
-<tr><td><strong>Place</strong> (dystrybucja)</td><td>gdzie/jak produkt dociera do klienta — sklep internetowy, App Store, sprzedaż bezpośrednia B2B</td></tr>
-<tr><td><strong>Promotion</strong> (promocja)</td><td>jak firma komunikuje wartość — reklama online, content marketing, webinary</td></tr>
+<tr><td><b>Product</b> (produkt)</td><td>co firma oferuje — patrz niżej rozbicie na 3 warstwy</td></tr>
+<tr><td><b>Price</b> (cena)</td><td>strategia cenowa — np. model subskrypcyjny, freemium, licencja jednorazowa</td></tr>
+<tr><td><b>Place</b> (dystrybucja)</td><td>gdzie/jak produkt dociera do klienta — sklep internetowy, App Store, sprzedaż bezpośrednia B2B</td></tr>
+<tr><td><b>Promotion</b> (promocja)</td><td>jak firma komunikuje wartość — reklama online, content marketing, webinary</td></tr>
 </table>
-<p>Trzy warstwy produktu (na przykładzie oprogramowania antywirusowego):</p>
-<ul>
-<li><strong>rdzeń produktu</strong> — podstawowa korzyść, którą kupuje klient, np. „poczucie bezpieczeństwa danych”</li>
-<li><strong>produkt rzeczywisty</strong> — konkretna, namacalna forma: samo oprogramowanie antywirusowe z określonymi funkcjami (skanowanie, zapora, ochrona w czasie rzeczywistym)</li>
-<li><strong>produkt poszerzony</strong> — dodatkowa wartość wykraczająca poza sam produkt: wsparcie techniczne 24/7, gwarancja, darmowe aktualizacje, szkolenia dla pracowników firmy klienta</li>
-</ul>
+<br>
+Trzy warstwy produktu (na przykładzie oprogramowania antywirusowego):<br><br>
+&bull; <b>rdzeń produktu</b> — podstawowa korzyść, którą kupuje klient, np. „poczucie bezpieczeństwa danych”<br>
+&bull; <b>produkt rzeczywisty</b> — konkretna, namacalna forma: samo oprogramowanie antywirusowe z określonymi funkcjami (skanowanie, zapora, ochrona w czasie rzeczywistym)<br>
+&bull; <b>produkt poszerzony</b> — dodatkowa wartość wykraczająca poza sam produkt: wsparcie techniczne 24/7, gwarancja, darmowe aktualizacje, szkolenia dla pracowników firmy klienta
+</div>
+</details>
 </div>
 </div>
 

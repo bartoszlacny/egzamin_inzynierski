@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,44 +32,61 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -82,16 +100,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -116,27 +124,25 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="logika">
 <h2>1. Teoria mnogości, logika i funkcje (Wstęp do matematyki / Teoretyczne podstawy informatyki)</h2>
 
-<div class="pytanie">
-<h3>1. Działania na zbiorach</h3>
-<p class="polecenie">Polecenie: Wyznacz \(A \cup B\), \(A \cap B\), \(A \setminus B\), \(B \setminus A\), \(A'\), \(B'\), \(B \setminus (A \cap B')\) jeżeli:<br>
+<div class="q-block">
+<span class="q-text">1. Wyznacz \(A \cup B\), \(A \cap B\), \(A \setminus B\), \(B \setminus A\), \(A'\), \(B'\), \(B \setminus (A \cap B')\) jeżeli:<br>
 a. \(A = \langle -2; 7 \rangle\), \(B = (-\infty; 6\rangle\)<br>
-b. \(A = \{x \in \mathbb{R}: |x-1| \ge 3\}\) i \(B = \{x \in \mathbb{R}: x^2-7x+6<0\}\).</p>
-
-<p><strong>a.</strong> \(A=[-2,7]\), \(B=(-\infty,6]\).</p>
-<div class="odp">
+b. \(A = \{x \in \mathbb{R}: |x-1| \ge 3\}\) i \(B = \{x \in \mathbb{R}: x^2-7x+6<0\}\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a.</b> \(A=[-2,7]\), \(B=(-\infty,6]\).<br><br>
 \(A \cup B = (-\infty, 7]\)<br>
 \(A \cap B = [-2, 6]\)<br>
 \(A \setminus B = (6, 7]\)<br>
 \(B \setminus A = (-\infty, -2)\)<br>
 \(A' = (-\infty,-2) \cup (7,\infty)\)<br>
 \(B' = (6,\infty)\)<br>
-\(A \cap B' = [-2,7]\cap(6,\infty) = (6,7]\), więc \(B\setminus(A\cap B') = (-\infty,6]\setminus(6,7] = (-\infty,6] = B\)
-</div>
+\(A \cap B' = [-2,7]\cap(6,\infty) = (6,7]\), więc \(B\setminus(A\cap B') = (-\infty,6]\setminus(6,7] = (-\infty,6] = B\)<br><br>
 
-<p><strong>b.</strong> Najpierw rozwiązujemy warunki definiujące zbiory:</p>
-<p>\(A\): \(|x-1|\ge 3 \Leftrightarrow x-1\ge3 \lor x-1\le-3 \Leftrightarrow x\ge4 \lor x\le-2\), czyli \(A=(-\infty,-2]\cup[4,\infty)\).</p>
-<p>\(B\): \(x^2-7x+6<0 \Leftrightarrow (x-1)(x-6)<0\), pierwiastki \(x=1,6\), parabola w górę więc ujemna między pierwiastkami: \(B=(1,6)\).</p>
-<div class="odp">
+<b>b.</b> Najpierw rozwiązujemy warunki definiujące zbiory:<br>
+\(A\): \(|x-1|\ge 3 \Leftrightarrow x-1\ge3 \lor x-1\le-3 \Leftrightarrow x\ge4 \lor x\le-2\), czyli \(A=(-\infty,-2]\cup[4,\infty)\).<br>
+\(B\): \(x^2-7x+6<0 \Leftrightarrow (x-1)(x-6)<0\), pierwiastki \(x=1,6\), parabola w górę więc ujemna między pierwiastkami: \(B=(1,6)\).<br><br>
 \(A \cup B = (-\infty,-2] \cup (1,\infty)\)<br>
 \(A \cap B = [4,6)\)<br>
 \(A \setminus B = (-\infty,-2] \cup [6,\infty)\)<br>
@@ -145,239 +151,312 @@ b. \(A = \{x \in \mathbb{R}: |x-1| \ge 3\}\) i \(B = \{x \in \mathbb{R}: x^2-7x+
 \(B' = (-\infty,1] \cup [6,\infty)\)<br>
 \(A \cap B' = (-\infty,-2]\cup[6,\infty)\), więc \(B\setminus(A\cap B') = (1,6)\setminus[(-\infty,-2]\cup[6,\infty)] = (1,6) = B\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>2. Zbiór wartości funkcji, injekcja, surjekcja, funkcja odwrotna</h3>
-<p class="polecenie">Polecenie: Dana jest funkcja \(f: \mathbb{R} \to \mathbb{R}\) określona następująco:<br>
+<div class="q-block">
+<span class="q-text">2. Dana jest funkcja \(f: \mathbb{R} \to \mathbb{R}\) określona następująco:<br>
 a. \(f(x) = x^2+1\)<br>
 b. \(f(x) = \begin{cases} x^2 & dla\ x \ge 0 \\ 2x+3 & dla\ x < 0 \end{cases}\)<br>
-Wyznacz zbiór wartości funkcji f. Zbadać, czy funkcja f jest injekcją, surjekcją. Wyznacz funkcje odwrotne (jeżeli istnieją).</p>
-
-<p><strong>a. \(f(x)=x^2+1\):</strong></p>
-<div class="odp">
+Wyznacz zbiór wartości funkcji f. Zbadać, czy funkcja f jest injekcją, surjekcją. Wyznacz funkcje odwrotne (jeżeli istnieją).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a. \(f(x)=x^2+1\):</b><br>
 Zbiór wartości: \([1,\infty)\) (minimum w \(x=0\)).<br>
 Injekcja: NIE — np. \(f(-1)=f(1)=2\).<br>
 Surjekcja na \(\mathbb{R}\): NIE — zbiór wartości \([1,\infty)\ne\mathbb{R}\).<br>
-Funkcja odwrotna: nie istnieje dla całej dziedziny \(\mathbb{R}\) (funkcja nie jest różnowartościowa).
-</div>
+Funkcja odwrotna: nie istnieje dla całej dziedziny \(\mathbb{R}\) (funkcja nie jest różnowartościowa).<br><br>
 
-<p><strong>b.</strong> Dla \(x\ge0\): \(f(x)=x^2\) daje wartości \([0,\infty)\). Dla \(x<0\): \(f(x)=2x+3\) daje wartości \((-\infty,3)\) (bez 3, bo \(x<0\) ściśle). Suma tych zbiorów \([0,\infty)\cup(-\infty,3) = \mathbb{R}\).</p>
-<div class="odp">
+<b>b.</b> Dla \(x\ge0\): \(f(x)=x^2\) daje wartości \([0,\infty)\). Dla \(x<0\): \(f(x)=2x+3\) daje wartości \((-\infty,3)\) (bez 3, bo \(x<0\) ściśle). Suma tych zbiorów \([0,\infty)\cup(-\infty,3) = \mathbb{R}\).<br><br>
 Zbiór wartości: \(\mathbb{R}\).<br>
 Injekcja: NIE — np. \(f(1)=1\) (z gałęzi \(x^2\)) oraz \(f(-1)=2(-1)+3=1\) (z gałęzi \(2x+3\)), dwa różne argumenty dają tę samą wartość.<br>
 Surjekcja na \(\mathbb{R}\): TAK, bo zbiór wartości \(=\mathbb{R}\)=przeciwdziedzina.<br>
 Funkcja odwrotna: nie istnieje (funkcja nie jest różnowartościowa, mimo że jest "na").
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Złożenia funkcji</h3>
-<p class="polecenie">Polecenie: Określamy trzy funkcje przekształcające zbiór \(\mathbb{R}\) w zbiór \(\mathbb{R}\) w następujący sposób: \(f(x)=x^3-4x\), \(g(x)=\dfrac{1}{x^2+1}\), \(h(x)=x^4\). Znajdź (jeżeli istnieją) a) \(f \circ g \circ h\), b) \(f \circ g\), c) \(h \circ g\).</p>
-
-<p>Wszystkie trzy funkcje mają dziedzinę \(\mathbb{R}\) i zbiory wartości zawarte w \(\mathbb{R}\) (mianownik \(x^2+1\) nigdy nie zeruje się), więc każde złożenie istnieje dla wszystkich \(x\in\mathbb{R}\).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">3. Określamy trzy funkcje przekształcające zbiór \(\mathbb{R}\) w zbiór \(\mathbb{R}\) w następujący sposób: \(f(x)=x^3-4x\), \(g(x)=\dfrac{1}{x^2+1}\), \(h(x)=x^4\). Znajdź (jeżeli istnieją) a) \(f \circ g \circ h\), b) \(f \circ g\), c) \(h \circ g\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Wszystkie trzy funkcje mają dziedzinę \(\mathbb{R}\) i zbiory wartości zawarte w \(\mathbb{R}\) (mianownik \(x^2+1\) nigdy nie zeruje się), więc każde złożenie istnieje dla wszystkich \(x\in\mathbb{R}\).<br><br>
 a) \((f\circ g\circ h)(x) = f(g(h(x))) = f\!\left(\dfrac{1}{x^8+1}\right) = \dfrac{1}{(x^8+1)^3} - \dfrac{4}{x^8+1}\), dziedzina \(\mathbb{R}\)<br><br>
 b) \((f\circ g)(x) = f\!\left(\dfrac{1}{x^2+1}\right) = \dfrac{1}{(x^2+1)^3} - \dfrac{4}{x^2+1}\), dziedzina \(\mathbb{R}\)<br><br>
 c) \((h\circ g)(x) = h\!\left(\dfrac{1}{x^2+1}\right) = \dfrac{1}{(x^2+1)^4}\), dziedzina \(\mathbb{R}\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Zbiory spełniania implikacji i równoważności</h3>
-<p class="polecenie">Polecenie: Wyznaczyć zbiory spełniania implikacji \(\varphi(x) \Rightarrow \psi(x)\) i równoważności \(\varphi(x) \Leftrightarrow \psi(x)\) funkcji zdaniowych \(\varphi(x)\) i \(\psi(x)\): \(\varphi(x): x^2+x+5>0\), \(\psi(x): x+2<0\). Wykorzystaj wzory: \(S(\varphi\Rightarrow\psi)=-S(\varphi)\cup S(\psi)\), \(S(\varphi\Leftrightarrow\psi)=(S(\varphi)\cap S(\psi))\cup(-S(\varphi)\cap-S(\psi))\), gdzie \(-S(\varphi)=Z(\varphi)\setminus S(\varphi)\), \(-S(\psi)=Z(\psi)\setminus S(\psi)\).</p>
-
-<p>\(\varphi(x)\): \(x^2+x+5>0\) — wyróżnik \(\Delta=1-20=-19<0\), więc parabola zawsze dodatnia. \(S(\varphi)=\mathbb{R}\).</p>
-<p>\(\psi(x)\): \(x+2<0 \Leftrightarrow x<-2\). \(S(\psi)=(-\infty,-2)\).</p>
-<p>\(-S(\varphi) = \mathbb{R}\setminus\mathbb{R} = \varnothing\)</p>
-<p>\(-S(\psi) = \mathbb{R}\setminus(-\infty,-2) = [-2,\infty)\)</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">4. Wyznaczyć zbiory spełniania implikacji \(\varphi(x) \Rightarrow \psi(x)\) i równoważności \(\varphi(x) \Leftrightarrow \psi(x)\) funkcji zdaniowych \(\varphi(x)\) i \(\psi(x)\): \(\varphi(x): x^2+x+5>0\), \(\psi(x): x+2<0\). Wykorzystaj wzory: \(S(\varphi\Rightarrow\psi)=-S(\varphi)\cup S(\psi)\), \(S(\varphi\Leftrightarrow\psi)=(S(\varphi)\cap S(\psi))\cup(-S(\varphi)\cap-S(\psi))\), gdzie \(-S(\varphi)=Z(\varphi)\setminus S(\varphi)\), \(-S(\psi)=Z(\psi)\setminus S(\psi)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+\(\varphi(x)\): \(x^2+x+5>0\) — wyróżnik \(\Delta=1-20=-19<0\), więc parabola zawsze dodatnia. \(S(\varphi)=\mathbb{R}\).<br>
+\(\psi(x)\): \(x+2<0 \Leftrightarrow x<-2\). \(S(\psi)=(-\infty,-2)\).<br>
+\(-S(\varphi) = \mathbb{R}\setminus\mathbb{R} = \varnothing\)<br>
+\(-S(\psi) = \mathbb{R}\setminus(-\infty,-2) = [-2,\infty)\)<br><br>
 \(S(\varphi\Rightarrow\psi) = \varnothing \cup (-\infty,-2) = (-\infty,-2)\)<br>
 \(S(\varphi\Leftrightarrow\psi) = (\mathbb{R}\cap(-\infty,-2)) \cup (\varnothing\cap[-2,\infty)) = (-\infty,-2)\)<br>
 Oba zbiory są identyczne — ponieważ \(\varphi\) jest tautologią (zawsze prawdziwa), implikacja i równoważność z \(\psi\) są prawdziwe dokładnie wtedy, gdy prawdziwe jest \(\psi\).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>5. Dowody indukcyjne</h3>
-<p class="polecenie">Polecenie: Metodą indukcji matematycznej udowodnij:<br>
+<div class="q-block">
+<span class="q-text">5. Metodą indukcji matematycznej udowodnij:<br>
 a. \(\forall n \in \mathbb{N}^+ \left[1^2+2^2+3^2+\cdots+n^2 = \dfrac{n(n+1)(2n+1)}{6}\right]\)<br>
-b. \(\forall n \in \mathbb{N} \left[6 \mid (n^3-n)\right]\)</p>
+b. \(\forall n \in \mathbb{N} \left[6 \mid (n^3-n)\right]\)</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>a.</b> <i>Baza indukcji</i> (\(n=1\)): \(L=1^2=1\), \(P=\dfrac{1\cdot2\cdot3}{6}=1\). \(L=P\) ✓.<br><br>
+<i>Krok indukcyjny:</i> zakładamy \(1^2+\cdots+k^2=\dfrac{k(k+1)(2k+1)}{6}\) i pokazujemy dla \(k+1\):<br>
+\(1^2+\cdots+k^2+(k+1)^2 = \dfrac{k(k+1)(2k+1)}{6}+(k+1)^2 = (k+1)\left[\dfrac{k(2k+1)}{6}+(k+1)\right] = (k+1)\cdot\dfrac{2k^2+7k+6}{6}\)<br><br>
+Rozkładając \(2k^2+7k+6=(2k+3)(k+2)\), otrzymujemy \(\dfrac{(k+1)(k+2)(2k+3)}{6}\), co jest dokładnie wzorem dla \(n=k+1\) (bo \(2(k+1)+1=2k+3\)). Na mocy zasady indukcji matematycznej wzór zachodzi dla każdego \(n\in\mathbb{N}^+\).<br><br>
 
-<p><strong>a.</strong> <em>Baza indukcji</em> (\(n=1\)): \(L=1^2=1\), \(P=\dfrac{1\cdot2\cdot3}{6}=1\). \(L=P\) ✓.</p>
-<p><em>Krok indukcyjny:</em> zakładamy \(1^2+\cdots+k^2=\dfrac{k(k+1)(2k+1)}{6}\) i pokazujemy dla \(k+1\):</p>
-<p>\(1^2+\cdots+k^2+(k+1)^2 = \dfrac{k(k+1)(2k+1)}{6}+(k+1)^2 = (k+1)\left[\dfrac{k(2k+1)}{6}+(k+1)\right] = (k+1)\cdot\dfrac{2k^2+7k+6}{6}\)</p>
-<p>Rozkładając \(2k^2+7k+6=(2k+3)(k+2)\), otrzymujemy \(\dfrac{(k+1)(k+2)(2k+3)}{6}\), co jest dokładnie wzorem dla \(n=k+1\) (bo \(2(k+1)+1=2k+3\)). Na mocy zasady indukcji matematycznej wzór zachodzi dla każdego \(n\in\mathbb{N}^+\).</p>
-
-<p><strong>b.</strong> <em>Baza indukcji</em> (\(n=0\)): \(0^3-0=0\), a \(6\mid 0\) ✓.</p>
-<p><em>Krok indukcyjny:</em> zakładamy \(6\mid(k^3-k)\), tj. \(k^3-k=6m\) dla pewnego \(m\in\mathbb{Z}\). Dla \(k+1\):</p>
-<p>\((k+1)^3-(k+1) = k^3+3k^2+3k+1-k-1 = (k^3-k)+3k^2+3k = 6m+3k(k+1)\)</p>
-<p>\(k(k+1)\) to iloczyn dwóch kolejnych liczb całkowitych — zawsze parzysty, więc \(3k(k+1)\) jest podzielne przez 6. Zatem \(6m+3k(k+1)\) też jest podzielne przez 6.</p>
-<div class="odp">Obie tezy udowodnione metodą indukcji matematycznej (baza + krok indukcyjny).</div>
+<b>b.</b> <i>Baza indukcji</i> (\(n=0\)): \(0^3-0=0\), a \(6\mid 0\) ✓.<br><br>
+<i>Krok indukcyjny:</i> zakładamy \(6\mid(k^3-k)\), tj. \(k^3-k=6m\) dla pewnego \(m\in\mathbb{Z}\). Dla \(k+1\):<br>
+\((k+1)^3-(k+1) = k^3+3k^2+3k+1-k-1 = (k^3-k)+3k^2+3k = 6m+3k(k+1)\)<br><br>
+\(k(k+1)\) to iloczyn dwóch kolejnych liczb całkowitych — zawsze parzysty, więc \(3k(k+1)\) jest podzielne przez 6. Zatem \(6m+3k(k+1)\) też jest podzielne przez 6.<br><br>
+<b>Odpowiedź:</b> Obie tezy udowodnione metodą indukcji matematycznej (baza + krok indukcyjny).
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Relacja równoważności i klasy abstrakcji</h3>
-<p class="polecenie">Polecenie: Dla danego zbioru X oraz relacji \(R\subset X^2\) zbadać, czy R jest relacją równoważności. Jeżeli tak to wyznacz klasy abstrakcji. \(X=\mathbb{N}\), \(xRy \Leftrightarrow 2|(x+y)\).</p>
-
-<div class="odp">
-<strong>Zwrotność:</strong> \(xRx \Leftrightarrow 2|2x\) — zawsze prawda. ✓<br>
-<strong>Symetria:</strong> \(2|(x+y) \Leftrightarrow 2|(y+x)\) — dodawanie przemienne. ✓<br>
-<strong>Przechodniość:</strong> jeśli \(2|(x+y)\) i \(2|(y+z)\), to ich suma \(x+2y+z\) jest parzysta, a więc \(x+z=(x+2y+z)-2y\) też jest parzyste (odejmujemy liczbę parzystą \(2y\)) — czyli \(2|(x+z)\). ✓<br><br>
+<div class="q-block">
+<span class="q-text">6. Dla danego zbioru X oraz relacji \(R\subset X^2\) zbadać, czy R jest relacją równoważności. Jeżeli tak to wyznacz klasy abstrakcji. \(X=\mathbb{N}\), \(xRy \Leftrightarrow 2|(x+y)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Zwrotność:</b> \(xRx \Leftrightarrow 2|2x\) — zawsze prawda. ✓<br>
+<b>Symetria:</b> \(2|(x+y) \Leftrightarrow 2|(y+x)\) — dodawanie przemienne. ✓<br>
+<b>Przechodniość:</b> jeśli \(2|(x+y)\) i \(2|(y+z)\), to ich suma \(x+2y+z\) jest parzysta, a więc \(x+z=(x+2y+z)-2y\) też jest parzyste (odejmujemy liczbę parzystą \(2y\)) — czyli \(2|(x+z)\). ✓<br><br>
 R jest relacją równoważności. Klasy abstrakcji odpowiadają parzystości liczby (suma dwóch liczb jest parzysta wtedy i tylko wtedy, gdy obie są parzyste lub obie nieparzyste):<br>
 \([0] = \{0,2,4,6,\dots\}\) — liczby parzyste<br>
 \([1] = \{1,3,5,7,\dots\}\) — liczby nieparzyste
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>9. Aksjomatyczne ujęcie rachunku prawdopodobieństwa</h3>
-<p class="polecenie">Polecenie: Jak wygląda aksjomatyczne ujęcie rachunku prawdopodobieństwa?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">9. Jak wygląda aksjomatyczne ujęcie rachunku prawdopodobieństwa?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Aksjomaty Kołmogorowa dla przestrzeni probabilistycznej \((\Omega, \mathcal{F}, P)\), gdzie \(\Omega\) to przestrzeń zdarzeń elementarnych, \(\mathcal{F}\) to \(\sigma\)-algebra podzbiorów \(\Omega\) (zdarzenia), a \(P\) to funkcja prawdopodobieństwa spełniająca:<br>
 1. \(P(A) \ge 0\) dla każdego \(A \in \mathcal{F}\) (nieujemność)<br>
 2. \(P(\Omega) = 1\) (unormowanie)<br>
 3. Dla przeliczalnie wielu, parami rozłącznych zdarzeń \(A_1, A_2, \dots\) (\(A_i \cap A_j = \varnothing\) dla \(i \ne j\)): \(P\left(\bigcup_i A_i\right) = \sum_i P(A_i)\) (przeliczalna addytywność)<br><br>
 Z tych trzech aksjomatów wyprowadza się wszystkie pozostałe własności prawdopodobieństwa, np. \(P(\varnothing)=0\), \(P(A')=1-P(A)\), monotoniczność \(P\).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>10. Funkcja zdaniowa, zakres zmienności, zbiór spełniania, wykres</h3>
-<p class="polecenie">Polecenie: Co to jest: funkcja zdaniowa, zakres jej zmienności, zbiór spełniania oraz jej wykres?</p>
-<div class="odp">
-<strong>Funkcja zdaniowa</strong> \(\varphi(x)\) — wyrażenie zawierające zmienną \(x\), które staje się zdaniem logicznym (prawdziwym lub fałszywym) dopiero po podstawieniu za \(x\) konkretnej wartości.<br>
-<strong>Zakres zmienności</strong> \(Z(\varphi)\) — zbiór, z którego wolno podstawiać wartości zmiennej \(x\) (dziedzina funkcji zdaniowej).<br>
-<strong>Zbiór spełniania</strong> \(S(\varphi)\) — podzbiór zakresu zmienności, dla którego funkcja zdaniowa staje się zdaniem prawdziwym: \(S(\varphi)=\{x\in Z(\varphi): \varphi(x)\text{ jest prawdziwe}\}\).<br>
-<strong>Wykres</strong> funkcji zdaniowej — graficzne przedstawienie zbioru spełniania (np. na osi liczbowej lub płaszczyźnie) w postaci zaznaczonych punktów lub przedziałów.
+<div class="q-block">
+<span class="q-text">10. Co to jest: funkcja zdaniowa, zakres jej zmienności, zbiór spełniania oraz jej wykres?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Funkcja zdaniowa</b> \(\varphi(x)\) — wyrażenie zawierające zmienną \(x\), które staje się zdaniem logicznym (prawdziwym lub fałszywym) dopiero po podstawieniu za \(x\) konkretnej wartości.<br>
+<b>Zakres zmienności</b> \(Z(\varphi)\) — zbiór, z którego wolno podstawiać wartości zmiennej \(x\) (dziedzina funkcji zdaniowej).<br>
+<b>Zbiór spełniania</b> \(S(\varphi)\) — podzbiór zakresu zmienności, dla którego funkcja zdaniowa staje się zdaniem prawdziwym: \(S(\varphi)=\{x\in Z(\varphi): \varphi(x)\text{ jest prawdziwe}\}\).<br>
+<b>Wykres</b> funkcji zdaniowej — graficzne przedstawienie zbioru spełniania (np. na osi liczbowej lub płaszczyźnie) w postaci zaznaczonych punktów lub przedziałów.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>11. Rozdzielność iloczynu kartezjańskiego względem sumy zbiorów</h3>
-<p class="polecenie">Polecenie: Sprawdź, czy prawdziwa jest następująca równość: \(A \times (B \cup C) = (A \times B) \cup (A \times C)\).</p>
-<p>Dowód przez pokazanie równoważności warunków przynależności:</p>
-<p>\((x,y)\in A\times(B\cup C) \Leftrightarrow x\in A \land y\in(B\cup C) \Leftrightarrow x\in A \land (y\in B \lor y\in C)\)</p>
-<p>\(\Leftrightarrow (x\in A \land y\in B) \lor (x\in A \land y\in C) \Leftrightarrow (x,y)\in A\times B \lor (x,y)\in A\times C \Leftrightarrow (x,y)\in(A\times B)\cup(A\times C)\)</p>
-<div class="odp">Równość jest PRAWDZIWA — jest to twierdzenie (tożsamość) teorii mnogości, wynikające z rozdzielności koniunkcji względem alternatywy w rachunku zdań.</div>
+<div class="q-block">
+<span class="q-text">11. Sprawdź, czy prawdziwa jest następująca równość: \(A \times (B \cup C) = (A \times B) \cup (A \times C)\).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Dowód przez pokazanie równoważności warunków przynależności:<br><br>
+\((x,y)\in A\times(B\cup C) \Leftrightarrow x\in A \land y\in(B\cup C) \Leftrightarrow x\in A \land (y\in B \lor y\in C)\)<br><br>
+\(\Leftrightarrow (x\in A \land y\in B) \lor (x\in A \land y\in C) \Leftrightarrow (x,y)\in A\times B \lor (x,y)\in A\times C \Leftrightarrow (x,y)\in(A\times B)\cup(A\times C)\)<br><br>
+<b>Odpowiedź:</b> Równość jest PRAWDZIWA — jest to twierdzenie (tożsamość) teorii mnogości, wynikające z rozdzielności koniunkcji względem alternatywy w rachunku zdań.
+</div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="prawdopodobienstwo">
 <h2>2. Rachunek prawdopodobieństwa</h2>
 
-<div class="pytanie">
-<h3>7. Prawdopodobieństwo geometryczne — spotkanie internautów</h3>
-<p class="polecenie">Polecenie: Dwoje internautów umówiło się na spotkanie w sieci między godziną 17 a 18, przy czym ze względu na koszty połączenia będą na siebie czekać co najwyżej 10 minut i nie dłużej niż do godziny 18. Jakie jest prawdopodobieństwo tego, że się spotkają?</p>
-<p>Niech \(x,y\in[0,60]\) oznaczają momenty przyjścia (w minutach po 17:00) obu osób. Losowa para \((x,y)\) jest punktem losowanym z kwadratu \([0,60]\times[0,60]\) o polu \(3600\). Spotkają się, gdy \(|x-y|\le10\).</p>
-<p>Obszar, w którym się NIE spotkają (\(|x-y|>10\)), to dwa trójkąty prostokątne w rogach kwadratu, każdy o przyprostokątnych długości \(60-10=50\), czyli o polu \(\dfrac{50^2}{2}=1250\) każdy — razem \(2500\).</p>
-<div class="odp">
-\(P = \dfrac{3600-2500}{3600} = \dfrac{1100}{3600} = \dfrac{11}{36} \approx 0{,}306\)
+<div class="q-block">
+<span class="q-text">7. Dwoje internautów umówiło się na spotkanie w sieci między godziną 17 a 18, przy czym ze względu na koszty połączenia będą na siebie czekać co najwyżej 10 minut i nie dłużej niż do godziny 18. Jakie jest prawdopodobieństwo tego, że się spotkają?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Niech \(x,y\in[0,60]\) oznaczają momenty przyjścia (w minutach po 17:00) obu osób. Losowa para \((x,y)\) jest punktem losowanym z kwadratu \([0,60]\times[0,60]\) o polu \(3600\). Spotkają się, gdy \(|x-y|\le10\).<br><br>
+Obszar, w którym się NIE spotkają (\(|x-y|>10\)), to dwa trójkąty prostokątne w rogach kwadratu, każdy o przyprostokątnych długości \(60-10=50\), czyli o polu \(\dfrac{50^2}{2}=1250\) każdy — razem \(2500\).<br><br>
+<b>Odpowiedź:</b> \(P = \dfrac{3600-2500}{3600} = \dfrac{1100}{3600} = \dfrac{11}{36} \approx 0{,}306\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>8. Rozkład dwumianowy — wadliwe zapałki</h3>
-<p class="polecenie">Polecenie: Badania statystyczne pokazały, że średnio 13,9% zapałek jest wadliwych. Jakie jest prawdopodobieństwo, że w pudełku z 90 zapałkami są więcej niż 2 wadliwe?</p>
-<p>Liczba wadliwych zapałek \(X\) ma rozkład dwumianowy \(B(n=90, p=0{,}139)\). Szukamy \(P(X>2)=1-P(X\le2)=1-[P(0)+P(1)+P(2)]\), gdzie \(P(k)=\binom{90}{k}p^k(1-p)^{90-k}\), \(q=1-p=0{,}861\).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">8. Badania statystyczne pokazały, że średnio 13,9% zapałek jest wadliwych. Jakie jest prawdopodobieństwo, że w pudełku z 90 zapałkami są więcej niż 2 wadliwe?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Liczba wadliwych zapałek \(X\) ma rozkład dwumianowy \(B(n=90, p=0{,}139)\). Szukamy \(P(X>2)=1-P(X\le2)=1-[P(0)+P(1)+P(2)]\), gdzie \(P(k)=\binom{90}{k}p^k(1-p)^{90-k}\), \(q=1-p=0{,}861\).<br><br>
 \(P(0)=q^{90}\approx 1{,}41\cdot10^{-6}\)<br>
 \(P(1)=90\cdot p\cdot q^{89}\approx 2{,}05\cdot10^{-5}\)<br>
 \(P(2)=\binom{90}{2}p^2q^{88}\approx 1{,}48\cdot10^{-4}\)<br>
-\(P(X\le2)\approx1{,}70\cdot10^{-4}\)<br>
-\(P(X>2) \approx 1-1{,}70\cdot10^{-4} \approx 0{,}9998\) (ok. 99,98%)<br><br>
+\(P(X\le2)\approx1{,}70\cdot10^{-4}\)<br><br>
+<b>Odpowiedź:</b> \(P(X>2) \approx 1-1{,}70\cdot10^{-4} \approx 0{,}9998\) (ok. 99,98%)<br><br>
 Wynik ma sens — wartość oczekiwana wynosi \(np=90\cdot0{,}139\approx12{,}5\), więc prawie na pewno wadliwych zapałek będzie więcej niż 2.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>12. Prawdopodobieństwo — kto trafi pierwszy</h3>
-<p class="polecenie">Polecenie: Kuba i Szymon na przemian strzelają piłką do bramki. Kuba trafia do bramki z prawdopodobieństwem 0,6, a Szymon 0,5. Zaczyna Kuba. Oblicz prawdopodobieństwo, że jako pierwszy do bramki trafi Kuba.</p>
-<p>Niech \(p_K=0{,}6\), \(p_S=0{,}5\). Kuba trafia pierwszy, jeśli: trafi za pierwszym razem, albo obaj chybią w pierwszej rundzie i Kuba trafi w drugiej, itd. — szereg geometryczny:</p>
-<p>\(P = p_K + (1-p_K)(1-p_S)p_K + [(1-p_K)(1-p_S)]^2p_K+\cdots = \dfrac{p_K}{1-(1-p_K)(1-p_S)}\)</p>
-<div class="odp">
-\(P = \dfrac{0{,}6}{1-0{,}4\cdot0{,}5} = \dfrac{0{,}6}{0{,}8} = 0{,}75\)
+<div class="q-block">
+<span class="q-text">12. Kuba i Szymon na przemian strzelają piłką do bramki. Kuba trafia do bramki z prawdopodobieństwem 0,6, a Szymon 0,5. Zaczyna Kuba. Oblicz prawdopodobieństwo, że jako pierwszy do bramki trafi Kuba.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Niech \(p_K=0{,}6\), \(p_S=0{,}5\). Kuba trafia pierwszy, jeśli: trafi za pierwszym razem, albo obaj chybią w pierwszej rundzie i Kuba trafi w drugiej, itd. — szereg geometryczny:<br><br>
+\(P = p_K + (1-p_K)(1-p_S)p_K + [(1-p_K)(1-p_S)]^2p_K+\cdots = \dfrac{p_K}{1-(1-p_K)(1-p_S)}\)<br><br>
+<b>Odpowiedź:</b> \(P = \dfrac{0{,}6}{1-0{,}4\cdot0{,}5} = \dfrac{0{,}6}{0{,}8} = 0{,}75\)
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="cyfrowe">
 <h2>3. Systemy liczbowe i układy cyfrowe (Organizacja i architektura komputerów)</h2>
 
-<div class="pytanie">
-<h3>13. Dodawanie i mnożenie pisemne liczb binarnych</h3>
-<p class="polecenie">Polecenie: Zsumuj oraz przemnóż pisemnie dwie liczby: 1101011 i 1001001. Wyniki podaj w systemie binarnym, dziesiętnym, ósemkowym oraz szesnastkowym.</p>
-<p>Zamiana na system dziesiętny: \(1101011_2 = 107_{10}\), \(1001001_2 = 73_{10}\).</p>
-<div class="odp">
-<strong>Suma:</strong> \(107+73=180\)<br>
+<div class="q-block">
+<span class="q-text">13. Zsumuj oraz przemnóż pisemnie dwie liczby: 1101011 i 1001001. Wyniki podaj w systemie binarnym, dziesiętnym, ósemkowym oraz szesnastkowym.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Zamiana na system dziesiętny: \(1101011_2 = 107_{10}\), \(1001001_2 = 73_{10}\).<br><br>
+<b>Suma:</b> \(107+73=180\)<br>
 binarnie: \(10110100_2\) &nbsp;|&nbsp; dziesiętnie: \(180_{10}\) &nbsp;|&nbsp; ósemkowo: \(264_8\) &nbsp;|&nbsp; szesnastkowo: \(B4_{16}\)<br><br>
-<strong>Iloczyn:</strong> \(107 \times 73 = 7811\)<br>
+<b>Iloczyn:</b> \(107 \times 73 = 7811\)<br>
 binarnie: \(1111010000011_2\) &nbsp;|&nbsp; dziesiętnie: \(7811_{10}\) &nbsp;|&nbsp; ósemkowo: \(17203_8\) &nbsp;|&nbsp; szesnastkowo: \(1E83_{16}\)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>14. Minimalizacja funkcji z tabeli prawdy (metoda K-map)</h3>
-<p class="polecenie">Polecenie: Na podstawie tabeli prawdy zminimalizuj dowolną metodą funkcję f(a1, a0, b1, b0) dla poszczególnych zmiennych c2, c1 i c0. Wynik zapisz jako sumy iloczynów.</p>
-<p><strong>Kluczowa obserwacja:</strong> analiza tabeli pokazuje, że traktując \(a_1a_0\) jako liczbę 2-bitową \(A\) oraz \(b_1b_0\) jako liczbę 2-bitową \(B\), wartość \(c_2c_1c_0\) to dokładnie suma \(A+B\) zapisana na 3 bitach (np. dla \(A=3, B=3\): \(3+3=6=110_2\), zgodnie z ostatnim wierszem tabeli). Tabela opisuje więc 2-bitowy sumator binarny — to bardzo ułatwia minimalizację, bo można wykorzystać znaną strukturę sumatora, a wynik zweryfikować mapami Karnaugh.</p>
-<p>Niech \(c=a_0b_0\) oznacza przeniesienie z najmłodszego bitu. Po zbudowaniu i uproszczeniu map Karnaugh dla każdej z trzech funkcji otrzymujemy:</p>
-<div class="odp">
+<div class="q-block">
+
+    <div class="q-text">
+        14. Na podstawie tabeli prawdy podanej na rysunku zminimalizuj dowolną metodą funkcję f(a1, a0, b1, b0) dla poszczególnych zmiennych c2, c1 i c0. Wynik zapisz jako sumy iloczynów.
+    </div>
+
+    <!-- Tabela z rysunku -->
+    <table class="tabela-prawdy">
+        <thead>
+            <tr>
+                <th>a1</th>
+                <th>a0</th>
+                <th>b1</th>
+                <th>b0</th>
+                <th>c2</th>
+                <th>c1</th>
+                <th>c0</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+        </tbody>
+    </table>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Kluczowa obserwacja:</b> analiza tabeli pokazuje, że traktując \(a_1a_0\) jako liczbę 2-bitową \(A\) oraz \(b_1b_0\) jako liczbę 2-bitową \(B\), wartość \(c_2c_1c_0\) to dokładnie suma \(A+B\) zapisana na 3 bitach (np. dla \(A=3, B=3\): \(3+3=6=110_2\), zgodnie z ostatnim wierszem tabeli). Tabela opisuje więc 2-bitowy sumator binarny — to bardzo ułatwia minimalizację, bo można wykorzystać znaną strukturę sumatora, a wynik zweryfikować mapami Karnaugh.<br><br>
+Niech \(c=a_0b_0\) oznacza przeniesienie z najmłodszego bitu. Po zbudowaniu i uproszczeniu map Karnaugh dla każdej z trzech funkcji otrzymujemy:<br><br>
 \(c_0 = a_0b_0' + a_0'b_0\)<br><br>
 \(c_1 = a_1a_0'b_1' + a_1b_1'b_0' + a_1'a_0'b_1 + a_1'b_1b_0' + a_1'a_0b_1'b_0 + a_1a_0b_1b_0\)<br>
 &nbsp;&nbsp;&nbsp;(równoważnie: \(c_1 = a_1 \oplus b_1 \oplus a_0b_0\) — trzybitowe XOR bitów \(a_1\), \(b_1\) i przeniesienia \(a_0b_0\))<br><br>
-\(c_2 = a_1b_1 + a_1a_0b_0 + a_0b_0b_1\)
+\(c_2 = a_1b_1 + a_1a_0b_0 + a_0b_0b_1\)<br><br>
+Dla \(c_0\) i \(c_2\) mapa Karnaugh daje po 2-3 zgrupowania (w tym jedno "czwórkowe" \(a_1b_1\) dla \(c_2\)), natomiast \(c_1\) — jako funkcja typu XOR trzech "efektywnych" sygnałów — nie daje się uprościć poniżej 6 składników iloczynowych (każdy z nich jest istotnym implikantem pierwszym).
 </div>
-<p>Dla \(c_0\) i \(c_2\) mapa Karnaugh daje po 2-3 zgrupowania (w tym jedno "czwórkowe" \(a_1b_1\) dla \(c_2\)), natomiast \(c_1\) — jako funkcja typu XOR trzech "efektywnych" sygnałów — nie daje się uprościć poniżej 6 składników iloczynowych (każdy z nich jest istotnym implikantem pierwszym).</p>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>15. Realizacja funkcji z użyciem bramek logicznych</h3>
-<p class="polecenie">Polecenie: Narysuj z wykorzystaniem bramek logicznych realizację funkcji \(f(w,x,y,z)=xy'z'+wxy'+wx'y+x'yz'+w'x'y'z+w'xyz\) (znak ' oznacza negację).</p>
-<p>Funkcja jest już zapisana w postaci sumy iloczynów (SOP), więc realizacja sprowadza się do: dla każdego z 6 składników — bramki NOT na zanegowanych zmiennych oraz jedna bramka AND (3-wejściowa) na cały iloczyn, a następnie jedna bramka OR (6-wejściowa) sumująca wyjścia wszystkich bramek AND.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">15. Narysuj z wykorzystaniem bramek logicznych realizację funkcji \(f(w,x,y,z)=xy'z'+wxy'+wx'y+x'yz'+w'x'y'z+w'xyz\) (Uwaga: znak ' – oznacza negację).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Funkcja jest zapisana w postaci sumy iloczynów (SOP). Jej realizacja polega na przygotowaniu negacji zmiennych za pomocą bramek NOT, zrealizowaniu poszczególnych składników (iloczynów) za pomocą bramek AND, a następnie zsumowaniu ich wyników jedną bramką OR.<br><br>
 Schemat układu:<br>
-1. Inwertery (NOT): osobne bramki NOT generujące sygnały \(w'\), \(x'\), \(y'\), \(z'\) z sygnałów wejściowych \(w,x,y,z\).<br>
-2. Sześć 3-wejściowych bramek AND, po jednej na każdy składnik:<br>
-&nbsp;&nbsp;AND1: \(x, y', z' \to xy'z'\)<br>
-&nbsp;&nbsp;AND2: \(w, x, y' \to wxy'\)<br>
-&nbsp;&nbsp;AND3: \(w, x', y \to wx'y\)<br>
-&nbsp;&nbsp;AND4: \(x', y, z' \to x'yz'\)<br>
-&nbsp;&nbsp;AND5: \(w', x', y', z \to w'x'y'z\)<br>
-&nbsp;&nbsp;AND6: \(w', x, y, z \to w'xyz\)<br>
+1. Inwertery (NOT): bramki generujące sygnały \(w'\), \(x'\), \(y'\), \(z'\) z sygnałów wejściowych.<br>
+2. Sześć bramek AND realizujących poszczególne składniki:<br>
+&nbsp;&nbsp;AND1 (3-wejściowa): \(x, y', z' \to xy'z'\)<br>
+&nbsp;&nbsp;AND2 (3-wejściowa): \(w, x, y' \to wxy'\)<br>
+&nbsp;&nbsp;AND3 (3-wejściowa): \(w, x', y \to wx'y\)<br>
+&nbsp;&nbsp;AND4 (3-wejściowa): \(x', y, z' \to x'yz'\)<br>
+&nbsp;&nbsp;AND5 (4-wejściowa): \(w', x', y', z \to w'x'y'z\)<br>
+&nbsp;&nbsp;AND6 (4-wejściowa): \(w', x, y, z \to w'xyz\)<br>
 3. Jedna 6-wejściowa bramka OR łącząca wyjścia AND1–AND6 w sygnał wyjściowy \(f\).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>16. Opis działania układów cyfrowych (przerzutniki D)</h3>
-<p class="polecenie">Polecenie: Opisz działanie poniższych układów (rysunek przedstawia dwa schematy zbudowane z przerzutników typu D).</p>
-<div class="odp">
-<strong>Lewy układ</strong> — 4-bitowy rejestr równoległy (parallel register): cztery przerzutniki D (\(I_0\)–\(I_3\) na wejściach, \(Y_0\)–\(Y_3\) na wyjściach), taktowane wspólnym sygnałem zegarowym (Clock) i sterowane wejściem Load (ładowanie nowej wartości na zboczu zegara) oraz Clear (asynchroniczne zerowanie wszystkich bitów rejestru niezależnie od zegara).<br><br>
-<strong>Prawy układ</strong> — pamięć rejestrowa (register file) przechowująca 4 słowa 3-bitowe (Słowo 0–3): macierz przerzutników D, w której zapis do wybranego słowa jest sterowany sygnałem "Write enable" oraz liniami wyboru słowa \(S_0, S_1\) (dekodowanie adresu — który z czterech zestawów przerzutników ma przyjąć nowe dane na wejściach Wejście₀–Wejście₂). Odczyt realizowany jest przez bramki AND/OR na wyjściu, działające jak multiplekser wybierający, które z czterech słów ma trafić na wyjścia Wyjście₀–Wyjście₂.
+<div class="q-block">
+<span class="q-text">16. Opisz działanie poniższych układów:</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Lewy układ</b> — 4-bitowy rejestr równoległy (parallel register): cztery przerzutniki D (\(I_0\)–\(I_3\) na wejściach, \(Y_0\)–\(Y_3\) na wyjściach), taktowane wspólnym sygnałem zegarowym (Clock) i sterowane wejściem Load (ładowanie nowej wartości na zboczu zegara) oraz Clear (asynchroniczne zerowanie wszystkich bitów rejestru niezależnie od zegara).<br><br>
+<b>Prawy układ</b> — pamięć rejestrowa (register file) przechowująca 4 słowa 3-bitowe (Słowo 0–3): macierz przerzutników D, w której zapis do wybranego słowa jest sterowany sygnałem "Write enable" oraz liniami wyboru słowa \(S_0, S_1\) (dekodowanie adresu — który z czterech zestawów przerzutników ma przyjąć nowe dane na wejściach Wejście₀–Wejście₂). Odczyt realizowany jest przez bramki AND/OR na wyjściu, działające jak multiplekser wybierający, które z czterech słów ma trafić na wyjścia Wyjście₀–Wyjście₂.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="algorytmy">
 <h2>4. Algorytmy i struktury danych</h2>
 
-<div class="pytanie">
-<h3>17. Szacowanie złożoności czasowej algorytmów na podstawie pomiarów</h3>
-<p class="polecenie">Polecenie: Dwa różne algorytmy A₁, A₂ rozwiązują ten sam problem. Zmierzono czas działania tych algorytmów na tym samym komputerze i stwierdzono że: A₁ — 100 danych: ok. 0.01s, 10000 danych: ok. 1s; A₂ — 100 danych: ok. 1s, 10000 danych: ok. 2s. Zakładając że te dane wejściowe są dostatecznie duże, oszacować rząd wielkości funkcji złożoności czasowej obu algorytmów. Na tej podstawie wyciągnąć wniosek odnośnie efektywności algorytmów dla dużej liczby danych wejściowych.</p>
-<p><strong>Algorytm A₁:</strong> \(n\) rośnie 100-krotnie (\(100\to10000\)), czas też rośnie 100-krotnie (\(0{,}01\to1\)). Jeśli \(T(n)\sim n^k\), to \(100^k=100 \Rightarrow k=1\) — złożoność <strong>liniowa</strong> \(O(n)\) (sprawdzenie: \(T(n)=0{,}0001\cdot n\); dla \(n=10000\): \(T=1\)s ✓).</p>
-<p><strong>Algorytm A₂:</strong> \(n\) rośnie 100-krotnie, a czas rośnie tylko 2-krotnie (\(1\to2\)). To charakterystyczne dla złożoności <strong>logarytmicznej</strong> \(O(\log n)\): jeśli \(T(n)=c\log_{10}n\), to \(c=1/\log_{10}(100)=1/2=0{,}5\); sprawdzenie dla \(n=10000\): \(T=0{,}5\cdot4=2\)s ✓.</p>
-<div class="odp">
-A₁ ma złożoność \(O(n)\) (liniową), A₂ ma złożoność \(O(\log n)\) (logarytmiczną).<br><br>
+<div class="q-block">
+<span class="q-text">17. Dwa różne algorytmy A₁, A₂ rozwiązują ten sam problem. Zmierzono czas działania tych algorytmów na tym samym komputerze i stwierdzono że:</span>
+<pre>A1 - rozwiązuje zadanie dla 100 danych wejściowych w czasie ok. 0.01sek
+A1 - rozwiązuje zadanie dla 10000 danych wejściowych w czasie ok. 1sek
+A2 - rozwiązuje zadanie dla 100 danych wejściowych w czasie ok. 1sek
+A2 - rozwiązuje zadanie dla 10000 danych wejściowych w czasie ok. 2sek</pre>
+<div class="q-text" style="font-weight: normal;">Zakładając że te dane wejściowe są dostatecznie duże, oszacować rząd wielkości funkcji złożoności czasowej obu algorytmów. Na tej podstawie wyciągnąć wniosek odnośnie efektywności algorytmów dla dużej liczby danych wejściowych.</div>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Algorytm A₁:</b> \(n\) rośnie 100-krotnie (\(100\to10000\)), czas też rośnie 100-krotnie (\(0{,}01\to1\)). Jeśli \(T(n)\sim n^k\), to \(100^k=100 \Rightarrow k=1\) — złożoność <b>liniowa</b> \(O(n)\) (sprawdzenie: \(T(n)=0{,}0001\cdot n\); dla \(n=10000\): \(T=1\)s ✓).<br><br>
+<b>Algorytm A₂:</b> \(n\) rośnie 100-krotnie, a czas rośnie tylko 2-krotnie (\(1\to2\)). To charakterystyczne dla złożoności <b>logarytmicznej</b> \(O(\log n)\): jeśli \(T(n)=c\log_{10}n\), to \(c=1/\log_{10}(100)=1/2=0{,}5\); sprawdzenie dla \(n=10000\): \(T=0{,}5\cdot4=2\)s ✓.<br><br>
+<b>Odpowiedź:</b> A₁ ma złożoność \(O(n)\) (liniową), A₂ ma złożoność \(O(\log n)\) (logarytmiczną).<br><br>
 Mimo że dla małych \(n\) A₂ jest dużo wolniejszy (większa stała/narzut początkowy: 1s vs 0,01s przy \(n=100\)), jego wolniej rosnąca (logarytmiczna) złożoność sprawia, że dla dostatecznie dużych \(n\) A₂ w końcu wyprzedzi A₁ pod względem czasu wykonania. Szacunkowo punkt przecięcia (crossover) wypada gdzieś w okolicach \(n\approx 2\cdot10^4\) (dla \(n=10^5\): \(A_1\approx10\)s, \(A_2\approx2{,}5\)s — A₂ już wyraźnie szybszy). Wniosek: dla dużej liczby danych wejściowych efektywniejszy jest algorytm A₂, mimo gorszej wydajności przy małych danych.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>18. Dokładnie wyważone drzewo BST</h3>
-<p class="polecenie">Polecenie: Dany jest zbiór kluczy: 28 13 19 18 7 44 15 8 3 72 35 23 11 89 17 20 9. Utworzyć dokładnie wyważone drzewo wyszukiwań binarnych (BST) przechowujące podany zbiór kluczy. Wynik przedstawić na rysunku.</p>
-<p>Metoda: sortujemy klucze rosnąco, a następnie rekurencyjnie wybieramy element środkowy posortowanej tablicy jako korzeń (lewa połowa tworzy lewe poddrzewo, prawa połowa — prawe poddrzewo).</p>
-<p>Posortowane klucze (17 elementów): 3, 7, 8, 9, 11, 13, 15, 17, 18, 19, 20, 23, 28, 35, 44, 72, 89</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">18. Dany jest zbiór kluczy: 28 13 19 18 7 44 15 8 3 72 35 23 11 89 17 20 9. Utworzyć dokładnie wyważone drzewo wyszukiwań binarnych (BST) przechowujące podany zbiór kluczy. Wynik przedstawić na rysunku.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Metoda: sortujemy klucze rosnąco, a następnie rekurencyjnie wybieramy element środkowy posortowanej tablicy jako korzeń (lewa połowa tworzy lewe poddrzewo, prawa połowa — prawe poddrzewo).<br><br>
+Posortowane klucze (17 elementów): 3, 7, 8, 9, 11, 13, 15, 17, 18, 19, 20, 23, 28, 35, 44, 72, 89<br><br>
 <pre>                          18
                 /                    \
               9                        28
@@ -389,26 +468,31 @@ Mimo że dla małych \(n\) A₂ jest dużo wolniejszy (większa stała/narzut po
                         17                            89</pre>
 Środkowy element całej tablicy (indeks 8) to 18 — korzeń. Lewa połowa (3,7,8,9,11,13,15,17) daje poddrzewo z korzeniem 9, prawa połowa (19,20,23,28,35,44,72,89) daje poddrzewo z korzeniem 28 — i tak rekurencyjnie dla każdej połowy. Drzewo ma wysokość 4 (minimalną możliwą dla 17 kluczy), co potwierdza, że jest dokładnie wyważone.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>19. Wyszukiwanie binarne vs trójdzielne — analiza efektywności</h3>
-<p class="polecenie">Polecenie: Znajdowanie klucza w tablicy posortowanej przy pomocy algorytmu wyszukiwania binarnego polega na rekurencyjnej procedurze podziału tablicy na dwie części. Próbując poprawić efektywność tego algorytmu zaproponowano podział tablicy na trzy części. Czy ten nowy algorytm będzie bardziej efektywny? Odpowiedź uzasadnić wykonując stosowne obliczenia.</p>
-<p><strong>Wyszukiwanie binarne:</strong> każdy krok to 1 porównanie i redukcja rozmiaru problemu \(n\) do \(n/2\). Liczba porównań: \(T(n)=\log_2n\).</p>
-<p><strong>Wyszukiwanie trójdzielne:</strong> każdy krok wymaga 2 porównań (żeby ustalić, w której z 3 części szukać) i redukuje rozmiar problemu do \(n/3\). Liczba porównań: \(T(n)=2\log_3n\).</p>
-<p>Porównajmy: \(2\log_3n = \dfrac{2}{\log_2 3}\log_2n \approx \dfrac{2}{1{,}585}\log_2n \approx 1{,}262\cdot\log_2n\)</p>
-<div class="odp">
-NIE — algorytm trójdzielny nie będzie bardziej efektywny. Choć redukuje przestrzeń przeszukiwań szybciej (dzieląc przez 3 zamiast przez 2), potrzebuje 2 porównań na krok zamiast 1, a ten narzut przeważa nad korzyścią: wymaga w przybliżeniu o 26% więcej porównań niż klasyczne wyszukiwanie binarne (\(1{,}262 \cdot \log_2 n\) vs \(\log_2 n\)).
+<div class="q-block">
+<span class="q-text">19. Znajdowanie klucza w tablicy posortowanej przy pomocy algorytmu wyszukiwania binarnego polega na rekurencyjnej procedurze podziału tablicy na dwie części. Próbując poprawić efektywność tego algorytmu zaproponowano podział tablicy na trzy części. Czy ten nowy algorytm będzie bardziej efektywny? Odpowiedź uzasadnić wykonując stosowne obliczenia.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Wyszukiwanie binarne:</b> każdy krok to 1 porównanie i redukcja rozmiaru problemu \(n\) do \(n/2\). Liczba porównań: \(T(n)=\log_2n\).<br><br>
+<b>Wyszukiwanie trójdzielne:</b> każdy krok wymaga 2 porównań (żeby ustalić, w której z 3 części szukać) i redukuje rozmiar problemu do \(n/3\). Liczba porównań: \(T(n)=2\log_3n\).<br><br>
+Porównajmy: \(2\log_3n = \dfrac{2}{\log_2 3}\log_2n \approx \dfrac{2}{1{,}585}\log_2n \approx 1{,}262\cdot\log_2n\)<br><br>
+<b>Odpowiedź:</b> NIE — algorytm trójdzielny nie będzie bardziej efektywny. Choć redukuje przestrzeń przeszukiwań szybciej (dzieląc przez 3 zamiast przez 2), potrzebuje 2 porównań na krok zamiast 1, a ten narzut przeważa nad korzyścią: wymaga w przybliżeniu o 26% więcej porównań niż klasyczne wyszukiwanie binarne (\(1{,}262 \cdot \log_2 n\) vs \(\log_2 n\)).
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="c">
 <h2>5. Programowanie w C</h2>
 
-<div class="pytanie">
-<h3>20. Rekurencyjna funkcja silnia</h3>
-<p class="polecenie">Polecenie: Napisz program z rekurencyjną implementacją funkcji silnia, wyświetlający wartość tej funkcji dla liczby podanej przez użytkownika.</p>
+<div class="q-block">
+<span class="q-text">20. Napisz program z rekurencyjną implementacją funkcji silnia, wyświetlający wartość tej funkcji dla liczby podanej przez użytkownika.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;stdio.h&gt;
 
 long long silnia(int n) {
@@ -419,18 +503,23 @@ long long silnia(int n) {
 int main(void) {
     int n;
     printf("Podaj liczbe: ");
-    scanf("%d", &n);
+    scanf("%d", &amp;n);
     printf("%d! = %lld\n", n, silnia(n));
     return 0;
 }</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>21. Dynamiczna tablica łańcuchów wczytywana z pliku</h3>
-<p class="polecenie">Polecenie: Załóżmy, że w pliku words.txt znajduje się 100 wierszy. Każdy wiersz zawiera jedno niepuste słowo złożone z wielkich liter alfabetu angielskiego. Długość jednego słowa nie przekracza 100 znaków. Napisz program, który odczytuje słowa w pliku i zapisuje je w 100-elementowej tablicy łańcuchów. Tablica powinna być alokowana dynamicznie i nie może zawierać niepotrzebnych elementów tzn. dla każdego słowa powinna być alokowana pamięć tylko taka jak długie jest to słowo (z uwzględnieniem znaku '\0'). Program powinien wyświetlać zawartość tablicy i dealkować pamięć przed jego zamknięciem.</p>
+<div class="q-block">
+<span class="q-text">21. Załóżmy, że w pliku words.txt znajduje się 100 wierszy. Każdy wiersz zawiera jedno niepuste słowo złożone z wielkich liter alfabetu angielskiego. Długość jednego słowa nie przekracza 100 znaków. Napisz program, który odczytuje słowa w pliku i zapisuje je w 100-elementowej tablicy łańcuchów. Tablica powinna być alokowana dynamicznie i nie może zawierać niepotrzebnych elementów tzn. dla każdego słowa powinna być alokowana pamięć tylko taka jak długie jest to słowo (z uwzględnieniem znaku '\0'). Program powinien wyświetlać zawartość tablicy i dealkować pamięć przed jego zamknięciem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define N 100
 #define MAXLEN 100
@@ -439,33 +528,54 @@ int main(void) {
     FILE *f = fopen("words.txt", "r");
     if (!f) { perror("Blad otwarcia pliku"); return 1; }
 
-    char *tab[N];
+    char **tab = malloc(N * sizeof(char *));
+    if (!tab) { 
+        fprintf(stderr, "Brak pamieci na tablice\n"); 
+        fclose(f); 
+        return 1; 
+    }
+
     char buffer[MAXLEN + 2];
     int i = 0;
 
-    while (i &lt; N && fgets(buffer, sizeof(buffer), f) != NULL) {
-        buffer[strcspn(buffer, "\n")] = '\0';       // usuwamy znak nowej linii
+    while (i < N && fgets(buffer, sizeof(buffer), f) != NULL) {
+        buffer[strcspn(buffer, "\n")] = '\0'; // usuwamy znak nowej linii
         int len = strlen(buffer);
-        tab[i] = malloc(len + 1);                    // dokladnie tyle ile potrzeba
-        if (!tab[i]) { fprintf(stderr, "Brak pamieci\n"); return 1; }
+        
+        tab[i] = malloc(len + 1); // dokladnie tyle ile potrzeba
+        if (!tab[i]) { 
+            fprintf(stderr, "Brak pamieci na slowo\n"); 
+            // W razie bledu warto zwolnic to, co juz zaalokowano
+            for (int j = 0; j < i; j++) free(tab[j]);
+            free(tab);
+            fclose(f);
+            return 1; 
+        }
         strcpy(tab[i], buffer);
         i++;
     }
     fclose(f);
 
-    for (int j = 0; j &lt; i; j++) {
+    for (int j = 0; j < i; j++) {
         printf("%s\n", tab[j]);
         free(tab[j]);
     }
+    
+
+    free(tab);
 
     return 0;
 }</pre>
-<p>Kluczowe elementy: <code>malloc(len + 1)</code> alokuje pamięć dokładnie na długość słowa plus bajt na terminator <code>'\0'</code> (bez marnowania pamięci), a każdy element tablicy jest zwalniany funkcją <code>free()</code> przed zakończeniem programu.</p>
+Kluczowe elementy: <code>malloc(len + 1)</code> alokuje pamięć dokładnie na długość słowa plus bajt na terminator <code>'\0'</code> (bez marnowania pamięci), a każdy element tablicy jest zwalniany funkcją <code>free()</code> przed zakończeniem programu.
+</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>22. Zapis do pliku wartości funkcji kwadratowej</h3>
-<p class="polecenie">Polecenie: Napisz program, który zapisze do pliku n wartości funkcji kwadratowej z przedziału zadanego przez użytkownika.</p>
+<div class="q-block">
+<span class="q-text">22. Napisz program, który zapisze do pliku n wartości funkcji kwadratowej z przedziału zadanego przez użytkownika.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>#include &lt;stdio.h&gt;
 
 int main(void) {
@@ -473,11 +583,11 @@ int main(void) {
     int n;
 
     printf("Podaj wspolczynniki a b c: ");
-    scanf("%lf %lf %lf", &a, &b, &c);
+    scanf("%lf %lf %lf", &amp;a, &amp;b, &amp;c);
     printf("Podaj poczatek i koniec przedzialu: ");
-    scanf("%lf %lf", &start, &end);
+    scanf("%lf %lf", &amp;start, &amp;end);
     printf("Podaj liczbe wartosci n: ");
-    scanf("%d", &n);
+    scanf("%d", &amp;n);
 
     FILE *f = fopen("wyniki.txt", "w");
     if (!f) { perror("Blad otwarcia pliku"); return 1; }
@@ -494,27 +604,34 @@ int main(void) {
     return 0;
 }</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>23. Rekurencyjne drukowanie listy jednokierunkowej od końca</h3>
-<p class="polecenie">Polecenie: Załóżmy, że struktura <code>typedef struct node { int value; struct node *next; } Node;</code> reprezentuje węzeł listy jednokierunkowej. Napisz rekurencyjną funkcję, która drukuje wartości listy jednokierunkowej od węzła końcowego do początkowego. Argumentem funkcji powinien być wskaźnik do początku listy.</p>
+<div class="q-block">
+<span class="q-text">23. Załóżmy, że struktura <code>typedef struct node { int value; struct node *next; } Node;</code> reprezentuje węzeł listy jednokierunkowej (zob. poniższy rysunek). Napisz rekurencyjną funkcję, która drukuje wartości listy jednokierunkowej od węzła końcowego do początkowego. Argumentem funkcji powinien być wskaźnik do początku listy.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>void drukujOdKonca(Node *head) {
     if (head == NULL) return;
-    drukujOdKonca(head->next);
-    printf("%d ", head->value);
+    drukujOdKonca(head-&gt;next);
+    printf("%d ", head-&gt;value);
 }</pre>
-<p>Wywołanie rekurencyjne najpierw "schodzi" w głąb listy aż do węzła \(NULL\) kończącego rekursję, a dopiero w drodze powrotnej (po zakończeniu wywołania rekurencyjnego dla <code>head-&gt;next</code>) wypisywana jest wartość bieżącego węzła — dlatego wartości pojawiają się w kolejności odwrotnej: od końca listy do jej początku.</p>
+Wywołanie rekurencyjne najpierw "schodzi" w głąb listy aż do węzła \(NULL\) kończącego rekursję, a dopiero w drodze powrotnej (po zakończeniu wywołania rekurencyjnego dla <code>head-&gt;next</code>) wypisywana jest wartość bieżącego węzła — dlatego wartości pojawiają się w kolejności odwrotnej: od końca listy do jej początku.
+</div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="www">
 <h2>6. Strony WWW i PHP</h2>
 
-<div class="pytanie">
-<h3>24. Kaskadowe arkusze stylów (CSS) — zasady, rodzaje, priorytety</h3>
-<p class="polecenie">Polecenie: Omów zasady wykorzystania kaskadowych arkuszy stylów (CSS) w języku HTML. Wymień rodzaje stylów, ich priorytety i podaj przykłady.</p>
-<p>CSS pozwala oddzielić prezentację (wygląd) dokumentu od jego struktury (HTML).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">24. Omów zasady wykorzystania kaskadowych arkuszy stylów (CSS) w języku HTML. Wymień rodzaje stylów, ich priorytety i podaj przykłady.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+CSS pozwala oddzielić prezentację (wygląd) dokumentu od jego struktury (HTML).<br><br>
 Rodzaje stylów (od najniższego do najwyższego priorytetu):<br>
 1. Style domyślne przeglądarki (user agent stylesheet)<br>
 2. Zewnętrzne — plik .css dołączony przez <code>&lt;link rel="stylesheet" href="styl.css"&gt;</code><br>
@@ -522,23 +639,28 @@ Rodzaje stylów (od najniższego do najwyższego priorytetu):<br>
 4. Inline — atrybut <code>style</code> bezpośrednio w znaczniku: <code>&lt;p style="color:red;"&gt;</code><br><br>
 Priorytet reguł CSS wynika ze specyficzności selektora (rosnąco: selektor elementu &lt; klasa/pseudoklasa &lt; identyfikator &lt; styl inline) oraz obecności <code>!important</code> (nadpisuje wszystko poza innym <code>!important</code> o wyższej specyficzności). Przy równej specyficzności wygrywa reguła zdefiniowana później w kodzie.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>25. Formularze na stronach WWW (backend)</h3>
-<p class="polecenie">Polecenie: Na podstawie wybranego języka backendowego omów wykorzystanie formularzy na stronach www. Podaj przykłady pól formularzy, metody przekazywania danych na serwer, sposoby pobierania danych.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">25. Na podstawie wybranego języka backendowego omów wykorzystanie formularzy na stronach www. Podaj przykłady pól formularzy, metody przekazywania danych na serwer, sposoby pobierania danych.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Przykładowe pola formularza: <code>&lt;input type="text"&gt;</code>, <code>type="password"</code>, <code>type="checkbox"</code>, <code>type="radio"</code>, <code>type="email"</code>, <code>&lt;textarea&gt;</code>, <code>&lt;select&gt;</code>.<br><br>
 Metody przekazywania danych:<br>
-— <strong>GET</strong> — dane w adresie URL (query string), ograniczona długość, dane widoczne, dobre dla wyszukiwarek/filtrów.<br>
-— <strong>POST</strong> — dane w ciele żądania HTTP, niewidoczne w URL, praktycznie bez ograniczenia rozmiaru, używane m.in. do haseł i rejestracji.<br><br>
+— <b>GET</b> — dane w adresie URL (query string), ograniczona długość, dane widoczne, dobre dla wyszukiwarek/filtrów.<br>
+— <b>POST</b> — dane w ciele żądania HTTP, niewidoczne w URL, praktycznie bez ograniczenia rozmiaru, używane m.in. do haseł i rejestracji.<br><br>
 Sposoby pobierania danych w PHP: <code>$_GET['pole']</code>, <code>$_POST['pole']</code>, <code>$_REQUEST['pole']</code> (niezależnie od metody).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>26. Skrypt PHP — tabliczka mnożenia</h3>
-<p class="polecenie">Polecenie: Napisz skrypt w PHP, który wygeneruje na stronie tabelę zawierającą tabliczkę mnożenia. Sformatuj kolor tła dla wierszy parzystych.</p>
+<div class="q-block">
+<span class="q-text">26. Napisz skrypt w PHP, który wygeneruje na stronie tabelę zawierającą tabliczkę mnożenia. Sformatuj kolor tła dla wierszy parzystych.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>&lt;?php
 echo "&lt;table border='1'&gt;";
 for ($i = 1; $i &lt;= 10; $i++) {
@@ -552,10 +674,14 @@ for ($i = 1; $i &lt;= 10; $i++) {
 echo "&lt;/table&gt;";
 ?&gt;</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>27. Skrypt PHP — logowanie/rejestracja do serwisu WWW</h3>
-<p class="polecenie">Polecenie: Napisz fragment skryptu w PHP odpowiedzialnego za logowanie (lub rejestrację) do serwisu www. Omów problemy z tym związane. Zakładamy, że samo połączenie z bazą zostało zrealizowane poprawnie.</p>
+<div class="q-block">
+<span class="q-text">27. Napisz fragment skryptu w PHP odpowiedzialnego za logowanie (lub rejestrację) do serwisu www. Omów problemy z tym związane. Zakładamy, że samo połączenie z bazą zostało zrealizowane poprawnie.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>&lt;?php
 session_start();
 
@@ -579,19 +705,21 @@ if ($result-&gt;num_rows === 1) {
     echo "Uzytkownik nie istnieje.";
 }
 ?&gt;</pre>
-<div class="odp">
 Problemy związane z logowaniem:<br>
-— <strong>SQL Injection</strong> — konieczne użycie zapytań przygotowanych (prepared statements) zamiast wklejania danych użytkownika wprost do zapytania SQL.<br>
-— <strong>Przechowywanie haseł</strong> — nigdy jawnym tekstem, tylko jako hash (<code>password_hash()</code>, algorytm bcrypt), weryfikacja przez <code>password_verify()</code>.<br>
-— <strong>Ataki brute-force</strong> — warto ograniczyć liczbę prób logowania (np. blokada konta po kilku nieudanych próbach).<br>
-— <strong>XSS</strong> — dane od użytkownika należy filtrować/escapować przy wyświetlaniu.<br>
-— <strong>Bezpieczeństwo sesji</strong> — regeneracja identyfikatora sesji po zalogowaniu (<code>session_regenerate_id()</code>) zapobiega session fixation.
+— <b>SQL Injection</b> — konieczne użycie zapytań przygotowanych (prepared statements) zamiast wklejania danych użytkownika wprost do zapytania SQL.<br>
+— <b>Przechowywanie haseł</b> — nigdy jawnym tekstem, tylko jako hash (<code>password_hash()</code>, algorytm bcrypt), weryfikacja przez <code>password_verify()</code>.<br>
+— <b>Ataki brute-force</b> — warto ograniczyć liczbę prób logowania (np. blokada konta po kilku nieudanych próbach).<br>
+— <b>XSS</b> — dane od użytkownika należy filtrować/escapować przy wyświetlaniu.<br>
+— <b>Bezpieczeństwo sesji</b> — regeneracja identyfikatora sesji po zalogowaniu (<code>session_regenerate_id()</code>) zapobiega session fixation.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>28. Sprawdzenie dostępu do strony (PHP session)</h3>
-<p class="polecenie">Polecenie: Napisz rozwiązanie, które sprawdzi czy użytkownik ma dostęp do danej strony (proszę skorzystać z php session).</p>
+<div class="q-block">
+<span class="q-text">28. Napisz rozwiązanie, które sprawdzi czy użytkownik ma dostęp do danej strony (proszę skorzystać z php session).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>&lt;?php
 session_start();
 
@@ -603,36 +731,42 @@ if (!isset($_SESSION['user_id'])) {
 echo "Witaj, masz dostep do tej strony.";
 ?&gt;</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="dzwiek">
 <h2>7. Cyfrowe przetwarzanie dźwięku</h2>
 
-<div class="pytanie">
-<h3>29. Zalety i ograniczenia cyfrowej obróbki dźwięku</h3>
-<p class="polecenie">Polecenie: Wskaż przynajmniej po 3 zalety i ograniczenia cyfrowej obróbki dźwięku.</p>
-<div class="odp">
-<strong>Zalety:</strong><br>
+<div class="q-block">
+<span class="q-text">29. Wskaż przynajmniej po 3 zalety i ograniczenia cyfrowej obróbki dźwięku.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Zalety:</b><br>
 1. Możliwość wielokrotnej edycji bez utraty jakości (w przeciwieństwie do kolejnych kopii analogowych)<br>
 2. Łatwość kopiowania, przechowywania i przesyłania plików cyfrowych<br>
 3. Możliwość zaawansowanego przetwarzania (filtry, efekty, redukcja szumów) w oprogramowaniu<br><br>
-<strong>Ograniczenia:</strong><br>
+<b>Ograniczenia:</b><br>
 1. Utrata informacji przy konwersji analogowo-cyfrowej (kwantyzacja, skończona częstotliwość próbkowania), ryzyko aliasingu<br>
 2. Wymaga sprzętu do konwersji A/C i C/A (przetworników) oraz mocy obliczeniowej<br>
 3. Kompresja stratna (np. MP3) może obniżać jakość dźwięku
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>30. Konwersja sygnału analogowego na cyfrowy</h3>
-<p class="polecenie">Polecenie: Przedstaw proces zamiany sygnału analogowego na jego reprezentację cyfrową. Jaki jest warunek konieczny wiernego odwzorowania sygnału?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">30. Przedstaw proces zamiany sygnału analogowego na jego reprezentację cyfrową. Jaki jest warunek konieczny wiernego odwzorowania sygnału?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Proces konwersji A/C składa się z trzech etapów:<br>
-1. <strong>Próbkowanie</strong> (sampling) — pobieranie wartości sygnału w regularnych odstępach czasu, z określoną częstotliwością próbkowania \(f_s\)<br>
-2. <strong>Kwantyzacja</strong> (quantization) — przypisanie każdej próbce najbliższej wartości ze skończonego zbioru poziomów (zależnego od rozdzielczości bitowej, np. 16-bit)<br>
-3. <strong>Kodowanie</strong> (encoding) — zapis skwantyzowanych wartości w postaci binarnej<br><br>
-Warunek konieczny wiernego odwzorowania to <strong>twierdzenie Nyquista-Shannona</strong>: częstotliwość próbkowania musi być co najmniej dwukrotnie większa od najwyższej częstotliwości zawartej w sygnale (\(f_s \ge 2f_{max}\)), inaczej wystąpi aliasing uniemożliwiający poprawne odtworzenie oryginalnego sygnału.
+1. <b>Próbkowanie</b> (sampling) — pobieranie wartości sygnału w regularnych odstępach czasu, z określoną częstotliwością próbkowania \(f_s\)<br>
+2. <b>Kwantyzacja</b> (quantization) — przypisanie każdej próbce najbliższej wartości ze skończonego zbioru poziomów (zależnego od rozdzielczości bitowej, np. 16-bit)<br>
+3. <b>Kodowanie</b> (encoding) — zapis skwantyzowanych wartości w postaci binarnej<br><br>
+Warunek konieczny wiernego odwzorowania to <b>twierdzenie Nyquista-Shannona</b>: częstotliwość próbkowania musi być co najmniej dwukrotnie większa od najwyższej częstotliwości zawartej w sygnale (\(f_s \ge 2f_{max}\)), inaczej wystąpi aliasing uniemożliwiający poprawne odtworzenie oryginalnego sygnału.
 </div>
+</details>
 </div>
 </div>
 

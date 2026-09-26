@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,44 +32,61 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -82,16 +100,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -114,32 +122,37 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="kwantowa">
 <h2>1. Mechanika i informatyka kwantowa</h2>
 
-<div class="pytanie">
-<h3>1. Stan splątany — polaryzacja dwóch fotonów</h3>
-<p class="polecenie">Polecenie: Proszę wyjaśnić pojęcie stanu splątanego. Czy stan polaryzacji dwóch fotonów jest stanem splątanym? Jeśli tak, to dlaczego?</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">1. Proszę wyjaśnić pojęcie stanu splątanego. Czy stan polaryzacji dwóch fotonów jest stanem splątanym? Jeśli tak, to dlaczego?</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Stan splątany to stan układu złożonego z co najmniej dwóch podukładów, którego nie da się zapisać jako iloczynu tensorowego stanów poszczególnych podukładów osobno: \(|\psi\rangle \ne |\psi_A\rangle\otimes|\psi_B\rangle\) dla żadnego wyboru \(|\psi_A\rangle\), \(|\psi_B\rangle\). W stanie splątanym pomiar wykonany na jednym podukładzie natychmiast koreluje z możliwymi wynikami pomiaru drugiego podukładu, niezależnie od odległości między nimi.<br><br>
-<strong>Tak</strong>, stan polaryzacji dwóch fotonów może być splątany — klasyczny przykład to para fotonów z konwersji parametrycznej (SPDC), o wspólnym stanie:<br>
+<b>Tak</b>, stan polaryzacji dwóch fotonów może być splątany — klasyczny przykład to para fotonów z konwersji parametrycznej (SPDC), o wspólnym stanie:<br>
 \(|\psi\rangle = \dfrac{1}{\sqrt2}\left(|H\rangle_1|H\rangle_2 + |V\rangle_1|V\rangle_2\right)\)<br><br>
 Tego stanu nie da się zapisać jako iloczynu prostego stanów pojedynczych fotonów — pomiar polaryzacji jednego fotonu (np. wynik H) natychmiast determinuje wynik pomiaru drugiego (również H), niezależnie od odległości między fotonami. Nie każdy jednak stan dwóch fotonów jest splątany — jeśli daje się zapisać jako iloczyn prosty (np. \(|H\rangle_1\otimes|H\rangle_2\)), jest to stan separowalny.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>2. Komutacja operatorów rzutowych Px i Py</h3>
-<p class="polecenie">Polecenie: Proszę sprawdzić, czy operatory rzutowe Px i Py komutują ze sobą. Px=|x⟩⟨x|, Py=|y⟩⟨y| w reprezentacji macierzowej są to macierze 2x2, gdzie Px ma 1 w lewym górnym rogu, a Py w prawym dolnym, reszta to zera.</p>
-<p>\(P_x=\begin{pmatrix}1&0\\0&0\end{pmatrix}\), \(P_y=\begin{pmatrix}0&0\\0&1\end{pmatrix}\)</p>
-<p>\(P_xP_y = \begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}0&0\\0&1\end{pmatrix} = \begin{pmatrix}0&0\\0&0\end{pmatrix}\)</p>
-<p>\(P_yP_x = \begin{pmatrix}0&0\\0&1\end{pmatrix}\begin{pmatrix}1&0\\0&0\end{pmatrix} = \begin{pmatrix}0&0\\0&0\end{pmatrix}\)</p>
-<div class="odp">
-\([P_x,P_y]=P_xP_y-P_yP_x = 0\) — operatory <strong>komutują</strong> (komutator jest macierzą zerową). Wynika to z tego, że \(P_x\) i \(P_y\) rzutują na wzajemnie ortogonalne (prostopadłe) podprzestrzenie rozpięte na wektorach bazowych \(|x\rangle\) i \(|y\rangle\) — iloczyn dwóch rzutów na ortogonalne podprzestrzenie zawsze daje operator zerowy w obu kolejnościach mnożenia.
+<div class="q-block">
+<span class="q-text">2. Proszę sprawdzić, czy operatory rzutowe Px i Py komutują ze sobą. Px=|x⟩⟨x|, Py=|y⟩⟨y| w reprezentacji macierzowej są to macierze 2x2, gdzie Px ma 1 w lewym górnym rogu, a Py w prawym dolnym, reszta to zera.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+\(P_x=\begin{pmatrix}1&0\\0&0\end{pmatrix}\), \(P_y=\begin{pmatrix}0&0\\0&1\end{pmatrix}\)<br><br>
+\(P_xP_y = \begin{pmatrix}1&0\\0&0\end{pmatrix}\begin{pmatrix}0&0\\0&1\end{pmatrix} = \begin{pmatrix}0&0\\0&0\end{pmatrix}\)<br><br>
+\(P_yP_x = \begin{pmatrix}0&0\\0&1\end{pmatrix}\begin{pmatrix}1&0\\0&0\end{pmatrix} = \begin{pmatrix}0&0\\0&0\end{pmatrix}\)<br><br>
+<b>Odpowiedź:</b> \([P_x,P_y]=P_xP_y-P_yP_x = 0\) — operatory <b>komutują</b> (komutator jest macierzą zerową). Wynika to z tego, że \(P_x\) i \(P_y\) rzutują na wzajemnie ortogonalne (prostopadłe) podprzestrzenie rozpięte na wektorach bazowych \(|x\rangle\) i \(|y\rangle\) — iloczyn dwóch rzutów na ortogonalne podprzestrzenie zawsze daje operator zerowy w obu kolejnościach mnożenia.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Postulaty mechaniki kwantowej</h3>
-<p class="polecenie">Polecenie: Proszę omówić postulaty mechaniki kwantowej.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">3. Proszę omówić postulaty mechaniki kwantowej.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Stan układu kwantowego opisany jest unormowanym wektorem stanu \(|\psi\rangle\) w przestrzeni Hilberta (\(\langle\psi|\psi\rangle=1\)).<br>
 2. Każdej wielkości fizycznej (obserwabli) odpowiada operator hermitowski (samosprzężony) działający w tej przestrzeni.<br>
 3. Możliwe wyniki pomiaru danej wielkości to wartości własne odpowiadającego jej operatora hermitowskiego.<br>
@@ -147,11 +160,14 @@ Tego stanu nie da się zapisać jako iloczynu prostego stanów pojedynczych foto
 5. Po pomiarze dającym wynik \(a\), stan układu ulega redukcji (kolapsuje) do odpowiadającego wektora własnego \(|a\rangle\).<br>
 6. Ewolucja czasowa stanu (między pomiarami) opisana jest równaniem Schrödingera: \(i\hbar\dfrac{\partial|\psi\rangle}{\partial t}=\hat H|\psi\rangle\), gdzie \(\hat H\) to operator Hamiltona (energii układu).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Program w Processing — niebieski kwadrat na czerwonej scenie</h3>
-<p class="polecenie">Polecenie: Napisz prosty program w języku Processing! generujący niebieski kwadrat o długości boku 10px (bez obrysu) na środku czerwonej sceny o wielkości 100x100px. Opisz w komentarzach poszczególne linie kodu.</p>
+<div class="q-block">
+<span class="q-text">4. Napisz prosty program w języku Processing! generujący niebieski kwadrat o długości boku 10px (bez obrysu) na środku czerwonej sceny o wielkości 100x100px. Opisz w komentarzach poszczególne linie kodu.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>void setup() {
   size(100, 100);          // ustawienie rozmiaru okna (sceny) na 100x100 pikseli
   noStroke();               // wylaczenie rysowania obrysu figur
@@ -161,15 +177,18 @@ Tego stanu nie da się zapisać jako iloczynu prostego stanów pojedynczych foto
   rect(50, 50, 10, 10);     // rysowanie kwadratu 10x10px wysrodkowanego w punkcie (50,50) - srodek sceny
 }</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="modelowanie">
 <h2>2. Modelowanie matematyczne i układy dynamiczne</h2>
 
-<div class="pytanie">
-<h3>5. Etapy tworzenia modelu matematycznego</h3>
-<p class="polecenie">Polecenie: Etapy tworzenia modelu matematycznego.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">5. Etapy tworzenia modelu matematycznego.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Sformułowanie problemu — identyfikacja zjawiska/procesu i celu modelu.<br>
 2. Idealizacja i uproszczenie — wybór istotnych zmiennych, pominięcie czynników nieistotnych (model koncepcyjny).<br>
 3. Formalizacja matematyczna — zapisanie zależności między zmiennymi w postaci równań (różniczkowych, algebraicznych).<br>
@@ -178,14 +197,16 @@ Tego stanu nie da się zapisać jako iloczynu prostego stanów pojedynczych foto
 6. Interpretacja wyników i korekta — iteracyjne dopracowywanie modelu, jeśli nie zgadza się z rzeczywistością.<br>
 7. Zastosowanie modelu — prognozowanie, symulacja, optymalizacja.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Równanie rozpadu promieniotwórczego i analogie</h3>
-<p class="polecenie">Polecenie: Równanie rozpadu promieniotwórczego i jego analogie.</p>
-<p>\(\dfrac{dN}{dt} = -\lambda N\), gdzie \(N\) — liczba jąder promieniotwórczych, \(\lambda\) — stała rozpadu. Rozwiązanie: \(N(t)=N_0e^{-\lambda t}\), czas połowicznego rozpadu \(T_{1/2}=\dfrac{\ln2}{\lambda}\).</p>
-<div class="odp">
-To samo równanie (liniowe, pierwszego rzędu, jednorodne — szybkość zmiany proporcjonalna do aktualnej wartości) opisuje wiele innych zjawisk wykładniczego zaniku/wzrostu:<br>
+<div class="q-block">
+<span class="q-text">6. Równanie rozpadu promieniotwórczego i jego analogie.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+\(\dfrac{dN}{dt} = -\lambda N\), gdzie \(N\) — liczba jąder promieniotwórczych, \(\lambda\) — stała rozpadu. Rozwiązanie: \(N(t)=N_0e^{-\lambda t}\), czas połowicznego rozpadu \(T_{1/2}=\dfrac{\ln2}{\lambda}\).<br><br>
+<b>Odpowiedź:</b> To samo równanie (liniowe, pierwszego rzędu, jednorodne — szybkość zmiany proporcjonalna do aktualnej wartości) opisuje wiele innych zjawisk wykładniczego zaniku/wzrostu:<br>
 — rozładowanie kondensatora w obwodzie RC: \(q(t)=q_0e^{-t/RC}\)<br>
 — tłumienie amplitudy drgań w układzie z tarciem (bez wymuszenia)<br>
 — wzrost/spadek populacji w modelu Malthusa<br>
@@ -193,110 +214,128 @@ To samo równanie (liniowe, pierwszego rzędu, jednorodne — szybkość zmiany 
 — kinetyka reakcji chemicznej pierwszego rzędu<br>
 — stygnięcie ciała (prawo stygnięcia Newtona)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>7. Układy dynamiczne — dynamika punktu materialnego</h3>
-<p class="polecenie">Polecenie: Układy dynamiczne (dynamika punktu materialnego).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">7. Układy dynamiczne (dynamika punktu materialnego).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Układ dynamiczny to matematyczny model opisujący ewolucję stanu układu w czasie (zwykle równaniami różniczkowymi/różnicowymi) — stan w chwili \(t\) jest jednoznacznie wyznaczony przez stan początkowy i reguły ewolucji.<br><br>
 Dynamika punktu materialnego opisuje ruch punktu (ciała o pomijalnych wymiarach) pod wpływem działających sił, zgodnie z II zasadą dynamiki Newtona:<br>
 \(m\dfrac{d^2x}{dt^2} = F(x, \dot x, t)\)<br><br>
 Stan układu opisuje para \((x(t), v(t))\) — położenie i prędkość, tworzące przestrzeń fazową. Znając siłę \(F\) i warunki początkowe \(x(0), v(0)\), można wyznaczyć trajektorię ruchu punktu materialnego w czasie.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>8. Oscylator harmoniczny jednowymiarowy, rezonans, przestrzeń fazowa</h3>
-<p class="polecenie">Polecenie: Oscylator harmoniczny jednowymiarowy i zjawisko rezonansu, przestrzeń fazowa.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">8. Oscylator harmoniczny jednowymiarowy i zjawisko rezonansu, przestrzeń fazowa.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Oscylator harmoniczny prosty: \(m\ddot x+kx=0\), rozwiązanie \(x(t)=A\cos(\omega_0t+\varphi)\), \(\omega_0=\sqrt{k/m}\) — częstość własna.<br><br>
 Oscylator wymuszony (bez tłumienia): \(m\ddot x+kx=F_0\cos(\omega t)\). Gdy częstość wymuszenia \(\omega\) zbliża się do częstości własnej \(\omega_0\), amplituda drgań rośnie nieograniczenie (rezonans). Przy niewielkim tłumieniu amplituda ustalona osiąga maksimum dla \(\omega\approx\omega_0\).<br><br>
-<strong>Przestrzeń fazowa</strong> — przestrzeń o współrzędnych \((x,p)\) (położenie, pęd), gdzie każdy punkt jednoznacznie określa stan układu. Dla nietłumionego oscylatora harmonicznego trajektoria fazowa jest elipsą (energia całkowita zachowana, więc trajektoria to zamknięta krzywa stałej energii).
+<b>Przestrzeń fazowa</b> — przestrzeń o współrzędnych \((x,p)\) (położenie, pęd), gdzie każdy punkt jednoznacznie określa stan układu. Dla nietłumionego oscylatora harmonicznego trajektoria fazowa jest elipsą (energia całkowita zachowana, więc trajektoria to zamknięta krzywa stałej energii).
 </div>
-</div>
-
-<div class="pytanie">
-<h3>9. Oscylator harmoniczny tłumiony, modele tłumienia</h3>
-<p class="polecenie">Polecenie: Oscylator harmoniczny tłumiony, modele tłumienia.</p>
-<p>Równanie ruchu: \(m\ddot x + b\dot x + kx = 0\), gdzie \(b\) — współczynnik tłumienia.</p>
-<div class="odp">
-<strong>Modele tłumienia:</strong><br>
-— <strong>liniowe (wiskotyczne)</strong> — siła proporcjonalna do prędkości: \(F=-bv\) (opór ośrodka lepkiego) — najczęściej stosowane, prowadzi do liniowego równania.<br>
-— <strong>suche (kulombowskie)</strong> — siła o stałej wartości, przeciwna do kierunku ruchu: \(F=-\mu N\cdot\text{sgn}(v)\) — równanie nieliniowe.<br>
-— <strong>kwadratowe (aerodynamiczne)</strong> — siła proporcjonalna do kwadratu prędkości: \(F=-cv^2\cdot\text{sgn}(v)\).<br><br>
-Dla tłumienia liniowego wyróżnia się trzy przypadki: <strong>podkrytyczny</strong> (drgania oscylacyjne z malejącą wykładniczo amplitudą), <strong>krytyczny</strong> (najszybszy powrót do równowagi bez oscylacji), <strong>nadkrytyczny</strong> (powolny, nieoscylacyjny powrót do równowagi).
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>10. Układy drgające o dwóch stopniach swobody</h3>
-<p class="polecenie">Polecenie: Układy drgające o wielu stopniach swobody (dwóch).</p>
-<p>Przykład: dwie masy \(m_1,m_2\) połączone trzema sprężynami (ściana–m1–m2–ściana):</p>
-<p>\(m_1\ddot x_1 = -k_1x_1+k_2(x_2-x_1)\)<br>
-\(m_2\ddot x_2 = -k_2(x_2-x_1)-k_3x_2\)</p>
-<div class="odp">
-Układ dwóch sprzężonych równań różniczkowych II rzędu. Poszukuje się <strong>drgań normalnych</strong> (modów własnych) — ruchów, w których wszystkie części układu drgają z tą samą częstością, co prowadzi do zagadnienia własnego wyznaczającego częstości własne \(\omega\) i odpowiadające im mody drgań. Układ o \(n\) stopniach swobody ma \(n\) częstości własnych i \(n\) modów normalnych — ogólne rozwiązanie jest ich superpozycją.
+<div class="q-block">
+<span class="q-text">9. Oscylator harmoniczny tłumiony, modele tłumienia.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Równanie ruchu: \(m\ddot x + b\dot x + kx = 0\), gdzie \(b\) — współczynnik tłumienia.<br><br>
+<b>Modele tłumienia:</b><br>
+— <b>liniowe (wiskotyczne)</b> — siła proporcjonalna do prędkości: \(F=-bv\) (opór ośrodka lepkiego) — najczęściej stosowane, prowadzi do liniowego równania.<br>
+— <b>suche (kulombowskie)</b> — siła o stałej wartości, przeciwna do kierunku ruchu: \(F=-\mu N\cdot\text{sgn}(v)\) — równanie nieliniowe.<br>
+— <b>kwadratowe (aerodynamiczne)</b> — siła proporcjonalna do kwadratu prędkości: \(F=-cv^2\cdot\text{sgn}(v)\).<br><br>
+Dla tłumienia liniowego wyróżnia się trzy przypadki: <b>podkrytyczny</b> (drgania oscylacyjne z malejącą wykładniczo amplitudą), <b>krytyczny</b> (najszybszy powrót do równowagi bez oscylacji), <b>nadkrytyczny</b> (powolny, nieoscylacyjny powrót do równowagi).
 </div>
-</div>
-
-<div class="pytanie">
-<h3>11. Układ RLC</h3>
-<p class="polecenie">Polecenie: Układ RLC.</p>
-<p>Obwód szeregowy zawierający rezystor R, cewkę L i kondensator C. Równanie na ładunek \(q(t)\) (II prawo Kirchhoffa):</p>
-<p>\(L\ddot q + R\dot q + \dfrac{q}{C} = U(t)\)</p>
-<div class="odp">
-Równanie jest formalnie analogiczne do oscylatora harmonicznego tłumionego: \(L\) odpowiada masie \(m\), \(R\) — współczynnikowi tłumienia \(b\), \(1/C\) — stałej sprężystości \(k\). W zależności od wartości \(R\) względem tłumienia krytycznego, obwód RLC może wykazywać drgania tłumione (oscylacje zanikające), tłumienie krytyczne lub przetłumienie (powolny powrót do zera bez oscylacji) — analogicznie do mechanicznego oscylatora tłumionego.
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>12. Wahadło matematyczne — układ nieliniowy, przybliżenie małych drgań</h3>
-<p class="polecenie">Polecenie: Układy nieliniowe na przykładzie wahadła matematycznego, przybliżenie małych drgań.</p>
-<p>Równanie ruchu wahadła matematycznego (masa na nici o długości \(l\)):</p>
-<p>\(\ddot\theta + \dfrac{g}{l}\sin\theta = 0\)</p>
-<p>To równanie <strong>nieliniowe</strong> (ze względu na \(\sin\theta\)) — nie ma ogólnego rozwiązania w funkcjach elementarnych (rozwiązanie wyraża się przez całki eliptyczne).</p>
-<div class="odp">
-<strong>Przybliżenie małych drgań:</strong> dla \(\theta\ll1\) rad, \(\sin\theta\approx\theta\) (rozwinięcie Taylora), co linearyzuje równanie do: \(\ddot\theta+\dfrac{g}{l}\theta=0\) — równanie liniowego oscylatora harmonicznego, \(\theta(t)=\theta_0\cos(\omega t+\varphi)\), \(\omega=\sqrt{g/l}\), okres \(T=2\pi\sqrt{l/g}\) niezależny od amplitudy (izochronizm małych wahań). Dla większych amplitud okres zależy od amplitudy — efekt nieliniowości pomijany w przybliżeniu liniowym.
+<div class="q-block">
+<span class="q-text">10. Układy drgające o wielu stopniach swobody (dwóch).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Przykład: dwie masy \(m_1,m_2\) połączone trzema sprężynami (ściana–m1–m2–ściana):<br><br>
+\(m_1\ddot x_1 = -k_1x_1+k_2(x_2-x_1)\)<br>
+\(m_2\ddot x_2 = -k_2(x_2-x_1)-k_3x_2\)<br><br>
+<b>Odpowiedź:</b> Układ dwóch sprzężonych równań różniczkowych II rzędu. Poszukuje się <b>drgań normalnych</b> (modów własnych) — ruchów, w których wszystkie części układu drgają z tą samą częstością, co prowadzi do zagadnienia własnego wyznaczającego częstości własne \(\omega\) i odpowiadające im mody drgań. Układ o \(n\) stopniach swobody ma \(n\) częstości własnych i \(n\) modów normalnych — ogólne rozwiązanie jest ich superpozycją.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>13. Metoda Eulera dla obwodu RC</h3>
-<p class="polecenie">Polecenie: Dany jest układ RC: R=1, C=1, a początkowy ładunek na kondensatorze wynosi q(0)=1. Zastosuj metodę Eulera do znalezienia rozwiązania q(t) dla t=0.2[s] przyjmując krok czasowy 0.1[s].</p>
-<p>Równanie rozładowania: \(R\dfrac{dq}{dt}+\dfrac{q}{C}=0 \Rightarrow \dfrac{dq}{dt}=-\dfrac{q}{RC}\). Dla \(R=C=1\): \(\dfrac{dq}{dt}=-q\), czyli \(f(t,q)=-q\).</p>
-<p>Metoda Eulera: \(q_{n+1}=q_n+h\cdot f(t_n,q_n) = q_n(1-h) = 0{,}9\cdot q_n\) (dla \(h=0{,}1\))</p>
+<div class="q-block">
+<span class="q-text">11. Układ RLC.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Obwód szeregowy zawierający rezystor R, cewkę L i kondensator C. Równanie na ładunek \(q(t)\) (II prawo Kirchhoffa):<br><br>
+\(L\ddot q + R\dot q + \dfrac{q}{C} = U(t)\)<br><br>
+<b>Odpowiedź:</b> Równanie jest formalnie analogiczne do oscylatora harmonicznego tłumionego: \(L\) odpowiada masie \(m\), \(R\) — współczynnikowi tłumienia \(b\), \(1/C\) — stałej sprężystości \(k\). W zależności od wartości \(R\) względem tłumienia krytycznego, obwód RLC może wykazywać drgania tłumione (oscylacje zanikające), tłumienie krytyczne lub przetłumienie (powolny powrót do zera bez oscylacji) — analogicznie do mechanicznego oscylatora tłumionego.
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">12. Układy nieliniowe na przykładzie wahadła matematycznego, przybliżenie małych drgań.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Równanie ruchu wahadła matematycznego (masa na nici o długości \(l\)):<br><br>
+\(\ddot\theta + \dfrac{g}{l}\sin\theta = 0\)<br><br>
+To równanie <b>nieliniowe</b> (ze względu na \(\sin\theta\)) — nie ma ogólnego rozwiązania w funkcjach elementarnych (rozwiązanie wyraża się przez całki eliptyczne).<br><br>
+<b>Przybliżenie małych drgań:</b> dla \(\theta\ll1\) rad, \(\sin\theta\approx\theta\) (rozwinięcie Taylora), co linearyzuje równanie do: \(\ddot\theta+\dfrac{g}{l}\theta=0\) — równanie liniowego oscylatora harmonicznego, \(\theta(t)=\theta_0\cos(\omega t+\varphi)\), \(\omega=\sqrt{g/l}\), okres \(T=2\pi\sqrt{l/g}\) niezależny od amplitudy (izochronizm małych wahań). Dla większych amplitud okres zależy od amplitudy — efekt nieliniowości pomijany w przybliżeniu liniowym.
+</div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">13. Dany jest układ RC: R=1, C=1, a początkowy ładunek na kondensatorze wynosi q(0)=1. Zastosuj metodę Eulera do znalezienia rozwiązania q(t) dla t=0.2[s] przyjmując krok czasowy 0.1[s].</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Równanie rozładowania: \(R\dfrac{dq}{dt}+\dfrac{q}{C}=0 \Rightarrow \dfrac{dq}{dt}=-\dfrac{q}{RC}\). Dla \(R=C=1\): \(\dfrac{dq}{dt}=-q\), czyli \(f(t,q)=-q\).<br><br>
+Metoda Eulera: \(q_{n+1}=q_n+h\cdot f(t_n,q_n) = q_n(1-h) = 0{,}9\cdot q_n\) (dla \(h=0{,}1\))<br><br>
 <table>
 <tr><th>n</th><th>t</th><th>q</th></tr>
 <tr><td>0</td><td>0,0</td><td>1,00</td></tr>
 <tr><td>1</td><td>0,1</td><td>0,90</td></tr>
 <tr><td>2</td><td>0,2</td><td>0,81</td></tr>
 </table>
-<div class="odp">
-\(q(0{,}2) \approx 0{,}81\)<br>
+<b>Odpowiedź:</b> \(q(0{,}2) \approx 0{,}81\)<br>
 Rozwiązanie dokładne: \(q(t)=e^{-t}\), \(q(0{,}2)=e^{-0{,}2}\approx0{,}8187\) — błąd metody Eulera ok. 0,009, typowy dla metody pierwszego rzędu.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>14. Model Malthusa — czas do zarażenia połowy populacji</h3>
-<p class="polecenie">Polecenie: Zakładając rozwój epidemii zgodny z modelem Malthusa o współczynniku k=2, oblicz po jakim czasie połowa populacji liczącej 2²⁰ osobników będzie zarażona, jeżeli w chwili początkowej 128 osobników było chorych? Zapisz rozwiązanie analityczne z dokładnością do 3 miejsc po przecinku.</p>
-<p>Model Malthusa: \(N(t)=N_0e^{kt}\). Dane: \(k=2\), \(N_0=128=2^7\), szukana wartość \(N(t)=\dfrac{2^{20}}{2}=2^{19}\).</p>
-<p>\(2^{19} = 2^7\cdot e^{2t} \Rightarrow e^{2t}=2^{12}=4096\)</p>
-<p>\(2t = \ln(4096) = 12\ln2 = 12\cdot0{,}693147 = 8{,}317766\)</p>
-<div class="odp">
-\(t = \dfrac{8{,}317766}{2} \approx 4{,}159\)
+<div class="q-block">
+<span class="q-text">14. Zakładając rozwój epidemii zgodny z modelem Malthusa o współczynniku k=2, oblicz po jakim czasie połowa populacji liczącej 2²⁰ osobników będzie zarażona, jeżeli w chwili początkowej 128 osobników było chorych? Zapisz rozwiązanie analityczne z dokładnością do 3 miejsc po przecinku.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Model Malthusa: \(N(t)=N_0e^{kt}\). Dane: \(k=2\), \(N_0=128=2^7\), szukana wartość \(N(t)=\dfrac{2^{20}}{2}=2^{19}\).<br><br>
+\(2^{19} = 2^7\cdot e^{2t} \Rightarrow e^{2t}=2^{12}=4096\)<br><br>
+\(2t = \ln(4096) = 12\ln2 = 12\cdot0{,}693147 = 8{,}317766\)<br><br>
+<b>Odpowiedź:</b> \(t = \dfrac{8{,}317766}{2} \approx 4{,}159\)
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="testowanie">
 <h2>3. Inżynieria oprogramowania — testowanie</h2>
 
-<div class="pytanie">
-<h3>15. Siedem zasad testowania oprogramowania</h3>
-<p class="polecenie">Polecenie: Wymień 7 zasad testowania oprogramowania.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">15. Wymień 7 zasad testowania oprogramowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Testowanie wykazuje obecność błędów, a nie ich brak.<br>
 2. Wyczerpujące testowanie jest niemożliwe.<br>
 3. Wczesne testowanie oszczędza czas i koszty.<br>
@@ -305,38 +344,52 @@ Rozwiązanie dokładne: \(q(t)=e^{-t}\), \(q(0{,}2)=e^{-0{,}2}\approx0{,}8187\) 
 6. Testowanie zależy od kontekstu.<br>
 7. Błędne przekonanie o braku błędów — przejście testów bez wykrytych błędów nie oznacza, że system jest użyteczny.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>16. V-model wytwarzania oprogramowania</h3>
-<p class="polecenie">Polecenie: Opisz V-model wytwarzania oprogramowania.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">16. Opisz V-model wytwarzania oprogramowania.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Rozszerzenie modelu kaskadowego, w którym każdej fazie wytwarzania (lewa strona "V") odpowiada skorelowana z nią pozioma faza testowania (prawa strona "V"):<br><br>
-<strong>Lewa strona (góra→dół):</strong> analiza wymagań → projekt systemu (architektura) → projekt szczegółowy (komponenty) → implementacja (dolny wierzchołek V).<br>
-<strong>Prawa strona (dół→góra):</strong> testy jednostkowe (odpowiadają projektowi szczegółowemu) → testy integracyjne (projektowi systemu) → testy systemowe (analizie wymagań) → testy akceptacyjne (wymaganiom biznesowym).<br><br>
+<b>Lewa strona (góra→dół):</b> analiza wymagań → projekt systemu (architektura) → projekt szczegółowy (komponenty) → implementacja (dolny wierzchołek V).<br>
+<b>Prawa strona (dół→góra):</b> testy jednostkowe (odpowiadają projektowi szczegółowemu) → testy integracyjne (projektowi systemu) → testy systemowe (analizie wymagań) → testy akceptacyjne (wymaganiom biznesowym).<br><br>
 Idea: planowanie testów danego poziomu rozpoczyna się już na etapie odpowiadającej fazy projektowej, a nie dopiero po implementacji — ułatwia to wczesne wykrywanie niezgodności między wymaganiami a projektem.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>17. Technika TDD — trzy etapy</h3>
-<p class="polecenie">Polecenie: Scharakteryzuj technikę TDD (wymień 3 charakterystyczne etapy tego procesu).</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">17. Scharakteryzuj technikę TDD (wymień 3 charakterystyczne etapy tego procesu).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Test-Driven Development — cykl "Red-Green-Refactor":<br>
-1. <strong>Red</strong> — napisanie testu jednostkowego dla nowej, jeszcze niezaimplementowanej funkcjonalności (test musi się nie powieść, bo kod jeszcze nie istnieje).<br>
-2. <strong>Green</strong> — napisanie minimalnej ilości kodu produkcyjnego potrzebnej, by test przeszedł pomyślnie.<br>
-3. <strong>Refactor</strong> — refaktoryzacja kodu (poprawa jakości/czytelności, usunięcie duplikacji) przy zachowaniu przechodzenia wszystkich testów.<br><br>
+1. <b>Red</b> — napisanie testu jednostkowego dla nowej, jeszcze niezaimplementowanej funkcjonalności (test musi się nie powieść, bo kod jeszcze nie istnieje).<br>
+2. <b>Green</b> — napisanie minimalnej ilości kodu produkcyjnego potrzebnej, by test przeszedł pomyślnie.<br>
+3. <b>Refactor</b> — refaktoryzacja kodu (poprawa jakości/czytelności, usunięcie duplikacji) przy zachowaniu przechodzenia wszystkich testów.<br><br>
 Cykl powtarza się dla każdej kolejnej funkcjonalności.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="wzorce">
 <h2>4. Wzorce projektowe — diagramy klas</h2>
 
-<div class="pytanie">
-<h3>18. Diagram klas — wzorzec Strategia (VAT Polska/Niemcy)</h3>
-<p class="polecenie">Polecenie: Narysuj diagram klas dla systemu obliczającego VAT z zastosowaniem wzorca strategii — klasa Zamowienie z metodą obliczPodatek(), klasa abstrakcyjna ObliczPodatek z metodą abstrakcyjną kwotaPodatku(...), oraz klasy PodatekPolska i PodatekNiemcy implementujące konkretne algorytmy.</p>
+<div class="q-block">
+<span class="q-text">18. Projektant stworzył projekt systemu do obsługi sprzedaży. System będzie m.in. obsługiwał zamówienia od klientów z Polski i Niemiec, przy czym okazało się, że wielkość podatku VAT dla sprzedawanych towarów jest inna w tych dwóch krajach. Ponadto w przyszłości system może zostać wdrożony w innych krajach, gdzie reguły wyliczania podatku VAT mogą się bardzo różnić (nie tylko wielkością podatku ale regułami jego naliczania). W celu elastycznej zmiany reguł wyliczania VAT projektant zastosował więc wzorzec strategii (Strategy). Klasa Zamowienie posiada metodę obliczPodatek(), która wylicza kwotę podatku VAT dla wszystkich towarów wchodzących w skład zamówienia w oparciu o odpowiednie reguły zhermetyzowane w następujących klasach:</span>
+<ul>
+<li>a. klasa abstrakcyjna ObliczPodatek - deklaruje wspólny interfejs dla wszystkich używanych algorytmów wyliczania VAT tzn. metodę abstrakcyjną: kwotaPodatku(przedmiotSprzedaży: Artykuł, ilosc: double, cena: double): double, która dla podanego towaru (przedmiotu sprzedaży), jego ilości i ceny netto wylicza kwotę podatku VAT.</li>
+<li>b. PodatekPolska, PodatekNiemcy - implementacje konkretnych algorytmów wyliczania VAT w Polsce i Niemczech przy użyciu interfejsu klasy ObliczPodatek.</li>
+</ul>
+<div class="q-text" style="font-weight: normal;">Narysuj diagram klas obrazujący opisane rozwiązanie. Na diagramie zamieść tylko wszystkie wymienione wcześniej klasy i metody zachowując podane nazewnictwo i uwzględniając relacje dziedziczenia oraz kompozycji. Klasy i metody abstrakcyjne oznacz adnotacją {abstract} umieszczoną po nazwie klasy/metody np.:</div>
+<pre>KlasaX {abstract}
+MetodaY(ilosc: double): double {abstract}</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>+--------------------------+
 |       Zamowienie         |
 +--------------------------+
@@ -361,14 +414,19 @@ Cykl powtarza się dla każdej kolejnej funkcjonalności.
 | + kwotaPodatku(przedmiotSprzedazy: Artykul,
 |     ilosc: double, cena: double): double
 +---------------+  +---------------+</pre>
-<div class="odp">
-<code>Zamowienie</code> łączy się z abstrakcyjną klasą <code>ObliczPodatek</code> relacją <strong>kompozycji</strong> (przechowuje referencję do aktualnej strategii). <code>PodatekPolska</code> i <code>PodatekNiemcy</code> <strong>dziedziczą</strong> po <code>ObliczPodatek</code> i implementują (nadpisują) jej metodę abstrakcyjną — dzięki temu <code>Zamowienie</code> może korzystać z różnych reguł wyliczania VAT wymiennie, bez znajomości ich konkretnej implementacji.
+<code>Zamowienie</code> łączy się z abstrakcyjną klasą <code>ObliczPodatek</code> relacją <b>kompozycji</b> (przechowuje referencję do aktualnej strategii). <code>PodatekPolska</code> i <code>PodatekNiemcy</code> <b>dziedziczą</b> po <code>ObliczPodatek</code> i implementują (nadpisują) jej metodę abstrakcyjną — dzięki temu <code>Zamowienie</code> może korzystać z różnych reguł wyliczania VAT wymiennie, bez znajomości ich konkretnej implementacji.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>19. Diagram klas — wzorzec Stan (File)</h3>
-<p class="polecenie">Polecenie: Narysuj diagram klas dla systemu przetwarzającego pliki z zastosowaniem wzorca stanu — klasa File z metodami Open(), Close(), Read(), Write(), klasa abstrakcyjna FileState z metodami abstrakcyjnymi, oraz klasy FileOpen i FileClosed.</p>
+<div class="q-block">
+<span class="q-text">19. Projektant stworzył projekt systemu przetwarzającego pliki. Jedną z klas projektu jest klasa File, która reprezentuje plik i posiada metody: Open(), Close(), Read(), Write(). Działanie tych metod zależy od wewnętrznego stanu obiektu klasy File np. metoda Open() powinna otworzyć plik jeśli jest zamknięty, albo zgłosić błąd lub nic nie zrobić jeśli plik jest już otwarty. Metoda Close() powinna zamknąć plik jeśli plik otwarty, albo zgłosić błąd lub nic nie zrobić jeśli plik jest już zamknięty. Z kolei metody Read() i Write() realizujące odczyt i zapis do pliku mogą działać poprawnie tylko na otwartym pliku, w przeciwnym razie zgłaszają błąd. W celu umożliwienia obiektowi pliku zmiany zachowania w wyniku zmiany wewnętrznego stanu projektant zastosował wzorzec stanu (State). Abstrakcyjna klasa FileState definiuje interfejs reprezentujący zachowanie związane z poszczególnymi stanami obiektu pliku tzn. metody abstrakcyjne: Open(), Close(), Read(), Write(). Klasa FileOpen() implementuje zachowanie związane ze szczególnym stanem obiektu pliku tzn. gdy plik jest otwarty. Klasa FileClosed() implementuje zachowanie związane z drugim szczególnym stanem obiektu pliku tzn. gdy plik jest zamknięty.</span>
+<div class="q-text" style="font-weight: normal;">Narysuj diagram klas obrazujący opisane rozwiązanie. Na diagramie zamieść tylko wszystkie wymienione wcześniej klasy i metody zachowując podane nazewnictwo i uwzględniając relacje dziedziczenia oraz kompozycji. Klasy i metody abstrakcyjne oznacz adnotacją {abstract} umieszczoną po nazwie klasy/metody np.:</div>
+<pre>KlasaX {abstract}
+MetodaY(ilosc: double): double {abstract}</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>+---------------------------+
 |           File             |
 +---------------------------+
@@ -400,14 +458,19 @@ Cykl powtarza się dla każdej kolejnej funkcjonalności.
 | + Read()     |  | + Read()      |
 | + Write()    |  | + Write()     |
 +--------------+  +---------------+</pre>
-<div class="odp">
-<code>File</code> łączy się z abstrakcyjną klasą <code>FileState</code> relacją <strong>kompozycji</strong> (przechowuje referencję do aktualnego stanu). <code>FileOpen</code> i <code>FileClosed</code> <strong>dziedziczą</strong> po <code>FileState</code> i implementują zachowanie właściwe danemu stanowi — obiekt <code>File</code> deleguje wywołania metod do aktualnego obiektu stanu, co pozwala zmieniać zachowanie w zależności od tego, czy plik jest otwarty czy zamknięty.
+<code>File</code> łączy się z abstrakcyjną klasą <code>FileState</code> relacją <b>kompozycji</b> (przechowuje referencję do aktualnego stanu). <code>FileOpen</code> i <code>FileClosed</code> <b>dziedziczą</b> po <code>FileState</code> i implementują zachowanie właściwe danemu stanowi — obiekt <code>File</code> deleguje wywołania metod do aktualnego obiektu stanu, co pozwala zmieniać zachowanie w zależności od tego, czy plik jest otwarty czy zamknięty.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. Diagram klas — wzorzec Stan (DBConnection)</h3>
-<p class="polecenie">Polecenie: Narysuj diagram klas dla systemu z bazą danych z zastosowaniem wzorca stanu — klasa DBConnection z metodami Open(), Close(), ExecuteSQL(), klasa abstrakcyjna DBConnectionState, oraz klasy DBConnectionOpen i DBConnectionClosed.</p>
+<div class="q-block">
+<span class="q-text">20. Projektant stworzył projekt systemu wykorzystującego bazy danych. Jedną z klas projektu jest klasa DBConnection, która reprezentuje połączenie z bazą danych i posiada metody: Open(), Close(), ExecuteSQL(). Działanie tych metod zależy od wewnętrznego stanu obiektu klasy DBConnection np. metoda Open() powinna otworzyć (nawiązać) połączenie z bazą danych jeśli jest zamknięte, albo zgłosić błąd lub nic nie zrobić jeśli połączenie jest już otwarte. Metoda Close() powinna zamknąć połączenie jeśli jest otwarte, albo zgłosić błąd lub nic nie zrobić jeśli połączenie jest już zamknięte. Z kolei metoda ExecuteSQL() wykonująca na bazie danych podane zapytanie SQL (argument metody) może działać poprawnie tylko na otwartym połączeniu, w przeciwnym razie zgłasza błąd. W celu umożliwienia obiektowi połączenia zmiany zachowania w wyniku zmiany wewnętrznego stanu projektant zastosował wzorzec stanu (State). Abstrakcyjna klasa DBConnectionState definiuje interfejs reprezentujący zachowanie związane z poszczególnymi stanami obiektu połączenia tzn. metody abstrakcyjne: Open(), Close(), ExecuteSQL(). Klasa DBConnectionOpen() implementuje zachowanie związane ze szczególnym stanem obiektu połączenia tzn. gdy połączenie jest otwarte. Klasa DBConnectionClosed() implementuje zachowanie związane z drugim szczególnym stanem obiektu połączenia tzn. gdy połączenie jest zamknięte.</span>
+<div class="q-text" style="font-weight: normal;">Narysuj diagram klas obrazujący opisane rozwiązanie. Na diagramie zamieść tylko wszystkie wymienione wcześniej klasy i metody zachowując podane nazewnictwo i uwzględniając relacje dziedziczenia oraz kompozycji. Klasy i metody abstrakcyjne oznacz adnotacją {abstract} umieszczoną po nazwie klasy/metody np.:</div>
+<pre>KlasaX {abstract}
+MetodaY(ilosc: double): double {abstract}</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>+---------------------------+
 |       DBConnection         |
 +---------------------------+
@@ -436,14 +499,19 @@ Cykl powtarza się dla każdej kolejnej funkcjonalności.
 | + Close()            |  | + Close()             |
 | + ExecuteSQL()        |  | + ExecuteSQL()         |
 +--------------------+  +----------------------+</pre>
-<div class="odp">
 Struktura analogiczna do wzorca Stan dla klasy <code>File</code>: <code>DBConnection</code> deleguje (kompozycja) wywołania do aktualnego obiektu stanu (<code>DBConnectionOpen</code> lub <code>DBConnectionClosed</code>), które dziedziczą po <code>DBConnectionState</code> i implementują zachowanie odpowiednie dla stanu otwartego/zamkniętego połączenia.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>21. Diagram klas — wzorzec Metoda Szablonowa</h3>
-<p class="polecenie">Polecenie: Narysuj diagram klas dla systemu z bazą danych wykorzystującego wzorzec metody szablonowej — klasa SzablonZapytania z metodami abstrakcyjnymi formatujConnect(), formatujSelect() oraz metodą szablonową wykonajZapytanie(), a także klasy ZapytanieSQLServer i ZapytanieOracle.</p>
+<div class="q-block">
+<span class="q-text">21. Projektant stworzył projekt systemu wykorzystującego bazę danych. By umożliwić łatwe dostosowanie systemu do współpracy z różnymi bazami danych, projektant wykorzystał wzorzec metody szablonowej (Template Method). Klasa SzablonZapytania określa abstrakcyjne operacje proste formatujConnect(), formatujSelect() definiowane przez podklasy. Operacje te dostosowują podane parametry połączenia z bazą danych oraz zapytania SQL-owe do dialektu języka SQL używanego przez wykorzystywaną bazę danych. Klasa SzablonZapytania implementuje także metodę szablonową wykonajZapytanie() definiującą ogólny szkielet algorytmu realizującego połączenie z bazą danych i wykonanie na niej zapytania SQL. Metoda szablonowa wywołuje operacje proste wymienione powyżej. Operacje proste zaimplementowane zostały w klasach ZapytanieSQLServer i ZapytanieOracle umożliwiających współpracę z bazami danych SQL Server oraz Oracle.</span>
+<div class="q-text" style="font-weight: normal;">Narysuj diagram klas obrazujący opisane rozwiązanie. Na diagramie zamieść tylko wszystkie wymienione wcześniej klasy i metody zachowując podane nazewnictwo i uwzględniając relacje dziedziczenia oraz kompozycji. Klasy i metody abstrakcyjne oznacz adnotacją {abstract} umieszczoną po nazwie klasy/metody np.:</div>
+<pre>KlasaX {abstract}
+MetodaY(ilosc: double): double {abstract}</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>+---------------------------------------+
 |      SzablonZapytania {abstract}        |
 +---------------------------------------+
@@ -461,49 +529,55 @@ Struktura analogiczna do wzorca Stan dla klasy <code>File</code>: <code>DBConnec
 | + formatujConnect()     |  | + formatujConnect() |
 | + formatujSelect()      |  | + formatujSelect()  |
 +------------------------+  +-------------------+</pre>
-<div class="odp">
-Brak relacji kompozycji — wzorzec Metoda Szablonowa opiera się wyłącznie na <strong>dziedziczeniu</strong>. Konkretne klasy <code>ZapytanieSQLServer</code> i <code>ZapytanieOracle</code> dziedziczą po <code>SzablonZapytania</code> i implementują jej metody abstrakcyjne (<code>formatujConnect()</code>, <code>formatujSelect()</code>), dostosowując je do dialektu SQL danej bazy; metoda <code>wykonajZapytanie()</code> jest zdefiniowana raz w klasie bazowej i wywołuje te metody wewnętrznie, definiując ogólny szkielet algorytmu.
+Brak relacji kompozycji — wzorzec Metoda Szablonowa opiera się wyłącznie na <b>dziedziczeniu</b>. Konkretne klasy <code>ZapytanieSQLServer</code> i <code>ZapytanieOracle</code> dziedziczą po <code>SzablonZapytania</code> i implementują jej metody abstrakcyjne (<code>formatujConnect()</code>, <code>formatujSelect()</code>), dostosowując je do dialektu SQL danej bazy; metoda <code>wykonajZapytanie()</code> jest zdefiniowana raz w klasie bazowej i wywołuje te metody wewnętrznie, definiując ogólny szkielet algorytmu.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="statystyka">
 <h2>5. Statystyka i uczenie maszynowe</h2>
 
-<div class="pytanie">
-<h3>22. Wnioskowanie częstościowe i bayesowskie</h3>
-<p class="polecenie">Polecenie: Wnioskowanie częstościowe i bayesowskie. Zalety i wady obydwu podejść.</p>
-<div class="odp">
-<strong>Wnioskowanie częstościowe (frequentist)</strong> — prawdopodobieństwo jako granica częstości względnej w nieskończenie wielu powtórzeniach eksperymentu. Parametry populacji to stałe, nieznane wartości; wnioskowanie opiera się na estymatorach, przedziałach ufności, testach hipotez (p-wartości).<br>
+<div class="q-block">
+<span class="q-text">22. Wnioskowanie częstościowe i bayesowskie. Zalety i wady obydwu podejść.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Wnioskowanie częstościowe (frequentist)</b> — prawdopodobieństwo jako granica częstości względnej w nieskończenie wielu powtórzeniach eksperymentu. Parametry populacji to stałe, nieznane wartości; wnioskowanie opiera się na estymatorach, przedziałach ufności, testach hipotez (p-wartości).<br>
 Zalety: obiektywność (brak subiektywnego rozkładu a priori), ugruntowana teoria i szeroko stosowane narzędzia.<br>
 Wady: trudna interpretacja przedziałów ufności, brak formalnego sposobu uwzględnienia wcześniejszej wiedzy, problemy przy małych próbkach.<br><br>
-<strong>Wnioskowanie bayesowskie</strong> — parametry traktowane jako zmienne losowe o rozkładzie a priori, aktualizowanym na podstawie danych (twierdzenie Bayesa) do rozkładu a posteriori.<br>
+<b>Wnioskowanie bayesowskie</b> — parametry traktowane jako zmienne losowe o rozkładzie a priori, aktualizowanym na podstawie danych (twierdzenie Bayesa) do rozkładu a posteriori.<br>
 Zalety: naturalne włączanie wcześniejszej wiedzy (prior), bezpośrednia interpretacja probabilistyczna wyników, lepsze radzenie sobie z małymi próbkami.<br>
 Wady: subiektywność wyboru rozkładu a priori, większa złożoność obliczeniowa (często wymaga metod MCMC), trudniejsza komunikacja wyników.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>23. Regresja liniowa i logistyczna</h3>
-<p class="polecenie">Polecenie: Metoda regresji. Regresja liniowa i logistyczna.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">23. Metoda regresji. Regresja liniowa i logistyczna.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Regresja modeluje zależność zmiennej zależnej od jednego lub więcej predyktorów.<br><br>
-<strong>Regresja liniowa</strong> — modeluje zmienną ciągłą jako liniową kombinację predyktorów: \(Y=\beta_0+\beta_1X_1+\cdots+\beta_nX_n+\varepsilon\). Parametry estymuje się metodą najmniejszych kwadratów. Stosowana, gdy zmienna zależna jest ciągła (np. cena, temperatura).<br><br>
-<strong>Regresja logistyczna</strong> — stosowana, gdy zmienna zależna jest kategoryczna (zwykle binarna). Modeluje prawdopodobieństwo przynależności do klasy za pomocą funkcji logistycznej:<br>
+<b>Regresja liniowa</b> — modeluje zmienną ciągłą jako liniową kombinację predyktorów: \(Y=\beta_0+\beta_1X_1+\cdots+\beta_nX_n+\varepsilon\). Parametry estymuje się metodą najmniejszych kwadratów. Stosowana, gdy zmienna zależna jest ciągła (np. cena, temperatura).<br><br>
+<b>Regresja logistyczna</b> — stosowana, gdy zmienna zależna jest kategoryczna (zwykle binarna). Modeluje prawdopodobieństwo przynależności do klasy za pomocą funkcji logistycznej:<br>
 \(P(Y=1|X) = \dfrac{1}{1+e^{-(\beta_0+\beta_1X_1+\cdots+\beta_nX_n)}}\)<br>
 Parametry estymuje się metodą największej wiarygodności. Stosowana w klasyfikacji binarnej (np. czy klient kupi produkt).
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>24. Selekcja predyktorów — cel i metody</h3>
-<p class="polecenie">Polecenie: W jakim celu dokonuje się selekcji predyktorów. Wymienić i opisać 2 metody selekcji.</p>
-<div class="odp">
-<strong>Cel:</strong> wybór podzbioru najistotniejszych zmiennych w celu uproszczenia modelu (lepsza interpretowalność), zmniejszenia ryzyka przeuczenia (overfitting), redukcji kosztu obliczeniowego, usunięcia redundantnych/skorelowanych predyktorów oraz poprawy jakości predykcji na nowych danych.<br><br>
-<strong>Metody:</strong><br>
-1. <strong>Selekcja krokowa (stepwise selection)</strong> — iteracyjne dodawanie (forward) lub usuwanie (backward) predyktorów na podstawie kryterium statystycznego (istotność współczynnika, AIC, BIC) — na każdym kroku ocenia się, czy zmiana istotnie poprawia dopasowanie modelu.<br>
-2. <strong>Regularyzacja (np. LASSO)</strong> — dodanie do funkcji kosztu kary za wielkość współczynników (norma L1), co sprowadza część współczynników nieistotnych predyktorów dokładnie do zera, automatycznie eliminując je z modelu podczas dopasowywania.
+<div class="q-block">
+<span class="q-text">24. W jakim celu dokonuje się selekcji predyktorów. Wymienić i opisać 2 metody selekcji.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Cel:</b> wybór podzbioru najistotniejszych zmiennych w celu uproszczenia modelu (lepsza interpretowalność), zmniejszenia ryzyka przeuczenia (overfitting), redukcji kosztu obliczeniowego, usunięcia redundantnych/skorelowanych predyktorów oraz poprawy jakości predykcji na nowych danych.<br><br>
+<b>Metody:</b><br>
+1. <b>Selekcja krokowa (stepwise selection)</b> — iteracyjne dodawanie (forward) lub usuwanie (backward) predyktorów na podstawie kryterium statystycznego (istotność współczynnika, AIC, BIC) — na każdym kroku ocenia się, czy zmiana istotnie poprawia dopasowanie modelu.<br>
+2. <b>Regularyzacja (np. LASSO)</b> — dodanie do funkcji kosztu kary za wielkość współczynników (norma L1), co sprowadza część współczynników nieistotnych predyktorów dokładnie do zera, automatycznie eliminując je z modelu podczas dopasowywania.
 </div>
+</details>
 </div>
 </div>
 

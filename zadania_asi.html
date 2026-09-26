@@ -14,12 +14,13 @@ MathJax = {
 
 <style>
 body {
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
     line-height: 1.6;
     color: #222;
+    background: #fdfdfd;
 }
 
 .powrot {
@@ -31,52 +32,70 @@ body {
     text-decoration: none;
     border-radius: 5px;
 }
-
 .powrot:hover { background: #0056b3; }
 
 h1 { border-bottom: 3px solid #007bff; padding-bottom: 10px; }
 
-.zagadnienie {
+.spis {
+    background: white;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+}
+.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
+.spis a:hover { text-decoration: underline; }
+
+.zagadnienie { margin-bottom: 35px; }
+.zagadnienie h2 {
+    color: #0056b3;
+    border-bottom: 2px solid #cfe2ff;
+    padding-bottom: 6px;
+}
+
+.q-block {
     background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
 }
 
-.zagadnienie h2 { margin-top: 0; color: #0056b3; }
-
-.pytanie {
-    border-left: 3px solid #007bff;
-    padding-left: 14px;
-    margin: 18px 0;
+.q-text {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
 }
 
-.pytanie h3 { margin-bottom: 6px; color: #0056b3; font-size: 1rem; }
-
-.polecenie {
-    background: #eef4fb;
-    border: 1px dashed #90b8e0;
-    border-radius: 6px;
-    padding: 8px 12px;
-    margin: 8px 0 12px 0;
-    font-style: italic;
+details {
+    margin-top: 10px;
 }
 
-.odp {
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+    padding: 6px 0;
+    outline: none;
+}
+summary:hover { color: #0056b3; }
+
+.exp {
     background: #eefaf1;
     border-left: 3px solid #16a34a;
-    padding: 8px 12px;
-    margin-top: 8px;
-    font-weight: bold;
+    padding: 10px 14px;
+    margin-top: 10px;
+    border-radius: 0 6px 6px 0;
 }
 
 .uwaga {
     background: #fff3cd;
     border-left: 3px solid #e0a800;
     padding: 8px 12px;
-    margin-top: 8px;
+    margin-bottom: 10px;
     font-size: 0.92rem;
+    border-radius: 0 6px 6px 0;
 }
 
 code, pre {
@@ -90,16 +109,6 @@ pre { padding: 10px; overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; margin: 10px 0; }
 th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
 th { background: #e9edf2; }
-
-.spis {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-}
-.spis a { color: #007bff; text-decoration: none; margin-right: 14px; display: inline-block; margin-bottom: 6px; }
-.spis a:hover { text-decoration: underline; }
 </style>
 </head>
 
@@ -124,51 +133,60 @@ th { background: #e9edf2; }
 <div class="zagadnienie" id="etyka">
 <h2>1. Etyka i kompetencje zawodowe w IT</h2>
 
-<div class="pytanie">
-<h3>1. Dwa kodeksy etyczne dla branży IT</h3>
-<p class="polecenie">Polecenie: Proszę wymienić i krótko opisać 2 wybrane kodeksy etyczne dla branży IT.</p>
-<div class="odp">
-1. <strong>ACM Code of Ethics and Professional Conduct</strong> (Association for Computing Machinery) — kodeks etyczny określający zasady postępowania dla specjalistów IT: dbałość o dobro społeczne, unikanie szkodzenia innym, uczciwość i wiarygodność, sprawiedliwość i niedyskryminacja, poszanowanie prywatności i poufności, przestrzeganie praw własności intelektualnej.<br><br>
-2. <strong>IEEE Code of Ethics</strong> (Institute of Electrical and Electronics Engineers) — zobowiązuje członków m.in. do priorytetowego traktowania bezpieczeństwa, zdrowia i dobra publicznego, unikania konfliktów interesów, uczciwego przedstawiania danych i wyników, odrzucania łapówkarstwa, doskonalenia zrozumienia technologii i jej konsekwencji.
+<div class="q-block">
+<span class="q-text">1. Proszę wymienić i krótko opisać 2 wybrane kodeksy etyczne dla branży IT.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>ACM Code of Ethics and Professional Conduct</b> (Association for Computing Machinery) — kodeks etyczny określający zasady postępowania dla specjalistów IT: dbałość o dobro społeczne, unikanie szkodzenia innym, uczciwość i wiarygodność, sprawiedliwość i niedyskryminacja, poszanowanie prywatności i poufności, przestrzeganie praw własności intelektualnej.<br><br>
+2. <b>IEEE Code of Ethics</b> (Institute of Electrical and Electronics Engineers) — zobowiązuje członków m.in. do priorytetowego traktowania bezpieczeństwa, zdrowia i dobra publicznego, unikania konfliktów interesów, uczciwego przedstawiania danych i wyników, odrzucania łapówkarstwa, doskonalenia zrozumienia technologii i jej konsekwencji.
 </div>
-</div>
-
-<div class="pytanie">
-<h3>2. Cognitive load i "magiczna siódemka"</h3>
-<p class="polecenie">Polecenie: Proszę krótko rozwinąć zagadnienie cognitive load (co to jest i na co wpływa) i tzw. "magicznej siódemki".</p>
-<div class="odp">
-<strong>Cognitive load</strong> (obciążenie poznawcze) — ilość zasobów pamięci roboczej potrzebnych do przetworzenia informacji podczas wykonywania zadania. Wpływa na zdolność uczenia się, rozwiązywania problemów i podejmowania decyzji — nadmierne obciążenie prowadzi do spadku wydajności, większej liczby błędów i trudności w przyswajaniu wiedzy. W programowaniu wysoki cognitive load (np. przy czytaniu skomplikowanego, źle zorganizowanego kodu) utrudnia zrozumienie i utrzymanie oprogramowania.<br><br>
-<strong>"Magiczna siódemka"</strong> (prawo Millera, "The Magical Number Seven, Plus or Minus Two", 1956) — koncepcja mówiąca, że przeciętny człowiek jest w stanie jednocześnie przechowywać w pamięci roboczej ok. 7±2 elementy (porcje informacji). Wpływa to na projektowanie interfejsów, struktur danych, menu itd. — tak, by nie przeciążać użytkownika zbyt dużą liczbą jednoczesnych opcji/informacji.
-</div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>3. Dwa programy edukacyjne i certyfikacyjne w branży IT</h3>
-<p class="polecenie">Polecenie: Proszę wymienić i krótko opisać 2 wybrane programy edukacyjne (i certyfikacyjne) w branży IT.</p>
-<div class="odp">
-1. <strong>CompTIA</strong> (np. A+, Network+, Security+) — seria niezależnych od producenta certyfikatów potwierdzających podstawowe i średniozaawansowane kompetencje w zakresie sprzętu komputerowego, sieci i bezpieczeństwa IT — powszechnie uznawana jako punkt wejścia do kariery w IT.<br><br>
-2. <strong>Microsoft Certified: Azure Fundamentals/Associate/Expert</strong> — seria certyfikatów Microsoft potwierdzających umiejętności projektowania, wdrażania i zarządzania rozwiązaniami chmurowymi na platformie Azure, na różnych poziomach zaawansowania.
+<div class="q-block">
+<span class="q-text">2. Proszę krótko rozwinąć zagadnienie cognitive load (co to jest i na co wpływa) i tzw. "magicznej siódemki".</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Cognitive load</b> (obciążenie poznawcze) — ilość zasobów pamięci roboczej potrzebnych do przetworzenia informacji podczas wykonywania zadania. Wpływa na zdolność uczenia się, rozwiązywania problemów i podejmowania decyzji — nadmierne obciążenie prowadzi do spadku wydajności, większej liczby błędów i trudności w przyswajaniu wiedzy. W programowaniu wysoki cognitive load (np. przy czytaniu skomplikowanego, źle zorganizowanego kodu) utrudnia zrozumienie i utrzymanie oprogramowania.<br><br>
+<b>"Magiczna siódemka"</b> (prawo Millera, "The Magical Number Seven, Plus or Minus Two", 1956) — koncepcja mówiąca, że przeciętny człowiek jest w stanie jednocześnie przechowywać w pamięci roboczej ok. 7±2 elementy (porcje informacji). Wpływa to na projektowanie interfejsów, struktur danych, menu itd. — tak, by nie przeciążać użytkownika zbyt dużą liczbą jednoczesnych opcji/informacji.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>4. Trzy poważne naruszenia bezpieczeństwa z ostatnich 10 lat</h3>
-<p class="polecenie">Polecenie: Proszę krótko opisać 3 wybrane (i publicznie znane) poważne naruszenia bezpieczeństwa systemów informatycznych z ostatnich 10 lat.</p>
-<div class="odp">
-1. <strong>Equifax (2017)</strong> — włamanie do amerykańskiego biura informacji kredytowej, wykorzystujące niezałataną lukę w Apache Struts. Skradzione dane osobowe (numery ubezpieczenia społecznego, daty urodzenia, adresy) ok. 147 milionów osób w USA.<br><br>
-2. <strong>SolarWinds (2020)</strong> — zaawansowany atak łańcucha dostaw (supply chain attack) na oprogramowanie Orion — atakujący wstrzyknęli złośliwy kod do aktualizacji, kompromitując tysiące organizacji, w tym agencje rządowe USA i duże korporacje.<br><br>
-3. <strong>Colonial Pipeline (2021)</strong> — atak ransomware (grupa DarkSide) na operatora rurociągu paliwowego w USA, który sparaliżował dostawy paliwa na wschodnim wybrzeżu na kilka dni; firma zapłaciła okup ok. 4,4 mln USD (część odzyskana przez FBI).
+<div class="q-block">
+<span class="q-text">3. Proszę wymienić i krótko opisać 2 wybrane programy edukacyjne (i certyfikacyjne) w branży IT.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>CompTIA</b> (np. A+, Network+, Security+) — seria niezależnych od producenta certyfikatów potwierdzających podstawowe i średniozaawansowane kompetencje w zakresie sprzętu komputerowego, sieci i bezpieczeństwa IT — powszechnie uznawana jako punkt wejścia do kariery w IT.<br><br>
+2. <b>Microsoft Certified: Azure Fundamentals/Associate/Expert</b> — seria certyfikatów Microsoft potwierdzających umiejętności projektowania, wdrażania i zarządzania rozwiązaniami chmurowymi na platformie Azure, na różnych poziomach zaawansowania.
 </div>
+</details>
+</div>
+
+<div class="q-block">
+<span class="q-text">4. Proszę krótko opisać 3 wybrane (i publicznie znane) poważne naruszenia bezpieczeństwa systemów informatycznych (np. włamy i wykradnięcie danych, ataki typu DDoS, itd.) z ostatnich 10 lat. W opisie powinny się znaleźć min. nazwa firmy/instytucji, jakiego rodzaju naruszenie, jakiego rodzaju (i ilościowo, ogólnie) skutki, itd.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>Equifax (2017)</b> — włamanie do amerykańskiego biura informacji kredytowej, wykorzystujące niezałataną lukę w Apache Struts. Skradzione dane osobowe (numery ubezpieczenia społecznego, daty urodzenia, adresy) ok. 147 milionów osób w USA.<br><br>
+2. <b>SolarWinds (2020)</b> — zaawansowany atak łańcucha dostaw (supply chain attack) na oprogramowanie Orion — atakujący wstrzyknęli złośliwy kod do aktualizacji, kompromitując tysiące organizacji, w tym agencje rządowe USA i duże korporacje.<br><br>
+3. <b>Colonial Pipeline (2021)</b> — atak ransomware (grupa DarkSide) na operatora rurociągu paliwowego w USA, który sparaliżował dostawy paliwa na wschodnim wybrzeżu na kilka dni; firma zapłaciła okup ok. 4,4 mln USD (część odzyskana przez FBI).
+</div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="linux">
 <h2>2. Administracja systemami Linux</h2>
 
-<div class="pytanie">
-<h3>5. LVM — zwiększenie pojemności logicznego wolumenu</h3>
-<p class="polecenie">Polecenie: Zamontowany wolumen logiczny /dev/myVG/data z danymi przekracza 95% zajętości. Nie mamy już wolnych zasobów dyskowych, ale możemy dołączyć nowy dysk do systemu. Proszę zaproponować bezpieczną procedurę zwiększenia objętości tego wolumenu.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">5. LVM – zwiększenie pojemności logicznego volumenu: Zamontowany volumen logiczny /dev/myVG/data z danymi przekracza 95% zajętości. Nie mamy już wolnych zasobów dyskowych ale możemy dołączyć nowy dysk do systemu. Proszę zaproponować bezpieczną procedurę zwiększenia objętości tego wolumenu.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 1. Podłączyć nowy dysk fizyczny do systemu (np. <code>/dev/sdb</code>).<br>
 2. Zainicjować dysk jako fizyczny wolumen LVM: <code>pvcreate /dev/sdb</code>.<br>
 3. Dodać nowy wolumen fizyczny do istniejącej grupy wolumenów: <code>vgextend myVG /dev/sdb</code>.<br>
@@ -180,46 +198,53 @@ th { background: #e9edf2; }
 7. Zweryfikować wynik: <code>df -h /punkt/montowania</code>.<br><br>
 Zalecenia bezpieczeństwa: warto wykonać kopię zapasową krytycznych danych przed operacją oraz zweryfikować sprawność nowego dysku (np. testem SMART) przed dodaniem go do produkcyjnej grupy wolumenów.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>6. Tunel SSH — udostępnienie usługi za NAT</h3>
-<p class="polecenie">Polecenie: Nasz system ma prywatne (nieroutowalne) IP. Potrzebujemy udostępnić w internecie port jednej z usług działających na naszym systemie (np. openssh, mysqld). Proszę opisać jakie oprogramowanie klienckie i serwerowe, jakie uprawnienia i jaki typ adresów IP są konieczne aby wykorzystać tunel ssh. Jaki tunel należy zestawić? Proszę opisać konfigurację IP:port obu endpointów tunelu.</p>
-<div class="odp">
-<strong>Oprogramowanie:</strong> klient <code>openssh-client</code> (polecenie <code>ssh</code>) uruchamiany na maszynie z usługą (za NAT), łączący się wychodząco do serwera pośredniczącego; serwer pośredniczący musi mieć uruchomiony <code>openssh-server</code> i publiczny, routowalny adres IP.<br><br>
-<strong>Uprawnienia:</strong> zwykły użytkownik wystarcza do zestawienia tunelu (opcja <code>-R</code>), o ile zdalny port jest nieuprzywilejowany (&gt;1024); dla portów &lt;1024 potrzebne są uprawnienia administracyjne na serwerze pośredniczącym (edycja <code>sshd_config</code>).<br><br>
-<strong>Typ adresów IP:</strong> serwer pośredniczący musi mieć publiczny, routowalny adres IP; maszyna z usługą może mieć adres prywatny, ponieważ to ona inicjuje połączenie wychodzące.<br><br>
-<strong>Tunel:</strong> należy zestawić tunel z <strong>przekierowaniem zdalnego portu (remote/reverse port forwarding)</strong>:<br>
+<div class="q-block">
+<span class="q-text">6. Nasz system ma prywatne (nieroutowalne) IP. Potrzebujemy udostępnić w internecie port jednej z usług działających na naszym systemie np. openssh serwer albo mysqld. Proszę opisać jakie oprogramowanie kilenckie i serwerowe, jakie uprawnienia (administracyjne czy zwykłego użytkownika) i jaki typ adresów IP są konieczne aby wykorzystać tunel ssh? Jaki tunel należy zestawić? Proszę opisać też konfigurację IP:port obu endpoint-ów tunelu.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Oprogramowanie:</b> klient <code>openssh-client</code> (polecenie <code>ssh</code>) uruchamiany na maszynie z usługą (za NAT), łączący się wychodząco do serwera pośredniczącego; serwer pośredniczący musi mieć uruchomiony <code>openssh-server</code> i publiczny, routowalny adres IP.<br><br>
+<b>Uprawnienia:</b> zwykły użytkownik wystarcza do zestawienia tunelu (opcja <code>-R</code>), o ile zdalny port jest nieuprzywilejowany (&gt;1024); dla portów &lt;1024 potrzebne są uprawnienia administracyjne na serwerze pośredniczącym (edycja <code>sshd_config</code>).<br><br>
+<b>Typ adresów IP:</b> serwer pośredniczący musi mieć publiczny, routowalny adres IP; maszyna z usługą może mieć adres prywatny, ponieważ to ona inicjuje połączenie wychodzące.<br><br>
+<b>Tunel:</b> należy zestawić tunel z <b>przekierowaniem zdalnego portu (remote/reverse port forwarding)</b>:<br>
 <code>ssh -R 0.0.0.0:2222:localhost:22 uzytkownik@publiczny.serwer.ip</code><br><br>
-<strong>Konfiguracja endpointów:</strong><br>
+<b>Konfiguracja endpointów:</b><br>
 — endpoint lokalny (maszyna z usługą): <code>127.0.0.1:22</code> — cel tunelu<br>
 — endpoint zdalny (serwer pośredniczący): <code>&lt;publiczny_IP&gt;:2222</code> — port nasłuchujący na ruch z internetu, przekazywany z powrotem przez tunel<br><br>
 Dodatkowo na serwerze pośredniczącym w <code>/etc/ssh/sshd_config</code> należy ustawić <code>GatewayPorts yes</code> (by port zdalny nasłuchiwał na wszystkich interfejsach, nie tylko localhost) — wymaga uprawnień administracyjnych.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>7. Software RAID — odporność na awarię 2 dysków, zero budżetu</h3>
-<p class="polecenie">Polecenie: Administrator ma przygotować linuxowy serwer z 5 jednakowymi dyskami, bez dedykowanego kontrolera RAID. Serwer ma pełnić funkcje WWW, plików dla klientów Windows, bazodanowego. System ma zachować odporność na awarię 2 dysków przy wykorzystaniu wszystkich dysków oraz maksymalizacji prędkości. Zerowy budżet — rozwiązania open source. Zaproponować organizację pamięci dyskowej, oprogramowanie oraz narzędzie do zdalnej administracji szyfrowanym protokołem.</p>
-<div class="odp">
-<strong>Macierz:</strong> <strong>RAID 6</strong> zrealizowany programowo (Linux software RAID, <code>mdadm</code>) — podwójna parzystość (dual parity) pozwala przetrwać awarię dowolnych 2 dysków jednocześnie, wykorzystując wszystkie 5 dysków (efektywna pojemność = 3 dyski użytkowe), z paskowaniem danych zapewniającym dobrą wydajność:<br>
+<div class="q-block">
+<span class="q-text">7. Administrator w małej firmie ma za zadanie przygotować linuxowy serwer dysponując jednostką centralną, zawierającą 5-ć jednakowych dysków ale nie posiadającą żadnego dedykowanego kontrolera do zarządzania macierzami dyskowymi. Serwer w sieci lokalnej ma pełnić funkcje serwera www, plików dla klientów Windows, bazodanowego. System ma zachować odporność na awarie 2-ch dysków przy wykorzystaniu wszystkich dostępnych dysków oraz maksymalizacji prędkości pracy układu dyskowego. Administrator ma zerowy budżet na zakup oprogramowania i sprzętu i konfiguruje linuxowy system w całości oparty na rozwiązaniach opensource. Zaproponować organizację pamięci dyskowej, oprogramowanie oraz narzędzie do administracji zdalnej szyfrowanym protokołem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Macierz:</b> <b>RAID 6</b> zrealizowany programowo (Linux software RAID, <code>mdadm</code>) — podwójna parzystość (dual parity) pozwala przetrwać awarię dowolnych 2 dysków jednocześnie, wykorzystując wszystkie 5 dysków (efektywna pojemność = 3 dyski użytkowe), z paskowaniem danych zapewniającym dobrą wydajność:<br>
 <code>mdadm --create /dev/md0 --level=6 --raid-devices=5 /dev/sd[b-f]1</code><br>
 System plików na <code>/dev/md0</code>: np. ext4 lub XFS.<br><br>
-<strong>Oprogramowanie serwerowe:</strong><br>
-— serwer WWW: <strong>Apache2</strong> lub <strong>Nginx</strong><br>
-— serwer plików dla klientów Windows: <strong>Samba</strong> (protokół SMB/CIFS)<br>
-— serwer bazodanowy: <strong>MySQL/MariaDB</strong> lub <strong>PostgreSQL</strong><br><br>
-<strong>Zdalna administracja szyfrowanym protokołem:</strong> <strong>OpenSSH</strong> (sshd) — szyfrowany dostęp zdalny (SSH), w tym bezpieczne przesyłanie plików (SCP/SFTP). Wszystkie wymienione komponenty są darmowe i open source.
+<b>Oprogramowanie serwerowe:</b><br>
+— serwer WWW: <b>Apache2</b> lub <b>Nginx</b><br>
+— serwer plików dla klientów Windows: <b>Samba</b> (protokół SMB/CIFS)<br>
+— serwer bazodanowy: <b>MySQL/MariaDB</b> lub <b>PostgreSQL</b><br><br>
+<b>Zdalna administracja szyfrowanym protokołem:</b> <b>OpenSSH</b> (sshd) — szyfrowany dostęp zdalny (SSH), w tym bezpieczne przesyłanie plików (SCP/SFTP). Wszystkie wymienione komponenty są darmowe i open source.
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="python">
 <h2>3. Programowanie w Pythonie (OOP, sieci)</h2>
 
-<div class="pytanie">
-<h3>8. Iterator i generator ciągu Fibonacciego</h3>
-<p class="polecenie">Polecenie: Napisz klasę, która implementuje nieskończony iterator ciągu Fibonacciego, który zwraca kolejne wyrazy ciągu mniejsze od n > 0. Wykonaj to samo zadanie pisząc odpowiedni generator.</p>
+<div class="q-block">
+<span class="q-text">8. Napisz klasę, która implementuje nieskończony iterator ciągu Fibonacciego, który zwraca kolejne wyrazy ciągu mniejsze od n > 0 (n – parametr konstruktora). Wykonaj to samo zadanie pisząc odpowiedni generator (funkcję generatora).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>class FibonacciIterator:
     def __init__(self, n):
         self.n = n
@@ -243,10 +268,14 @@ def fibonacci_generator(n):
         yield a
         a, b = b, a + b</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>9. Klasa Pet z właściwościami (property)</h3>
-<p class="polecenie">Polecenie: Napisz prostą klasę reprezentującą domowego zwierzaka (Pet). Konstruktor powinien inicjalizować atrybuty name i age. Za pomocą właściwości kontroluj dostęp i ustawianie atrybutów: name — minimum trzyliterowy ciąg tekstowy, age — dodatnia liczba całkowita. Utwórz metody __str__() i __repr__().</p>
+<div class="q-block">
+<span class="q-text">9. Napisz prostą klasę reprezentującą domowego zwierzaka (Pet). Konstruktor klasy powinien inicjalizować dwa publiczne atrybuty obiektu klasy Pet: name i age. Za pomocą właściwości kontroluj dostęp i ustawianie atrybutów: name - minimum trzyliterowy ciąg tekstowy, age – dodatnia liczba całkowita. Utwórz metody odpowiedzialne za wyświetlanie instancji tej klasy (__str__() i __repr__()).</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>class Pet:
     def __init__(self, name, age):
         self.name = name
@@ -278,10 +307,41 @@ def fibonacci_generator(n):
     def __repr__(self):
         return f"Pet({self.name!r}, {self.age!r})"</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>10. Klasa Vector2D</h3>
-<p class="polecenie">Polecenie: Napisz prostą klasę reprezentującą wektor dwuwymiarowy (Vector2D), zgodną z przykładową sesją interaktywną (obsługa print, repr, abs, negacji, dodawania, mnożenia przez skalar z obu stron, bool, porównań ==/!=, konwersji na listę).</p>
+<div class="q-block">
+<span class="q-text">10. Napisz prostą klasę reprezentującą wektor dwuwymiarowy (Vector2D). Klasa powinna zawierać takie metody, aby możliwe była praca z instancjami tej klasy jak w przykładowej sesji powłoki interaktywnej:</span>
+<pre>&gt;&gt;&gt; v = Vector2D(3,4)
+&gt;&gt;&gt; print(v)
+(3.0, 4.0)
+&gt;&gt;&gt; repr(v)
+'Vector2D(3.0, 4.0)'
+&gt;&gt;&gt; abs(v)
+5.0
+&gt;&gt;&gt; -v
+Vector2D(-3.0, -4.0)
+&gt;&gt;&gt; +v
+Vector2D(3.0, 4.0)
+&gt;&gt;&gt; v + Vector2D(1.5, 6.5)
+Vector2D(4.5, 9.5)
+&gt;&gt;&gt; v * 2
+Vector2D(6.0, 8.0)
+&gt;&gt;&gt; 2 * v
+Vector2D(6.0, 8.0)
+&gt;&gt;&gt; bool(v)
+True
+&gt;&gt;&gt; bool(Vector2D(0,0))
+False
+&gt;&gt;&gt; v == Vector2D(3, 3)
+False
+&gt;&gt;&gt; v != Vector2D(3, 3)
+True
+&gt;&gt;&gt; list(v)
+[3.0, 4.0]</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>class Vector2D:
     def __init__(self, x, y):
         self.x = float(x)
@@ -322,14 +382,16 @@ def fibonacci_generator(n):
 
     def __iter__(self):
         return iter((self.x, self.y))</pre>
-<div class="odp">
 Każda linia sesji interaktywnej odpowiada jednej metodzie specjalnej: <code>print(v)</code> → <code>__str__</code>, <code>repr(v)</code> → <code>__repr__</code>, <code>abs(v)</code> → <code>__abs__</code>, <code>-v</code> → <code>__neg__</code>, <code>+v</code> → <code>__pos__</code>, <code>v+w</code> → <code>__add__</code>, <code>v*2</code> i <code>2*v</code> → <code>__mul__</code>/<code>__rmul__</code>, <code>bool(v)</code> → <code>__bool__</code>, <code>==</code>/<code>!=</code> → <code>__eq__</code>/<code>__ne__</code>, <code>list(v)</code> → <code>__iter__</code>.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>11. Klient UDP</h3>
-<p class="polecenie">Polecenie: Napisz instancję klienta UDP łączącego się z adresem "http://example.com" na porcie 5551.</p>
+<div class="q-block">
+<span class="q-text">11. Napisz instancję klienta UDP łączącego się z adresem "http://example.com" na porcie 5551.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)   # gniazdo UDP (SOCK_DGRAM)
@@ -343,10 +405,14 @@ print(odpowiedz.decode())
 
 sock.close()</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>12. Połączenie HTTP z parametrami (timeout, Accept, POST)</h3>
-<p class="polecenie">Polecenie: Napisz metodę, która utworzy połączenie z domeną "http://example.com". W parametrach połączenia ustaw: a) czas oczekiwania 10 sekund, b) zwracaną treść w formacie "application/xhtml+xml", c) metodę wysyłania danych na POST.</p>
+<div class="q-block">
+<span class="q-text">12. Napisz metodę, która utworzy połączenie z domeną "http://example.com". W parametrach połączenia ustaw: a. czas oczekiwania na połączenie 10 sekund, b. zwracaną treść w formacie "application/xhtml+xml", c. metodę wysyłania danych na POST.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>import http.client
 
 def utworz_polaczenie():
@@ -356,10 +422,14 @@ def utworz_polaczenie():
     odpowiedz = polaczenie.getresponse()
     return odpowiedz</pre>
 </div>
+</details>
+</div>
 
-<div class="pytanie">
-<h3>13. Serwer wielowątkowy</h3>
-<p class="polecenie">Polecenie: Napisz rozwiązanie, które tworzy instancję serwera oczekującego na połączenia w nieokreślonym czasie oraz kiedy nawiąże połączenie stworzy dla niego nowy wątek.</p>
+<div class="q-block">
+<span class="q-text">13. Napisz rozwiązanie, które tworzy instancję serwera oczekującego na połączenia w nieokreślonym czasie oraz kiedy nawiąże połączenie stworzy dla niego nowy wątek.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>import socket
 import threading
 
@@ -378,14 +448,38 @@ while True:
     watek = threading.Thread(target=obsluz_klienta, args=(polaczenie, adres))
     watek.start()                          # nowy watek dla kazdego polaczenia</pre>
 </div>
+</details>
+</div>
 </div>
 
 <div class="zagadnienie" id="jdbc">
 <h2>4. Bazy danych i Java (JDBC)</h2>
 
-<div class="pytanie">
-<h3>14. JDBC — wstawienie elementów listy do tabeli</h3>
-<p class="polecenie">Polecenie: Tabela pracownicy(idprac INTEGER PK AUTOINCREMENT, imie_i_nazwisko TEXT NOT NULL). W miejscach (1)... i (2)... wstaw brakujący kod, który posłuży do wstawienia elementów listy "ludzie" do relacji pracownicy (baza działa w trybie AUTOCOMMIT).</p>
+<div class="q-block">
+<span class="q-text">14. Tablica w relacyjnej bazie danych została stworzona następującym poleceniem:</span>
+<pre>CREATE TABLE "pracownicy" (
+"idprac" INTEGER NOT NULL UNIQUE,
+"imie_i_nazwisko" TEXT NOT NULL,
+PRIMARY KEY("idprac" AUTOINCREMENT)
+);</pre>
+<div class="q-text" style="font-weight: normal;">Następnie zainicjowano listę ludzie i nawiązano połączenie z bazą danych co przedstawia poniższy kod:</div>
+<pre>ArrayList&lt;String&gt; ludzie=new ArrayList&lt;&gt;();
+ludzie.add("Jan Kowalski");
+ludzie.add("Maria Konopnicka");
+ludzie.add("Zbigniew Nowak");
+try {
+Connection connection=DriverManager.getConnection("jdbc:sqlite:"+dbname);
+System.out.println("Połączenie nawiązane");
+PreparedStatement statement=
+connection.prepareStatement("(1)...");
+(2)...
+} catch (SQLException e) {
+e.printStackTrace();
+}</pre>
+<div class="q-text" style="font-weight: normal;">W miejscach oznaczonych (1)... i (2)... wstaw brakujący kod, który posłuży do wstawienia elementów listy do relacji pracownicy. Wskazówka: można założyć, że baza danych działa w trybie AUTOCOMMIT.</div>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 <pre>ArrayList&lt;String&gt; ludzie = new ArrayList&lt;&gt;();
 ludzie.add("Jan Kowalski");
 ludzie.add("Maria Konopnicka");
@@ -407,34 +501,68 @@ try {
 } catch (SQLException e) {
     e.printStackTrace();
 }</pre>
-<div class="odp">
 Ponieważ <code>idprac</code> jest kolumną <code>AUTOINCREMENT</code>, nie podajemy jej wartości w zapytaniu <code>INSERT</code> — baza wygeneruje ją automatycznie. Dzięki trybowi AUTOCOMMIT każde wywołanie <code>executeUpdate()</code> jest od razu trwale zapisywane, bez potrzeby jawnego wywołania <code>commit()</code>.
 </div>
+</details>
 </div>
 </div>
+
 
 <div class="zagadnienie" id="wspolbiezne">
 <h2>5. Programowanie współbieżne (semafory, monitory)</h2>
 
-<div class="pytanie">
-<h3>15. Analiza programu współbieżnego w zależności od wartości m</h3>
-<p class="polecenie">Polecenie: Program współbieżny wykonywany przez 4 procesy (semafor s←1, b←0, integer m←?): p1: wait(s); p2: m←m-1; p3: if(m=0); p4: signal(b); [else p5: signal(s)]; p6: wait(b); p7: signal(b); p8: exit. Opisać scenariusz wykonania w zależności od wartości początkowej m.</p>
-<p>Semafor <code>s</code> serializuje dostęp do sekcji krytycznej (dekrementacja m); semafor <code>b</code> pełni rolę "bramki" bariery — otwieranej dopiero gdy m osiągnie dokładnie 0, a następnie kaskadowo przekazywanej dalej przez <code>signal(b)</code> w p7.</p>
-<div class="odp">
-<strong>m = 4</strong> (równe liczbie procesów): wszystkie 4 procesy poprawnie zsynchronizują się na barierze. Kolejne procesy dekrementują m: 4→3→2→1→0. Czwarty proces, który sprowadzi m do 0, wywoła <code>signal(b)</code> zamiast <code>signal(s)</code> — otwierając bramę. Ponieważ nie ma już piątego procesu czekającego na <code>s</code>, brak procesów zablokowanych — wszystkie przechodzą przez <code>wait(b)</code> (kaskada sygnałów z p7) i kończą działanie poprawnie.<br><br>
-<strong>1 ≤ m ≤ 3</strong> (mniejsze niż liczba procesów): dokładnie m procesów zdąży zmniejszyć m i przejść dalej (przez barierę, do zakończenia), ale proces, który sprowadził m do 0, NIE wywołuje już <code>signal(s)</code> — pozostałe (4−m) procesy pozostaną zablokowane na zawsze w <code>wait(s)</code> (częściowe zakleszczenie/głodzenie).<br><br>
-<strong>m &gt; 4 lub m ≤ 0</strong> (m nigdy nie osiągnie dokładnie zera podczas wykonania — bo tylko 4 procesy dekrementują, a startowa wartość jest zbyt wysoka albo od razu "przeskakuje" poniżej zera): żaden proces nie wywoła <code>signal(b)</code>, więc wszystkie 4 procesy zablokują się na zawsze w <code>wait(b)</code> — <strong>pełne zakleszczenie (deadlock)</strong> wszystkich procesów.
+<div class="q-block">
+    <div class="q-text">
+        15. Program współbieżny zapisany w pseudokodzie jest wykonywany przez 4 procesy. Opisać scenariusz wykonywania się tego programu w zależności od wartości początkowej zmiennej m. Zarówno semafory jak i zmienna m są współdzielone przez wszystkie procesy.
+    </div>
+
+    <pre>
+Program współbieżny
+semafor  s←1, b←0
+integer m ←?
+p1:  wait(s)
+p2:  m ←m-1
+p3:  if (m=0)
+p4:      signal(b)
+p5:  else  signal(s)
+p6:  wait(b)
+p7:  signal(b)
+p8:  exit</pre>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Semafor <code>s</code> serializuje dostęp do sekcji krytycznej (dekrementacja m); semafor <code>b</code> pełni rolę "bramki" bariery — otwieranej dopiero gdy m osiągnie dokładnie 0, a następnie kaskadowo przekazywanej dalej przez <code>signal(b)</code> w p7.<br><br>
+<b>m = 4</b> (równe liczbie procesów): wszystkie 4 procesy poprawnie zsynchronizują się na barierze. Kolejne procesy dekrementują m: 4→3→2→1→0. Czwarty proces, który sprowadzi m do 0, wywoła <code>signal(b)</code> zamiast <code>signal(s)</code> — otwierając bramę. Ponieważ nie ma już piątego procesu czekającego na <code>s</code>, brak procesów zablokowanych — wszystkie przechodzą przez <code>wait(b)</code> (kaskada sygnałów z p7) i kończą działanie poprawnie.<br><br>
+<b>1 ≤ m ≤ 3</b> (mniejsze niż liczba procesów): dokładnie m procesów zdąży zmniejszyć m i przejść dalej (przez barierę, do zakończenia), ale proces, który sprowadził m do 0, NIE wywołuje już <code>signal(s)</code> — pozostałe (4−m) procesy pozostaną zablokowane na zawsze w <code>wait(s)</code> (częściowe zakleszczenie/głodzenie).<br><br>
+<b>m &gt; 4 lub m ≤ 0</b> (m nigdy nie osiągnie dokładnie zera podczas wykonania — bo tylko 4 procesy dekrementują, a startowa wartość jest zbyt wysoka albo od razu "przeskakuje" poniżej zera): żaden proces nie wywoła <code>signal(b)</code>, więc wszystkie 4 procesy zablokują się na zawsze w <code>wait(b)</code> — <b>pełne zakleszczenie (deadlock)</b> wszystkich procesów.
+</div>
+</details>
 </div>
 </div>
 
-<div class="pytanie">
-<h3>16. Synchronizacja semaforami — druk wartości p i q w kolejności rosnącej</h3>
-<p class="polecenie">Polecenie: Program generuje x=2i+1 (proces p, i=0..4) oraz y=2j+2 (proces q, j=0..4). Wykorzystując semafory, zapisać zmodyfikowaną wersję programu, w której proces r zawsze wypisze wszystkie wartości generowane przez p i q w kolejności rosnącej (modyfikacja: wyłącznie dodanie instrukcji synchronizacyjnych).</p>
-<p>Wartości p (nieparzyste: 1,3,5,7,9) i q (parzyste: 2,4,6,8,10) dla tego samego indeksu spełniają \(x_i &lt; y_i &lt; x_{i+1}\), więc poprawna kolejność rosnąca to ścisłe naprzemienne odczytywanie par: \(x_0,y_0,x_1,y_1,\ldots,x_4,y_4\). Wymaga to synchronizacji łańcuchowej p→r→q→r→p.</p>
+<div class="q-block">
+    <div class="q-text">
+        16. Dany jest następujący program współbieżny zapisany w pseudokodzie. Wykorzystując narzędzia synchronizacyjne typu semafor zapisać zmodyfikowaną wersję programu, w którym proces r zawsze wypisze wszystkie wartości generowane przez procesy p i q w kolejności rosnącej. Uwaga: modyfikacja programu może polegać jedynie na użyciu instrukcji synchronizacyjnych opartych na semaforach.
+    </div>
+
+    <pre>
+Program współbieżny
+integer    x ← 0,  y ← 0
+p1: i ← 0              q1: j ← 0                  r1: k←0
+p2: while (i &lt;5)       q2: while (j &lt; 5)          r2: while (k&lt;10)
+p3:   x ← 2*i+1        q3:   y ← 2*j +2           r3:    drukuj (x)
+p4:   i ← i+1          q4:   j ← j+1              r4:    drukuj (y)
+p5: exit               q5: exit                   r5:    k ← k+1</pre>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Wartości p (nieparzyste: 1,3,5,7,9) i q (parzyste: 2,4,6,8,10) dla tego samego indeksu spełniają \(x_i &lt; y_i &lt; x_{i+1}\), więc poprawna kolejność rosnąca to ścisłe naprzemienne odczytywanie par: \(x_0,y_0,x_1,y_1,\ldots,x_4,y_4\). Wymaga to synchronizacji łańcuchowej p→r→q→r→p.<br><br>
 <pre>semafor semX ← 0, xPrinted ← 0, semY ← 0, yPrinted ← 0
 
 p1: i ← 0
-p2: while (i < 5)
+p2: while (i &lt; 5)
 p3:    x ← 2*i+1
 p3a:   signal(semX)
 p3b:   wait(yPrinted)
@@ -442,7 +570,7 @@ p4:    i ← i+1
 p5: exit
 
 q1: j ← 0
-q2: while (j < 5)
+q2: while (j &lt; 5)
 q2a:   wait(xPrinted)
 q3:    y ← 2*j+2
 q3a:   signal(semY)
@@ -450,7 +578,7 @@ q4:    j ← j+1
 q5: exit
 
 r1: k ← 0
-r2: while (k < 5)
+r2: while (k &lt; 5)
 r2a:   wait(semX)
 r3:    drukuj(x)
 r3a:   signal(xPrinted)
@@ -462,19 +590,38 @@ r6: exit</pre>
 <div class="uwaga">
 Uwaga: skoro każdy przebieg pętli r drukuje jedną parę (x,y), a łącznie mamy 5 par (10 wartości), pętla r powinna wykonać się 5 razy (<code>k&lt;5</code>) — w oryginalnym poleceniu podano warunek <code>k&lt;10</code>, co przy dwóch wydrukach na iterację dawałoby niespójność z liczbą dostępnych wartości; przyjęto <code>k&lt;5</code> jako spójne z resztą specyfikacji zadania.
 </div>
-<div class="odp">
 Każda iteracja: p generuje x i sygnalizuje (<code>semX</code>) → r budzi się, drukuje x, sygnalizuje q (<code>xPrinted</code>) → q generuje y i sygnalizuje (<code>semY</code>) → r drukuje y, sygnalizuje p (<code>yPrinted</code>), pozwalając mu wygenerować kolejne x. Ścisłe następstwo gwarantuje druk w kolejności rosnącej.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>17. Synchronizacja semaforami — pipeline p→q→r</h3>
-<p class="polecenie">Polecenie: Proces p zwiększa x (x←x+1) 10 razy, proces q podnosi x do kwadratu (x←x*x) 10 razy, proces r drukuje x 10 razy. Wykorzystując semafory zapisać wersję programu, w której r zawsze wypisze wartości generowane przez p PO ich modyfikacji przez q.</p>
-<p>Wymagany jest ścisły potok (pipeline) trzyetapowy: p inkrementuje → q podnosi do kwadratu → r drukuje → z powrotem do p, w kółko 10 razy.</p>
+<div class="q-block">
+    <div class="q-text">
+        17. Dany jest następujący program współbieżny zapisany w pseudokodzie. Wykorzystując narzędzia synchronizacyjne typu semafor zapisać zmodyfikowaną wersję programu , w którym proces r zawsze wypisze wszystkie wartości generowane przez proces p po ich modyfikacji przez proces q.<br>
+        Uwaga: modyfikacja programu może polegać jedynie na użyciu instrukcji synchroniacyjnych opartych na semaforach.
+    </div>
+
+    <pre>
+Program współbieżny
+integer     x ←  0
+p1: j ← 0              q1: i ←  0              r1:  k←  0
+p2: while (j &lt;10)      q2: while (k &lt; 10)      r1: while (k&lt;10)
+p3:   x ← x +1         q3:   x ← x*x           r3:   drukuj (x)
+p4:   j ← j+1          q4:   i ← i+1           r4:   k ← k+1
+p5: exit               q5: exit                r5: exit</pre>
+    
+    <div>
+        uwaga: instrukcje podporządkowane i złożone wyznaczają wcięcia.
+    </div>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+Wymagany jest ścisły potok (pipeline) trzyetapowy: p inkrementuje → q podnosi do kwadratu → r drukuje → z powrotem do p, w kółko 10 razy.<br><br>
 <pre>semafor sPQ ← 0, sQR ← 0, sRP ← 1
 
 p1: j ← 0
-p2: while (j < 10)
+p2: while (j &lt; 10)
 p2a:   wait(sRP)
 p3:    x ← x+1
 p3a:   signal(sPQ)
@@ -482,7 +629,7 @@ p4:    j ← j+1
 p5: exit
 
 q1: i ← 0
-q2: while (i < 10)
+q2: while (i &lt; 10)
 q2a:   wait(sPQ)
 q3:    x ← x*x
 q3a:   signal(sQR)
@@ -490,21 +637,49 @@ q4:    i ← i+1
 q5: exit
 
 r1: k ← 0
-r2: while (k < 10)
+r2: while (k &lt; 10)
 r2a:   wait(sQR)
 r3:    drukuj(x)
 r3a:   signal(sRP)
 r4:    k ← k+1
 r5: exit</pre>
-<div class="odp">
 Semafor <code>sRP</code> (start=1) pozwala p rozpocząć pierwszą iterację; po inkrementacji p sygnalizuje <code>sPQ</code>, budząc q; po podniesieniu do kwadratu q sygnalizuje <code>sQR</code>, budząc r; po wydrukowaniu r sygnalizuje <code>sRP</code>, zezwalając p na kolejną iterację — ścisły cykl round-robin gwarantuje, że r zawsze drukuje wartość już zmodyfikowaną przez q.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>18. Monitor — problem wąskiego mostu (na bazie czytelnicy-pisarze)</h3>
-<p class="polecenie">Polecenie: Program współbieżny symuluje przejazd samochodów przez wąski most (samochody z obu stron, na moście nie mogą się mijać). Zmodyfikuj monitor z problemu czytelnicy i pisarze, aby mógł być wykorzystany do synchronizacji procesów symulujących przejazd samochodów przez wąski most.</p>
-<p><strong>Kluczowa różnica</strong> względem oryginalnego problemu: relacja jest <em>symetryczna</em> — samochody jadące w tym samym kierunku mogą być na moście jednocześnie (jak czytelnicy), ale samochody z przeciwnych kierunków wzajemnie się wykluczają (jak pisarz wobec czytelników) w OBIE strony jednocześnie — stąd zamiast asymetrycznej pary liczników (cz, p) używamy dwóch symetrycznych liczników.</p>
+<div class="q-block">
+    <div class="q-text">
+        18. Program współbieżny symuluje przejazd samochodów przez wąski most. Poszczególne procesy reprezentują samochody, które mogą wjeżdżać na most z obu końców, ale na moście nie mogą się mijać. Zakłada się, że zawsze może pojawić się samochód wjeżdżający na most z dowolnej strony. Zmodyfikuj monitor z problemu czytelnicy i pisarze aby mógł być wykorzystany do synchronizacji procesów symulujących przejazd samochodów przez wąski most.
+    </div>
+
+    <pre>
+Monitor czytelnicy i pisarze
+Monitor CP
+    ineger cz ← 0, p ←0
+    condition  można_pisać, można_czytać
+    operation poczatek_czytania
+            if ( p  ≠ 0  lub not empty(można_pisać)  )
+waitc(można_czytać)
+            cz ← cz +1
+            signalc(można_czytać)
+    operation koniec_czytania
+            cz ← cz -1
+            signalc (można_pisać)
+    operation poczatek_pisania
+            if (p ≠ 0  lub cz  ≠ 0 )  waitc(można_pisać)
+            p ← p+1
+            signalc(można_czytać)
+    operation koniec_pisania
+            p ← p-1
+            if (not empty( można_czytać) )  signalc
+(można_czytać)
+            else signalc (można pisać)</pre>
+
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Kluczowa różnica</b> względem oryginalnego problemu: relacja jest <i>symetryczna</i> — samochody jadące w tym samym kierunku mogą być na moście jednocześnie (jak czytelnicy), ale samochody z przeciwnych kierunków wzajemnie się wykluczają (jak pisarz wobec czytelników) w OBIE strony jednocześnie — stąd zamiast asymetrycznej pary liczników (cz, p) używamy dwóch symetrycznych liczników.<br><br>
 <pre>Monitor Most
 integer w_polnoc ← 0, w_poludnie ← 0
 condition mozna_polnoc, mozna_poludnie
@@ -530,61 +705,67 @@ operation zjazd_poludnie
     w_poludnie ← w_poludnie - 1
     if (w_poludnie = 0 and not empty(mozna_polnoc))
         signalc(mozna_polnoc)</pre>
-<div class="odp">
 Brama dla przeciwnego kierunku otwiera się dopiero, gdy licznik danego kierunku spadnie do zera (ostatni samochód zjeżdżający z mostu w danym kierunku odblokowuje wjazd z przeciwnej strony) — w oryginalnym problemie czytelnicy-pisarze taka pełna symetria nie występowała.
 </div>
-</div>
+</details>
 </div>
 
 <div class="zagadnienie" id="web">
 <h2>6. Technologie webowe (Java EE, REST, architektura)</h2>
 
-<div class="pytanie">
-<h3>19. Serwlet — definicja i cykl życia</h3>
-<p class="polecenie">Polecenie: Proszę zdefiniować serwlet i przedstawić jego cykl życia w technologii Java Enterprise Edition.</p>
-<div class="odp">
+<div class="q-block">
+<span class="q-text">19. Proszę zdefiniować serwlet i przedstawić jego cykl życia w technologii Java Enterprise Edition.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
 Serwlet to komponent programowy napisany w Javie, działający po stronie serwera aplikacji (kontenera serwletów, np. Apache Tomcat), rozszerzający funkcjonalność serwera poprzez obsługę żądań i generowanie odpowiedzi (najczęściej HTTP) — podstawowy budulec aplikacji webowych w Java EE (Jakarta EE).<br><br>
-<strong>Cykl życia (kontrolowany przez kontener serwletów):</strong><br>
-1. <strong>Ładowanie i inicjalizacja klasy</strong> — kontener ładuje klasę i tworzy jej instancję (zwykle jedną, współdzieloną).<br>
-2. <strong>init()</strong> — wywoływana raz, przy pierwszym żądaniu (lub starcie aplikacji) — inicjalizuje zasoby.<br>
-3. <strong>service()</strong> (odpowiednio <code>doGet()</code>, <code>doPost()</code> itd.) — wywoływana dla każdego żądania klienta, w osobnym wątku — przetwarza żądanie i generuje odpowiedź.<br>
-4. <strong>destroy()</strong> — wywoływana raz, przy usuwaniu serwletu z pamięci — zwalnia zasoby.
+<b>Cykl życia (kontrolowany przez kontener serwletów):</b><br>
+1. <b>Ładowanie i inicjalizacja klasy</b> — kontener ładuje klasę i tworzy jej instancję (zwykle jedną, współdzieloną).<br>
+2. <b>init()</b> — wywoływana raz, przy pierwszym żądaniu (lub starcie aplikacji) — inicjalizuje zasoby.<br>
+3. <b>service()</b> (odpowiednio <code>doGet()</code>, <code>doPost()</code> itd.) — wywoływana dla każdego żądania klienta, w osobnym wątku — przetwarza żądanie i generuje odpowiedź.<br>
+4. <b>destroy()</b> — wywoływana raz, przy usuwaniu serwletu z pamięci — zwalnia zasoby.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>20. REST API — styl architektoniczny i metody HTTP a CRUD</h3>
-<p class="polecenie">Polecenie: Proszę przedstawić styl architektoniczny oprogramowania REST API z uwzględnieniem znaczenia metod protokołu HTTP w operacjach CRUD.</p>
-<div class="odp">
-REST to styl architektoniczny dla systemów rozproszonych, oparty na zasadach: <strong>bezstanowość</strong> (każde żądanie zawiera wszystkie potrzebne informacje, serwer nie przechowuje stanu sesji), <strong>zasoby</strong> identyfikowane unikalnym URI, <strong>jednolity interfejs</strong> (standardowy zestaw operacji), <strong>reprezentacje</strong> w standardowych formatach (JSON, XML), warstwowość i cachowalność.<br><br>
+<div class="q-block">
+<span class="q-text">20. Proszę przedstawić styl architektoniczny oprogramowania REST API z uwzględnieniem znaczenia metod protokołu HTTP w operacjach CRUD.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+REST to styl architektoniczny dla systemów rozproszonych, oparty na zasadach: <b>bezstanowość</b> (każde żądanie zawiera wszystkie potrzebne informacje, serwer nie przechowuje stanu sesji), <b>zasoby</b> identyfikowane unikalnym URI, <b>jednolity interfejs</b> (standardowy zestaw operacji), <b>reprezentacje</b> w standardowych formatach (JSON, XML), warstwowość i cachowalność.<br><br>
 Mapowanie metod HTTP na operacje CRUD:<br>
-— <strong>POST</strong> → Create (utworzenie nowego zasobu)<br>
-— <strong>GET</strong> → Read (odczyt zasobu lub listy zasobów)<br>
-— <strong>PUT</strong> / <strong>PATCH</strong> → Update (pełna / częściowa aktualizacja)<br>
-— <strong>DELETE</strong> → Delete (usunięcie zasobu)
+— <b>POST</b> → Create (utworzenie nowego zasobu)<br>
+— <b>GET</b> → Read (odczyt zasobu lub listy zasobów)<br>
+— <b>PUT</b> / <b>PATCH</b> → Update (pełna / częściowa aktualizacja)<br>
+— <b>DELETE</b> → Delete (usunięcie zasobu)
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>21. Architektura trójwarstwowa</h3>
-<p class="polecenie">Polecenie: Proszę omówić architekturę trójwarstwową stosowaną w aplikacjach internetowych.</p>
-<div class="odp">
-1. <strong>Warstwa prezentacji</strong> — interfejs użytkownika, wyświetlanie danych i interakcja (przeglądarka z HTML/CSS/JS).<br>
-2. <strong>Warstwa logiki biznesowej</strong> — przetwarza żądania, implementuje reguły biznesowe, pośredniczy między prezentacją a danymi (serwer aplikacji, serwlety, kontrolery MVC).<br>
-3. <strong>Warstwa danych</strong> — przechowywanie i zarządzanie danymi (RDBMS).<br><br>
+<div class="q-block">
+<span class="q-text">21. Proszę omówić architekturę trójwarstwową stosowaną w aplikacjach internetowych.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+1. <b>Warstwa prezentacji</b> — interfejs użytkownika, wyświetlanie danych i interakcja (przeglądarka z HTML/CSS/JS).<br>
+2. <b>Warstwa logiki biznesowej</b> — przetwarza żądania, implementuje reguły biznesowe, pośredniczy między prezentacją a danymi (serwer aplikacji, serwlety, kontrolery MVC).<br>
+3. <b>Warstwa danych</b> — przechowywanie i zarządzanie danymi (RDBMS).<br><br>
 Zalety: separacja odpowiedzialności (łatwiejsza konserwacja i testowanie), niezależne skalowanie warstw, możliwość wymiany technologii jednej warstwy bez wpływu na pozostałe, lepsze bezpieczeństwo (warstwa danych nieosiągalna bezpośrednio z warstwy prezentacji).
 </div>
+</details>
 </div>
 </div>
 
 <div class="zagadnienie" id="bezpieczenstwo">
 <h2>7. Bezpieczeństwo i administracja serwerami</h2>
 
-<div class="pytanie">
-<h3>22. Certyfikat SSL — kroki uzyskania i rola klucza prywatnego</h3>
-<p class="polecenie">Polecenie: Proszę opisać kroki niezbędne do uzyskania certyfikatu SSL dla naszej nazwy domenowej (akceptowany przez popularne przeglądarki). Proszę omówić jaka jest rola klucza prywatnego i certyfikatu w rozpoczęciu szyfrowanej komunikacji między klientem i serwerem.</p>
-<div class="odp">
-<strong>Kroki uzyskania certyfikatu:</strong><br>
+<div class="q-block">
+<span class="q-text">22. Proszę opisać kroki niezbędne do uzyskania certyfikatu SSL dla naszej nazwy domenowej. Certyfikat ma być akceptowany przez popularne przeglądarki. Proszę następnie omówić jaka jest rola klucza prywatnego i certyfikatu w rozpoczęciu szyfrowanej komunikacji między klientem i serwerem.</span>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>Kroki uzyskania certyfikatu:</b><br>
 1. Wygenerowanie pary kluczy (prywatny + publiczny), np. <code>openssl genrsa</code>.<br>
 2. Utworzenie żądania CSR (Certificate Signing Request) zawierającego klucz publiczny i dane domeny: <code>openssl req -new -key private.key -out request.csr</code>.<br>
 3. Przesłanie CSR do zaufanego urzędu certyfikacji (CA), np. Let's Encrypt, DigiCert, Sectigo.<br>
@@ -592,15 +773,58 @@ Zalety: separacja odpowiedzialności (łatwiejsza konserwacja i testowanie), nie
 5. Wystawienie podpisanego certyfikatu przez CA (klucz publiczny CA jest zaufany — wbudowany w magazyny zaufania przeglądarek/systemów).<br>
 6. Instalacja certyfikatu (wraz z łańcuchem pośrednim) na serwerze WWW.<br>
 7. Konfiguracja serwera do obsługi HTTPS (port 443).<br><br>
-<strong>Rola klucza prywatnego i certyfikatu (uproszczony przebieg TLS handshake):</strong> serwer przesyła klientowi swój certyfikat (klucz publiczny + podpis CA); klient weryfikuje podpis względem zaufanych CA; klient generuje tajny materiał sesyjny i szyfruje go kluczem publicznym serwera (z certyfikatu); tylko serwer, posiadając odpowiadający <strong>klucz prywatny</strong>, może to odszyfrować i odzyskać tajny klucz sesyjny — od tego momentu obie strony używają wspólnego klucza do szyfrowania symetrycznego dalszej komunikacji. Klucz prywatny gwarantuje więc, że tylko prawowity właściciel certyfikatu mógł ustanowić bezpieczną sesję, potwierdzając tożsamość serwera.
+<b>Rola klucza prywatnego i certyfikatu (uproszczony przebieg TLS handshake):</b> serwer przesyła klientowi swój certyfikat (klucz publiczny + podpis CA); klient weryfikuje podpis względem zaufanych CA; klient generuje tajny materiał sesyjny i szyfruje go kluczem publicznym serwera (z certyfikatu); tylko serwer, posiadając odpowiadający <b>klucz prywatny</b>, może to odszyfrować i odzyskać tajny klucz sesyjny — od tego momentu obie strony używają wspólnego klucza do szyfrowania symetrycznego dalszej komunikacji. Klucz prywatny gwarantuje więc, że tylko prawowity właściciel certyfikatu mógł ustanowić bezpieczną sesję, potwierdzając tożsamość serwera.
 </div>
+</details>
 </div>
 
-<div class="pytanie">
-<h3>23. Poprawa konfiguracji VirtualHost Apache2</h3>
-<p class="polecenie">Polecenie: Poprawić błędy w konfiguracji dwóch wirtualnych hostów Apache2 (012-adminer.conf i 073-proxy.conf) i dopasować je do podanych wymagań (domeny, adresy nasłuchu, katalogi, dostęp).</p>
-
-<p><strong>012-adminer.conf — błędy w oryginale:</strong> nieprawidłowa składnia <code>&lt;VirtualHost *.*&gt;</code>; brak <code>ServerName</code>; zły adres w <code>ServerAdmin</code>; <code>AllowOverride Yes</code> w <code>/php</code> (wymaganie: .htaccess wyłączone); brak <code>DirectoryIndex ja.php</code>; alias wskazuje na <code>/adminer</code> zamiast <code>/url345</code>; ścieżka <code>&lt;Directory /usr/adminer&gt;</code> zamiast <code>/usr/share/adminer</code>; znacznik <code>&lt;/VirtualHost&gt;</code> zamknięty zbyt wcześnie (przed ErrorLog/CustomLog); błędny, niesparowany znacznik <code>&lt;/Directory&gt;</code> na końcu pliku.</p>
+<div class="q-block">
+<span class="q-text">23. Przejmujemy administrację serwera apache2. Znajdujemy poniższą konfigurację wirtualnego hostu w pliku 012-adminer.conf i włączamy ją poleceniem a2ensite. Niestety próba ponownego uruchomienia, działającego do tej pory apache2 kończy się niepowodzeniem. Proszę poprawić błędy w pliku i dodatkowo dopasować plik do następujących wymagań:</span>
+<ul>
+<li>obsługiwać nazwę domenową kfa.pp</li>
+<li>nasłuchiwać wyłącznie na IP 52.142.116.119 na porcie 80 i IP 194.181.237.38 na porcie 80</li>
+<li>przeglądarka łącząca się z adresem kfa.pp ma mieć udostępniony katalog „/php”</li>
+<li>w katalogu /php domyślnie wyszukiwanym przez apache2 plikiem powinien być ja.php</li>
+<li>w katalogu /php nie powinien działać plik .htaccess</li>
+<li>przeglądarka łącząca się z adresem kfa.pp/url345 powinna mieć udostępniony /usr/share/adminer</li>
+</ul>
+<pre>&lt;VirtualHost *.*&gt;
+ServerAdmin kfa.pl
+# DocumentRoot /var/php
+&lt;Directory /php&gt;
+Options -Indexes +FollowSymLinks
+AllowOverride Yes
+Require all granted
+&lt;/Directory&gt;
+alias /adminer /usr/share/adminer
+&lt;Directory /usr/adminer&gt;
+Options Indexes FollowSymLinks
+AllowOverride None
+DirectoryIndex index.php
+Require all granted
+&lt;/VirtualHost&gt;
+ErrorLog ${APACHE_LOG_DIR}/error.log
+CustomLog ${APACHE_LOG_DIR}/access.log combined
+&lt;/Directory&gt;</pre>
+<div class="q-text" style="font-weight: normal;">Przejmujemy administrację serwera apache2, który między innymi ma pełnić funkcję Proxy. Znajdujemy poniższą konfigurację w pliku 073-proxy.conf i włączamy ją poleceniem a2ensite. Niestety próba ponownego uruchomienia, działającego do tej pory apache2 kończy się niepowodzeniem. Proszę poprawić błędy w pliku i dodatkowo dopasować plik do następujących wymagań. Proxy ma:</div>
+<ul>
+<li>obsługiwać nazwę domenową proxy.kfa.pp</li>
+<li>nasłuchiwać wyłącznie na IP 52.142.116.119 i porcie 8081</li>
+<li>być dostępny wyłącznie dla klientów z podsieci 149.156.76.0/24</li>
+</ul>
+<pre>&lt;VirtualHost *:9090&gt;
+ServerAdmin kfa.pp
+ProxyRequests on
+&lt;Proxy *&gt;
+Require from all
+&lt;/Proxy&gt;
+ErrorLog ${APACHE_LOG_DIR}/proxy-e.log
+CustomLog ${APACHE_LOG_DIR}/proxy-access.log combined
+&lt;/Directory&gt;</pre>
+<details>
+<summary>Rozwiązanie</summary>
+<div class="exp">
+<b>012-adminer.conf — błędy w oryginale:</b> nieprawidłowa składnia <code>&lt;VirtualHost *.*&gt;</code>; brak <code>ServerName</code>; zły adres w <code>ServerAdmin</code>; <code>AllowOverride Yes</code> w <code>/php</code> (wymaganie: .htaccess wyłączone); brak <code>DirectoryIndex ja.php</code>; alias wskazuje na <code>/adminer</code> zamiast <code>/url345</code>; ścieżka <code>&lt;Directory /usr/adminer&gt;</code> zamiast <code>/usr/share/adminer</code>; znacznik <code>&lt;/VirtualHost&gt;</code> zamknięty zbyt wcześnie (przed ErrorLog/CustomLog); błędny, niesparowany znacznik <code>&lt;/Directory&gt;</code> na końcu pliku.<br><br>
 <pre>&lt;VirtualHost 52.142.116.119:80 194.181.237.38:80&gt;
     ServerName kfa.pp
     ServerAdmin webmaster@kfa.pp
@@ -625,7 +849,7 @@ Zalety: separacja odpowiedzialności (łatwiejsza konserwacja i testowanie), nie
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 &lt;/VirtualHost&gt;</pre>
 
-<p><strong>073-proxy.conf — błędy w oryginale:</strong> port 9090 zamiast wymaganego 8081, nasłuch na wszystkich adresach (<code>*</code>) zamiast konkretnego IP; brak <code>ServerName</code>; nieprawidłowa/nieaktualna składnia <code>Require from all</code> (składnia Apache 2.2, nie 2.4) — a wymaganie mówi o ograniczeniu do jednej podsieci, nie o pełnym dostępie; znacznik zamykający <code>&lt;/Directory&gt;</code> na końcu bez odpowiadającego otwarcia (powinien to być <code>&lt;/VirtualHost&gt;</code>) — główna przyczyna błędu przy restarcie.</p>
+<b>073-proxy.conf — błędy w oryginale:</b> port 9090 zamiast wymaganego 8081, nasłuch na wszystkich adresach (<code>*</code>) zamiast konkretnego IP; brak <code>ServerName</code>; nieprawidłowa/nieaktualna składnia <code>Require from all</code> (składnia Apache 2.2, nie 2.4) — a wymaganie mówi o ograniczeniu do jednej podsieci, nie o pełnym dostępie; znacznik zamykający <code>&lt;/Directory&gt;</code> na końcu bez odpowiadającego otwarcia (powinien to być <code>&lt;/VirtualHost&gt;</code>) — główna przyczyna błędu przy restarcie.<br><br>
 <pre>&lt;VirtualHost 52.142.116.119:8081&gt;
     ServerName proxy.kfa.pp
     ServerAdmin webmaster@kfa.pp
@@ -636,9 +860,9 @@ Zalety: separacja odpowiedzialności (łatwiejsza konserwacja i testowanie), nie
     ErrorLog ${APACHE_LOG_DIR}/proxy-e.log
     CustomLog ${APACHE_LOG_DIR}/proxy-access.log combined
 &lt;/VirtualHost&gt;</pre>
-<div class="odp">
 Najważniejszy błąd składniowy powodujący niepowodzenie restartu w obu plikach to niesparowany znacznik <code>&lt;/Directory&gt;</code> zamiast <code>&lt;/VirtualHost&gt;</code> na końcu bloku — Apache odrzuca całą konfigurację jako niepoprawną strukturalnie (XML-podobną) niezależnie od pozostałych, "kosmetycznych" niezgodności z wymaganiami.
 </div>
+</details>
 </div>
 </div>
 
