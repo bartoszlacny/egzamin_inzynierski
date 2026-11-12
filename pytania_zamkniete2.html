@@ -316,6 +316,30 @@ MathJax = {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Zakleszczenie (ang. deadlock) - wzajemna blokada – procesów ubiegających się o współdzielone zasoby najlepiej ilustruje jeden z klasycznych problemów synchronizacji procesów i jest to:</span>
+            <ul class="options">
+                <li class="opt">problem producenta i konsumenta</li>
+                <li class="opt">żaden z wymienionych</li>
+                <li class="opt">problem czytelników i pisarzy</li>
+                <li class="opt correct">problem pięciu ucztujących filozofów</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość klasycznych problemów synchronizacji i tego, które zagrożenie każdy z nich ilustruje:<br><br>
+                    1. <b>Problem pięciu ucztujących filozofów:</b> pięciu filozofów siedzi przy okrągłym stole, a między sąsiadami leży po jednym widelcu (łącznie 5). Aby jeść, filozof potrzebuje <b>dwóch</b> widelców. Jeśli każdy jednocześnie podniesie widelec z lewej strony, to każdy będzie czekał na widelec z prawej, który trzyma sąsiad. Nikt nie zwolni zasobu, więc powstaje <b>zakleszczenie</b>.<br>
+                    2. <b>Warunki Coffmana:</b> sytuacja spełnia wszystkie cztery warunki zakleszczenia: wzajemne wykluczanie, przetrzymywanie i oczekiwanie, brak wywłaszczania zasobów oraz cykliczne oczekiwanie.<br>
+                    3. <b>Sposoby zapobiegania:</b> np. dopuszczenie najwyżej czterech filozofów jednocześnie do stołu, narzucenie kolejności podnoszenia widelców (np. jeden filozof zaczyna od prawego) lub podnoszenie obu widelców atomowo.<br>
+                    4. <b>Dodatkowo:</b> w tym problemie może wystąpić także <b>głodzenie</b> (starvation), ale to zakleszczenie jest jego najbardziej znaną ilustracją.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) problem producenta i konsumenta dotyczy synchronizacji dostępu do ograniczonego bufora (producent czeka, gdy bufor pełny, konsument, gdy pusty). Służy głównie do ilustracji semaforów i poprawnej koordynacji. Zakleszczenie może wystąpić tylko przy błędnej kolejności operacji na semaforach, ale nie jest głównym przesłaniem tego problemu.<br>
+                    - <b>Opcja b)</b> \(\implies\) fałsz, bo jeden z wymienionych problemów (filozofowie) dokładnie ilustruje zakleszczenie.<br>
+                    - <b>Opcja c)</b> \(\implies\) problem czytelników i pisarzy dotyczy zarządzania dostępem do wspólnych danych, gdzie wielu czytelników może czytać jednocześnie, a pisarz potrzebuje wyłączności. Jego typowym zagrożeniem jest <b>głodzenie</b> (pisarzy lub czytelników), a nie zakleszczenie.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="pp">
@@ -526,6 +550,34 @@ int main(void) {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Dana jest struktura <code>vector</code> oraz zmienne <code>w</code> i <code>w1</code>. Aby podstawić do składowych struktury wartości <code>x = 2.5</code> i <code>y = 3.5</code> należy wykonać instrukcje:</span>
+<pre><code>struct vector {
+    double x;
+    double y;
+};
+
+struct vector w, *w1 = &amp;w;</code></pre>
+            <ul class="options">
+                <li class="opt"><code>*w1-&gt;x=2.5; *w1-&gt;y=3.5;</code></li>
+                <li class="opt">Żadna z pozostałych odpowiedzi nie jest poprawna.</li>
+                <li class="opt correct"><code>w1-&gt;x=2.5; w1-&gt;y=3.5;</code></li>
+                <li class="opt"><code>w1.x=2.5; w1.y=3.5;</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zauważenie, że <code>w1</code> jest <b>wskaźnikiem</b> do struktury (<code>w1 = &amp;w</code>), więc do jej składowych należy się odwoływać operatorem strzałki <code>-&gt;</code>:<br><br>
+                    1. <b>Operator strzałki:</b> <code>w1-&gt;x</code> jest skrótem zapisu <code>(*w1).x</code>, czyli wyłuskuje strukturę i wybiera jej składową.<br>
+                    2. <b>Skutek:</b> <code>w1-&gt;x = 2.5;</code> i <code>w1-&gt;y = 3.5;</code> zapisują wartości w zmiennej <code>w</code>, na którą wskazuje <code>w1</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) operator <code>-&gt;</code> ma wyższy priorytet niż <code>*</code>, więc <code>*w1-&gt;x</code> to <code>*(w1-&gt;x)</code>. Składowa <code>x</code> jest typu <code>double</code>, a nie wskaźnikiem, więc jej wyłuskanie jest błędem kompilacji.<br>
+                    - <b>Opcja b)</b> \(\implies\) fałsz, bo opcja c) jest poprawna.<br>
+                    - <b>Opcja d)</b> \(\implies\) operator kropki stosuje się do zmiennej strukturalnej (<code>w.x</code>), a nie do wskaźnika. Zapis <code>w1.x</code> jest błędem kompilacji. Poprawne byłoby <code>w1-&gt;x</code> lub <code>(*w1).x</code>.
+                </div>
+            </details>
+        </div>
     </div>
     
     <div class="section" id="tpi">
@@ -574,6 +626,52 @@ int main(void) {
                     - <b>Opcja a)</b> \(\implies\) stos wykorzystuje <b>automat ze stosem (PDA)</b>, a nie DFA. DFA nie ma żadnej pamięci poza bieżącym stanem.<br>
                     - <b>Opcja b)</b> \(\implies\) języki bezkontekstowe są szerszą klasą niż regularne. Np. język \(\{a^n b^n : n \ge 0\}\) jest bezkontekstowy, ale nie jest regularny, więc żaden DFA go nie rozpoznaje (wymaga zliczania nieograniczonej liczby symboli).<br>
                     - <b>Opcja d)</b> \(\implies\) możliwość przejścia do kilku stanów to cecha <b>automatu niedeterministycznego (NFA)</b>. W DFA następny stan jest zawsze jednoznaczny.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Która z podanych złożoności asymptotycznych opisuje czas działania wyszukiwania binarnego w posortowanej tablicy w najgorszym przypadku?</span>
+            <ul class="options">
+                <li class="opt">\(\Theta(n)\)</li>
+                <li class="opt correct">\(\Theta(\lg n)\)</li>
+                <li class="opt">\(\Theta(n^2)\)</li>
+                <li class="opt">\(\Theta(n \lg n)\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zrozumienie, że <b>wyszukiwanie binarne</b> w każdym kroku <b>zmniejsza o połowę</b> rozmiar przeszukiwanego fragmentu tablicy:<br><br>
+                    1. <b>Przebieg algorytmu:</b> porównujemy szukaną wartość ze środkowym elementem. Jeśli jest mniejsza, szukamy dalej w lewej połowie, jeśli większa, w prawej. Pozostaje więc \(n, \frac{n}{2}, \frac{n}{4}, \ldots, 1\) elementów.<br>
+                    2. <b>Liczba kroków:</b> po \(k\) krokach zostaje \(\frac{n}{2^k}\) elementów. Przeszukiwanie kończy się, gdy \(\frac{n}{2^k} \le 1\), czyli \(k \ge \lg n\). W najgorszym przypadku (element nieobecny lub znaleziony w ostatnim kroku) wykonujemy około \(\lfloor \lg n \rfloor + 1\) porównań.<br>
+                    3. <b>Wynik:</b> \(\Theta(\lg n)\). Warunkiem jest posortowanie tablicy i dostęp swobodny do elementów w czasie \(O(1)\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) \(\Theta(n)\) to złożoność wyszukiwania liniowego, które w najgorszym przypadku sprawdza wszystkie elementy. Wyszukiwanie binarne wykorzystuje posortowanie i pomija połowę danych w każdym kroku.<br>
+                    - <b>Opcja c)</b> \(\implies\) \(\Theta(n^2)\) to typowa złożoność prostych algorytmów sortowania (np. bąbelkowego, przez wstawianie w najgorszym przypadku), a nie wyszukiwania.<br>
+                    - <b>Opcja d)</b> \(\implies\) \(\Theta(n \lg n)\) to złożoność efektywnych algorytmów sortowania (np. sortowania przez scalanie). Wyszukiwanie binarne wykonuje tylko \(\lg n\) kroków, bez dodatkowego czynnika \(n\).
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie dotyczące problemu stopu (<i>halting problem</i>) jest prawdziwe?</span>
+            <ul class="options">
+                <li class="opt">Problem stopu dotyczy wyłącznie programów działających w nieskończonych pętlach.</li>
+                <li class="opt">Problem stopu jest rozstrzygalny dla wszystkich programów niezawierających instrukcji rekurencyjnych.</li>
+                <li class="opt">Problem stopu można rozwiązać dla wszystkich programów przez zastosowanie wystarczająco wydajnego komputera.</li>
+                <li class="opt correct">Nie istnieje algorytm, który dla każdego programu i jego danych wejściowych poprawnie rozstrzyga, czy program zakończy działanie.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest twierdzenie Turinga o nierozstrzygalności problemu stopu:<br><br>
+                    1. <b>Definicja problemu:</b> dla danego programu \(P\) i danych \(x\) trzeba rozstrzygnąć, czy \(P(x)\) kiedykolwiek się zatrzyma.<br>
+                    2. <b>Twierdzenie Turinga (1936):</b> nie istnieje algorytm, który robi to poprawnie dla każdej pary \((P, x)\). Problem jest nierozstrzygalny (<i>undecidable</i>), a jedynie półrozstrzygalny: można stwierdzić, że program się zatrzymał (uruchamiając go), ale nie zawsze można stwierdzić, że się nie zatrzyma.<br>
+                    3. <b>Szkic dowodu (przez sprzeczność):</b> załóżmy, że istnieje procedura \(H(P, x)\) rozstrzygająca zatrzymanie. Budujemy program \(D(P)\): jeśli \(H(P, P)\) zwraca "zatrzyma się", to \(D\) wchodzi w nieskończoną pętlę, w przeciwnym razie kończy działanie. Dla \(D(D)\) otrzymujemy sprzeczność w obu przypadkach, więc \(H\) nie istnieje.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) problem dotyczy dowolnych programów, nie tylko tych z nieskończonymi pętlami. Chodzi właśnie o to, że nie umiemy ogólnie rozstrzygnąć, czy program się zatrzyma, czy zapętli.<br>
+                    - <b>Opcja b)</b> \(\implies\) brak rekurencji niczego nie zmienia: pętle <code>while</code> dają taką samą siłę obliczeniową (np. <code>while (n != 1) { n = (n % 2 == 0) ? n / 2 : 3 * n + 1; }</code>, czyli problem Collatza, którego zatrzymania dla każdego \(n\) nie potrafimy dowieść). Rozstrzygalność dotyczy ograniczonych klas programów (np. bez pętli o nieznanej liczbie iteracji), a nie programów bez rekurencji.<br>
+                    - <b>Opcja c)</b> \(\implies\) nierozstrzygalność jest własnością teoretyczną, niezależną od mocy obliczeniowej. Szybszy komputer nie rozwiąże problemu, bo żaden algorytm go nie rozwiązuje, a dowód Turinga obowiązuje dla dowolnego modelu obliczeń równoważnego maszynie Turinga.
                 </div>
             </details>
         </div>
@@ -722,6 +820,29 @@ int main(void) {
                     - <b>Opcja a)</b> \(\implies\) "rodzic" to określenie relacji między węzłami (każdy węzeł wewnętrzny jest rodzicem swoich dzieci), a nie nazwa rodzaju węzła. Nie opisuje roli węzłów wewnętrznych w B+-drzewie.<br>
                     - <b>Opcja b)</b> \(\implies\) liście to węzły <b>zewnętrzne</b>, czyli przeciwieństwo węzłów wewnętrznych. To w nich przechowywane są dane.<br>
                     - <b>Opcja d)</b> \(\implies\) korzeń jest tylko jednym, szczególnym węzłem drzewa (choć zwykle też zawiera klucze). Nie jest to nazwa ogółu węzłów wewnętrznych.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Sumę \(n\) kolejnych liczb naturalnych: \(1 + 2 + 3 + \ldots + (n-1) + n\) możemy obliczyć korzystając ze wzoru: \(\dfrac{n(n+1)}{2}\). Najbardziej precyzyjnie określimy złożoność takiego algorytmu jako:</span>
+            <ul class="options">
+                <li class="opt">\(O(\log n)\)</li>
+                <li class="opt">\(O(n)\)</li>
+                <li class="opt">\(O(n^2)\)</li>
+                <li class="opt correct">\(O(1)\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest policzenie, ile operacji wykonuje algorytm w zależności od \(n\):<br><br>
+                    1. <b>Liczba operacji:</b> wzór \(\dfrac{n(n+1)}{2}\) wymaga dokładnie jednego dodawania (\(n+1\)), jednego mnożenia (\(n \cdot (n+1)\)) i jednego dzielenia przez 2. To <b>stała liczba operacji</b>, niezależna od wartości \(n\).<br>
+                    2. <b>Wniosek:</b> czas działania nie rośnie wraz z \(n\), więc złożoność wynosi \(O(1)\) (złożoność stała), przy standardowym założeniu, że działania arytmetyczne na liczbach mają koszt stały.<br>
+                    3. <b>Porównanie z metodą naiwną:</b> sumowanie w pętli \(1 + 2 + \ldots + n\) wymaga \(n\) dodawań, czyli ma złożoność \(O(n)\). Wzór pozwala uniknąć pętli.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) \(O(\log n)\) typowo występuje w algorytmach, które w każdym kroku zmniejszają problem np. o połowę (wyszukiwanie binarne). Tu nie ma żadnych powtarzanych kroków.<br>
+                    - <b>Opcja b)</b> \(\implies\) \(O(n)\) to złożoność sumowania w pętli. Wzór nie iteruje po kolejnych liczbach, więc liczba operacji nie zależy od \(n\).<br>
+                    - <b>Opcja c)</b> \(\implies\) \(O(n^2)\) mogłoby sugerować obecność \(n^2\) w liczniku wzoru, ale to dotyczy <b>wartości</b> wyniku, a nie liczby operacji potrzebnych do jego obliczenia. Mnożenie dwóch liczb to jedna operacja.
                 </div>
             </details>
         </div>
@@ -1198,6 +1319,36 @@ int main(void) {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Następujący program w języku C (<code>c:\program.c</code>) po wywołaniu (uruchomieniu) w postaci: <code>c:\program.exe 1 2 3</code> w środowisku Windows wyświetli na ekranie:</span>
+<pre><code>int main(int argc, char *argw[]) {
+    int i;
+    for (i = 0; i &lt; argc; i++)
+        printf("%s,", argw[i]);
+    return 0;
+}</code></pre>
+            <ul class="options">
+                <li class="opt"><code>1,2,3,</code></li>
+                <li class="opt"><code>1,2,3,4,</code></li>
+                <li class="opt"><code>c:\program.exe,1,2,</code></li>
+                <li class="opt correct"><code>c:\program.exe,1,2,3,</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość argumentów funkcji <code>main</code> w C:<br><br>
+                    1. <b>Znaczenie argumentów:</b> <code>argc</code> to liczba argumentów wywołania, a <code>argw</code> (zwykle <code>argv</code>) to tablica napisów z tymi argumentami.<br>
+                    2. <b>Argument zerowy:</b> <code>argw[0]</code> zawiera nazwę (ścieżkę) uruchamianego programu, czyli <code>c:\program.exe</code>. Kolejne elementy to argumenty podane w wierszu poleceń.<br>
+                    3. <b>Dla wywołania <code>c:\program.exe 1 2 3</code>:</b> \(argc = 4\), a <code>argw[0] = "c:\program.exe"</code>, <code>argw[1] = "1"</code>, <code>argw[2] = "2"</code>, <code>argw[3] = "3"</code>.<br>
+                    4. <b>Pętla:</b> <code>i</code> przebiega od \(0\) do \(argc - 1 = 3\), więc wypisuje wszystkie cztery napisy, każdy z przecinkiem: <code>c:\program.exe,1,2,3,</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) pomija <code>argw[0]</code>. Pętla zaczyna się od <code>i = 0</code>, więc nazwa programu również jest wypisana.<br>
+                    - <b>Opcja b)</b> \(\implies\) w wywołaniu nie ma argumentu <code>4</code>. Poza tym nazwa programu też zostałaby wypisana.<br>
+                    - <b>Opcja c)</b> \(\implies\) pomija ostatni argument <code>3</code>. Warunek <code>i &lt; argc</code> przy \(argc = 4\) obejmuje indeksy \(0, 1, 2, 3\).
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="op_uz">
@@ -1266,6 +1417,29 @@ int main(void) {
                     - <b>Opcja b)</b> \(\implies\) kwerenda dołączająca <b>dodaje rekordy</b> do innej tabeli. Bez kryteriów skopiowałaby wszystkie zamówienia, więc nie ogranicza wyniku do zamówień powyżej 1000 zł.<br>
                     - <b>Opcja c)</b> \(\implies\) kwerenda usuwająca <b>trwale usuwa</b> rekordy z tabeli, a w zadaniu pozostałe rekordy mają zostać zachowane.<br>
                     - <b>Opcja d)</b> \(\implies\) kwerenda aktualizująca <b>zmienia wartości</b> w polach. Nie służy do filtrowania, a zmieniałaby dane, czego użytkownik nie chce.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Jaka jest główna zaleta stosowania stylów nagłówków w wielostronicowym dokumencie tekstowym?</span>
+            <ul class="options">
+                <li class="opt">Uniemożliwiają zmianę formatowania dokumentu po jego zapisaniu.</li>
+                <li class="opt">Powodują automatyczne numerowanie wszystkich tabel i ilustracji niezależnie od ich podpisów.</li>
+                <li class="opt">Zastępują konieczność stosowania podziałów stron i sekcji w każdym dokumencie.</li>
+                <li class="opt correct">Umożliwiają zachowanie spójnego formatowania nagłówków oraz automatyczne wygenerowanie i aktualizowanie spisu treści.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zrozumienie, że <b>style nagłówków</b> (np. Nagłówek 1, Nagłówek 2) nadają tekstowi nie tylko wygląd, ale też <b>znaczenie strukturalne</b>:<br><br>
+                    1. <b>Spójne formatowanie:</b> wszystkie nagłówki tego samego poziomu mają identyczną czcionkę, rozmiar, odstępy i kolor. Zmiana definicji stylu aktualizuje od razu wszystkie nagłówki w dokumencie, bez ręcznego poprawiania każdego z nich.<br>
+                    2. <b>Spis treści:</b> edytor rozpoznaje nagłówki po stylach, więc może automatycznie wygenerować spis treści wraz z numerami stron i zaktualizować go po zmianach w dokumencie.<br>
+                    3. <b>Dodatkowe korzyści:</b> nawigacja po dokumencie (okienko nawigacji), numerowanie wielopoziomowe rozdziałów, poprawna struktura po eksporcie do PDF.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) style nie blokują edycji. Formatowanie można zmieniać w dowolnym momencie, a zmiana stylu jest wręcz wygodnym sposobem modyfikacji całego dokumentu.<br>
+                    - <b>Opcja b)</b> \(\implies\) numerowanie tabel i ilustracji zapewniają <b>podpisy (etykiety)</b> wstawiane osobnym mechanizmem, a nie style nagłówków.<br>
+                    - <b>Opcja c)</b> \(\implies\) style nagłówków nie zastępują podziałów stron i sekcji. Podziały sekcji służą np. do zmiany orientacji strony czy nagłówków i stopek, a style tylko do formatowania i struktury tekstu.
                 </div>
             </details>
         </div>
@@ -1437,6 +1611,53 @@ int main(void) {
                     - <b>Opcja a)</b> \(\implies\) wynik \(0\) otrzymalibyśmy dla całki bez wartości bezwzględnej: \(\int_0^{2\pi} \sin x\,dx = 0\), bo pola nad i pod osią się znoszą. Wartość bezwzględna sprawia, że oba pola się dodają.<br>
                     - <b>Opcja b)</b> \(\implies\) \(2\) to pole tylko jednej półfali (np. na \([0, \pi]\)). Przedział \([0, 2\pi]\) obejmuje dwie takie półfale.<br>
                     - <b>Opcja c)</b> \(\implies\) całka oznaczona jest <b>liczbą</b>, a nie funkcją zmiennej \(x\), więc wynik \(\cos(x)\) jest niemożliwy.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Granica funkcji \(\displaystyle\lim_{x \to 1^-} \dfrac{1}{1 - x^2}\)</span>
+            <ul class="options">
+                <li class="opt">\(-\infty\)</li>
+                <li class="opt correct">\(+\infty\)</li>
+                <li class="opt">nie istnieje</li>
+                <li class="opt">\(0\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zbadanie, do czego dąży mianownik i jaki ma znak, gdy \(x\) zbliża się do \(1\) z lewej strony:<br><br>
+                    1. <b>Mianownik:</b> dla \(x \to 1\) mamy \(1 - x^2 \to 0\), a licznik jest równy \(1\). Granica jest więc nieskończona (symbol typu \(\frac{1}{0}\)), a o jej znaku decyduje znak mianownika.<br>
+                    2. <b>Znak mianownika:</b> granica lewostronna oznacza \(x < 1\), np. \(x = 0{,}9\). Wtedy \(x^2 = 0{,}81 < 1\), więc \(1 - x^2 = 0{,}19 > 0\). Dla \(x\) bardzo bliskich \(1\) z lewej strony mianownik jest dodatni i dąży do zera: \(1 - x^2 \to 0^+\).<br>
+                    3. <b>Wynik:</b> \(\dfrac{1}{0^+} = +\infty\).<br>
+                    4. <b>Rozkład na czynniki:</b> \(1 - x^2 = (1 - x)(1 + x)\). Dla \(x \to 1^-\): \((1 - x) \to 0^+\), a \((1 + x) \to 2\), więc iloczyn dąży do \(0^+\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) wynik \(-\infty\) byłby poprawny dla granicy prawostronnej \(x \to 1^+\), bo wtedy \(x^2 > 1\), więc \(1 - x^2 < 0\) i mianownik dąży do \(0^-\).<br>
+                    - <b>Opcja c)</b> \(\implies\) granica jednostronna istnieje w sensie niewłaściwym i wynosi \(+\infty\). Tylko granica dwustronna w punkcie \(x = 1\) nie istnieje, bo granice jednostronne są różne (\(+\infty\) i \(-\infty\)), ale pytanie dotyczy granicy lewostronnej.<br>
+                    - <b>Opcja d)</b> \(\implies\) wartość \(0\) otrzymalibyśmy, gdyby w mianowniku wartość rosła nieograniczenie. Tutaj mianownik dąży do zera, więc cały ułamek rośnie nieograniczenie.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Istnieje macierz \(A^{-1}\) odwrotna do macierzy kwadratowej \(A\) jeżeli:</span>
+            <ul class="options">
+                <li class="opt">\(A\) jest osobliwa</li>
+                <li class="opt correct">\(A\) jest nieosobliwa</li>
+                <li class="opt">macierz \(A\) posiada minor</li>
+                <li class="opt">\(\det A = 0\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest warunek odwracalności macierzy kwadratowej:<br><br>
+                    1. <b>Definicja:</b> macierz kwadratowa \(A\) jest nieosobliwa (<i>non-singular</i>), gdy \(\det A \ne 0\).<br>
+                    2. <b>Warunek istnienia odwrotności:</b> \(A^{-1}\) istnieje wtedy i tylko wtedy, gdy \(\det A \ne 0\), ponieważ \(A^{-1} = \dfrac{1}{\det A} \cdot A^D\), gdzie \(A^D\) to macierz dopełnień algebraicznych transponowana.<br>
+                    3. <b>Przykład:</b> dla \(A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix}\) mamy \(\det A = 1 \cdot 4 - 2 \cdot 3 = -2 \ne 0\), więc \(A^{-1}\) istnieje.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) macierz osobliwa (<i>singular</i>) ma \(\det A = 0\), więc nie ma odwrotnej. Np. \(\begin{pmatrix} 1 & 2 \\ 2 & 4 \end{pmatrix}\) ma \(\det = 4 - 4 = 0\).<br>
+                    - <b>Opcja c)</b> \(\implies\) minor można wyznaczyć dla każdej macierzy kwadratowej (także osobliwej), więc samo posiadanie minora nie gwarantuje odwracalności.<br>
+                    - <b>Opcja d)</b> \(\implies\) to warunek osobliwości: dla \(\det A = 0\) nie można wykonać dzielenia przez \(\det A\) we wzorze na \(A^{-1}\), więc odwrotna nie istnieje.
                 </div>
             </details>
         </div>
@@ -1801,6 +2022,30 @@ print(increment(3))</code></pre>
                     - <b>Opcja b)</b> \(\implies\) przydzielanie uprawnień wyłącznie według grup, bez analizy potrzeb ról, prowadzi zwykle do nadmiarowych uprawnień. PoLP wymaga dopasowania uprawnień do rzeczywistych zadań.<br>
                     - <b>Opcja c)</b> \(\implies\) odwrotność zasady: uprawnienia podwyższone z góry, a ograniczane dopiero po incydencie. PoLP zaczyna od minimum i rozszerza je tylko w razie potrzeby.<br>
                     - <b>Opcja d)</b> \(\implies\) jednakowe uprawnienia dla wszystkich zalogowanych użytkowników oznaczają, że większość z nich ma więcej praw, niż potrzebuje, co przeczy zasadzie.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W aplikacji internetowej wykorzystującej architekturę trójwarstwową, za realizację reguł biznesowych odpowiada przede wszystkim:</span>
+            <ul class="options">
+                <li class="opt">Warstwa prezentacji, która odpowiada za bezpośrednie wykonywanie wszystkich operacji na bazie danych.</li>
+                <li class="opt">Warstwa danych, która odpowiada za generowanie interfejsu użytkownika i obsługę interakcji w przeglądarce.</li>
+                <li class="opt">Warstwa prezentacji, która odpowiada za przechowywanie danych oraz zapewnienie ich trwałości.</li>
+                <li class="opt correct">Warstwa logiki aplikacji, która przetwarza żądania i realizuje operacje zgodnie z regułami biznesowymi.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość podziału odpowiedzialności w <b>architekturze trójwarstwowej</b>:<br><br>
+                    1. <b>Warstwa prezentacji:</b> interfejs użytkownika (HTML, CSS, JavaScript w przeglądarce). Wyświetla dane, zbiera dane wejściowe i przekazuje żądania do warstwy logiki.<br>
+                    2. <b>Warstwa logiki aplikacji (biznesowa):</b> przetwarza żądania, realizuje reguły biznesowe (np. obliczanie rabatów, sprawdzanie warunków zamówienia), waliduje dane i koordynuje dostęp do danych.<br>
+                    3. <b>Warstwa danych:</b> przechowuje dane i zapewnia ich trwałość (baza danych, dostęp do niej).<br>
+                    4. <b>Zaleta podziału:</b> każdą warstwę można rozwijać, testować i skalować niezależnie.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) warstwa prezentacji nie powinna bezpośrednio operować na bazie danych. Odpowiada za interfejs, a dostęp do danych odbywa się przez warstwę logiki i warstwę danych.<br>
+                    - <b>Opcja b)</b> \(\implies\) role są pomylone: generowaniem interfejsu zajmuje się warstwa prezentacji, a warstwa danych odpowiada za przechowywanie danych.<br>
+                    - <b>Opcja c)</b> \(\implies\) przechowywanie danych i ich trwałość to zadanie warstwy danych, a nie prezentacji.
                 </div>
             </details>
         </div>
@@ -2316,6 +2561,29 @@ END;</code></pre>
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Aplikacja internetowa realizuje przelew środków między dwoma rachunkami. Operacja wymaga zmniejszenia salda pierwszego rachunku i zwiększenia salda drugiego. Jak należy zorganizować te operacje, aby w razie niepowodzenia jednej z nich nie zatwierdzić częściowo wykonanego przelewu?</span>
+            <ul class="options">
+                <li class="opt">Wykonać każdą operację w osobnej transakcji i zatwierdzić pierwszą przed rozpoczęciem drugiej.</li>
+                <li class="opt">Zastosować blokadę wyłącznie podczas odczytu sald, a następnie wykonać obie aktualizacje poza transakcją.</li>
+                <li class="opt correct">Wykonać obie operacje w jednej transakcji i zatwierdzić ją dopiero po ich pomyślnym zakończeniu, a w razie błędu wycofać transakcję.</li>
+                <li class="opt">Wykonać obie operacje niezależnie i zatwierdzić każdą bezpośrednio po jej wykonaniu, aby skrócić czas blokowania rekordów.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zasada <b>atomowości (Atomicity)</b> transakcji z własności <b>ACID</b>: transakcja wykonuje się w całości albo wcale.<br><br>
+                    1. <b>Jedna transakcja:</b> obie aktualizacje (obciążenie pierwszego rachunku i uznanie drugiego) wykonuje się w ramach jednej transakcji: <code>BEGIN TRANSACTION; UPDATE ... saldo = saldo - kwota ...; UPDATE ... saldo = saldo + kwota ...; COMMIT;</code>.<br>
+                    2. <b>Zatwierdzenie:</b> <code>COMMIT</code> wykonuje się dopiero, gdy obie operacje zakończyły się sukcesem.<br>
+                    3. <b>Obsługa błędu:</b> jeśli którakolwiek operacja się nie powiedzie, wykonuje się <code>ROLLBACK</code>, który cofa wszystkie zmiany, więc w bazie nie zostaje częściowo wykonany przelew (np. pieniądze pobrane, ale niedodane).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) po zatwierdzeniu pierwszej transakcji obciążenie rachunku jest już trwałe. Jeśli druga operacja się nie powiedzie, środki znikną, a nie ma czego wycofać.<br>
+                    - <b>Opcja b)</b> \(\implies\) blokada tylko przy odczycie nie chroni zapisów, a aktualizacje poza transakcją nie mogą być wycofane razem. Brak atomowości i ryzyko niespójności.<br>
+                    - <b>Opcja d)</b> \(\implies\) zatwierdzanie każdej operacji osobno to w praktyce to samo, co opcja a): przy błędzie w drugiej operacji pierwsza pozostaje zatwierdzona. Krótszy czas blokad nie jest ważniejszy niż spójność danych.
+                </div>
+            </details>
+        </div>
     </div>
 
 
@@ -2414,6 +2682,29 @@ END;</code></pre>
                     - <b>Opcja a)</b> \(\implies\) swoistość: \(\dfrac{TN}{TN + FP}\). Określa odsetek rzeczywiście <b>zdrowych</b>, których model prawidłowo uznał za zdrowych.<br>
                     - <b>Opcja b)</b> \(\implies\) precyzja: \(\dfrac{TP}{TP + FP}\). Określa, jaka część osób uznanych przez model za chore jest faktycznie chora. Mianownik dotyczy przewidywań pozytywnych, a nie rzeczywiście chorych.<br>
                     - <b>Opcja d)</b> \(\implies\) dokładność: \(\dfrac{TP + TN}{TP + TN + FP + FN}\). Określa odsetek wszystkich poprawnych decyzji, bez rozróżnienia klas.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Jaką rolę pełni współczynnik uczenia (<i>learning rate</i>) podczas optymalizacji parametrów sieci neuronowej metodą spadku gradientowego?</span>
+            <ul class="options">
+                <li class="opt">Określa liczbę pełnych przejść algorytmu uczenia przez cały zbiór treningowy.</li>
+                <li class="opt correct">Określa wielkość kroku aktualizacji parametrów modelu w kierunku przeciwnym do gradientu funkcji straty.</li>
+                <li class="opt">Określa liczbę przykładów treningowych wykorzystywanych do obliczenia gradientu podczas jednej aktualizacji parametrów.</li>
+                <li class="opt">Określa liczbę neuronów, których wyjścia są losowo zerowane podczas każdej iteracji uczenia.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość reguły aktualizacji parametrów w spadku gradientowym:<br><br>
+                    1. <b>Reguła aktualizacji:</b> \(\theta_{t+1} = \theta_t - \eta \cdot \nabla_\theta L(\theta_t)\), gdzie \(\eta\) to współczynnik uczenia, a \(\nabla_\theta L\) to gradient funkcji straty.<br>
+                    2. <b>Rola \(\eta\):</b> gradient wskazuje kierunek najszybszego wzrostu straty, więc idziemy w kierunku przeciwnym, a \(\eta\) skaluje długość tego kroku.<br>
+                    3. <b>Skutki doboru:</b> zbyt duże \(\eta\) powoduje oscylacje lub rozbieżność (przeskakiwanie minimum), zbyt małe \(\eta\) powoduje bardzo wolną zbieżność lub utknięcie w płaskim obszarze.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to opisuje liczbę epok (<i>epochs</i>), czyli osobny hiperparametr określający, ile razy model widzi cały zbiór treningowy.<br>
+                    - <b>Opcja c)</b> \(\implies\) to opisuje rozmiar paczki (<i>batch size</i>): np. \(1\) w SGD, cały zbiór w <i>batch gradient descent</i>, wartość pośrednia w <i>mini-batch</i>.<br>
+                    - <b>Opcja d)</b> \(\implies\) to opisuje regularyzację <i>dropout</i>, gdzie losowo zeruje się wyjścia neuronów (parametrem jest prawdopodobieństwo dropoutu), co nie ma związku z długością kroku aktualizacji.
                 </div>
             </details>
         </div>
@@ -2826,6 +3117,29 @@ jobs:
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Projektowana aplikacja powinna działać z dwoma różnymi bibliotekami interfejsu graficznego. Każda biblioteka dostarcza własne, wzajemnie zgodne implementacje przycisków, okien i pól tekstowych. Programista chce tworzyć całe rodziny takich komponentów bez uzależniania kodu aplikacji od ich konkretnych klas. Który wzorzec najlepiej spełnia te wymagania?</span>
+            <ul class="options">
+                <li class="opt">Budowniczy (Builder).</li>
+                <li class="opt">Prototyp (Prototype).</li>
+                <li class="opt">Singleton.</li>
+                <li class="opt correct">Fabryka abstrakcyjna (Abstract Factory).</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest rozpoznanie sformułowania <b>"rodziny powiązanych obiektów bez wskazywania ich konkretnych klas"</b>, które jest definicją wzorca <b>Fabryka abstrakcyjna (Abstract Factory)</b>:<br><br>
+                    1. <b>Budowa wzorca:</b> definiuje się interfejs fabryki z metodami tworzącymi poszczególne produkty (np. <code>createButton()</code>, <code>createWindow()</code>, <code>createTextBox()</code>). Dla każdej biblioteki GUI powstaje osobna fabryka konkretna (np. <code>FabrykaBibliotekiA</code>, <code>FabrykaBibliotekiB</code>).<br>
+                    2. <b>Zgodność komponentów:</b> każda fabryka tworzy komponenty z jednej rodziny, więc przyciski, okna i pola tekstowe zawsze do siebie pasują i nie da się przypadkowo pomieszać elementów z różnych bibliotek.<br>
+                    3. <b>Niezależność kodu aplikacji:</b> aplikacja korzysta tylko z interfejsów fabryki i produktów. Zmiana biblioteki sprowadza się do podmiany obiektu fabryki.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) Budowniczy służy do <b>krok po kroku konstruowania jednego złożonego obiektu</b> (np. dokumentu z wieloma opcjonalnymi częściami), a nie do tworzenia rodzin powiązanych obiektów.<br>
+                    - <b>Opcja b)</b> \(\implies\) Prototyp tworzy nowe obiekty przez <b>klonowanie</b> istniejącego egzemplarza. Nie zapewnia spójnych rodzin komponentów dla różnych bibliotek.<br>
+                    - <b>Opcja c)</b> \(\implies\) Singleton gwarantuje, że istnieje <b>tylko jedna instancja</b> klasy, i nie dotyczy tworzenia rodzin obiektów.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="iiad">
@@ -2899,6 +3213,30 @@ jobs:
                     - <b>Opcja a)</b> \(\implies\) <code>DataFrame.corr()</code> oblicza korelację Pearsona, ale zwraca <b>macierz korelacji</b> (ramkę danych 2×2 z jedynkami na przekątnej), a nie pojedynczą wartość.<br>
                     - <b>Opcja b)</b> \(\implies\) to <b>różnica średnich</b> obu kolumn. Nie mierzy zależności między zmiennymi.<br>
                     - <b>Opcja d)</b> \(\implies\) <code>cov()</code> zwraca <b>kowariancję</b>, czyli nieznormalizowaną miarę współzmienności, zależną od skali danych. Współczynnik Pearsona to kowariancja podzielona przez iloczyn odchyleń standardowych, więc jest to inna wielkość.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Ramka danych Pandas <code>df</code> zawiera kolumnę numeryczną <code>age</code> z brakującymi wartościami reprezentowanymi przez <code>NaN</code>. Która instrukcja zastąpi te braki medianą wartości z tej kolumny, pozostawiając pozostałe wartości bez zmian?</span>
+            <ul class="options">
+                <li class="opt"><code>df['age'] = df['age'].dropna()</code></li>
+                <li class="opt"><code>df['age'] = df['age'].replace(0, df['age'].median())</code></li>
+                <li class="opt"><code>df['age'] = df['age'].fillna(df['age'].mean())</code></li>
+                <li class="opt correct"><code>df['age'] = df['age'].fillna(df['age'].median())</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość metody <code>fillna()</code>, która zastępuje wartości <code>NaN</code> podaną wartością, oraz różnicy między medianą (<code>median()</code>) a średnią (<code>mean()</code>):<br><br>
+                    1. <b>Mediana kolumny:</b> <code>df['age'].median()</code> zwraca medianę, przy czym <code>NaN</code> są domyślnie pomijane (<code>skipna=True</code>).<br>
+                    2. <b>Uzupełnienie braków:</b> <code>df['age'].fillna(wartość)</code> podmienia tylko elementy <code>NaN</code>, a pozostałe wartości zostają bez zmian.<br>
+                    3. <b>Przypisanie:</b> wynik zapisujemy z powrotem do <code>df['age']</code>.<br>
+                    4. <b>Przykład:</b> dla <code>[20, NaN, 30, 50]</code> mediana wynosi \(30\), więc wynik to <code>[20, 30, 30, 50]</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) <code>dropna()</code> usuwa wiersze z <code>NaN</code>, zamiast je uzupełniać. Po przypisaniu do kolumny indeksy się nie zgadzają i w miejscu usuniętych elementów znów pojawią się <code>NaN</code>, więc braki nie zostają zastąpione medianą.<br>
+                    - <b>Opcja b)</b> \(\implies\) <code>replace(0, ...)</code> podmienia wartości równe <code>0</code>, a nie <code>NaN</code>. Braki zostają nietknięte, a prawdziwe zera (np. wiek \(0\)) zostałyby błędnie zmienione.<br>
+                    - <b>Opcja c)</b> \(\implies\) <code>fillna</code> jest poprawne, ale używa średniej (<code>mean()</code>), a nie mediany. Dla \([20, NaN, 30, 50]\) średnia to \(\dfrac{20 + 30 + 50}{3} \approx 33{,}3\), czyli inny wynik niż mediana \(30\).
                 </div>
             </details>
         </div>
