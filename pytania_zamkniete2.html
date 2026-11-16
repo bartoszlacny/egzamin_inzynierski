@@ -239,6 +239,54 @@ MathJax = {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Rozwiązaniem nierówności \(|x + 1| \le 1\) jest przedział:</span>
+            <ul class="options">
+                <li class="opt">\((-\infty, -1) \cup (0, +\infty)\)</li>
+                <li class="opt correct">\([-2, 0]\)</li>
+                <li class="opt">\((-\infty, 0)\)</li>
+                <li class="opt">\((-\infty, -1] \cup (0, +\infty)\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest równoważność dla wartości bezwzględnej: \(|A| \le c \Leftrightarrow -c \le A \le c\) dla \(c \ge 0\) (odległość \(A\) od zera nie przekracza \(c\)):<br><br>
+                    1. <b>Rozpisanie:</b> \(|x + 1| \le 1 \Leftrightarrow -1 \le x + 1 \le 1\).<br>
+                    2. <b>Odjęcie \(1\) od każdej strony:</b> \(-1 - 1 \le x \le 1 - 1\), czyli \(-2 \le x \le 0\).<br>
+                    3. <b>Wynik:</b> \(x \in [-2, 0]\). Interpretacja geometryczna: punkty oddalone od \(-1\) o nie więcej niż \(1\).<br>
+                    4. <b>Sprawdzenie:</b> dla \(x = -2\): \(|-1| = 1 \le 1\), dla \(x = 0\): \(|1| = 1 \le 1\), dla \(x = -1\): \(0 \le 1\), a dla \(x = 1\): \(2 \le 1\) jest fałszem.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to zbiór rozwiązań nierówności \(|x + 1| > 1\) (z wyłączeniem punktu \(-1\) w pierwszym przedziale i bez końców). Np. \(x = -1\) nie należy do tego zbioru, a spełnia \(|x+1| = 0 \le 1\).<br>
+                    - <b>Opcja c)</b> \(\implies\) zawiera np. \(x = -3\): \(|-2| = 2 > 1\), więc nierówność nie jest spełniona. Przedział jest nieograniczony z lewej strony, a rozwiązanie jest ograniczone.<br>
+                    - <b>Opcja d)</b> \(\implies\) to zbiór bliski rozwiązaniu \(|x+1| > 1\) (tam: \((-\infty,-2) \cup (0,+\infty)\)). Zawiera np. \(x = 1\), dla którego \(|2| = 2 > 1\), więc nierówność \(\le 1\) nie zachodzi.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Równanie \(|x| - 2 = -|x| + 2\)</span>
+            <ul class="options">
+                <li class="opt correct">ma dokładnie dwa rozwiązania</li>
+                <li class="opt">ma dokładnie jedno rozwiązanie</li>
+                <li class="opt">ma dokładnie cztery rozwiązania</li>
+                <li class="opt">nie ma rozwiązań</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest potraktowanie \(|x|\) jak jednej niewiadomej i przekształcenie równania do postaci \(|x| = c\), której liczba rozwiązań zależy od znaku \(c\):<br><br>
+                    1. <b>Przekształcenie:</b> \(|x| - 2 = -|x| + 2 \Rightarrow |x| + |x| = 2 + 2 \Rightarrow 2|x| = 4 \Rightarrow |x| = 2\).<br>
+                    2. <b>Rozwiązanie równania \(|x| = 2\):</b> dla \(c > 0\) równanie \(|x| = c\) ma dwa rozwiązania \(x = c\) i \(x = -c\), czyli tu \(x = 2\) lub \(x = -2\).<br>
+                    3. <b>Sprawdzenie:</b> dla \(x = 2\): \(|2| - 2 = 0\) oraz \(-|2| + 2 = 0\). Dla \(x = -2\): \(|-2| - 2 = 0\) oraz \(-|-2| + 2 = 0\). Obie wartości spełniają równanie.<br>
+                    4. <b>Wniosek:</b> równanie ma dokładnie dwa rozwiązania.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) jedno rozwiązanie miałoby równanie \(|x| = 0\) (tylko \(x = 0\)). Tu \(|x| = 2 > 0\), więc rozwiązania są dwa, symetryczne względem zera.<br>
+                    - <b>Opcja c)</b> \(\implies\) cztery rozwiązania wymagałyby np. równania z dwoma wartościami bezwzględnymi o różnych wartościach, takiego jak \(||x| - 1| = 2 - \ldots\). Tu po przekształceniu otrzymujemy jedno równanie \(|x| = 2\), dające dwa pierwiastki.<br>
+                    - <b>Opcja d)</b> \(\implies\) brak rozwiązań wystąpiłby, gdyby \(|x| = c\) z \(c < 0\) (np. \(|x| = -2\)), bo wartość bezwzględna jest nieujemna. Tu \(c = 2 > 0\).
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="oiak">
@@ -359,6 +407,29 @@ MathJax = {
                     - <b>Opcja b)</b> \(\implies\) jest odwrotnie: elementy pamiętające (przerzutniki) są istotą układów sekwencyjnych.<br>
                     - <b>Opcja c)</b> \(\implies\) układy sekwencyjne nie ograniczają się do arytmetyki (rejestry, automaty sterujące, liczniki), a operacje arytmetyczne wykonują też układy kombinacyjne (sumatory).<br>
                     - <b>Opcja d)</b> \(\implies\) to definicja układu kombinacyjnego, a nie sekwencyjnego.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które wyrażenie jest równoważne funkcji logicznej \(F(A,B) = A + \overline{A}B\), gdzie (+) oznacza alternatywę, a iloczyn oznacza koniunkcję?</span>
+            <ul class="options">
+                <li class="opt correct">\(A + B\)</li>
+                <li class="opt">\(A\overline{B}\)</li>
+                <li class="opt">\(AB\)</li>
+                <li class="opt">\(\overline{A} + B\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest prawo pochłaniania w postaci \(A + \overline{A}B = A + B\), które można wyprowadzić z rozdzielności alternatywy względem koniunkcji lub sprawdzić tablicą prawdy:<br><br>
+                    1. <b>Rozdzielność:</b> \(A + \overline{A}B = (A + \overline{A})(A + B)\).<br>
+                    2. <b>Uproszczenie:</b> \(A + \overline{A} = 1\), więc \((A + \overline{A})(A + B) = 1 \cdot (A + B) = A + B\).<br>
+                    3. <b>Tablica prawdy:</b> \((A,B) = (0,0) \Rightarrow F = 0 + 1 \cdot 0 = 0\); \((0,1) \Rightarrow F = 0 + 1 \cdot 1 = 1\); \((1,0) \Rightarrow F = 1\); \((1,1) \Rightarrow F = 1\). Wynik \((0,1,1,1)\) jest identyczny jak dla \(A + B\) (funkcja OR).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) \(A\overline{B}\) dla \((0,1)\) daje \(0\), a \(F(0,1) = 1\). Dla \((1,1)\) daje \(0\), a \(F(1,1) = 1\).<br>
+                    - <b>Opcja c)</b> \(\implies\) \(AB\) (AND) dla \((1,0)\) daje \(0\), a \(F(1,0) = 1\).<br>
+                    - <b>Opcja d)</b> \(\implies\) \(\overline{A} + B\) dla \((0,0)\) daje \(1\), a \(F(0,0) = 0\). Dla \((1,0)\) daje \(0\), a \(F(1,0) = 1\).
                 </div>
             </details>
         </div>
@@ -573,6 +644,57 @@ MathJax = {
                     - <b>Opcja a)</b> \(\implies\) zawartość pliku jest przechowywana w blokach danych (rozproszonych lub zakresach), a nie w i-węźle. Nie ma też gwarancji ciągłego położenia: pliki mogą być pofragmentowane. (Wyjątkiem są bardzo małe pliki przy włączonej funkcji <i>inline data</i>.)<br>
                     - <b>Opcja b)</b> \(\implies\) i-węzeł nie przechowuje nazwy pliku ani ścieżki. Nazwy znajdują się we wpisach katalogów, a ścieżka wynika z hierarchii katalogów.<br>
                     - <b>Opcja d)</b> \(\implies\) kolejnością wykonywania procesów zajmuje się planista procesora (<i>scheduler</i>), a nie system plików. I-węzeł nie ma związku z szeregowaniem procesów.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W skryptach powłok systemowych BASH oraz PowerShell można stosować komentarze w następujący sposób:</span>
+            <ul class="options">
+                <li class="opt"><code>$To jest komentarz.</code></li>
+                <li class="opt"><code>/*To jest komentarz.*/</code></li>
+                <li class="opt"><code>!To jest komentarz.</code></li>
+                <li class="opt correct"><code>#To jest komentarz.</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość składni komentarzy jednoliniowych: zarówno w Bashu, jak i w PowerShellu komentarz rozpoczyna się znakiem <code>#</code> i obejmuje resztę linii:<br><br>
+                    1. <b>Bash:</b> tekst od znaku <code>#</code> do końca linii jest ignorowany przez interpreter. Pierwsza linia skryptu <code>#!/bin/bash</code> (<i>shebang</i>) jest szczególnym przypadkiem, bo dla powłoki to także komentarz, a system używa jej do wskazania interpretera.<br>
+                    2. <b>PowerShell:</b> również <code>#</code> oznacza komentarz jednoliniowy. Komentarze wieloliniowe zapisuje się jako <code>&lt;# ... #&gt;</code>.<br>
+                    3. <b>Przykład:</b> <code>echo "Witaj"  # wypisanie powitania</code> (w Bashu), <code>Write-Output "Witaj"  # wypisanie powitania</code> (w PowerShellu).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) znak <code>$</code> służy do odwoływania się do zmiennych (<code>$zmienna</code>), a nie do komentarzy. Linia <code>$To jest komentarz.</code> zostanie potraktowana jako odwołanie do zmiennej i zgłosi błąd.<br>
+                    - <b>Opcja b)</b> \(\implies\) zapis <code>/* ... */</code> to komentarz wieloliniowy w językach z rodziny C (C, C++, Java, JavaScript), a nie w Bashu i PowerShellu.<br>
+                    - <b>Opcja c)</b> \(\implies\) wykrzyknik w Bashu wiąże się z rozwijaniem historii poleceń (<code>!!</code>, <code>!n</code>), a w PowerShellu jest zaprzeczeniem logicznym (<code>!</code> jako alias <code>-not</code>). Nie oznacza komentarza.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W jakim środowisku wykona się następujący program?</span>
+<pre><code>$a = 1, 2, 3
+$b = 1000
+$a | ForEach-Object -Process {$_*2}
+$b | ForEach-Object -Process {$_+350}</code></pre>
+            <ul class="options">
+                <li class="opt">Python</li>
+                <li class="opt">C</li>
+                <li class="opt correct">PowerShell</li>
+                <li class="opt">BASH</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest rozpoznanie cech składni PowerShella: zmienne zaczynają się od <code>$</code>, a polecenia (<i>cmdlets</i>) mają nazwy w formacie <code>Czasownik-Rzeczownik</code> i łączy się je potokiem <code>|</code>, przekazującym obiekty:<br><br>
+                    1. <b>Przypisania:</b> <code>$a = 1, 2, 3</code> tworzy tablicę trzech liczb (operator przecinka), a <code>$b = 1000</code> zmienną liczbową. Zapis ze spacjami wokół <code>=</code> jest w PowerShellu dozwolony.<br>
+                    2. <b>Potok i <code>ForEach-Object</code>:</b> <code>$a | ForEach-Object -Process {$_*2}</code> wykonuje blok dla każdego elementu, gdzie <code>$_</code> to bieżący element. Wynik: \(2, 4, 6\).<br>
+                    3. <b>Drugie polecenie:</b> <code>$b | ForEach-Object -Process {$_+350}</code> daje \(1000 + 350 = 1350\).<br>
+                    4. <b>Wniosek:</b> składnia <code>ForEach-Object</code>, <code>$_</code> i potok obiektów jest charakterystyczna dla PowerShella.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) w Pythonie zmienne nie mają prefiksu <code>$</code>, a nie istnieje <code>ForEach-Object</code>. Zapis <code>a | ...</code> oznaczałby operator bitowy OR.<br>
+                    - <b>Opcja b)</b> \(\implies\) C jest językiem kompilowanym i nie ma takiej składni (brak <code>$</code> w nazwach zmiennych, brak potoków obiektów i poleceń <code>ForEach-Object</code>).<br>
+                    - <b>Opcja d)</b> \(\implies\) w Bashu przypisanie zapisuje się bez spacji (<code>a=1</code>), a zmiennych używa się z <code>$</code> tylko przy odczycie. Polecenie <code>ForEach-Object</code> nie istnieje, a potok przekazuje tekst, a nie obiekty.
                 </div>
             </details>
         </div>
@@ -889,6 +1011,61 @@ for (k=4; k&lt;10; ++k)
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Która z poniższych instrukcji jest niepoprawna składniowo?</span>
+            <ul class="options">
+                <li class="opt"><pre><code>if(warunek1){
+    instrukcja1;
+    if(warunek2) instrukcja2;
+}</code></pre></li>
+                <li class="opt"><pre><code>if (warunek) instrukcja1;
+else instrukcja2;</code></pre></li>
+                <li class="opt"><pre><code>if(warunek1) instrukcja1;
+else if(warunek2) instrukcja2;</code></pre></li>
+                <li class="opt correct"><pre><code>if(warunek){
+    instrukcja1;
+else
+    instrukcja2;
+}</code></pre></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest składnia instrukcji warunkowej w C: <code>else</code> może wystąpić wyłącznie bezpośrednio po instrukcji (lub bloku) należącej do <code>if</code>, a blok <code>{ ... }</code> musi być zamknięty przed <code>else</code>:<br><br>
+                    1. <b>Poprawna postać:</b> <code>if (warunek) instrukcja1; else instrukcja2;</code> lub z blokami: <code>if (warunek) { ... } else { ... }</code>.<br>
+                    2. <b>Zasada:</b> <code>else</code> zawsze łączy się z najbliższym poprzedzającym <code>if</code>, który nie ma jeszcze <code>else</code>, i musi znajdować się w tym samym bloku co ten <code>if</code>.<br>
+                    3. <b>Analiza opcji 4:</b> po <code>if(warunek){</code> otwierany jest blok, w którym stoi <code>instrukcja1;</code>, a następnie <code>else</code>. Wewnątrz tego bloku nie ma żadnego <code>if</code>, z którym <code>else</code> mógłby się powiązać (<code>if</code> jest na zewnątrz bloku), więc kompilator zgłosi błąd składni (<i>'else' without a previous 'if'</i>). Poprawny zapis: <code>if(warunek){ instrukcja1; } else { instrukcja2; }</code>.<br><br>
+                    Analiza pozostałych opcji (instrukcji poprawnych):<br>
+                    - <b>Opcja a)</b> \(\implies\) poprawna: blok zawiera instrukcję oraz zagnieżdżony <code>if</code> bez <code>else</code>, co jest dozwolone.<br>
+                    - <b>Opcja b)</b> \(\implies\) poprawna: standardowa instrukcja <code>if ... else</code> z pojedynczymi instrukcjami.<br>
+                    - <b>Opcja c)</b> \(\implies\) poprawna: konstrukcja <code>else if</code> to po prostu <code>else</code> z zagnieżdżoną instrukcją <code>if</code>.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Która z poniższych deklaracji nie jest obsługiwana w języku C?</span>
+            <ul class="options">
+                <li class="opt"><code>float str = 3e2;</code></li>
+                <li class="opt correct"><code>string str;</code></li>
+                <li class="opt"><code>char str;</code></li>
+                <li class="opt"><code>char *str;</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest fakt, że w języku C nie istnieje wbudowany typ napisowy <code>string</code>: napisy reprezentuje się jako tablice znaków (<code>char[]</code>) zakończone znakiem <code>'\0'</code> lub wskaźniki na <code>char</code>:<br><br>
+                    1. <b>Typ <code>string</code>:</b> jest słowem kluczowym ani nazwą typu w C. Typ <code>std::string</code> pochodzi z biblioteki standardowej C++ (nagłówek <code>&lt;string&gt;</code>), a w C deklaracja <code>string str;</code> zgłosi błąd kompilacji (<i>unknown type name 'string'</i>), chyba że programista sam zdefiniuje taki typ (np. <code>typedef char *string;</code>).<br>
+                    2. <b>Napisy w C:</b> <code>char napis[20];</code> (tablica) lub <code>char *napis = "tekst";</code> (wskaźnik na literał napisowy).<br>
+                    3. <b>Przykład:</b> <code>char *str = "kot";</code> jest poprawne, a <code>string str = "kot";</code> nie.<br><br>
+                    Analiza pozostałych opcji (deklaracji poprawnych):<br>
+                    - <b>Opcja a)</b> \(\implies\) <code>float str = 3e2;</code> jest poprawne: <code>3e2</code> to stała zmiennoprzecinkowa \(3 \cdot 10^2 = 300\) (typu <code>double</code>, konwertowana do <code>float</code>). Nazwa <code>str</code> jest zwykłym identyfikatorem.<br>
+                    - <b>Opcja c)</b> \(\implies\) <code>char str;</code> deklaruje pojedynczy znak, co jest poprawne.<br>
+                    - <b>Opcja d)</b> \(\implies\) <code>char *str;</code> deklaruje wskaźnik na <code>char</code>, typowy sposób przechowywania napisu w C.
+                </div>
+            </details>
+        </div>
     </div>
     
     <div class="section" id="tpi">
@@ -1007,6 +1184,29 @@ for (k=4; k&lt;10; ++k)
                     - <b>Opcja a)</b> \(\implies\) dla \(p = 1\) i \(0\) wynik jest w pełni przewidywalny, więc entropia jest minimalna: \(H = 0\).<br>
                     - <b>Opcja b)</b> \(\implies\) prawdopodobieństwa muszą się sumować do \(1\), więc suma \(1 + 1 = 2\) jest niemożliwa. Taki rozkład nie istnieje.<br>
                     - <b>Opcja c)</b> \(\implies\) entropia zależy od rozkładu prawdopodobieństwa: dla \(p = 0\) lub \(p = 1\) wynosi \(0\), a rośnie do maksimum dla \(p = \dfrac{1}{2}\), po czym maleje. Nie rośnie więc monotonicznie niezależnie od rozkładu.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W gramatyce bezkontekstowej, w której zbiór reguł produkcji składa się z reguły \(S \to aSb \mid \epsilon\) (gdzie \(\epsilon\) to słowo puste), możliwe jest wyprowadzenie słowa:</span>
+            <ul class="options">
+                <li class="opt"><code>baab</code></li>
+                <li class="opt"><code>aabbb</code></li>
+                <li class="opt"><code>ababa</code></li>
+                <li class="opt correct"><code>aaabbb</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest rozpoznanie języka generowanego przez gramatykę: każde użycie reguły \(S \to aSb\) dodaje jedno \(a\) po lewej i jedno \(b\) po prawej stronie, a reguła \(S \to \epsilon\) kończy wyprowadzenie, więc język to \(L = \{a^n b^n : n \ge 0\}\):<br><br>
+                    1. <b>Struktura słów:</b> słowo składa się z \(n\) liter \(a\), po których następuje dokładnie \(n\) liter \(b\).<br>
+                    2. <b>Wyprowadzenie słowa <code>aaabbb</code>:</b> \(S \Rightarrow aSb \Rightarrow aaSbb \Rightarrow aaaSbbb \Rightarrow aaabbb\) (trzy razy \(S \to aSb\), a na końcu \(S \to \epsilon\)).<br>
+                    3. <b>Wniosek:</b> \(aaabbb = a^3 b^3 \in L\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) <code>baab</code> zaczyna się od \(b\), a w każdym słowie z \(L\) wszystkie litery \(a\) poprzedzają litery \(b\).<br>
+                    - <b>Opcja b)</b> \(\implies\) <code>aabbb</code> ma \(2\) litery \(a\) i \(3\) litery \(b\), a liczby muszą być równe.<br>
+                    - <b>Opcja c)</b> \(\implies\) <code>ababa</code> miesza litery \(a\) i \(b\) (a nie ma postaci \(a^n b^n\)), a ponadto ma \(3\) litery \(a\) i \(2\) litery \(b\).
                 </div>
             </details>
         </div>
@@ -1226,6 +1426,78 @@ for (k=4; k&lt;10; ++k)
                     - <b>Opcja a)</b> \(\implies\) to zdanie przyjęte w zadaniu jako prawdziwe, choć w ścisłym ujęciu sortowanie przez wstawianie ma w przypadku optymistycznym (tablica już posortowana) złożoność \(O(n)\). Zadanie pyta o zdanie fałszywe wskazane przez klucz, a sformułowanie "w każdym przypadku" dla Quick sort jest jednoznacznie błędne.<br>
                     - <b>Opcja b)</b> \(\implies\) prawdziwe: sortowanie przez wybieranie zawsze wykonuje \(\dfrac{n(n-1)}{2}\) porównań, niezależnie od uporządkowania danych.<br>
                     - <b>Opcja d)</b> \(\implies\) prawdziwe: sortowanie przez scalanie ma \(O(n \log n)\) w przypadku optymistycznym, średnim i pesymistycznym.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W B<sup>+</sup>-drzewie odwołania do danych mogą pojawiać się:</span>
+            <ul class="options">
+                <li class="opt correct">tylko w liściach</li>
+                <li class="opt">w węzłach rodzicach</li>
+                <li class="opt">w korzeniu</li>
+                <li class="opt">w dowolnych węzłach</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest różnica między B-drzewem a B<sup>+</sup>-drzewem: w B<sup>+</sup>-drzewie węzły wewnętrzne pełnią wyłącznie rolę nawigacyjną, a wszystkie odwołania do danych znajdują się w liściach:<br><br>
+                    1. <b>Węzły wewnętrzne (w tym korzeń):</b> przechowują tylko klucze rozdzielające i wskaźniki do węzłów potomnych. Służą do wyznaczenia ścieżki do właściwego liścia.<br>
+                    2. <b>Liście:</b> zawierają wszystkie klucze wraz z odwołaniami do rekordów (lub same rekordy). Wszystkie liście leżą na tym samym poziomie.<br>
+                    3. <b>Powiązanie liści:</b> liście są połączone w listę (wskaźnik do następnego liścia), co umożliwia szybkie sekwencyjne przeglądanie i zapytania zakresowe (<code>BETWEEN</code>, <code>ORDER BY</code>).<br>
+                    4. <b>Konsekwencja:</b> każde wyszukiwanie kończy się w liściu, więc ma tę samą długość ścieżki równą wysokości drzewa. Klucze z węzłów wewnętrznych powtarzają się w liściach.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) węzły wewnętrzne (rodzice liści) zawierają tylko klucze nawigacyjne, a nie odwołania do danych.<br>
+                    - <b>Opcja c)</b> \(\implies\) korzeń jest węzłem wewnętrznym (poza przypadkiem, gdy drzewo ma jeden węzeł, który jest wtedy liściem), więc nie przechowuje odwołań do danych.<br>
+                    - <b>Opcja d)</b> \(\implies\) odwołania do danych w dowolnych węzłach występują w zwykłym B-drzewie, a nie w B<sup>+</sup>-drzewie.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Kod prefiksowy przy kompresji danych to taki, w którym:</span>
+            <ul class="options">
+                <li class="opt">wszystkie symbole kodowe są prefiksami innych symboli kodowych</li>
+                <li class="opt">każdy symbol kodowy jest prefiksem innego symbolu kodowego</li>
+                <li class="opt">niektóre symbole kodowe są prefiksami innych symboli kodowych</li>
+                <li class="opt correct">żaden symbol kodowy nie jest prefiksem innego symbolu kodowego</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest definicja kodu prefiksowego (<i>prefix code</i>): żadne słowo kodowe nie jest początkiem (prefiksem) innego słowa kodowego, dzięki czemu kod jest jednoznacznie dekodowalny bez separatorów:<br><br>
+                    1. <b>Dekodowanie:</b> czytamy bity strumienia, aż utworzą słowo kodowe. Ponieważ żadne słowo nie jest prefiksem innego, ta decyzja jest jednoznaczna i natychmiastowa (kod natychmiastowy, <i>instantaneous code</i>).<br>
+                    2. <b>Przykład poprawny:</b> \(\{0, 10, 110, 111\}\), żadne słowo nie zaczyna innego. Ciąg <code>0110111</code> to <code>0</code>, <code>110</code>, <code>111</code>.<br>
+                    3. <b>Przykład niepoprawny:</b> \(\{0, 01, 11\}\), bo \(0\) jest prefiksem \(01\). Ciąg <code>011</code> można odczytać jako <code>0</code> + <code>11</code> albo <code>01</code> + <code>1...</code>, więc pojawia się niejednoznaczność.<br>
+                    4. <b>Zastosowanie:</b> kody Huffmana są kodami prefiksowymi. Można je przedstawić jako drzewo binarne, w którym słowa kodowe leżą wyłącznie w liściach. Nierówność Krafta: \(\displaystyle\sum_i 2^{-l_i} \le 1\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) jeśli wszystkie słowa byłyby prefiksami innych, tworzyłyby nieskończony łańcuch (każde krótsze od jakiegoś innego), co w skończonym kodzie jest niemożliwe, a kod nie byłby prefiksowy.<br>
+                    - <b>Opcja b)</b> \(\implies\) to samo: każde słowo będące prefiksem innego narusza definicję kodu prefiksowego, a w skończonym zbiorze najdłuższe słowo nie może być prefiksem żadnego.<br>
+                    - <b>Opcja c)</b> \(\implies\) wystarczy jedna para (prefiks, słowo dłuższe), by kod nie był prefiksowy. Kod prefiksowy wymaga braku takich par w ogóle.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Moc typu złożonego (iloczynu kartezjańskiego typów) to:</span>
+            <ul class="options">
+                <li class="opt">suma mocy jego składowych</li>
+                <li class="opt">logarytm mocy jego składowych</li>
+                <li class="opt correct">iloczyn mocy jego składowych</li>
+                <li class="opt">potęga mocy jego składowych</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość pojęcia mocy typu (<i>cardinality</i>), czyli liczby różnych wartości, jakie może przyjąć typ, oraz tego, że typ złożony (struktura, krotka, rekord) odpowiada iloczynowi kartezjańskiemu typów składowych:<br><br>
+                    1. <b>Definicja:</b> typ złożony \(T = T_1 \times T_2 \times \ldots \times T_n\) to zbiór uporządkowanych n-tek \((v_1, v_2, \ldots, v_n)\), gdzie \(v_i\) jest dowolną wartością typu \(T_i\).<br>
+                    2. <b>Zasada mnożenia:</b> każdą składową wybieramy niezależnie, więc \(|T| = |T_1| \cdot |T_2| \cdot \ldots \cdot |T_n|\).<br>
+                    3. <b>Przykład:</b> struktura z polem typu <code>bool</code> (\(2\) wartości) i polem typu <code>unsigned char</code> (\(256\) wartości) ma moc \(2 \cdot 256 = 512\).<br>
+                    4. <b>Uwaga:</b> dla typów sumacyjnych (unia, <code>enum</code> z wariantami) moc jest sumą mocy wariantów, a dla typu funkcyjnego \(A \to B\) wynosi \(|B|^{|A|}\) (potęga).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) suma mocy dotyczy typów sumacyjnych (unii rozłącznej), w których wartość pochodzi z jednego z wariantów, a nie ze wszystkich składowych naraz.<br>
+                    - <b>Opcja b)</b> \(\implies\) logarytm mocy jest liczbą bitów potrzebnych do zakodowania wartości (np. \(\log_2 512 = 9\)), a nie liczbą wartości typu.<br>
+                    - <b>Opcja d)</b> \(\implies\) potęga mocy opisuje typy funkcyjne lub tablice indeksowane, np. tablica \(n\) elementów typu o mocy \(k\) ma moc \(k^n\), a nie typ złożony o różnych składowych.
                 </div>
             </details>
         </div>
@@ -1543,6 +1815,53 @@ for (k=4; k&lt;10; ++k)
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Wskaż zdanie, którego wartość logiczna wynosi \(1\).</span>
+            <ul class="options">
+                <li class="opt">Liczba \(0{,}(3)\) jest liczbą niewymierną i spełniona jest nierówność \(3\sqrt{2} < 2\sqrt{3}\)</li>
+                <li class="opt">\((3 \mid 5) \Leftrightarrow (2 \mid 8)\)</li>
+                <li class="opt correct">\(\left[\left(\sqrt{2} > 1{,}41\right) \Rightarrow \sqrt{1\frac{7}{9}} > \left(1\frac{1}{2}\right)^{-1}\right] \wedge \left[(3 \cdot 2 = 6) \Leftrightarrow (4 \cdot 70 = 280)\right]\)</li>
+                <li class="opt">\(\displaystyle\lim_{n \to \infty} \dfrac{1 + 2 + 3 + 4 + \ldots + n}{n^2}\) jest liczbą naturalną</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest obliczenie wartości logicznej każdego składnika oraz znajomość tabel prawdy implikacji, równoważności i koniunkcji: implikacja \(p \Rightarrow q\) jest fałszywa tylko dla \(p = 1\), \(q = 0\), równoważność \(p \Leftrightarrow q\) jest prawdziwa, gdy \(p\) i \(q\) mają tę samą wartość, a koniunkcja \(p \wedge q\) jest prawdziwa, gdy oba zdania są prawdziwe:<br><br>
+                    1. <b>Implikacja w pierwszym nawiasie:</b> \(\sqrt{2} \approx 1{,}4142 > 1{,}41\), więc poprzednik jest prawdziwy. Następnik: \(\sqrt{1\frac{7}{9}} = \sqrt{\dfrac{16}{9}} = \dfrac{4}{3}\) oraz \(\left(1\frac{1}{2}\right)^{-1} = \left(\dfrac{3}{2}\right)^{-1} = \dfrac{2}{3}\). Ponieważ \(\dfrac{4}{3} > \dfrac{2}{3}\), następnik jest prawdziwy, więc implikacja \(1 \Rightarrow 1\) jest prawdziwa.<br>
+                    2. <b>Równoważność w drugim nawiasie:</b> \(3 \cdot 2 = 6\) jest prawdą, \(4 \cdot 70 = 280\) też jest prawdą, więc równoważność \(1 \Leftrightarrow 1\) jest prawdziwa.<br>
+                    3. <b>Koniunkcja:</b> oba człony są prawdziwe, więc całe zdanie ma wartość logiczną \(1\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) \(0{,}(3) = \dfrac{1}{3}\) jest liczbą wymierną (każdy ułamek okresowy jest wymierny), więc pierwszy człon koniunkcji jest fałszywy. Dodatkowo \(3\sqrt{2} = \sqrt{18}\) i \(2\sqrt{3} = \sqrt{12}\), a \(\sqrt{18} > \sqrt{12}\), więc nierówność też jest fałszywa.<br>
+                    - <b>Opcja b)</b> \(\implies\) \(3 \mid 5\) jest fałszem (\(5\) nie dzieli się przez \(3\)), a \(2 \mid 8\) jest prawdą. Równoważność \(0 \Leftrightarrow 1\) jest fałszywa.<br>
+                    - <b>Opcja d)</b> \(\implies\) \(1 + 2 + \ldots + n = \dfrac{n(n+1)}{2}\), więc wyrażenie to \(\dfrac{n(n+1)}{2n^2} = \dfrac{n+1}{2n} \to \dfrac{1}{2}\). Granica wynosi \(\dfrac{1}{2}\), czyli nie jest liczbą naturalną.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Wskaż zdanie prawdziwe dotyczące indeksowanej rodziny zbiorów \(A_n := \left[\dfrac{1}{n}, n\right]\) dla \(n \in \mathbb{N}_+\).</span>
+            <ul class="options">
+                <li class="opt">\(\displaystyle\bigcup_{n \in \mathbb{N}_+} A_n = \mathbb{R}_+ \setminus \mathbb{N}\)</li>
+                <li class="opt">\(\displaystyle\bigcup_{n \in \mathbb{N}_+} A_n = (0, +\infty)\), \(\displaystyle\bigcap_{n \in \mathbb{N}_+} A_n = \emptyset\)</li>
+                <li class="opt correct">\(\displaystyle\bigcup_{n \in \mathbb{N}_+} A_n = (0, +\infty)\)</li>
+                <li class="opt">\(\displaystyle\bigcup_{n \in \mathbb{N}_+} A_n = [0, \infty)\), \(\displaystyle\bigcap_{n \in \mathbb{N}_+} A_n = A_1\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest wyznaczenie sumy i przekroju rodziny zbiorów z definicji: \(x \in \bigcup A_n\) wtedy i tylko wtedy, gdy \(x\) należy do któregoś \(A_n\), a \(x \in \bigcap A_n\) wtedy i tylko wtedy, gdy należy do wszystkich \(A_n\):<br><br>
+                    1. <b>Kilka pierwszych zbiorów:</b> \(A_1 = [1, 1] = \{1\}\), \(A_2 = \left[\dfrac{1}{2}, 2\right]\), \(A_3 = \left[\dfrac{1}{3}, 3\right]\). Zbiory są rosnące: \(A_1 \subset A_2 \subset A_3 \subset \ldots\), bo lewy koniec maleje, a prawy rośnie.<br>
+                    2. <b>Suma \(\subseteq (0, +\infty)\):</b> każdy \(A_n\) zawiera tylko liczby dodatnie (\(\dfrac{1}{n} > 0\)), więc \(0\) nie należy do żadnego z nich.<br>
+                    3. <b>Suma \(\supseteq (0, +\infty)\):</b> dla dowolnego \(x > 0\) wybieramy \(n \in \mathbb{N}_+\) takie, że \(n \ge \max\left(x, \dfrac{1}{x}\right)\). Wtedy \(\dfrac{1}{n} \le x \le n\), czyli \(x \in A_n\). Zatem \(\bigcup A_n = (0, +\infty)\).<br>
+                    4. <b>Przekrój:</b> ponieważ zbiory rosną, \(\bigcap A_n = A_1 = \{1\}\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) suma zawiera też liczby naturalne, np. \(2 \in A_2\) i \(1 \in A_1\), więc nie jest równa \(\mathbb{R}_+ \setminus \mathbb{N}\).<br>
+                    - <b>Opcja b)</b> \(\implies\) suma jest poprawna, ale przekrój nie jest pusty: \(1 \in A_n\) dla każdego \(n\), bo \(\dfrac{1}{n} \le 1 \le n\), więc \(\bigcap A_n = \{1\}\).<br>
+                    - <b>Opcja d)</b> \(\implies\) suma nie zawiera \(0\) (każdy \(A_n\) ma lewy koniec \(\dfrac{1}{n} > 0\)), więc nie jest równa \([0, \infty)\). Przekrój \(A_1 = \{1\}\) jest podany poprawnie, ale pierwsza część zdania jest fałszywa.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="www">
@@ -1734,6 +2053,29 @@ for (k=4; k&lt;10; ++k)
                     - <b>Opcja a)</b> \(\implies\) klucz <code>"name"</code> nie istnieje: pole ma <code>name="imie"</code>. Wynik to ostrzeżenie <i>undefined array key</i> i pusta wartość (w PHP 8 ostrzeżenie, a <code>htmlspecialchars(null)</code> jest przestarzałe).<br>
                     - <b>Opcja b)</b> \(\implies\) <code>$_GET</code> zawiera parametry z adresu URL (query string), a formularz używa POST, więc <code>$_GET["imie"]</code> jest niezdefiniowane.<br>
                     - <b>Opcja c)</b> \(\implies\) klucz <code>"id"</code> nie istnieje w <code>$_POST</code>. Atrybut <code>id</code> nie jest wysyłany z formularzem, wysyłany jest tylko <code>name</code>.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Która reguła CSS ustawia szary kolor tła co drugiego wiersza tabeli, licząc od drugiego wiersza wśród rodzeństwa tego samego rodzica?</span>
+            <ul class="options">
+                <li class="opt correct"><code>tr:nth-child(2n) { background-color: gray; }</code></li>
+                <li class="opt"><code>tr:last-child { background-color: gray; }</code></li>
+                <li class="opt"><code>tr:nth-child(n+2) { background-color: gray; }</code></li>
+                <li class="opt"><code>tr:first-child { background-color: gray; }</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość pseudoklasy <code>:nth-child(an+b)</code>: wybiera ona elementy, których numer wśród rodzeństwa (liczony od \(1\)) ma postać \(an + b\) dla \(n = 0, 1, 2, \ldots\):<br><br>
+                    1. <b>Wzór <code>2n</code>:</b> dla \(n = 0, 1, 2, 3, \ldots\) otrzymujemy pozycje \(0, 2, 4, 6, \ldots\). Pozycja \(0\) nie istnieje, więc wybrane są wiersze o numerach \(2, 4, 6, \ldots\), czyli co drugi, począwszy od drugiego.<br>
+                    2. <b>Równoważny zapis:</b> <code>:nth-child(even)</code>. Dla co drugiego od pierwszego służy <code>2n+1</code> lub <code>odd</code>.<br>
+                    3. <b>Zastosowanie:</b> typowe "zebra stripes" w tabelach, np. <code>tr:nth-child(even) { background-color: gray; }</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) <code>:last-child</code> wybiera tylko ostatni wiersz, a nie co drugi.<br>
+                    - <b>Opcja c)</b> \(\implies\) <code>n+2</code> daje pozycje \(2, 3, 4, 5, \ldots\), czyli wszystkie wiersze od drugiego, a nie co drugi.<br>
+                    - <b>Opcja d)</b> \(\implies\) <code>:first-child</code> wybiera tylko pierwszy wiersz.
                 </div>
             </details>
         </div>
@@ -2124,6 +2466,114 @@ int main(void){
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Wskaż poprawną w języku C instrukcję dynamicznego przydziału i zwalniania pamięci dla dwuwymiarowej tablicy <code>t</code> składającej się z <code>N</code> wierszy i <code>M</code> kolumn o typie elementów <code>int</code>:</span>
+            <ul class="options">
+                <li class="opt"><pre><code>int **t = (int **) malloc(N * sizeof(int*));
+for(int i = 0; i &lt; N; i++){
+    t[i] = (int) malloc(M * sizeof(int));
+}
+for(int i = 0; i &lt; N; i++) free(t[i]);
+free(t);</code></pre></li>
+                <li class="opt"><pre><code>int **t = (int **) malloc(N * sizeof(int*));
+t[0] = (int *) malloc(M * N * sizeof(int));
+for(int i = 0; i &lt; N; i++){
+    t[i] = t[0] + i * M;
+}
+free(**t);
+free(t[0]);</code></pre></li>
+                <li class="opt correct"><pre><code>int **t = (int **) malloc(N * sizeof(int*));
+t[0] = (int *) malloc(M * N * sizeof(int));
+for(int i = 0; i &lt; N; i++){
+    *(t + i) = *t + i * M;
+}
+free(*t);
+free(t);</code></pre></li>
+                <li class="opt"><pre><code>int **t = (int **) malloc(N * sizeof(int*));
+for(int i = 0; i &lt; N; i++){
+    t[i] = (int *) malloc(M * sizeof(int));
+}
+for(int i = 0; i &lt; N; i++) free(t[i]);
+free(**t);</code></pre></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zasada, że każdy wskaźnik zwrócony przez <code>malloc</code> musi być zwolniony dokładnie raz przez <code>free</code> z tym samym wskaźnikiem, oraz poprawne zbudowanie tablicy wskaźników na wiersze:<br><br>
+                    1. <b>Tablica wskaźników:</b> <code>int **t = malloc(N * sizeof(int*))</code> tworzy \(N\) wskaźników na wiersze.<br>
+                    2. <b>Jeden blok danych:</b> <code>t[0] = malloc(M * N * sizeof(int))</code> alokuje ciągły obszar na wszystkie \(N \cdot M\) elementów, a pętla ustawia <code>t[i]</code> (zapis <code>*(t + i)</code>) na początek \(i\)-tego wiersza: <code>*t + i * M</code>. Ponieważ <code>*t</code> \(\equiv\) <code>t[0]</code>, wskaźnik początku bloku danych jest zachowany.<br>
+                    3. <b>Zwalnianie:</b> <code>free(*t)</code> zwalnia blok danych (wskaźnik z drugiego <code>malloc</code>), a <code>free(t)</code> zwalnia tablicę wskaźników (z pierwszego <code>malloc</code>). Zwolnione są obie alokacje, bez wycieku i bez podwójnego zwolnienia.<br>
+                    4. <b>Dostęp:</b> <code>t[i][j]</code> działa jak w zwykłej tablicy dwuwymiarowej.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) w <code>t[i] = (int) malloc(...)</code> wskaźnik jest rzutowany na <code>int</code> zamiast na <code>int *</code>. To błędna konwersja (obcięcie adresu na platformach 64-bitowych, ostrzeżenie lub błąd kompilacji), więc zapis jest niepoprawny.<br>
+                    - <b>Opcja b)</b> \(\implies\) <code>free(**t)</code> przekazuje wartość typu <code>int</code> (pierwszy element danych), a nie wskaźnik, więc to błąd. Brakuje też <code>free(t)</code>, więc tablica wskaźników by wyciekła.<br>
+                    - <b>Opcja d)</b> \(\implies\) wiersze są zwalniane poprawnie, ale <code>free(**t)</code> przekazuje wartość <code>int</code> zamiast wskaźnika <code>t</code> (i po zwolnieniu <code>t[0]</code> dereferencja <code>**t</code> odwołuje się do zwolnionej pamięci). Tablica wskaźników <code>t</code> nie zostaje zwolniona.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W pewnym programie zadeklarowano następujące zmienne. Wskaż poprawny prototyp oraz wywołanie funkcji, która nie zwraca żadnej wartości, a jako argumenty przyjmuje adres zmiennej <code>a</code>, zmienną <code>b</code> oraz zmienną <code>aba</code>.</span>
+<pre><code>struct A{
+    char x[30];
+    float y;
+} a;
+struct A aba[2000];
+FILE *b;</code></pre>
+            <ul class="options">
+                <li class="opt">Prototyp: <code>void fun(struct A &amp;x, FILE *y, struct A *z);</code><br>Wywołanie: <code>fun(*a, b, aba);</code></li>
+                <li class="opt correct">Prototyp: <code>void fun(struct A *x, FILE *y, struct A *z);</code><br>Wywołanie: <code>fun(&amp;a, b, aba);</code></li>
+                <li class="opt">Prototyp: <code>void fun(struct A *x, FILE y, struct A *z);</code><br>Wywołanie: <code>fun(&amp;a, b, aba[]);</code></li>
+                <li class="opt">Prototyp: <code>void fun(struct A *x, FILE y, struct A *z[]);</code><br>Wywołanie: <code>fun(&amp;a, b, aba);</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest dopasowanie typów argumentów do typów parametrów w C: adres struktury to wskaźnik <code>struct A *</code>, wskaźnik do pliku to <code>FILE *</code>, a tablica przekazana do funkcji zamienia się na wskaźnik do pierwszego elementu (<i>array decay</i>):<br><br>
+                    1. <b>Pierwszy argument:</b> <code>a</code> jest strukturą typu <code>struct A</code>, więc jej adres <code>&amp;a</code> ma typ <code>struct A *</code>. Parametr: <code>struct A *x</code>.<br>
+                    2. <b>Drugi argument:</b> <code>b</code> jest typu <code>FILE *</code> (wskaźnik, nigdy sam <code>FILE</code> przekazywany przez wartość). Parametr: <code>FILE *y</code>.<br>
+                    3. <b>Trzeci argument:</b> <code>aba</code> to tablica <code>struct A[2000]</code>, która po przekazaniu zamienia się na <code>struct A *</code>. Parametr: <code>struct A *z</code> (równoważnie <code>struct A z[]</code>).<br>
+                    4. <b>Wynik:</b> prototyp <code>void fun(struct A *x, FILE *y, struct A *z);</code> i wywołanie <code>fun(&amp;a, b, aba);</code> są zgodne.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) <code>struct A &amp;x</code> to referencja, która istnieje w C++, a nie w C. Dodatkowo <code>*a</code> jest błędem, bo <code>a</code> nie jest wskaźnikiem i nie można go dereferencjonować.<br>
+                    - <b>Opcja c)</b> \(\implies\) parametr <code>FILE y</code> oznacza przekazanie struktury <code>FILE</code> przez wartość (niedozwolone w praktyce, a argument <code>b</code> jest wskaźnikiem), a zapis <code>aba[]</code> w wywołaniu jest niepoprawną składnią.<br>
+                    - <b>Opcja d)</b> \(\implies\) parametr <code>FILE y</code> ma zły typ (argument to <code>FILE *</code>), a <code>struct A *z[]</code> to tablica wskaźników (czyli <code>struct A **</code>), więc nie pasuje do argumentu <code>aba</code> typu <code>struct A *</code>.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W pewnym programie zdefiniowano następującą funkcję. Jakie wartości i w jakiej kolejności zostaną wyświetlone w wyniku wykonania poniższych instrukcji w tym programie:</span>
+<pre><code>void f(long *p1, long *p2, long x){
+    while(p1 != p2){
+        if(*p1 &lt; x) printf("%ld, ", *p1);
+        ++p1;
+    }
+}
+
+long a[15] = {15, 3, 16, 1, 7, 40, 8, 2, 10, 3, 5, 61, 5, 11, 9};
+f(a+2, a+10, 8);</code></pre>
+            <ul class="options">
+                <li class="opt"><code>3, 1, 7, 2, 3,</code></li>
+                <li class="opt"><code>1, 7, 2, 3, 5, 5,</code></li>
+                <li class="opt correct"><code>1, 7, 2, 3,</code></li>
+                <li class="opt"><code>1, 7,</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest arytmetyka wskaźników: funkcja przegląda przedział półotwarty \([p1, p2)\) i wypisuje elementy mniejsze od \(x\):<br><br>
+                    1. <b>Zakres:</b> <code>p1 = a+2</code> wskazuje na <code>a[2]</code>, a <code>p2 = a+10</code> na <code>a[10]</code>. Pętla działa, dopóki <code>p1 != p2</code>, więc element <code>a[10]</code> nie jest już sprawdzany. Przeglądane są <code>a[2]</code> do <code>a[9]</code>: \(16, 1, 7, 40, 8, 2, 10, 3\).<br>
+                    2. <b>Warunek:</b> wypisywane są wartości \(&lt; 8\): \(16\) nie, \(1\) tak, \(7\) tak, \(40\) nie, \(8\) nie (nierówność ostra), \(2\) tak, \(10\) nie, \(3\) tak.<br>
+                    3. <b>Wynik:</b> <code>1, 7, 2, 3,</code><br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) zawiera na początku \(3\), czyli <code>a[1]</code>, które leży przed zakresem (start od <code>a+2</code>, a nie <code>a+1</code>).<br>
+                    - <b>Opcja b)</b> \(\implies\) zawiera \(5, 5\), czyli <code>a[10]</code> i <code>a[12]</code>, które leżą poza zakresem (koniec to <code>a+10</code> wyłącznie), a pominięto też, że \(a[10] = 5\) nie jest przeglądane.<br>
+                    - <b>Opcja d)</b> \(\implies\) kończy się po \(7\), pomijając \(2\) i \(3\), które leżą w zakresie (<code>a[7]</code> i <code>a[9]</code>) i spełniają warunek \(&lt; 8\).
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="op_uz">
@@ -2263,6 +2713,54 @@ int main(void){
                     - <b>Opcja a)</b> \(\implies\) formatowanie realizuje się formatowaniem komórek lub formatowaniem warunkowym. Formuły tablicowe służą do obliczeń.<br>
                     - <b>Opcja b)</b> \(\implies\) formuły tablicowe mogą zawierać wiele operacji i funkcji wbudowanych (<code>SUM</code>, <code>IF</code>, <code>INDEX</code>, <code>MATCH</code> itd.), a ich zaletą jest właśnie złożoność obliczeń w jednej formule.<br>
                     - <b>Opcja d)</b> \(\implies\) dane muszą być liczbowe, aby wykonywać na nich operacje arytmetyczne. Konwersja na tekst nie jest wymagana i uniemożliwiałaby obliczenia.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W arkuszu kalkulacyjnym użytkownik regularnie wykonuje tę samą sekwencję czynności: formatuje dane, usuwa zbędne kolumny i przygotowuje zestawienie. Które rozwiązanie pozwoli zautomatyzować te operacje?</span>
+            <ul class="options">
+                <li class="opt">Utworzenie tabeli przestawnej, która zapisuje i odtwarza wszystkie czynności użytkownika w arkuszu.</li>
+                <li class="opt">Zastosowanie formatowania warunkowego, które automatycznie wykonuje dowolne operacje na strukturze arkusza.</li>
+                <li class="opt correct">Utworzenie makra rejestrującego lub realizującego określoną sekwencję czynności.</li>
+                <li class="opt">Wykorzystanie odwołań bezwzględnych, które umożliwiają automatyczne wykonywanie sekwencji poleceń.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość makr (<i>macros</i>): makro to zapisany ciąg poleceń, który można uruchomić wielokrotnie jednym kliknięciem lub skrótem klawiszowym:<br><br>
+                    1. <b>Rejestrowanie:</b> rejestrator makr (np. w Excelu <i>Widok \(\to\) Makra \(\to\) Nagraj makro</i>) zapisuje wykonywane czynności (formatowanie, usuwanie kolumn, tworzenie zestawień) jako kod, w Excelu w języku VBA (w LibreOffice Basic, w Arkuszach Google Apps Script).<br>
+                    2. <b>Uruchamianie:</b> zapisane makro odtwarza całą sekwencję automatycznie, dla nowych danych, w identyczny sposób. Można je przypisać do przycisku lub skrótu klawiszowego.<br>
+                    3. <b>Edycja:</b> kod makra można modyfikować w edytorze (np. dodać pętle i warunki), co pozwala wyjść poza zwykłe nagrywanie czynności.<br>
+                    4. <b>Przykład:</b> makro, które usuwa kolumny <code>C:E</code>, ustawia format liczb i tworzy zestawienie, wykonuje się w ułamku sekundy zamiast ręcznych kroków.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) tabela przestawna służy do podsumowywania i analizy danych (grupowanie, agregacja), a nie do zapisywania i odtwarzania czynności użytkownika.<br>
+                    - <b>Opcja b)</b> \(\implies\) formatowanie warunkowe zmienia wygląd komórek (kolory, ikony) w zależności od ich wartości. Nie usuwa kolumn ani nie wykonuje dowolnych operacji na strukturze arkusza.<br>
+                    - <b>Opcja d)</b> \(\implies\) odwołania bezwzględne (np. <code>$A$1</code>) określają, że adres komórki w formule nie zmienia się przy kopiowaniu. Nie służą do automatyzacji sekwencji poleceń.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które działanie jest przykładem konsolidacji danych w arkuszu kalkulacyjnym?</span>
+            <ul class="options">
+                <li class="opt">Posortowanie danych sprzedaży jednego oddziału według wartości przychodu.</li>
+                <li class="opt correct">Zsumowanie wartości sprzedaży z kilku arkuszy zawierających dane poszczególnych oddziałów w celu utworzenia zbiorczego zestawienia.</li>
+                <li class="opt">Przefiltrowanie tabeli sprzedaży w celu wyświetlenia transakcji z wybranego miesiąca.</li>
+                <li class="opt">Zastosowanie formatowania warunkowego do wyróżnienia wartości sprzedaży przekraczających ustalony próg.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest definicja konsolidacji danych (<i>data consolidation</i>): łączenie danych z wielu zakresów, arkuszy lub plików w jedno zbiorcze zestawienie, zwykle z użyciem funkcji agregującej (suma, średnia, liczba, minimum, maksimum):<br><br>
+                    1. <b>Źródła:</b> dane pochodzą z kilku oddzielnych zakresów, np. arkuszy poszczególnych oddziałów o podobnej strukturze.<br>
+                    2. <b>Agregacja:</b> wartości o tych samych etykietach (wiersze i kolumny) są łączone funkcją, np. suma sprzedaży z wszystkich oddziałów.<br>
+                    3. <b>Narzędzie:</b> w Excelu <i>Dane \(\to\) Konsoliduj</i> (<i>Data \(\to\) Consolidate</i>), możliwe jest też użycie formuł trójwymiarowych, np. <code>=SUM(Oddzial1:Oddzial3!B2)</code>, lub Power Query.<br>
+                    4. <b>Przykład:</b> oddział A: \(100\), oddział B: \(150\), oddział C: \(250\), zestawienie zbiorcze: \(500\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) sortowanie zmienia tylko kolejność wierszy w jednym zbiorze danych i nie łączy danych z wielu źródeł.<br>
+                    - <b>Opcja c)</b> \(\implies\) filtrowanie ukrywa wiersze niespełniające kryterium. Nie łączy ani nie agreguje danych z wielu źródeł.<br>
+                    - <b>Opcja d)</b> \(\implies\) formatowanie warunkowe zmienia wygląd komórek w zależności od wartości, ale nie zmienia ani nie łączy danych.
                 </div>
             </details>
         </div>
@@ -2552,6 +3050,30 @@ int main(void){
                     - <b>Opcja a)</b> \(\implies\) nierówność \(F(b) &gt; F(a)\) nie jest warunkiem zachodzenia wzoru. Wzór działa niezależnie od znaku różnicy, np. dla \(f(x) = -1\) na \([0, 1]\) mamy \(F(x) = -x\), \(F(1) - F(0) = -1 &lt; 0\), a równość nadal zachodzi.<br>
                     - <b>Opcja b)</b> \(\implies\) podobnie, nierówność \(F(b) \ge F(a)\) opisuje co najwyżej znak całki, a nie warunek poprawności wzoru.<br>
                     - <b>Opcja c)</b> \(\implies\) dodatniość \(f\) gwarantuje dodatnią wartość całki (pole pod wykresem), ale nie jest potrzebna do zastosowania wzoru Newtona-Leibniza.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Pochodna funkcji \(y = x^{ax}\) względem \(x\) wynosi:</span>
+            <ul class="options">
+                <li class="opt">\(y' = a x^{ax}\)</li>
+                <li class="opt">\(y' = x^{ax-1}\)</li>
+                <li class="opt">\(y' = a(\ln(x) + a)x^{x}\)</li>
+                <li class="opt correct">\(y' = a(\ln(x) + 1)x^{ax}\)</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zapisanie funkcji w postaci wykładniczej \(f(x)^{g(x)} = e^{g(x)\ln f(x)}\) i zastosowanie wzoru na pochodną funkcji złożonej oraz reguły iloczynu:<br><br>
+                    1. <b>Zapis wykładniczy:</b> dla \(x > 0\) mamy \(x^{ax} = e^{ax\ln x}\).<br>
+                    2. <b>Pochodna wykładnika (reguła iloczynu):</b> \(\left(ax\ln x\right)' = a\ln x + ax\cdot\dfrac{1}{x} = a\ln x + a = a(\ln x + 1)\).<br>
+                    3. <b>Pochodna funkcji złożonej:</b> \(y' = e^{ax\ln x}\cdot a(\ln x + 1) = a(\ln x + 1)\,x^{ax}\).<br>
+                    4. <b>Sprawdzenie dla \(a = 1\):</b> \((x^x)' = x^x(\ln x + 1)\), co zgadza się ze znanym wzorem.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to wynik błędnego przyjęcia, że wykładnik jest stałą (\(\left(x^{ax}\right)' \ne a x^{ax}\)). Wykładnik zależy od \(x\), więc potrzebna jest pochodna logarytmiczna. Dla \(a = 1\), \(x = 1\): poprawnie \(y' = 1\), a opcja daje \(1\) tylko przypadkiem, natomiast np. dla \(x = e\) poprawnie \(y' = 2e^{e}\), a opcja daje \(e^{e}\).<br>
+                    - <b>Opcja b)</b> \(\implies\) to wzór na pochodną funkcji potęgowej ze stałym wykładnikiem \(\left(x^n\right)' = n x^{n-1}\), pominięto też czynnik \(ax\) z wykładnika. Wykładnik jest tu zmienny.<br>
+                    - <b>Opcja c)</b> \(\implies\) ma złą podstawę potęgi (\(x^{x}\) zamiast \(x^{ax}\)) i błędny nawias (\(\ln x + a\) zamiast \(\ln x + 1\)). Dla \(a = 2\), \(x = 1\): poprawnie \(y' = 2\), a opcja daje \(2(0 + 2)\cdot 1 = 4\).
                 </div>
             </details>
         </div>
@@ -2918,6 +3440,119 @@ int main() {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie dotyczące wskaźnika <code>this</code> w języku C++ jest prawdziwe?</span>
+            <ul class="options">
+                <li class="opt correct">W niestatycznej metodzie klasy wskaźnik <code>this</code> wskazuje na obiekt, dla którego wywołano tę metodę.</li>
+                <li class="opt">Wskaźnik <code>this</code> przechowuje adres kodu aktualnie wykonywanej metody.</li>
+                <li class="opt">Wskaźnik <code>this</code> wskazuje zawsze na pierwszy obiekt utworzony z danej klasy.</li>
+                <li class="opt">Wskaźnik <code>this</code> jest dostępny wyłącznie w metodach statycznych.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość tego, że każda niestatyczna metoda klasy otrzymuje niejawny parametr: wskaźnik <code>this</code> do obiektu, na rzecz którego została wywołana:<br><br>
+                    1. <b>Znaczenie:</b> przy wywołaniu <code>obj.metoda()</code> wewnątrz metody <code>this</code> równa się <code>&amp;obj</code>. Typ to <code>T*</code> (w metodzie <code>const</code> jest to <code>const T*</code>).<br>
+                    2. <b>Zastosowanie:</b> odwołanie do składowych (<code>this-&gt;x</code>, zwykle jawne tylko przy konfliktach nazw), zwracanie obiektu (<code>return *this;</code>, np. w łańcuchowaniu wywołań i operatorze <code>=</code>), przekazywanie adresu obiektu innym funkcjom.<br>
+                    3. <b>Przykład:</b> <code>class A { int x; public: void ustaw(int x) { this-&gt;x = x; } };</code> dla <code>a.ustaw(5)</code> wskaźnik <code>this</code> wskazuje na <code>a</code>, a dla <code>b.ustaw(5)</code> na <code>b</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) <code>this</code> wskazuje na obiekt, a nie na kod metody. Kod metod jest wspólny dla wszystkich obiektów klasy.<br>
+                    - <b>Opcja c)</b> \(\implies\) <code>this</code> zależy od obiektu, na rzecz którego wywołano metodę. Dla każdego obiektu wskazuje na ten właśnie obiekt, a nie na pierwszy utworzony.<br>
+                    - <b>Opcja d)</b> \(\implies\) jest odwrotnie: metody statyczne nie mają wskaźnika <code>this</code>, bo nie są wywoływane na rzecz obiektu.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie dotyczące klasy polimorficznej w języku C++ jest prawdziwe?</span>
+            <ul class="options">
+                <li class="opt correct">Klasa jest polimorficzna, jeżeli deklaruje lub dziedziczy co najmniej jedną funkcję wirtualną.</li>
+                <li class="opt">Klasa jest polimorficzna tylko wtedy, gdy wszystkie jej metody są statyczne.</li>
+                <li class="opt">Klasa jest polimorficzna tylko wtedy, gdy zawiera co najmniej dwa konstruktory.</li>
+                <li class="opt">Klasa jest polimorficzna wyłącznie wtedy, gdy jest klasą abstrakcyjną.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest definicja ze standardu C++: klasa polimorficzna (<i>polymorphic class</i>) to klasa, która deklaruje lub dziedziczy co najmniej jedną funkcję wirtualną:<br><br>
+                    1. <b>Funkcja wirtualna:</b> oznaczona słowem <code>virtual</code> (lub przesłaniająca funkcję wirtualną klasy bazowej). Dzięki niej wywołanie przez wskaźnik lub referencję do klasy bazowej jest rozstrzygane w czasie działania programu (<i>late binding</i>), na podstawie rzeczywistego typu obiektu.<br>
+                    2. <b>Skutki:</b> obiekty takiej klasy zawierają ukryty wskaźnik do tablicy metod wirtualnych (<i>vtable</i>), a na wskaźnikach do klasy bazowej można używać <code>dynamic_cast</code> i <code>typeid</code> z dynamicznym typem obiektu.<br>
+                    3. <b>Przykład:</b> <code>class A { public: virtual void f() {} };</code> jest polimorficzna, a <code>class B : public A {};</code> także, bo dziedziczy funkcję wirtualną <code>f()</code>.<br>
+                    4. <b>Dobra praktyka:</b> klasa polimorficzna przeznaczona do dziedziczenia powinna mieć wirtualny destruktor.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) metody statyczne nie mogą być wirtualne i nie uczestniczą w polimorfizmie, więc klasa z samymi metodami statycznymi nie jest polimorficzna.<br>
+                    - <b>Opcja c)</b> \(\implies\) liczba konstruktorów nie ma związku z polimorfizmem. Konstruktory nie mogą być wirtualne.<br>
+                    - <b>Opcja d)</b> \(\implies\) klasa abstrakcyjna jest polimorficzna (ma co najmniej jedną funkcję czysto wirtualną), ale nie jest to warunek konieczny: klasa konkretna z funkcją wirtualną jest również polimorficzna.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Rozważmy następującą definicję klasy w języku C++. Co zostanie wyświetlone na ekranie?</span>
+<pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Liczba {
+    int x;
+public:
+    Liczba(int v) : x(v) {}
+    Liczba operator+(const Liczba&amp; b) const {
+        return Liczba(x + b.x);
+    }
+    int get() const { return x; }
+};
+
+int main() {
+    Liczba a(3), b(5);
+    Liczba c = a + b;
+    cout &lt;&lt; c.get();
+}</code></pre>
+            <ul class="options">
+                <li class="opt"><code>3</code></li>
+                <li class="opt">Program nie skompiluje się, ponieważ operator <code>+</code> nie może być przeciążony dla obiektów klas.</li>
+                <li class="opt correct"><code>8</code></li>
+                <li class="opt"><code>5</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość przeciążania operatorów (<i>operator overloading</i>) w C++: wyrażenie <code>a + b</code> dla obiektów klasy jest interpretowane jako wywołanie <code>a.operator+(b)</code>:<br><br>
+                    1. <b>Obiekty:</b> <code>a</code> ma pole <code>x = 3</code>, <code>b</code> ma pole <code>x = 5</code>.<br>
+                    2. <b>Wywołanie operatora:</b> <code>a + b</code> to <code>a.operator+(b)</code>. Wewnątrz metody <code>x</code> to pole obiektu <code>a</code> (\(3\)), a <code>b.x</code> to pole argumentu (\(5\)).<br>
+                    3. <b>Wynik:</b> metoda zwraca nowy obiekt <code>Liczba(3 + 5)</code>, czyli obiekt z <code>x = 8</code>, który jest przypisany (inicjalizowany) do <code>c</code>.<br>
+                    4. <b>Wypisanie:</b> <code>c.get()</code> zwraca \(8\), więc na ekranie pojawi się <code>8</code>. Obiekty <code>a</code> i <code>b</code> nie zostają zmienione, bo operator jest <code>const</code> i zwraca nowy obiekt.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) \(3\) to wartość pola <code>a.x</code> sprzed dodawania. Operator zwraca sumę pól, a nie wartość lewego operandu.<br>
+                    - <b>Opcja b)</b> \(\implies\) operator <code>+</code> można przeciążać dla klas (jako metodę lub funkcję zaprzyjaźnioną/globalną). Nie można przeciążać tylko niektórych operatorów, np. <code>::</code>, <code>.</code>, <code>.*</code>, <code>?:</code>, a także zmieniać znaczenia operatorów dla typów wbudowanych.<br>
+                    - <b>Opcja d)</b> \(\implies\) \(5\) to wartość pola <code>b.x</code>. Wynikiem jest suma \(3 + 5 = 8\), a nie sam prawy operand.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie dotyczące składowych zadeklarowanych jako <code>protected</code> w klasie bazowej w języku C++ jest prawdziwe?</span>
+            <ul class="options">
+                <li class="opt">Są dostępne wyłącznie w metodach klasy bazowej i nigdy w klasach pochodnych.</li>
+                <li class="opt">Są dostępne z dowolnej funkcji programu, również niezwiązanej z hierarchią dziedziczenia.</li>
+                <li class="opt correct">Są dostępne w metodach klasy bazowej oraz w metodach klas pochodnych, z uwzględnieniem reguł dostępu języka C++.</li>
+                <li class="opt">Są automatycznie przekształcane w składowe <code>public</code> we wszystkich klasach pochodnych.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość specyfikatora <code>protected</code>: składowe chronione są niedostępne z zewnątrz klasy (jak <code>private</code>), ale dostępne w klasie bazowej, w klasach pochodnych oraz dla przyjaciół (<code>friend</code>):<br><br>
+                    1. <b>Dostęp w klasie pochodnej:</b> metody klasy pochodnej mogą odwoływać się do składowych <code>protected</code> klasy bazowej, np. <code>class B : public A { void f() { x = 1; } };</code>, gdzie <code>x</code> jest <code>protected</code> w <code>A</code>.<br>
+                    2. <b>Reguła dodatkowa:</b> klasa pochodna ma dostęp do składowej chronionej tylko przez obiekty własnego typu (lub typu pochodnego). Przez samodzielny obiekt klasy bazowej <code>A a; a.x = 1;</code> w metodzie <code>B</code> dostęp jest zabroniony.<br>
+                    3. <b>Dostęp z zewnątrz:</b> funkcja niezwiązana z hierarchią (np. <code>main</code>) nie ma dostępu do składowych <code>protected</code>.<br>
+                    4. <b>Rodzaj dziedziczenia:</b> przy dziedziczeniu <code>public</code> składowe <code>protected</code> pozostają <code>protected</code>, przy <code>protected</code> także, a przy <code>private</code> stają się <code>private</code> w klasie pochodnej. Nigdy nie stają się automatycznie <code>public</code>.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to opis <code>private</code>. Składowe <code>protected</code> są właśnie dostępne w klasach pochodnych.<br>
+                    - <b>Opcja b)</b> \(\implies\) dostęp z dowolnej funkcji dotyczy <code>public</code>. Składowe <code>protected</code> są niedostępne z zewnątrz hierarchii (poza przyjaciółmi).<br>
+                    - <b>Opcja d)</b> \(\implies\) dziedziczenie nigdy nie rozszerza dostępu: <code>protected</code> może zostać co najwyżej zachowane lub ograniczone do <code>private</code>, a nie zamienione w <code>public</code>.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="sk">
@@ -3236,6 +3871,31 @@ print(result)</code></pre>
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Jaki wynik otrzymamy po wykonaniu poniższego wyrażenia w języku Python?</span>
+<pre><code>list(zip([1, 2, 3], ['a', 'b']))</code></pre>
+            <ul class="options">
+                <li class="opt"><code>[(1, 2, 3), ('a', 'b')]</code></li>
+                <li class="opt"><code>[[1, 2, 3], ['a', 'b']]</code></li>
+                <li class="opt"><code>[(1, 'a'), (2, 'b'), (3, None)]</code></li>
+                <li class="opt correct"><code>[(1, 'a'), (2, 'b')]</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość działania funkcji <code>zip()</code>: łączy ona elementy o tych samych indeksach z kolejnych sekwencji w krotki i kończy działanie, gdy najkrótsza z sekwencji się wyczerpie:<br><br>
+                    1. <b>Parowanie:</b> pierwsze elementy tworzą krotkę <code>(1, 'a')</code>, drugie <code>(2, 'b')</code>.<br>
+                    2. <b>Różna długość:</b> druga lista ma tylko \(2\) elementy, więc dla trzeciego elementu <code>3</code> nie ma pary. <code>zip</code> obcina wynik do długości najkrótszej sekwencji i element <code>3</code> jest pomijany.<br>
+                    3. <b>Obiekt wynikowy:</b> <code>zip</code> zwraca iterator (leniwy), a <code>list()</code> zamienia go na listę: <code>[(1, 'a'), (2, 'b')]</code>.<br>
+                    4. <b>Uzupełnianie brakujących wartości:</b> aby nie tracić elementów, używa się <code>itertools.zip_longest</code>, np. <code>list(zip_longest([1, 2, 3], ['a', 'b']))</code> daje <code>[(1, 'a'), (2, 'b'), (3, None)]</code>. Od Pythona 3.10 można też użyć <code>zip(..., strict=True)</code>, co zgłosi <code>ValueError</code> przy różnych długościach.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to wynik samego "sklejenia" list jako krotek (np. <code>[tuple(l1), tuple(l2)]</code>), a <code>zip</code> łączy elementy o tych samych indeksach, a nie całe sekwencje.<br>
+                    - <b>Opcja b)</b> \(\implies\) to lista oryginalnych list, a <code>zip</code> zwraca krotki zawierające po jednym elemencie z każdej sekwencji.<br>
+                    - <b>Opcja c)</b> \(\implies\) to wynik <code>itertools.zip_longest</code> (domyślnie z <code>fillvalue=None</code>). Zwykły <code>zip</code> nie uzupełnia brakujących wartości.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="poc">
@@ -3336,6 +3996,30 @@ print(result)</code></pre>
                     - <b>Opcja a)</b> \(\implies\) warstwa prezentacji nie powinna bezpośrednio operować na bazie danych. Odpowiada za interfejs, a dostęp do danych odbywa się przez warstwę logiki i warstwę danych.<br>
                     - <b>Opcja b)</b> \(\implies\) role są pomylone: generowaniem interfejsu zajmuje się warstwa prezentacji, a warstwa danych odpowiada za przechowywanie danych.<br>
                     - <b>Opcja c)</b> \(\implies\) przechowywanie danych i ich trwałość to zadanie warstwy danych, a nie prezentacji.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Standard WCAG 2.1 dotyczy:</span>
+            <ul class="options">
+                <li class="opt">Wymagań dotyczących projektowania infrastruktury serwerowej zapewniającej wysoką dostępność aplikacji.</li>
+                <li class="opt correct">Dostępności treści cyfrowych dla osób z różnymi ograniczeniami, np. wzroku, słuchu lub percepcji.</li>
+                <li class="opt">Minimalnych wymagań wydajnościowych dotyczących czasu odpowiedzi aplikacji internetowych.</li>
+                <li class="opt">Zasad ochrony danych osobowych i obowiązków administratorów wynikających z RODO.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest rozwinięcie skrótu: WCAG to <i>Web Content Accessibility Guidelines</i>, czyli wytyczne dotyczące dostępności treści internetowych, opracowane przez W3C (inicjatywa WAI):<br><br>
+                    1. <b>Cel:</b> zapewnienie, że strony i aplikacje internetowe są użyteczne dla osób z niepełnosprawnościami wzroku (np. niewidomi, słabowidzący, daltoniści), słuchu, ruchowymi i poznawczymi.<br>
+                    2. <b>Cztery zasady (POUR):</b> treści muszą być <i>Perceivable</i> (postrzegalne), <i>Operable</i> (obsługiwalne), <i>Understandable</i> (zrozumiałe) i <i>Robust</i> (solidne, kompatybilne z technologiami wspomagającymi).<br>
+                    3. <b>Poziomy zgodności:</b> A, AA, AAA. Najczęściej wymagany jest poziom AA (np. kontrast tekstu co najmniej \(4{,}5:1\)).<br>
+                    4. <b>Przykłady wymagań:</b> teksty alternatywne obrazów (<code>alt</code>), napisy do materiałów wideo, obsługa strony z klawiatury, odpowiedni kontrast kolorów. W Polsce WCAG 2.1 jest podstawą ustawy o dostępności cyfrowej stron internetowych i aplikacji mobilnych podmiotów publicznych.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) projektowanie infrastruktury serwerowej i wysoka dostępność (<i>high availability</i>, redundancja, klastry, SLA) to zupełnie inne zagadnienie. "Dostępność" w WCAG oznacza <i>accessibility</i>, a nie <i>availability</i>.<br>
+                    - <b>Opcja c)</b> \(\implies\) wymagania wydajnościowe (czas odpowiedzi, <i>Core Web Vitals</i>) nie należą do zakresu WCAG, który dotyczy dostępności treści.<br>
+                    - <b>Opcja d)</b> \(\implies\) ochronę danych osobowych i obowiązki administratorów reguluje RODO (GDPR), a nie WCAG.
                 </div>
             </details>
         </div>
@@ -3827,6 +4511,54 @@ public class Main {
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Tabela <code>zamowienia</code> zawiera kolumny <code>id</code>, <code>klient_id</code> i <code>status</code>. Które zapytanie MySQL zwróci identyfikatory klientów, którzy mają więcej niż dwa zamówienia o statusie <code>'oplacone'</code>?</span>
+            <ul class="options">
+                <li class="opt"><code>SELECT klient_id FROM zamowienia WHERE status = 'oplacone' GROUP BY klient_id HAVING COUNT(*) &gt;= 2;</code></li>
+                <li class="opt"><code>SELECT klient_id FROM zamowienia GROUP BY klient_id HAVING COUNT(*) &gt; 2;</code></li>
+                <li class="opt"><code>SELECT klient_id FROM zamowienia WHERE status = 'oplacone' GROUP BY klient_id HAVING COUNT(*) &lt; 2;</code></li>
+                <li class="opt correct"><code>SELECT klient_id FROM zamowienia WHERE status = 'oplacone' GROUP BY klient_id HAVING COUNT(*) &gt; 2;</code></li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest kolejność przetwarzania zapytania SQL oraz różnica między <code>WHERE</code> a <code>HAVING</code>: <code>WHERE</code> filtruje pojedyncze wiersze przed grupowaniem, a <code>HAVING</code> filtruje grupy po agregacji:<br><br>
+                    1. <b>Filtrowanie wierszy:</b> <code>WHERE status = 'oplacone'</code> zostawia tylko zamówienia opłacone, więc kolejne kroki liczą wyłącznie je.<br>
+                    2. <b>Grupowanie:</b> <code>GROUP BY klient_id</code> tworzy jedną grupę dla każdego klienta.<br>
+                    3. <b>Filtrowanie grup:</b> <code>HAVING COUNT(*) &gt; 2</code> zostawia klientów, którzy mają ostro więcej niż \(2\) opłacone zamówienia, czyli co najmniej \(3\).<br>
+                    4. <b>Przykład:</b> klient z \(3\) zamówieniami <code>'oplacone'</code> jest w wyniku, a klient z \(2\) opłaconymi i \(5\) innymi nie jest.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) warunek <code>&gt;= 2</code> zwraca także klientów z dokładnie \(2\) zamówieniami, a miało być więcej niż \(2\).<br>
+                    - <b>Opcja b)</b> \(\implies\) brak <code>WHERE status = 'oplacone'</code>, więc liczone są wszystkie zamówienia niezależnie od statusu. Klient z \(3\) zamówieniami nieopłaconymi też trafiłby do wyniku.<br>
+                    - <b>Opcja c)</b> \(\implies\) warunek <code>&lt; 2</code> zwraca klientów z co najwyżej jednym opłaconym zamówieniem, czyli odwrotny zbiór niż wymagany.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie dotyczące indeksów w relacyjnych bazach danych jest prawdziwe?</span>
+            <ul class="options">
+                <li class="opt correct">Indeksy mogą przyspieszać wyszukiwanie danych, ale wymagają dodatkowej przestrzeni i mogą zwiększać koszt modyfikacji tabeli.</li>
+                <li class="opt">Indeksy zapewniają, że każde zapytanie wykorzystujące <code>ORDER BY</code> zostanie wykonane bez dodatkowego sortowania, niezależnie od wybranego indeksu.</li>
+                <li class="opt">Indeksy pozwalają przyspieszać odczyt danych wyłącznie wtedy, gdy zostały zdefiniowane na kolumnie będącej kluczem głównym.</li>
+                <li class="opt">Indeksy przyspieszają wyszukiwanie danych i jednocześnie eliminują potrzebę aktualizacji dodatkowych struktur podczas operacji <code>INSERT</code>, <code>UPDATE</code> i <code>DELETE</code>.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest kompromis, jaki wprowadzają indeksy: przyspieszają odczyt, ale kosztują miejsce i czas przy modyfikacjach danych:<br><br>
+                    1. <b>Przyspieszenie odczytu:</b> indeks (zwykle B<sup>+</sup>-drzewo) pozwala znaleźć wiersze w czasie około \(O(\log n)\) zamiast przeglądania całej tabeli (\(O(n)\)), co przyspiesza <code>WHERE</code>, <code>JOIN</code> i często <code>ORDER BY</code>.<br>
+                    2. <b>Dodatkowa przestrzeń:</b> indeks jest osobną strukturą zapisaną na dysku i zajmuje miejsce niezależnie od tabeli.<br>
+                    3. <b>Koszt modyfikacji:</b> każde <code>INSERT</code>, <code>UPDATE</code> (zmieniające kolumny indeksowane) i <code>DELETE</code> wymaga aktualizacji wszystkich powiązanych indeksów, więc zapis jest wolniejszy.<br>
+                    4. <b>Wniosek:</b> indeksy zakłada się selektywnie, na kolumnach często używanych w filtrach, złączeniach i sortowaniu.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) indeks pomaga uniknąć sortowania tylko wtedy, gdy kolejność indeksu zgadza się z klauzulą <code>ORDER BY</code> (i optymalizator go użyje). Nie jest to gwarancja dla każdego zapytania.<br>
+                    - <b>Opcja c)</b> \(\implies\) indeksy można zakładać na dowolnych kolumnach i zestawach kolumn (indeksy wtórne, złożone, unikalne), a nie tylko na kluczu głównym.<br>
+                    - <b>Opcja d)</b> \(\implies\) jest odwrotnie: operacje modyfikujące dane wymagają aktualizacji indeksów, co jest właśnie ich kosztem.
+                </div>
+            </details>
+        </div>
     </div>
 
     <div class="section" id="kizp">
@@ -4083,6 +4815,30 @@ public class Main {
                     - <b>Opcja b)</b> \(\implies\) protokoły routingu dynamicznego nadal wymieniają komunikaty po osiągnięciu zbieżności (pakiety <i>Hello</i>, okresowe aktualizacje w RIP), więc nie jest to cecha zbieżności.<br>
                     - <b>Opcja c)</b> \(\implies\) routery mają różne następne przeskoki, bo zależą one od położenia routera w sieci (każdy ma inny najbliższy sąsiad na drodze do celu).<br>
                     - <b>Opcja d)</b> \(\implies\) tablice routingu różnią się między routerami (inne trasy bezpośrednio podłączone, inne następne przeskoki). Spójna jest wiedza o topologii, a nie zawartość tablic.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Firma posiada dwie lokalizacje połączone przez Internet. Administrator chce zapewnić bezpieczną komunikację między ich sieciami lokalnymi, bez konieczności konfigurowania połączenia VPN osobno na każdym komputerze. Które rozwiązanie najlepiej spełnia te wymagania?</span>
+            <ul class="options">
+                <li class="opt correct">Skonfigurowanie tunelu VPN typu <i>site-to-site</i> z wykorzystaniem IPsec między routerami obu lokalizacji.</li>
+                <li class="opt">Skonfigurowanie tras statycznych między prywatnymi podsieciami bez zastosowania tunelowania i szyfrowania komunikacji przez Internet.</li>
+                <li class="opt">Skonfigurowanie translacji NAT na routerach obu lokalizacji jako jedynego mechanizmu ochrony przesyłanych danych.</li>
+                <li class="opt">Skonfigurowanie połączeń VPN typu <i>remote access</i> oddzielnie na każdym komputerze w obu lokalizacjach.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest rozróżnienie typów VPN: <i>site-to-site</i> łączy całe sieci lokalne przez tunel zestawiony między urządzeniami brzegowymi (routerami lub zaporami), a <i>remote access</i> łączy pojedynczego użytkownika z siecią:<br><br>
+                    1. <b>Tunel między routerami:</b> routery obu lokalizacji zestawiają szyfrowany tunel (IPsec) przez Internet. Hosty w sieciach lokalnych nie wymagają żadnej dodatkowej konfiguracji ani oprogramowania klienckiego.<br>
+                    2. <b>Zabezpieczenia IPsec:</b> zapewnia poufność (szyfrowanie ESP, np. AES), integralność, uwierzytelnienie stron (klucze wstępne lub certyfikaty, IKE) oraz ochronę przed powtórzeniami (<i>anti-replay</i>).<br>
+                    3. <b>Przezroczystość:</b> ruch między podsieciami (np. \(192.168.1.0/24\) i \(192.168.2.0/24\)), który pasuje do ACL tunelu (<i>interesting traffic</i>), jest automatycznie szyfrowany i kapsułkowany przez routery.<br>
+                    4. <b>Skalowalność:</b> dodanie nowego komputera w sieci nie wymaga zmian w konfiguracji VPN.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) trasy statyczne tylko wskazują drogę pakietów. Bez tunelowania i szyfrowania dane przechodzą przez Internet jawnie, a adresy prywatne (RFC 1918) nie są routowane w Internecie.<br>
+                    - <b>Opcja c)</b> \(\implies\) NAT tłumaczy adresy i nie szyfruje ani nie uwierzytelnia ruchu, więc nie jest mechanizmem ochrony danych.<br>
+                    - <b>Opcja d)</b> \(\implies\) VPN <i>remote access</i> na każdym komputerze to dokładnie to, czego administrator chce uniknąć: wymaga konfiguracji i obsługi klienta na każdej maszynie, co się słabo skaluje.
                 </div>
             </details>
         </div>
@@ -4421,6 +5177,30 @@ END;</code></pre>
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Które stwierdzenie najlepiej opisuje system czasu rzeczywistego z twardymi wymaganiami czasowymi (<i>hard real-time</i>)?</span>
+            <ul class="options">
+                <li class="opt correct">Przekroczenie określonego terminu wykonania zadania jest niedopuszczalne z punktu widzenia poprawności działania systemu.</li>
+                <li class="opt">Poprawność działania systemu zależy wyłącznie od uzyskanego wyniku obliczeń, niezależnie od czasu jego dostarczenia.</li>
+                <li class="opt">Przekroczenie terminu wykonania zadania może obniżyć jakość usługi, ale nie oznacza automatycznie niepoprawnego działania systemu.</li>
+                <li class="opt">Wymagania czasowe dotyczą jedynie średniego czasu odpowiedzi, a pojedyncze opóźnienia nie mają znaczenia.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest definicja systemu czasu rzeczywistego: poprawność zależy nie tylko od wyniku logicznego, ale też od chwili jego dostarczenia, a w systemie twardym (<i>hard real-time</i>) spóźniony wynik jest równoznaczny z błędem:<br><br>
+                    1. <b>Termin (<i>deadline</i>):</b> każde zadanie ma określony termin zakończenia. W systemie twardym jego przekroczenie, nawet jednorazowe, jest awarią systemu i może prowadzić do poważnych skutków (np. zagrożenie życia, uszkodzenie urządzeń).<br>
+                    2. <b>Wymóg projektowy:</b> trzeba wykazać (analiza najgorszego czasu wykonania WCET, testy schedulowalności, np. \(U \le n(2^{1/n}-1)\) dla RMS lub \(U \le 1\) dla EDF), że wszystkie terminy będą dotrzymane zawsze.<br>
+                    3. <b>Przykłady:</b> układ ABS i poduszki powietrzne w samochodzie, sterowanie lotem, rozrusznik serca.<br>
+                    4. <b>Porównanie:</b> w systemie miękkim (<i>soft real-time</i>) spóźnienie obniża jakość usługi (np. gubienie klatek w odtwarzaniu wideo), ale nie powoduje awarii.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) to opis zwykłych systemów obliczeniowych, w których liczy się tylko poprawność wyniku. W systemach czasu rzeczywistego czas dostarczenia wyniku jest częścią poprawności.<br>
+                    - <b>Opcja c)</b> \(\implies\) to opis systemu miękkiego (<i>soft real-time</i>), w którym przekroczenie terminu pogarsza jakość, ale nie oznacza niepoprawnego działania.<br>
+                    - <b>Opcja d)</b> \(\implies\) w systemach twardych liczy się czas najgorszego przypadku, a nie średni. Pojedyncze opóźnienie może być katastrofalne.
+                </div>
+            </details>
+        </div>
     </div>
 
 
@@ -4542,6 +5322,54 @@ END;</code></pre>
                 </div>
             </details>
         </div>
+
+        <div class="q-block">
+            <span class="q-text">Jaką rolę pełnią miary takie jak entropia lub indeks Giniego podczas budowy drzewa decyzyjnego do klasyfikacji?</span>
+            <ul class="options">
+                <li class="opt">Określają wielkość kroku aktualizacji parametrów modelu podczas optymalizacji metodą spadku gradientowego.</li>
+                <li class="opt correct">Służą do oceny niejednorodności klas w zbiorach danych i pomagają wybierać podziały zwiększające jednorodność powstających podzbiorów.</li>
+                <li class="opt">Służą do wyznaczania odległości między obserwacjami w celu przypisania ich do najbliższych sąsiadów.</li>
+                <li class="opt">Wyznaczają granicę decyzyjną przez maksymalizację marginesu oddzielającego obserwacje należące do różnych klas.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest znajomość miar nieczystości (<i>impurity</i>) węzła: entropia i indeks Giniego mierzą, jak bardzo klasy są wymieszane w zbiorze, a algorytm wybiera podział, który najbardziej tę nieczystość zmniejsza:<br><br>
+                    1. <b>Entropia:</b> \(\displaystyle H = -\sum_{k} p_k \log_2 p_k\), gdzie \(p_k\) to udział klasy \(k\) w węźle. Wynosi \(0\) dla węzła jednorodnego i osiąga maksimum, gdy klasy są równoliczne.<br>
+                    2. <b>Indeks Giniego:</b> \(\displaystyle G = 1 - \sum_{k} p_k^2\). Także równy \(0\) dla węzła czystego, a dla dwóch równolicznych klas wynosi \(0{,}5\).<br>
+                    3. <b>Wybór podziału:</b> dla każdego kandydata na podział liczona jest ważona średnia nieczystości podzbiorów potomnych. Wybierany jest podział o największym spadku nieczystości (przy entropii: przyrost informacji, <i>information gain</i>).<br>
+                    4. <b>Przykład:</b> węzeł z \(5\) obiektami klasy A i \(5\) klasy B ma \(G = 1 - 0{,}25 - 0{,}25 = 0{,}5\). Podział na zbiory \((5\text{A}, 0\text{B})\) i \((0\text{A}, 5\text{B})\) daje \(G = 0\), czyli idealny podział.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) wielkość kroku aktualizacji w spadku gradientowym określa współczynnik uczenia (<i>learning rate</i>). Drzewa decyzyjne nie są trenowane tą metodą.<br>
+                    - <b>Opcja c)</b> \(\implies\) odległości między obserwacjami wyznaczają metryki (np. euklidesowa, Manhattan) w algorytmie k-NN, a nie entropia czy indeks Giniego.<br>
+                    - <b>Opcja d)</b> \(\implies\) maksymalizacja marginesu to idea maszyny wektorów nośnych (<i>SVM</i>), a nie drzew decyzyjnych.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Jaką funkcję pełnią warstwy konwolucyjne w sieciach CNN wykorzystywanych do analizy obrazów?</span>
+            <ul class="options">
+                <li class="opt correct">Wykrywają lokalne wzorce w danych wejściowych za pomocą uczonych filtrów, których parametry są współdzielone w różnych położeniach obrazu.</li>
+                <li class="opt">Zmniejszają rozdzielczość map cech przez wybieranie maksymalnej lub średniej wartości w lokalnych obszarach, bez stosowania uczonych filtrów konwolucyjnych.</li>
+                <li class="opt">Przekształcają wektory cech w prawdopodobieństwa klas przez normalizację wartości wyjściowych funkcją softmax.</li>
+                <li class="opt">Modelują zależności czasowe przez przekazywanie stanu ukrytego między kolejnymi elementami sekwencji.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zasada działania konwolucji w sieciach CNN: mały filtr (jądro, <i>kernel</i>) przesuwa się po obrazie i w każdym położeniu oblicza iloczyn skalarny z fragmentem wejścia, a jego wagi są uczone i współdzielone:<br><br>
+                    1. <b>Filtry uczone:</b> wagi filtrów (np. \(3 \times 3\)) są parametrami optymalizowanymi podczas uczenia. Pierwsze warstwy wykrywają proste wzorce (krawędzie, narożniki), kolejne bardziej złożone (tekstury, kształty, obiekty).<br>
+                    2. <b>Współdzielenie parametrów (<i>weight sharing</i>):</b> ten sam filtr jest stosowany w każdym położeniu obrazu, więc wzorzec jest wykrywany niezależnie od miejsca (równoważność względem przesunięcia), a liczba parametrów jest dużo mniejsza niż w warstwie w pełni połączonej.<br>
+                    3. <b>Lokalność:</b> każdy neuron wyjściowy zależy tylko od niewielkiego sąsiedztwa (pole recepcyjne, <i>receptive field</i>). Wynikiem jest mapa cech (<i>feature map</i>), a liczba map równa się liczbie filtrów.<br>
+                    4. <b>Rozmiar wyjścia:</b> dla wejścia o szerokości \(W\), filtra \(F\), dopełnienia \(P\) i kroku \(S\) szerokość wyniku to \(\left\lfloor \dfrac{W - F + 2P}{S} \right\rfloor + 1\).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) to opis warstw łączących (<i>pooling</i>, max lub average), które zmniejszają rozdzielczość map cech bez uczonych parametrów.<br>
+                    - <b>Opcja c)</b> \(\implies\) to opis funkcji <i>softmax</i> w warstwie wyjściowej klasyfikatora, zamieniającej wyniki (<i>logits</i>) na prawdopodobieństwa klas.<br>
+                    - <b>Opcja d)</b> \(\implies\) to opis sieci rekurencyjnych (RNN, LSTM, GRU), które przekazują stan ukryty między elementami sekwencji. Warstwy konwolucyjne nie mają takiej pamięci.
+                </div>
+            </details>
+        </div>
     </div>
 
 
@@ -4627,6 +5455,30 @@ jobs:
                     - <b>Opcja b)</b> \(\implies\) ręczne uruchamianie wymaga zdarzenia <code>workflow_dispatch</code>, którego w pliku nie ma. Tu workflow uruchamia się automatycznie po <code>push</code>.<br>
                     - <b>Opcja c)</b> \(\implies\) otwarcie pull requesta odpowiada zdarzeniu <code>pull_request</code>, którego w pliku nie zdefiniowano. Samo otwarcie PR nie uruchomi tego workflow.<br>
                     - <b>Opcja d)</b> \(\implies\) utworzenie gałęzi odpowiada zdarzeniu <code>create</code>. Ponadto filtr ogranicza <code>push</code> tylko do gałęzi <code>main</code>, więc nowa gałąź o dowolnej nazwie niczego nie uruchomi.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">Zespół programistyczny rozwija aplikację w repozytorium Git. Administrator skonfigurował pipeline CI uruchamiany automatycznie po każdym zgłoszeniu <i>pull request</i>. Jakie działanie najlepiej odpowiada idei ciągłej integracji (CI)?</span>
+            <ul class="options">
+                <li class="opt correct">Automatyczne budowanie aplikacji i uruchamianie testów w celu weryfikacji zmian przed ich połączeniem z główną gałęzią projektu.</li>
+                <li class="opt">Automatyczne zastępowanie zmian wprowadzonych przez programistów ostatnią stabilną wersją aplikacji przed ich połączeniem z główną gałęzią.</li>
+                <li class="opt">Automatyczne publikowanie każdej zmiany w środowisku produkcyjnym bez konieczności przeprowadzania testów.</li>
+                <li class="opt">Automatyczne tworzenie nowej gałęzi repozytorium po każdej zmianie kodu, bez uruchamiania procesu budowania aplikacji.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest idea ciągłej integracji (<i>Continuous Integration</i>): zmiany programistów są często włączane do wspólnego repozytorium, a każda z nich jest automatycznie weryfikowana przez zbudowanie aplikacji i uruchomienie testów, co pozwala szybko wykryć błędy integracji:<br><br>
+                    1. <b>Wyzwalacz:</b> pipeline uruchamia się automatycznie po zdarzeniu w repozytorium, np. <i>push</i> lub zgłoszeniu <i>pull request</i>.<br>
+                    2. <b>Etapy:</b> pobranie kodu, instalacja zależności, kompilacja (<i>build</i>), testy jednostkowe i integracyjne, często analiza statyczna (<i>linting</i>) oraz pomiar pokrycia kodu.<br>
+                    3. <b>Bramka jakości:</b> wynik pipeline'u (pozytywny lub negatywny) jest widoczny w <i>pull request</i>. Połączenie z główną gałęzią (<code>main</code>) następuje dopiero po pozytywnej weryfikacji.<br>
+                    4. <b>Korzyści:</b> szybkie wykrywanie regresji, stabilna gałąź główna, krótsza pętla informacji zwrotnej. Rozszerzeniem jest CD (<i>Continuous Delivery/Deployment</i>), czyli automatyczne wdrażanie zweryfikowanych zmian.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) CI nie nadpisuje zmian programistów starszą wersją. Jego zadaniem jest weryfikacja nowych zmian, a nie ich wycofywanie.<br>
+                    - <b>Opcja c)</b> \(\implies\) publikowanie na produkcję bez testów przeczy idei CI (opartej na testach) i jest ryzykowne. Nawet w ciągłym wdrażaniu (<i>Continuous Deployment</i>) wdrożenie następuje po pomyślnych testach.<br>
+                    - <b>Opcja d)</b> \(\implies\) samo tworzenie gałęzi bez budowania i testowania nie weryfikuje niczego, więc nie realizuje CI. Istotą jest automatyczne budowanie i testowanie.
                 </div>
             </details>
         </div>
@@ -4771,6 +5623,30 @@ jobs:
                     - <b>Opcja b)</b> \(\implies\) to steganografia (<i>steganography</i>), która ukrywa sam fakt istnienia komunikatu (np. w pikselach obrazu), a nie zabezpiecza jego treści przez szyfrowanie.<br>
                     - <b>Opcja c)</b> \(\implies\) to kryptoanaliza (<i>cryptanalysis</i>), czyli łamanie szyfrów i przełamywanie zabezpieczeń. Jest to działanie przeciwstawne do celu kryptografii.<br>
                     - <b>Opcja d)</b> \(\implies\) kryptografia nie jest procedurą zapobiegającą utracie danych w transmisji. Za wykrywanie i korekcję błędów transmisji odpowiadają kody korekcyjne i sumy kontrolne (np. CRC), a ochrona przed utratą danych to kwestia kopii zapasowych i niezawodności łączy.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W systemie kryptograficznym RSA użytkownik posiada parę kluczy: publiczny i prywatny. Który sposób ich wykorzystania umożliwia przesłanie poufnej wiadomości do tego użytkownika?</span>
+            <ul class="options">
+                <li class="opt">Nadawca i odbiorca szyfrują oraz odszyfrowują wiadomość wyłącznie za pomocą tego samego klucza publicznego odbiorcy.</li>
+                <li class="opt correct">Nadawca szyfruje wiadomość kluczem publicznym odbiorcy, a odbiorca odszyfrowuje ją swoim kluczem prywatnym.</li>
+                <li class="opt">Nadawca szyfruje wiadomość własnym kluczem prywatnym, a odbiorca odszyfrowuje ją kluczem publicznym nadawcy.</li>
+                <li class="opt">Nadawca szyfruje wiadomość własnym kluczem publicznym, a odbiorca odszyfrowuje ją swoim kluczem prywatnym.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest zasada kryptografii asymetrycznej: klucz publiczny jest ogólnie dostępny i służy do szyfrowania, a pasujący do niego klucz prywatny zna tylko właściciel i służy do odszyfrowania. Poufność zapewnia więc szyfrowanie kluczem publicznym odbiorcy:<br><br>
+                    1. <b>Szyfrowanie:</b> nadawca pobiera klucz publiczny odbiorcy \((e, n)\) i szyfruje wiadomość \(m\): \(c = m^e \bmod n\).<br>
+                    2. <b>Odszyfrowanie:</b> odbiorca używa swojego klucza prywatnego \((d, n)\): \(m = c^d \bmod n\), gdzie \(e \cdot d \equiv 1 \pmod{\varphi(n)}\).<br>
+                    3. <b>Poufność:</b> tylko właściciel klucza prywatnego może odczytać wiadomość. Podsłuchujący zna \(c\) i klucz publiczny, ale nie potrafi odtworzyć \(d\) bez rozłożenia \(n\) na czynniki pierwsze.<br>
+                    4. <b>Uwaga praktyczna:</b> RSA jest wolny, więc zwykle szyfruje się nim tylko klucz sesyjny algorytmu symetrycznego (np. AES), a nie całą wiadomość.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) klucz publiczny jest znany wszystkim, więc każdy mógłby odszyfrować wiadomość. W RSA klucze są różne i do odszyfrowania służy klucz prywatny.<br>
+                    - <b>Opcja c)</b> \(\implies\) to schemat podpisu cyfrowego (uwierzytelnienie i integralność), a nie poufności: każdy zna klucz publiczny nadawcy, więc każdy może odczytać wiadomość.<br>
+                    - <b>Opcja d)</b> \(\implies\) wiadomość zaszyfrowana kluczem publicznym nadawcy może być odszyfrowana tylko jego kluczem prywatnym, którego odbiorca nie posiada, więc odbiorca jej nie odczyta.
                 </div>
             </details>
         </div>
@@ -5041,6 +5917,53 @@ jobs:
                     - <b>Opcja a)</b> \(\implies\) to wzorzec <i>Mediator</i>, w którym obiekty komunikują się nie bezpośrednio, lecz przez centralny obiekt koordynujący. W zadaniu nie ma centralnego koordynatora, tylko sekwencyjne przekazywanie.<br>
                     - <b>Opcja b)</b> \(\implies\) to wzorzec <i>Observer</i>, w którym zmiana stanu obiektu (<i>subject</i>) powoduje powiadomienie wszystkich subskrybentów. Tu żądanie trafia do jednego handlera po kolei, a nie do wszystkich naraz.<br>
                     - <b>Opcja c)</b> \(\implies\) to wzorzec <i>Command</i>, który hermetyzuje żądanie jako obiekt (umożliwia kolejkowanie, logowanie, <i>undo</i>). Nie opisuje przekazywania żądania przez kolejne obiekty.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W aplikacji użytkownik może wykonywać operacje na dokumentach, np. kopiowanie, usuwanie i zapisywanie. Programista chce reprezentować każdą operację jako obiekt, aby umożliwić kolejkowanie żądań i rejestrowanie historii wykonanych działań. Które rozwiązanie najlepiej odpowiada intencji wzorca <i>Command</i>?</span>
+            <ul class="options">
+                <li class="opt correct">Hermetyzacja żądania w postaci obiektu udostępniającego operację wykonania, co umożliwia przekazywanie, przechowywanie i kolejkowanie poleceń.</li>
+                <li class="opt">Hermetyzacja algorytmów wykonywania operacji w wymiennych obiektach, które mogą być wybierane zależnie od konfiguracji aplikacji.</li>
+                <li class="opt">Hermetyzacja dostępu do dokumentu w obiekcie zastępczym, który kontroluje wywołania metod rzeczywistego obiektu.</li>
+                <li class="opt">Hermetyzacja stanu dokumentu w osobnym obiekcie, umożliwiająca późniejsze odtworzenie jego zawartości bez naruszania hermetyzacji.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest intencja wzorca <i>Command</i> (polecenie): zamiana żądania na samodzielny obiekt, który można przekazywać, przechowywać, kolejkować, logować i (opcjonalnie) cofać:<br><br>
+                    1. <b>Struktura:</b> interfejs <code>Command</code> z metodą <code>execute()</code> (często także <code>undo()</code>), konkretne polecenia (<code>CopyCommand</code>, <code>DeleteCommand</code>, <code>SaveCommand</code>), odbiorca (<i>receiver</i>) wykonujący właściwą pracę oraz inwoker (<i>invoker</i>) wywołujący polecenia.<br>
+                    2. <b>Oddzielenie:</b> nadawca żądania (np. przycisk menu) nie zna szczegółów operacji, zna tylko interfejs polecenia.<br>
+                    3. <b>Zastosowanie w zadaniu:</b> polecenia trafiają do kolejki lub listy historii, co pozwala je odroczyć, powtórzyć, zapisać w dzienniku lub cofnąć (<i>undo/redo</i>).<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja b)</b> \(\implies\) to wzorzec <i>Strategy</i>, który hermetyzuje wymienne algorytmy wybierane w czasie działania lub konfiguracji.<br>
+                    - <b>Opcja c)</b> \(\implies\) to wzorzec <i>Proxy</i> (pośrednik), który kontroluje dostęp do rzeczywistego obiektu.<br>
+                    - <b>Opcja d)</b> \(\implies\) to wzorzec <i>Memento</i>, który zapisuje i odtwarza stan obiektu bez naruszania jego hermetyzacji.
+                </div>
+            </details>
+        </div>
+
+        <div class="q-block">
+            <span class="q-text">W aplikacji giełdowej wiele niezależnych komponentów interfejsu prezentuje kurs tego samego instrumentu finansowego. Po zmianie kursu wszystkie zainteresowane komponenty powinny zostać poinformowane o nowej wartości. Które rozwiązanie najlepiej odpowiada wzorcowi <i>Observer</i>?</span>
+            <ul class="options">
+                <li class="opt">Obiekt przechowujący kurs udostępnia wspólny interfejs umożliwiający jednolite traktowanie pojedynczych instrumentów i ich grup.</li>
+                <li class="opt">Obiekt przechowujący kurs zmienia swoją implementację zachowania przez przełączanie między klasami reprezentującymi różne stany.</li>
+                <li class="opt correct">Obiekt przechowujący kurs utrzymuje listę subskrybentów i powiadamia ich o zmianach swojego stanu, nie wymagając znajomości ich konkretnych klas.</li>
+                <li class="opt">Obiekt przechowujący kurs przekazuje wszystkie operacje aktualizacji do innego obiektu, który kontroluje dostęp do rzeczywistych danych.</li>
+            </ul>
+            <details>
+                <summary>Wyjaśnienie</summary>
+                <div class="exp">
+                    Kluczem do rozwiązania jest intencja wzorca <i>Observer</i> (obserwator): definiuje zależność jeden-do-wielu między obiektami, tak że zmiana stanu jednego obiektu (<i>subject</i>) powoduje automatyczne powiadomienie wszystkich zależnych obiektów (<i>observers</i>):<br><br>
+                    1. <b>Struktura:</b> podmiot przechowuje listę obserwatorów i udostępnia metody <code>subscribe()</code> / <code>unsubscribe()</code> oraz <code>notify()</code>. Obserwatorzy implementują wspólny interfejs z metodą <code>update()</code>.<br>
+                    2. <b>Luźne powiązanie:</b> podmiot zna tylko interfejs obserwatora, a nie jego konkretną klasę, więc komponenty można dodawać i usuwać bez zmian w podmiocie.<br>
+                    3. <b>Zastosowanie w zadaniu:</b> obiekt z kursem to podmiot, a komponenty interfejsu (wykres, tabela, alert) to obserwatorzy. Po zmianie kursu podmiot wywołuje <code>notify()</code> i każdy komponent odświeża się.<br>
+                    4. <b>Inne przykłady:</b> zdarzenia w GUI, <code>addEventListener</code> w JavaScript, model-widok w MVC.<br><br>
+                    Analiza błędnych opcji:<br>
+                    - <b>Opcja a)</b> \(\implies\) to wzorzec <i>Composite</i>, który pozwala jednolicie traktować obiekty pojedyncze i ich grupy (drzewiasta struktura).<br>
+                    - <b>Opcja b)</b> \(\implies\) to wzorzec <i>State</i>, w którym obiekt zmienia zachowanie, delegując je do obiektów reprezentujących bieżący stan.<br>
+                    - <b>Opcja d)</b> \(\implies\) to wzorzec <i>Proxy</i>, w którym obiekt zastępczy kontroluje dostęp do rzeczywistego obiektu.
                 </div>
             </details>
         </div>
